@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>หลังบ้าน | ที่นี่โพธิ์กระสังข์</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap">
+<style>
+:root{--bg:#f5f6fa;--card:#fff;--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--navy:#1c2b5e;--gold:#fc8c2c;--green:#06c755;--red:#c93b2f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Noto Sans Thai",system-ui,sans-serif}
+header{background:var(--navy);color:#fff;padding:12px 16px;display:flex;gap:12px;align-items:center;position:sticky;top:0;z-index:5}header b{font-size:18px;flex:1}
+button,select,input,textarea{font:inherit}button{cursor:pointer}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+.btn{text-decoration:none;display:inline-block;border:0;border-radius:10px;padding:9px 16px;font-weight:700;background:var(--gold);color:#241a00}.btn.g{background:var(--green);color:#0a2a14}.btn.o{background:#e8ecfa;color:var(--navy)}
+.login{max-width:420px;margin:60px auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+label{display:block;font-weight:700;margin:12px 0 4px;font-size:14px}input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:3px 14px;font-size:14px}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}.chip b{margin-left:4px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}.c.flag{border-left:6px solid var(--red)}
+.top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.top h3{margin:0;font-size:18px}.mute{color:var(--mute);font-size:14px}
+.badge{display:inline-block;border-radius:99px;padding:1px 10px;font-size:13px;font-weight:700;background:#e8ecfa;color:var(--navy)}.badge.r{background:#fde2e2;color:var(--red)}.badge.g{background:#dcf3e7;color:#14502f}
+.ph{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.ph img{width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}
+.msg{background:#dcf3e7;color:#14502f;border-radius:8px;padding:6px 12px;margin-top:8px}.err{background:#fde2e2;color:#8a1c1c}
+#big{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20}#big img{max-width:96vw;max-height:92vh}.hide{display:none!important}
+</style></head><body>
+<header><b>🛠️ หลังบ้าน ที่นี่โพธิ์กระสังข์</b><button class="btn o" id="rf">รีเฟรช</button><button class="btn o" id="lo">ออก</button></header>
+<div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัส ADMIN_TOKEN ที่ตั้งไว้ใน Apps Script</p>
+<label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec">
+<label for="tk">รหัสผู้ดูแล</label><input id="tk" type="password" autocomplete="current-password">
+<label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต">
+<p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div></div>
+<div id="app" class="wrap hide"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="big" class="hide"><img alt="รูปขยาย"></div>
+<script>
+const API0="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
+const $=i=>document.getElementById(i);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+let S={api:sessionStorage.getItem("api")||API0||localStorage.getItem("api")||"",tk:sessionStorage.getItem("tk")||"",nm:localStorage.getItem("nm")||"",f:{}};
+async function call(body){const r=await fetch(S.api,{method:"POST",body:JSON.stringify(Object.assign({token:S.tk,by:S.nm},body))});return r.json()}
+$("api").value=S.api;$("nm").value=S.nm;
+$("go").onclick=async()=>{S.api=$("api").value.trim();S.tk=$("tk").value;S.nm=$("nm").value.trim();const e=$("le");e.classList.add("hide");
+  try{const d=await call({action:"adminList"});if(!d.ok)throw new Error(d.error||"เข้าสู่ระบบไม่ได้");localStorage.setItem("api",S.api);localStorage.setItem("nm",S.nm);sessionStorage.setItem("api",S.api);sessionStorage.setItem("tk",S.tk);start(d)}
+  catch(x){e.textContent="⚠️ "+x.message;e.classList.remove("hide")}};
+$("lo").onclick=()=>{sessionStorage.clear();location.reload()};$("rf").onclick=load;
+function start(d){$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d)}
+async function load(){try{draw(await call({action:"adminList",filter:S.f}))}catch(x){alert("โหลดไม่ได้: "+x.message)}}
+if(S.api&&S.tk)load().then(()=>{$("lg").classList.add("hide");$("app").classList.remove("hide")});
+function draw(d){if(!d.ok){alert(d.error);return}
+ const st=$("st");st.replaceChildren(...d.statuses.concat(d.reviews).map((k,i)=>{const c=el("span","chip",k+" ");c.append(el("b","",String(d.stats[k]||0)));return c}));
+ const F=[["ทั้งหมด",{}],["รอตรวจเนื้อหา",{review:"รอตรวจ"}],["รอรับเรื่อง",{status:"รอรับเรื่อง"}],["มีธงเตือน",{flagged:1}]];
+ $("ft").replaceChildren(...F.map(([n,f])=>{const b=el("button","chip"+(JSON.stringify(S.f)===JSON.stringify(f)?" on":""),n);b.onclick=()=>{S.f=f;load()};return b}));
+ $("ls").replaceChildren(...(d.items.length?d.items.map(card(d)):[el("p","mute","ไม่มีรายการ")]))}
+const okImg=u=>/^https:\/\/drive\.google\.com\//.test(u),okMap=u=>/^https:\/\/maps\.google\.com\//.test(u);
+function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("div","top");
+ t.append(el("h3","",it.no+" • "+it.cat),el("span","badge",it.status),el("span","badge"+(it.review==="ผ่าน"?" g":it.review==="รอตรวจ"?"":" r"),"ตรวจ: "+it.review));if(it.pub)t.append(el("span","badge g","เผยแพร่แล้ว"));c.append(t);
+ c.append(el("div","mute",it.at+" • ช่องทาง "+it.ch+" • ส่งถึง "+(it.to||"-")+(it.hasLine?" • ผูก LINE":"")));
+ if(it.flags)c.append(el("div","badge r","⚠️ "+it.flags));
+ c.append(el("p","",it.what));if(it.want)c.append(el("p","mute","อยากให้ทำ: "+it.want));c.append(el("p","mute","จุดสังเกต: "+(it.spot||"-")));
+ if(okMap(it.map)){const a=el("a","btn g","📍 เปิดแผนที่ ("+(+it.lat).toFixed(5)+", "+(+it.lng).toFixed(5)+")");a.href=it.map;a.target="_blank";a.rel="noopener";c.append(a)}
+ const ph=el("div","ph");it.pics.filter(okImg).forEach(u=>{const i=new Image();i.src=u;i.alt="รูปประกอบ";i.loading="lazy";i.onclick=()=>{$("big").querySelector("img").src=u.replace("sz=w1200","sz=w2000");$("big").classList.remove("hide")};ph.append(i)});c.append(ph);
+ const sel=(l,opts,v)=>{const s=el("select");opts.forEach(o=>{const x=el("option","",o);x.value=o;s.append(x)});s.value=v;return s};
+ const ss=sel("",d.statuses,it.status),rs=sel("",d.reviews,it.review),org=el("input"),pg=el("textarea"),pk=el("input");org.value=it.org||"";pg.value=it.prog||"";pg.rows=2;pk.type="checkbox";pk.checked=it.pub;pk.style.width="auto";pk.disabled=!it.allow;
+ const r=el("div","row"),f1=el("div"),f2=el("div");f1.append(el("label","","สถานะ"),ss);f2.append(el("label","","ผลตรวจเนื้อหา"),rs);r.append(f1,f2);c.append(r);
+ c.append(el("label","","หน่วยงานที่ส่งต่อ"),org,el("label","","ความคืบหน้า (ส่งให้ผู้แจ้งทาง LINE ถ้าผูกบัญชีไว้)"),pg);
+ const ck=el("label");ck.style.fontWeight="400";ck.append(pk," เผยแพร่ในหน้า “ติดตามเรื่อง” ของเว็บ"+(it.allow?" (ผู้แจ้งอนุญาตแล้ว)":" — ผู้แจ้งไม่ได้อนุญาต"));c.append(ck);
+ const sv=el("button","btn","บันทึก"),m=el("div","msg hide");sv.onclick=async()=>{sv.disabled=true;m.className="msg hide";
+  try{const u=await call({action:"adminUpdate",no:it.no,patch:{status:ss.value,review:rs.value,org:org.value,prog:pg.value,pub:pk.checked}});m.textContent=u.ok?"✅ บันทึกแล้ว"+(u.item.pub?" • เผยแพร่":" • ไม่เผยแพร่")+(it.hasLine?" • แจ้งผู้แจ้งทาง LINE แล้ว":""):"⚠️ "+u.error;m.className="msg"+(u.ok?"":" err");if(u.ok){pk.checked=u.item.pub;load()}}catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}sv.disabled=false};
+ c.append(el("p"),sv,m);return c}}
+$("big").onclick=()=>$("big").classList.add("hide");
+</script></body></html>
