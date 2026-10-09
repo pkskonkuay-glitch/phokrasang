@@ -26,7 +26,20 @@ label{display:block;font-weight:700;margin:12px 0 4px;font-size:14px}input,selec
 <label for="tk">รหัสผู้ดูแล</label><input id="tk" type="password" autocomplete="current-password">
 <label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต">
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div></div>
-<div id="app" class="wrap hide"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
+<div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
+<label for="cc">หมวด (เช่น โครงการและบริการ, เตือนภัย, คนบ้านเรา, ประเพณี, ความเชื่อ)</label><input id="cc" list="cl"><datalist id="cl"><option>โครงการและบริการ</option><option>เตือนภัย</option><option>คนบ้านเรา</option><option>ประเพณี</option><option>ความเชื่อ</option><option>วัฒน์กวย</option><option>คลิป</option></datalist>
+<label for="ct">หัวข้อ</label><input id="ct" maxlength="150">
+<label for="cs">สรุปสั้น (ไม่เกิน 300 ตัวอักษร)</label><textarea id="cs" rows="2" maxlength="300"></textarea>
+<label for="cb">เนื้อหาเต็ม</label><textarea id="cb" rows="9"></textarea>
+<p class="mute">เว้นบรรทัดเพื่อขึ้นย่อหน้าใหม่ · ขึ้นต้นบรรทัดด้วย <code>## </code> เป็นหัวข้อย่อย · ขึ้นต้นด้วย <code>• </code> เป็นรายการ · ห้ามใส่ข้อมูลส่วนตัวของผู้อื่น</p>
+<label for="cv">ลิงก์ YouTube (ประเภท “คลิป” ต้องใส่)</label><input id="cv" placeholder="https://www.youtube.com/watch?v=...">
+<label for="cf">รูปประกอบ (เลือกจากเครื่อง ระบบย่อขนาดให้)</label><input id="cf" type="file" accept="image/*"><div id="cpv" class="ph"></div>
+<label for="ci">หรือใส่ลิงก์รูป (https)</label><input id="ci" placeholder="https://...">
+<label style="font-weight:400"><input type="checkbox" id="cp2" checked style="width:auto"> เผยแพร่ทันที</label>
+<p><button class="btn" id="csv">บันทึก</button> <button class="btn o" id="crs">ล้างฟอร์ม</button></p><div class="msg hide" id="cm"></div></div>
+<h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div></div>
 <div id="big" class="hide"><img alt="รูปขยาย"></div>
 <script>
 const API0="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
@@ -64,4 +77,25 @@ function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("d
   try{const u=await call({action:"adminUpdate",no:it.no,patch:{status:ss.value,review:rs.value,org:org.value,prog:pg.value,pub:pk.checked}});m.textContent=u.ok?"✅ บันทึกแล้ว"+(u.item.pub?" • เผยแพร่":" • ไม่เผยแพร่")+(it.hasLine?" • แจ้งผู้แจ้งทาง LINE แล้ว":""):"⚠️ "+u.error;m.className="msg"+(u.ok?"":" err");if(u.ok){pk.checked=u.item.pub;load()}}catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}sv.disabled=false};
  c.append(el("p"),sv,m);return c}}
 $("big").onclick=()=>$("big").classList.add("hide");
+/* ===== โพสต์เนื้อหา ===== */
+let CE=null,CP="";
+const tab=n=>{$("p1").classList.toggle("hide",n!==1);$("p2").classList.toggle("hide",n!==2);$("t1").classList.toggle("on",n===1);$("t2").classList.toggle("on",n===2);if(n===2)loadC()};
+$("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);
+const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
+function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cp2").checked=true;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide"}
+$("crs").onclick=cclear;cclear();
+$("cf").onchange=e=>{const f=e.target.files[0];if(!f){CP="";$("cpv").replaceChildren();return}
+ const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);CP=c.toDataURL("image/jpeg",.82);const p=new Image();p.src=CP;p.alt="ตัวอย่างรูป";$("cpv").replaceChildren(p);URL.revokeObjectURL(u)};im.onerror=()=>{CP="";alert("เปิดไฟล์รูปนี้ไม่ได้")};im.src=u};
+$("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.className="msg hide";
+ try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:$("cb").value,video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked};
+  const u=await call({action:"adminContentSave",item:item,photo:CP||undefined});
+  if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");m.textContent="✅ บันทึกแล้ว"+(u.item.pub?" และเผยแพร่บนเว็บ":" (ฉบับร่าง ยังไม่เผยแพร่)");m.className="msg";cclear();loadC()}
+ catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
+async function loadC(){try{const d=await call({action:"adminContentList"});if(!d.ok)throw new Error(d.error);
+ $("cl2").replaceChildren(...(d.items.length?d.items.map(it=>{const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title),el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));
+  c.append(t,el("div","mute",[it.at,it.cat,it.by].filter(Boolean).join(" • ")));if(it.sum)c.append(el("p","",it.sum));
+  const e=el("button","btn o","แก้ไข"),h=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");
+  e.onclick=()=>{CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";$("cb").value=it.body||"";$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;$("cform").scrollIntoView({behavior:"smooth"})};
+  h.onclick=async()=>{h.disabled=true;const u=await call({action:"adminContentSave",item:{id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pub:!it.pub}});if(!u.ok)alert(u.error);loadC()};
+  c.append(e," ",h);return c}):[el("p","mute","ยังไม่มีเนื้อหาที่โพสต์ผ่านหน้านี้")]))}catch(x){$("cl2").replaceChildren(el("p","mute","โหลดไม่ได้: "+x.message))}}
 </script></body></html>
