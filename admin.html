@@ -19,13 +19,17 @@ label{display:block;font-weight:700;margin:12px 0 4px;font-size:14px}input,selec
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}
 .msg{background:#dcf3e7;color:#14502f;border-radius:8px;padding:6px 12px;margin-top:8px}.err{background:#fde2e2;color:#8a1c1c}
 #big{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20}#big img{max-width:96vw;max-height:92vh}.hide{display:none!important}
+.opt{font-weight:400;display:flex;gap:8px;align-items:center;margin:8px 0;font-size:15px}.opt input{width:auto}.msg.warn{background:#fff3c4;color:#6b5000}#adv{margin:14px 0 4px;color:var(--mute);font-size:14px}#adv summary{cursor:pointer}
+body:not(.in) #rf,body:not(.in) #lo{display:none}
 </style></head><body>
 <header><b>🛠️ หลังบ้าน ที่นี่โพธิ์กระสังข์</b><button class="btn o" id="rf">รีเฟรช</button><button class="btn o" id="lo">ออก</button></header>
-<div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัส ADMIN_TOKEN ที่ตั้งไว้ใน Apps Script</p>
-<label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec">
-<label for="tk">รหัสผู้ดูแล</label><input id="tk" type="password" autocomplete="current-password">
-<label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต">
-<p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div></div>
+<div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัสผู้ดูแล (ADMIN_TOKEN) ที่ตั้งไว้ใน Apps Script</p>
+<label for="tk">รหัสผู้ดูแล</label><input id="tk" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+<label class="opt"><input type="checkbox" id="sp"> แสดงรหัสที่พิมพ์ (ใช้ตรวจว่าพิมพ์ถูก)</label>
+<div class="msg warn hide" id="tw"></div>
+<label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
+<details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
+<p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
 <div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
@@ -48,14 +52,31 @@ const $=i=>document.getElementById(i);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 let S={api:sessionStorage.getItem("api")||API0||localStorage.getItem("api")||"",tk:sessionStorage.getItem("tk")||"",nm:localStorage.getItem("nm")||"",f:{}};
 async function call(body){const r=await fetch(S.api,{method:"POST",body:JSON.stringify(Object.assign({token:S.tk,by:S.nm},body))});return r.json()}
-$("api").value=S.api;$("nm").value=S.nm;
-$("go").onclick=async()=>{S.api=$("api").value.trim();S.tk=$("tk").value;S.nm=$("nm").value.trim();const e=$("le");e.classList.add("hide");
-  try{const d=await call({action:"adminList"});if(!d.ok)throw new Error(d.error||"เข้าสู่ระบบไม่ได้");localStorage.setItem("api",S.api);localStorage.setItem("nm",S.nm);sessionStorage.setItem("api",S.api);sessionStorage.setItem("tk",S.tk);start(d)}
-  catch(x){e.textContent="⚠️ "+x.message;e.classList.remove("hide")}};
+$("api").value=S.api;$("nm").value=S.nm;$("adv").open=!S.api;
+try{if(localStorage.getItem("kp_idle")){localStorage.removeItem("kp_idle");$("li").textContent="ออกจากระบบอัตโนมัติ เพราะไม่ได้ใช้งานเกิน 30 นาที กรุณาเข้าสู่ระบบอีกครั้ง";$("li").classList.remove("hide")}}catch(e){}
+$("sp").onchange=()=>{$("tk").type=$("sp").checked?"text":"password"};
+const chkTk=e=>{const v=$("tk").value,w=$("tw"),m=[];
+ if(/[\u0E00-\u0E7F]/.test(v))m.push("ตอนนี้พิมพ์เป็นภาษาไทยอยู่ รหัสเป็นภาษาอังกฤษและตัวเลข ให้สลับแป้นพิมพ์เป็น EN");
+ if(e&&e.getModifierState&&e.getModifierState("CapsLock"))m.push("เปิด Caps Lock อยู่ ตัวพิมพ์ใหญ่-เล็กมีผลกับรหัส");
+ if(/^\s|\s$/.test(v))m.push("มีช่องว่างหน้าหรือหลังรหัส (ระบบตัดออกให้อัตโนมัติ)");
+ w.textContent=m.length?"⚠️ "+m.join(" • "):"";w.classList.toggle("hide",!m.length)};
+["input","keydown","keyup"].forEach(t=>$("tk").addEventListener(t,chkTk));
+["tk","nm","api"].forEach(i=>$(i).addEventListener("keydown",e=>{if(e.key==="Enter")$("go").click()}));
+$("go").onclick=async()=>{S.api=$("api").value.trim();S.tk=$("tk").value.trim();S.nm=$("nm").value.trim();const e=$("le"),g=$("go");e.classList.add("hide");$("li").classList.add("hide");
+ if(!S.tk){e.textContent="⚠️ กรุณากรอกรหัสผู้ดูแล";e.classList.remove("hide");$("tk").focus();return}
+ if(!S.api){e.textContent="⚠️ ยังไม่มีลิงก์ Web App กรุณากรอกในช่อง “ตั้งค่าขั้นสูง”";e.classList.remove("hide");$("adv").open=true;return}
+ g.disabled=true;g.textContent="กำลังตรวจสอบ…";
+ try{const d=await call({action:"adminList"});if(!d.ok)throw new Error(d.error||"เข้าสู่ระบบไม่ได้");localStorage.setItem("api",S.api);localStorage.setItem("nm",S.nm);sessionStorage.setItem("api",S.api);sessionStorage.setItem("tk",S.tk);$("tk").value="";$("sp").checked=false;$("tk").type="password";start(d)}
+ catch(x){const net=/fetch|network|Load failed/i.test(String(x.message));e.textContent="⚠️ "+(net?"เชื่อมต่อหลังบ้านไม่ได้ ตรวจอินเทอร์เน็ต หรือตรวจลิงก์ Web App ใน “ตั้งค่าขั้นสูง”":x.message);if(net)$("adv").open=true;e.classList.remove("hide")}
+ g.disabled=false;g.textContent="เข้าสู่ระบบ"};
+/* ออกจากระบบอัตโนมัติเมื่อไม่ได้ใช้งาน 30 นาที (กันลืมปิดหน้าบนเครื่องที่ใช้ร่วมกัน) */
+let idleT=null,LOGGED=false;const IDLE=30*60*1000;
+const bump=()=>{if(!LOGGED)return;clearTimeout(idleT);idleT=setTimeout(()=>{try{localStorage.setItem("kp_idle","1")}catch(e){}sessionStorage.clear();location.reload()},IDLE)};
+["click","keydown","touchstart","scroll"].forEach(t=>document.addEventListener(t,bump,{passive:true}));
 $("lo").onclick=()=>{sessionStorage.clear();location.reload()};$("rf").onclick=load;
-function start(d){$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d)}
+function start(d){document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d)}
 async function load(){try{draw(await call({action:"adminList",filter:S.f}))}catch(x){alert("โหลดไม่ได้: "+x.message)}}
-if(S.api&&S.tk)load().then(()=>{$("lg").classList.add("hide");$("app").classList.remove("hide")});
+if(S.api&&S.tk)load().then(()=>{document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide")});
 function draw(d){if(!d.ok){alert(d.error);return}
  const st=$("st");st.replaceChildren(...d.statuses.concat(d.reviews).map((k,i)=>{const c=el("span","chip",k+" ");c.append(el("b","",String(d.stats[k]||0)));return c}));
  const F=[["ทั้งหมด",{}],["รอตรวจเนื้อหา",{review:"รอตรวจ"}],["รอรับเรื่อง",{status:"รอรับเรื่อง"}],["มีธงเตือน",{flagged:1}]];
