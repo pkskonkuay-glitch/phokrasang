@@ -610,17 +610,27 @@ const _openRead=openRead;
 openRead=function(o,push){if(o.lazy&&!o.full&&CFG.apiUrl){go("read");$("rd").replaceChildren(el("p","mute","กำลังโหลดเนื้อหา…"));
 fetch(CFG.apiUrl+"?action=item&id="+encodeURIComponent(o.dynId)).then(x=>x.json()).then(d=>{if(d.ok&&d.body)o.body=String(d.body).split(/\n+/).map(x=>x.trim()).filter(Boolean);o.full=1;_openRead(o,push)}).catch(()=>{o.full=1;_openRead(o,push)});return}
 _openRead(o,push)};
-async function loadContent(){if(!CFG.apiUrl||window.__dc)return;window.__dc=1;
-try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items||!d.items.length)return;
-const SI={};[...news,...arts].forEach(o=>{if(!o.dynId&&o.img)SI[o.title]=o.img}); // รูปสำรองเดิม ใช้เมื่อรูปใหม่โหลดไม่ขึ้น
-const have=new Set(d.items.map(i=>i.title));[news,arts].forEach(l=>{for(let i=l.length-1;i>=0;i--)if(!l[i].dynId&&have.has(l[i].title))l.splice(i,1)});for(let i=FEED.length-1;i>=0;i--)if(have.has(FEED[i].t)&&!(FEED[i].o&&FEED[i].o.dynId))FEED.splice(i,1); // เรื่องเดิมที่ย้ายเข้าชีตแล้ว ไม่ต้องแสดงซ้ำ
-const add=[];[...d.items].reverse().forEach(it=>{const y=it.at?String(+it.at.slice(0,4)+543):"";
-if(it.kind==="คลิป"&&it.video){add.unshift({key:"cv"+it.id,kind:"v",t:it.title,cat:it.cat||"คลิป",s:it.sum||"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+it.video+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+it.video+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+it.video,y:y});return}
-const cc=CC[it.cat]||CC["โครงการและบริการ"],ph="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sv0(cc[0],cc[1],'<text x="300" y="250" font-size="130" text-anchor="middle">'+cc[2]+'</text>'));
-const o={k:"c"+it.id,cat:it.cat||it.kind,title:it.title,sum:it.sum,date:thD(it.at),img:it.img||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:[it.sum||it.title],lazy:it.lazy,dynId:it.id};
-(it.kind==="วิถีกวย"?arts:news).unshift(o);const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y};add.unshift(fe);
-if(SI[it.title]&&it.img){const t=new Image();t.onerror=()=>{o.img=SI[it.title];fe.img=o.img;rNews();rFeed()};t.src=it.img}});
-FEED.unshift(...add);rNews();rFeed();if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
+const CKEY="kp_content_v1";let STATIC0=null,LASTJ="";
+function applyContent(items){
+ if(!STATIC0)STATIC0={news:[...news],arts:[...arts],feed:[...FEED],hero:[...HERO]};
+ const SI={};[...STATIC0.news,...STATIC0.arts].forEach(o=>{if(o.img)SI[o.title]=o.img}); // รูปสำรองเดิม
+ const have=new Set(items.map(i=>i.title)),nn=STATIC0.news.filter(o=>!have.has(o.title)),aa=STATIC0.arts.filter(o=>!have.has(o.title)),ff=STATIC0.feed.filter(f=>!have.has(f.t)),add=[];
+ [...items].reverse().forEach(it=>{const y=it.at?String(+it.at.slice(0,4)+543):"";
+  if(it.kind==="คลิป"&&it.video){add.unshift({key:"cv"+it.id,kind:"v",t:it.title,cat:it.cat||"คลิป",s:it.sum||"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+it.video+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+it.video+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+it.video,y:y,pin:!!it.pin});return}
+  const cc=CC[it.cat]||CC["โครงการและบริการ"],ph="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sv0(cc[0],cc[1],'<text x="300" y="250" font-size="130" text-anchor="middle">'+cc[2]+'</text>'));
+  const o={k:"c"+it.id,cat:it.cat||it.kind,title:it.title,sum:it.sum,date:thD(it.at),img:it.img||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:[it.sum||it.title],lazy:it.lazy,dynId:it.id};
+  (it.kind==="วิถีกวย"?aa:nn).unshift(o);
+  const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y,pin:!!it.pin};add.unshift(fe);
+  if(SI[it.title]&&it.img){const t=new Image();t.onerror=()=>{o.img=SI[it.title];fe.img=o.img;rNews();rFeed()};t.src=it.img}});
+ news.splice(0,news.length,...nn);arts.splice(0,arts.length,...aa);FEED.splice(0,FEED.length,...add,...ff);
+ const byT={};add.forEach(f=>byT[f.t]=f);let nh=STATIC0.hero.map(f=>byT[f.t]||f);
+ const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){nh=[...pins];STATIC0.hero.map(f=>byT[f.t]).filter(Boolean).forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
+ clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rNews();rFeed()}
+async function loadContent(){if(!CFG.apiUrl)return;
+ try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
+ try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items)return;const j=JSON.stringify(d.items);
+  if(j!==LASTJ){LASTJ=j;applyContent(d.items);try{localStorage.setItem(CKEY,JSON.stringify({items:d.items}))}catch(e){}}
+  if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
 $("foot").textContent+=" • อัปเดตล่าสุด 4 ต.ค. 2569 (ภาพใหม่ การ์ดเรียงตรงกัน)";
