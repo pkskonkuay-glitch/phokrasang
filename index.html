@@ -612,12 +612,14 @@ fetch(CFG.apiUrl+"?action=item&id="+encodeURIComponent(o.dynId)).then(x=>x.json(
 _openRead(o,push)};
 async function loadContent(){if(!CFG.apiUrl||window.__dc)return;window.__dc=1;
 try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items||!d.items.length)return;
+const SI={};[...news,...arts].forEach(o=>{if(!o.dynId&&o.img)SI[o.title]=o.img}); // รูปสำรองเดิม ใช้เมื่อรูปใหม่โหลดไม่ขึ้น
 const have=new Set(d.items.map(i=>i.title));[news,arts].forEach(l=>{for(let i=l.length-1;i>=0;i--)if(!l[i].dynId&&have.has(l[i].title))l.splice(i,1)});for(let i=FEED.length-1;i>=0;i--)if(have.has(FEED[i].t)&&!(FEED[i].o&&FEED[i].o.dynId))FEED.splice(i,1); // เรื่องเดิมที่ย้ายเข้าชีตแล้ว ไม่ต้องแสดงซ้ำ
 const add=[];[...d.items].reverse().forEach(it=>{const y=it.at?String(+it.at.slice(0,4)+543):"";
 if(it.kind==="คลิป"&&it.video){add.unshift({key:"cv"+it.id,kind:"v",t:it.title,cat:it.cat||"คลิป",s:it.sum||"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+it.video+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+it.video+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+it.video,y:y});return}
 const cc=CC[it.cat]||CC["โครงการและบริการ"],ph="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sv0(cc[0],cc[1],'<text x="300" y="250" font-size="130" text-anchor="middle">'+cc[2]+'</text>'));
 const o={k:"c"+it.id,cat:it.cat||it.kind,title:it.title,sum:it.sum,date:thD(it.at),img:it.img||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:[it.sum||it.title],lazy:it.lazy,dynId:it.id};
-(it.kind==="วิถีกวย"?arts:news).unshift(o);add.unshift({key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y})});
+(it.kind==="วิถีกวย"?arts:news).unshift(o);const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y};add.unshift(fe);
+if(SI[it.title]&&it.img){const t=new Image();t.onerror=()=>{o.img=SI[it.title];fe.img=o.img;rNews();rFeed()};t.src=it.img}});
 FEED.unshift(...add);rNews();rFeed();if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
