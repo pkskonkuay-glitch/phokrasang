@@ -208,6 +208,24 @@ header{z-index:20}.mb svg{display:block}
 #ydl{position:absolute;top:calc(100% + 6px);left:0;z-index:8;min-width:160px;max-height:50vh;overflow:auto;background:var(--soft);border-radius:16px;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}#ydl button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 20px;color:var(--ink)}
 .emg{background:#fde2e2;color:#7a1c1c;border:1px solid #f1b4b4;border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.6}.pvn{font-size:14px;color:var(--mute);margin:4px 0 10px}.pvn a{color:var(--link)}
 </style>
+<style id="v2">
+.sv2{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.t{border:0;border-radius:12px;padding:14px;text-align:left;color:#fff;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;min-height:96px;line-height:1.35}
+.t b{font:800 18px/1.3 "Noto Serif Thai",serif}.t span{font-size:14px;opacity:.92}
+.t.big{grid-column:span 2;grid-row:span 2;min-height:200px}.t.big b{font-size:26px}
+.t.a{background:#fc8c2c;color:#1c2b5e}.t.r{background:#c9372c}.t.n{background:#1c2b5e}.t.g{background:#2f7d5b}.t.b{background:#3b56b8}
+.t:hover{filter:brightness(1.07)}
+@media(max-width:640px){.sv2{grid-template-columns:1fr 1fr}.t.big{grid-column:span 2;grid-row:auto;min-height:130px}}
+</style>
+<style id="v3">
+.yr{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
+.yc{flex:0 0 min(280px,78%);scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.yc:before{content:"";height:10px;background:var(--silk) center/cover}
+.yc .in{padding:12px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.yc .w{font:800 15px "Noto Serif Thai",serif;color:var(--gold)}
+.yc h3{font-size:19px}.yc p{margin:0;font-size:15px;color:var(--mute)}
+.yc a{margin-top:auto;font-weight:700;font-size:15px}
+</style>
 </head>
 <body>
 <header><div class="bar">
@@ -229,6 +247,16 @@ header{z-index:20}.mb svg{display:block}
 <div class="wrap">
 <section id="topics"><div class="sh"><h2>เรื่องราวชาวกวยบ้านเรา</h2></div><div class="topics"><button class="tp" style="--b:#1c2b5e" onclick="goC('เซ (ฮีตคอง)')"><span>🕯️</span>เซ (ฮีตคอง)<small>ประเพณีตลอดปี</small></button><button class="tp" style="--b:#5a2f7d" onclick="goC('ละวาย')"><span>🎗️</span>ละวาย<small>ขวัญคนตามวงจรชีวิต</small></button><button class="tp" style="--b:#9a5b12" onclick="goC('ดุง')"><span>🏡</span>ดุง<small>บ้านเรือน ตานชิ โคะอ์โค</small></button><button class="tp" style="--b:#2f7d5b" onclick="goC('กัวออ')"><span>🙏</span>กัวออ<small>พิธีกรรมและวันจริง</small></button><button class="tp" style="--b:#c9462e" onclick="goC('จาแอม')"><span>🍲</span>จาแอม<small>วิถีกิน วิถีอยู่</small></button><button class="tp" style="--b:#3b56b8" onclick="goC('ภาษากวย')"><span>🗣️</span>ภาษากวย<small>คำและความหมาย</small></button></div></section>
 <section class="sw hide" id="culture"><div class="sh"><h2>วิถีกวยวอแธร ฮีตคอง และภาษา</h2></div><p class="mute">กวยวอแธร คือกวยที่ทำการเกษตร ข้อมูลรวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน</p><div class="chips" id="cchips"></div><div class="grid" id="cgr"></div></section>
+<section id="yr"><div class="sh"><h2>ปีกวย ตลอดปีของบ้านเรา</h2><span class="mute">เลื่อนดูได้</span></div><div class="yr" id="yrl"></div></section>
+<section id="services"><div class="sh"><h2>บริการชุมชนผ่าน LINE</h2><span class="mute">แจ้งเรื่อง ติดตาม ส่งข่าว</span></div>
+<div class="sv2">
+<button class="t big a" onclick="go('submit')"><b>แจ้งเรื่อง • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย ทีมงานรับเรื่องแล้วแจ้งผลทาง LINE</span></button>
+<button class="t n" onclick="go('board')"><b>ติดตามเรื่อง</b><span>ดูความคืบหน้า</span></button>
+<button class="t g" onclick="history.replaceState(null,'','?c=news');go('submit')"><b>ส่งข่าว</b><span>ฝากข่าวดีบ้านเรา</span></button>
+<button class="t r" onclick="history.replaceState(null,'','?c=urgent');go('submit')"><b>เตือนภัย</b><span>ฝากแจ้งเหตุ</span></button>
+<a class="t b" id="lnT"><b>คุยกับทีมงาน</b><span>ถามทาง LINE</span></a>
+</div>
+<p class="mute" style="margin:10px 0 0">เหตุฉุกเฉินโทร <a href="tel:191">191</a> · <a href="tel:1669">1669</a> · <a href="tel:199">199</a> ก่อนเสมอ ทีมงานชุมชนตอบเรื่องจันทร์–ศุกร์ 09.00–18.00 น. <a href="privacy.html">ความเป็นส่วนตัว</a></p></section>
 <section><div class="cta2"><h3>ฝากเรื่องราวถึงชุมชน</h3><p>มีภาพเก่า เรื่องราวของผู้เฒ่า หรือข่าวดีของลูกหลานบ้านเรา ส่งมาทาง LINE หรืออีเมลได้เลย ทีมงานจะเรียบเรียงและเผยแพร่ โดยขออนุญาตเจ้าของเรื่องก่อนทุกครั้ง</p><a class="btn line" id="lnC" style="margin:0">ส่งเรื่องทาง LINE</a> <a class="btn alt" id="mailA">ส่งอีเมล</a> <a class="btn alt" id="fbA">Facebook</a> <a class="btn alt" id="ytA">YouTube</a></div></section>
 <section class="sw hide" id="news"><div class="sh"><h2>ข่าวสาร</h2></div>
 <div class="chips" id="nchips"></div><div class="grid" id="ngrid"></div></section>
@@ -638,5 +666,10 @@ rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").cla
 
 {const pa=el("a","","ประกาศความเป็นส่วนตัว");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}
 </script>
+<script>document.getElementById("lnT").href=CFG.lineUrl;document.getElementById("lnT").target="_blank";document.getElementById("lnT").rel="noopener"</script>
+<script>(function(){var L=document.getElementById("yrl"),a=K["เซ (ฮีตคอง)"]||[];a.forEach(function(r){var d=document.createElement("div");d.className="yc";var i=document.createElement("div");i.className="in";
+var w=document.createElement("span");w.className="w";w.textContent=r[0];var h=document.createElement("h3");h.textContent=r[1];var p=document.createElement("p");p.textContent=r[2];
+var x=document.createElement("a");x.textContent="ถามทีมงานทาง LINE";x.target="_blank";x.rel="noopener";x.href="https://line.me/R/oaMessage/"+encodeURIComponent(CFG.lineId)+"/?"+encodeURIComponent("สอบถามเรื่อง: "+r[1]);
+i.append(w,h,p,x);d.append(i);L.append(d)})})()</script>
 </body>
 </html>
