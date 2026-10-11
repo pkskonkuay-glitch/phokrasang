@@ -206,6 +206,7 @@ header{z-index:20}.mb svg{display:block}
 .sendbar.done{background:#dcf3e7;border:2px solid #06c755;border-radius:16px;padding:18px;text-align:center}.tkno{font:800 40px/1.2 "Noto Serif Thai",serif;color:#14502f;margin:4px 0 10px;letter-spacing:2px}.sendbar.done .btn{display:block;margin:8px auto;max-width:360px}
 .fb{flex-wrap:wrap}.fb input{flex:1;min-width:150px;border:1px solid var(--line);border-radius:99px;padding:8px 16px;background:var(--card);color:var(--ink)}
 #ydl{position:absolute;top:calc(100% + 6px);left:0;z-index:8;min-width:160px;max-height:50vh;overflow:auto;background:var(--soft);border-radius:16px;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}#ydl button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 20px;color:var(--ink)}
+.emg{background:#fde2e2;color:#7a1c1c;border:1px solid #f1b4b4;border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.6}.pvn{font-size:14px;color:var(--mute);margin:4px 0 10px}.pvn a{color:var(--link)}
 </style>
 </head>
 <body>
@@ -502,7 +503,7 @@ const CID=(()=>{try{let c=localStorage.getItem("kpcid");if(!c){c=Math.random().t
 const rdURL=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.onerror=()=>r("");x.readAsDataURL(f)});
 async function sendApi(){const b=$("send"),er=$("er");b.disabled=true;const old=b.textContent;b.textContent="⏳ กำลังส่งเรื่อง…";er.textContent="";
  try{const photos=(await Promise.all(R.ph.map(p=>rdURL(p.f)))).filter(Boolean);
-  const body={action:"submit",cat:R.cat,to:$("rOrg").value,lat:R.lat,lng:R.lng,spot:$("rPl").value.trim(),what:$("rWh").value.trim(),want:[...R.want,$("rWa").value.trim()].filter(Boolean).join(", "),allow:$("rOk").checked,cid:CID,hp:$("hp")?$("hp").value:"",photos:photos,idToken:(window.liff&&liff.isLoggedIn&&liff.isLoggedIn())?liff.getIDToken():""};
+  const body={action:"submit",cat:R.cat,to:$("rOrg").value,lat:R.lat,lng:R.lng,spot:$("rPl").value.trim(),what:$("rWh").value.trim(),want:[...R.want,$("rWa").value.trim()].filter(Boolean).join(", "),allow:$("rOk").checked,cid:CID,hp:$("hpot")?$("hpot").value:"",photos:photos,idToken:(window.liff&&liff.isLoggedIn&&liff.isLoggedIn())?liff.getIDToken():""};
   const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),90000);
   const d=await (await fetch(CFG.apiUrl,{method:"POST",body:JSON.stringify(body),signal:ac.signal})).json();clearTimeout(tm);
   if(!d.ok)throw new Error(d.error||"ส่งไม่สำเร็จ");
@@ -538,6 +539,7 @@ $("cam").disabled=$("gal").disabled=R.ph.length>=3;$("pc").textContent="แน�
 function rSubmit(){const b=$("sub");if(wId!=null){navigator.geolocation.clearWatch(wId);wId=null}
 R={cat:"",lat:null,lng:null,ok:false,ph:[],want:[],me:null,acc:0};map=meM=meC=null;
 b.innerHTML=
+'<div class="emg">🚨 <b>เหตุฉุกเฉิน</b> (อุบัติเหตุ ไฟไหม้ เจ็บป่วยหนัก มีคนเป็นอันตราย) <b>โทร 191 · 1669 · 199 ก่อนเสมอ</b> เว็บนี้ไม่ใช่สายด่วน ทีมงานตอบในเวลาทำการ</div>'+
 '<div class="stp" id="s1"><div class="sn"><i>1</i><h3>เรื่องอะไร</h3></div><div class="cats" id="cats"></div></div>'+
 '<div class="stp" id="s2"><div class="sn"><i>2</i><h3>เกิดที่ไหน</h3></div>'+
 '<button class="big go" id="gps" type="button"><span class="bi">📍</span><span><b>ฉันอยู่ตรงจุดเกิดเหตุ</b><small>กดปุ่มนี้ โทรศัพท์จะหาตำแหน่งให้เอง</small></span></button>'+
@@ -556,7 +558,7 @@ b.innerHTML=
 '<p class="hint">💡 กดรูปไมโครโฟน 🎤 บนคีย์บอร์ดมือถือ เพื่อพูดแทนการพิมพ์ได้</p>'+
 '<label for="rOrg">ส่งถึงใคร</label><select id="rOrg">'+ORGS.map(o=>"<option>"+o+"</option>").join("")+'</select>'+
 '<label class="ck"><input type="checkbox" id="rOk" checked> อนุญาตให้แสดงเรื่องนี้ในหน้า “ติดตามเรื่อง” (ไม่แสดงชื่อ)</label></div>'+
-'<div class="sendbar"><div class="er" id="er"></div><input id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><button class="big line" id="send" type="button">ส่งเข้า LINE</button><div class="sm"><button id="cp" type="button">คัดลอกข้อความ</button><button id="txo" type="button">ส่งเฉพาะข้อความ</button></div></div><div class="pv hide" id="pv"></div>';
+'<div class="sendbar"><div class="er" id="er"></div><p class="pvn">ส่งเรื่องแล้วถือว่ารับทราบ <a href="privacy.html" target="_blank" rel="noopener">ประกาศความเป็นส่วนตัว</a> (เก็บข้อมูลอะไร ใช้ทำอะไร ใครเห็นได้ เก็บนานแค่ไหน)</p><input id="hpot" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><button class="big line" id="send" type="button">ส่งเข้า LINE</button><div class="sm"><button id="cp" type="button">คัดลอกข้อความ</button><button id="txo" type="button">ส่งเฉพาะข้อความ</button></div></div><div class="pv hide" id="pv"></div>';
 if(CFG.apiUrl)$("send").textContent="ส่งเรื่อง (ถึงทีมงานทาง LINE อัตโนมัติ)";
 const cb=$("cats");CATS.forEach(c=>{const x=el("button");x.type="button";x.append(el("span","ce",c[0]),el("b","",c[1]),el("small","",c[2]));x.onclick=()=>{R.cat=c[1];[...cb.children].forEach(y=>y.classList.toggle("on",y===x));steps()};cb.append(x)});
 {const pc=new URLSearchParams(location.search).get("c"),pm={urgent:"เตือนภัย / อุบัติเหตุ",news:"ฝากข่าว / ภาพเก่า"}[pc],pi=CATS.findIndex(c=>c[1]===pm);if(pi>=0){cb.children[pi].click();history.replaceState(null,"",location.pathname+location.hash)}}
@@ -634,6 +636,7 @@ async function loadContent(){if(!CFG.apiUrl)return;
 rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
 
+{const pa=el("a","","ประกาศความเป็นส่วนตัว");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}
 </script>
 </body>
 </html>
