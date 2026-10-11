@@ -483,7 +483,7 @@ function rHome(){rNews();rCul();rMags();rClips();rFeed();if(!window.__h){window.
 $("agrid").replaceChildren(...arts.map(a=>{const d=el(a.link?"a":"div","art"),b=el("div");if(a.link){ext(d,a.link);d.style.color="inherit";d.style.textDecoration="none"}
 b.append(el("span","tag",a.cat),el("h3","",a.title),el("div","mute",a.sum));d.append(b);return d}));rows(th.slice(0,3),$("hlist"))}
 let bf="ทั้งหมด";
-function rBoard(){const cats=["ทั้งหมด","แจ้งปัญหา","เสนอแนะ","ร้องเรียน"];
+function rBoard(){const cats=["ทั้งหมด","แจ้งปัญหา","เสนอแนะ","ข่าว"];
 $("bchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===bf?" on":""),k);b.onclick=()=>{bf=k;rBoard()};return b}));
 rows(th.filter(x=>bf==="ทั้งหมด"||x.type===bf),$("blist"))}
 function openT(x){const p=$("th");p.replaceChildren();
@@ -633,7 +633,7 @@ async function loadContent(){if(!CFG.apiUrl)return;
   if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
-$("foot").textContent+=" • อัปเดตล่าสุด 4 ต.ค. 2569 (ภาพใหม่ การ์ดเรียงตรงกัน)";
+
 </script>
 </body>
 </html>
