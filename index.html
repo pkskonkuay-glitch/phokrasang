@@ -226,6 +226,16 @@ header{z-index:20}.mb svg{display:block}
 .yc h3{font-size:19px}.yc p{margin:0;font-size:15px;color:var(--mute)}
 .yc a{margin-top:auto;font-weight:700;font-size:15px}
 </style>
+<style id="v4">.gf{margin:18px 0}.gf .rimg{margin:0 0 6px}.gf figcaption{font-size:15px}</style>
+<style id="v5">
+.pf{margin:24px 0}.pf img{width:100%;height:auto;border-radius:12px;display:block}.pf figcaption{font-size:15px;color:var(--mute);margin-top:6px}
+.pq{margin:28px 0;padding:4px 0 4px 22px;border-left:5px solid #fc8c2c;font:700 22px/1.7 "Noto Serif Thai",serif;color:#1c2b5e}
+.pq:before{content:"\201C";display:block;font-size:60px;line-height:.6;color:#fc8c2c;height:26px}
+.pq cite{display:block;font:400 15px "Noto Sans Thai",sans-serif;color:var(--mute);margin-top:6px;font-style:normal}
+.hl{background:#fff4e6;border:1px solid #f7d3a8;border-radius:12px;padding:12px 16px;margin:20px 0}
+.rbar{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0}
+</style>
+<style id="v6">.pm{margin:22px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.pm iframe{display:block;width:100%;height:220px;border:0;border-radius:8px;margin:8px 0 10px}</style>
 </head>
 <body>
 <header><div class="bar">
@@ -430,9 +440,15 @@ news.forEach((o,i)=>{o.k="n"+i;o.body=BODY[o.k]});arts.forEach((o,i)=>{o.k="a"+i
 function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.title);const m=el("div","mute",(o.date||"")+(o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);
 if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
 let ul=null;o.body.forEach(x=>{if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null;
-if(x.startsWith("## "))r.append(el("h2","",x.slice(3)));else if(x.startsWith("### "))r.append(el("h3","",x.slice(4)));else if(x.startsWith("※"))r.append(el("p","mute",x));else r.append(el("p","",x))});
-if(o.k==="n0"){const a=el("p");a.append(ext(el("a","","▶ ดูคลิปบรรยากาศการประชุมครั้งแรก"),"https://www.facebook.com/share/v/1F5wFBkipS/"));r.append(a)}
-r.append(ext(el("a","btn solid","ติดตามเรื่องราวเพิ่มเติมที่เพจ ที่นี่โพธิ์กระสังข์"),F));
+const ml=/^@@\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);
+if(ml){const la=+ml[2],lo=+ml[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180){const c=el("div","pm"),q=la+","+lo,fr=document.createElement("iframe");fr.loading="lazy";fr.title="แผนที่ "+ml[1];fr.src="https://www.openstreetmap.org/export/embed.html?bbox="+[lo-.008,la-.005,lo+.008,la+.005].join(",")+"&layer=mapnik&marker="+q;const a=el("a","btn solid","เปิดใน Google Maps • นำทาง");a.href="https://www.google.com/maps?q="+q;a.target="_blank";a.rel="noopener";c.append(el("b","","📍 "+ml[1]),fr,a);r.append(c)}return}
+if(x.startsWith("@@"))return;
+const mi=/^!\[(.*?)\]\((\S+?)\)\s*$/.exec(x);if(mi&&okSrc(mi[2])){const f=el("figure","pf"),im=new Image();im.src=mi[2];im.alt=mi[1];im.loading="lazy";im.onerror=()=>f.remove();f.append(im);if(mi[1])f.append(el("figcaption","",mi[1]));r.append(f);return}
+if(x.startsWith("> ")){const q=el("blockquote","pq"),t=x.slice(2).split(" | ");bd(q,t[0]);if(t[1])q.append(el("cite","",t[1]));r.append(q);return}
+if(x.startsWith("!! ")){const q=el("div","hl");bd(q,x.slice(3));r.append(q);return}
+if(x.startsWith("## "))r.append(el("h2","",x.slice(3)));else if(x.startsWith("### "))r.append(el("h3","",x.slice(4)));else if(x.startsWith("※"))r.append(el("p","mute",x));else{const pp=el("p");bd(pp,x);r.append(pp)}});
+if(o.gal)o.gal.forEach(g=>{const f=el("figure","gf"),im=new Image();im.src=g[0];im.alt=g[1];im.loading="lazy";im.className="rimg";im.onerror=()=>f.remove();f.append(im,el("figcaption","mute",g[1]));r.append(f)});if(o.k==="n0"){const a=el("p");a.append(ext(el("a","","▶ ดูคลิปบรรยากาศการประชุมครั้งแรก"),"https://www.facebook.com/share/v/1F5wFBkipS/"));r.append(a)}
+{const u=location.origin+location.pathname+"#/read/"+o.k,b=el("div","rbar"),a=el("a","btn solid","ส่งต่อใน LINE");a.href="https://line.me/R/share?text="+encodeURIComponent(o.title+"\n"+u);a.target="_blank";a.rel="noopener";b.append(a,ext(el("a","btn","เพิ่มเพื่อน LINE ข่าวบ้านเรา"),CFG.lineUrl),ext(el("a","btn","ติดตามเพจ Facebook"),F));r.append(b)}
 go("read");if(push!==false)history.pushState(null,"","#/read/"+o.k)}
 function readFrom(h){const k=(h||"").replace("#/read/","");const o=[...news,...arts].find(x=>x.k===k);if(o)openRead(o,false)}
 const ROUTES={"#/submit":["submit"],"#/board":["board"],"#/news":["home","news"],"#/culture":["home","culture"],"#/clips":["home","clips"],"#/mags":["home","mags"]};
@@ -509,7 +525,7 @@ box.replaceChildren(...list.map(x=>{const r=el("button","row"),d=el("div");
 d.append(el("div","t",x.title),el("div","mute",[x.no,x.type,x.topic,x.place,x.at].filter(Boolean).join(" • ")));
 r.append(d,el("span","st "+stc(x.status),x.status));r.onclick=()=>openT(x);return r}))}
 function rHome(){rNews();rCul();rMags();rClips();rFeed();if(!window.__h){window.__h=1;heroInit()}
-$("agrid").replaceChildren(...arts.map(a=>{const d=el(a.link?"a":"div","art"),b=el("div");if(a.link){ext(d,a.link);d.style.color="inherit";d.style.textDecoration="none"}
+$("agrid").replaceChildren(...arts.map(a=>{const d=el(a.link?"a":"div","art"),b=el("div");if(a.body){d.href="#/read/"+a.k;d.onclick=e=>{e.preventDefault();openRead(a)};d.style.color="inherit";d.style.textDecoration="none"}else if(a.link){ext(d,a.link);d.style.color="inherit";d.style.textDecoration="none"}
 b.append(el("span","tag",a.cat),el("h3","",a.title),el("div","mute",a.sum));d.append(b);return d}));rows(th.slice(0,3),$("hlist"))}
 let bf="ทั้งหมด";
 function rBoard(){const cats=["ทั้งหมด","แจ้งปัญหา","เสนอแนะ","ข่าว"];
@@ -671,5 +687,7 @@ rHome();route();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").cla
 var w=document.createElement("span");w.className="w";w.textContent=r[0];var h=document.createElement("h3");h.textContent=r[1];var p=document.createElement("p");p.textContent=r[2];
 var x=document.createElement("a");x.textContent="ถามทีมงานทาง LINE";x.target="_blank";x.rel="noopener";x.href="https://line.me/R/oaMessage/"+encodeURIComponent(CFG.lineId)+"/?"+encodeURIComponent("สอบถามเรื่อง: "+r[1]);
 i.append(w,h,p,x);d.append(i);L.append(d)})})()</script>
+<script>function okSrc(u){return /^(https:\/\/|img\/)/.test(u)}
+function bd(e,t){String(t).split(/\*\*(.+?)\*\*/).forEach(function(x,i){if(!x)return;if(i%2){var b=document.createElement("b");b.textContent=x;e.append(b)}else e.append(x)})}</script>
 </body>
 </html>
