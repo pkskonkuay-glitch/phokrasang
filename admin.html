@@ -38,6 +38,12 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="cs">สรุปสั้น (ไม่เกิน 300 ตัวอักษร)</label><textarea id="cs" rows="2" maxlength="300"></textarea>
 <label for="cb">เนื้อหาเต็ม</label><textarea id="cb" rows="9"></textarea>
 <p class="mute">เว้นบรรทัดเพื่อขึ้นย่อหน้าใหม่ · ขึ้นต้นบรรทัดด้วย <code>## </code> เป็นหัวข้อย่อย · ขึ้นต้นด้วย <code>• </code> เป็นรายการ · ห้ามใส่ข้อมูลส่วนตัวของผู้อื่น</p>
+<p><button type="button" class="btn o" id="cimb">🖼 แทรกรูปในเนื้อหา</button> <button type="button" class="btn o" id="chb2">หัวข้อย่อย</button> <button type="button" class="btn o" id="cqb">❝ คำพูดเด่น</button> <button type="button" class="btn o" id="chb">⭐ กล่องเน้น</button><input type="file" id="cimf" accept="image/*" hidden></p>
+<details id="pld"><summary style="font-weight:700;cursor:pointer;padding:8px 0">📍 ใส่ตำแหน่งบนแผนที่ (ไม่บังคับ)</summary>
+<div class="c"><div class="row"><div><input id="plq" placeholder="ค้นหาชื่อสถานที่ เช่น วัดโพธิ์กระสังข์"></div><div><button type="button" class="btn o" id="plsb">🔍 ค้นหา</button> <button type="button" class="btn o" id="plgps">📍 ตำแหน่งปัจจุบัน</button></div></div>
+<div id="plres"></div><div id="plmap" style="height:280px;border-radius:10px;margin:8px 0;background:#e8ecfa"></div>
+<label for="plname">ชื่อสถานที่ที่จะแสดงบนเว็บ</label><input id="plname" maxlength="80" placeholder="เช่น น้ำตกห้วยจันทร์">
+<p class="mute" id="plc">ยังไม่เลือกพิกัด แตะบนแผนที่ หรือลากหมุดไปวางให้ตรงจุด</p><button type="button" class="btn o" id="plx">ไม่ใช้พิกัด</button></div></details>
 <label for="cv">ลิงก์ YouTube (ประเภท “คลิป” ต้องใส่)</label><input id="cv" placeholder="https://www.youtube.com/watch?v=...">
 <label for="cf">รูปประกอบ (เลือกจากเครื่อง ระบบย่อขนาดให้)</label><input id="cf" type="file" accept="image/*"><div id="cpv" class="ph"></div>
 <label for="ci">หรือใส่ลิงก์รูป (https)</label><input id="ci" placeholder="https://...">
@@ -46,7 +52,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <p><button class="btn" id="csv">บันทึก</button> <button class="btn o" id="crs">ล้างฟอร์ม</button></p><div class="msg hide" id="cm"></div></div>
 <h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div></div>
 <div id="big" class="hide"><img alt="รูปขยาย"></div>
-<script>
+<script>let PL=null,PM=null,PMk=null,CL=[];
 const API0="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
 const $=i=>document.getElementById(i);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
@@ -104,20 +110,56 @@ let CE=null,CP="";
 const tab=n=>{$("p1").classList.toggle("hide",n!==1);$("p2").classList.toggle("hide",n!==2);$("t1").classList.toggle("on",n===1);$("t2").classList.toggle("on",n===2);if(n===2)loadC()};
 $("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
-function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide"}
+function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear()}
 $("crs").onclick=cclear;cclear();
 $("cf").onchange=e=>{const f=e.target.files[0];if(!f){CP="";$("cpv").replaceChildren();return}
  const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);CP=c.toDataURL("image/jpeg",.82);const p=new Image();p.src=CP;p.alt="ตัวอย่างรูป";$("cpv").replaceChildren(p);URL.revokeObjectURL(u)};im.onerror=()=>{CP="";alert("เปิดไฟล์รูปนี้ไม่ได้")};im.src=u};
 $("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.className="msg hide";
- try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:$("cb").value,video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked};
+ try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:bodyWithLoc(),video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked};
+  const dup=CL.find(z=>z.title===item.title&&z.cat!=="รูปแทรก"&&(!CE||z.id!==CE.id));if(dup&&!confirm("มีเรื่องชื่อ “"+item.title+"” อยู่แล้ว\nถ้าจะแก้เรื่องเดิม ให้กด ยกเลิก แล้วใช้ปุ่ม แก้ไข ในรายการด้านล่าง\nถ้าตั้งใจโพสต์ซ้ำ กด ตกลง")){b.disabled=false;return}
   const u=await call({action:"adminContentSave",item:item,photo:CP||undefined});
   if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");m.textContent="✅ บันทึกแล้ว"+(u.item.pub?" และเผยแพร่บนเว็บ":" (ฉบับร่าง ยังไม่เผยแพร่)");m.className="msg";cclear();loadC()}
  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
 async function loadC(){try{const d=await call({action:"adminContentList"});if(!d.ok)throw new Error(d.error);
- $("cl2").replaceChildren(...(d.items.length?d.items.map(it=>{const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title),el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
+ CL=d.items;$("cl2").replaceChildren(...(d.items.filter(z=>z.cat!=="รูปแทรก").length?d.items.filter(z=>z.cat!=="รูปแทรก").map(it=>{const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title),el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
   c.append(t,el("div","mute",[it.at,it.cat,it.by].filter(Boolean).join(" • ")));if(it.sum)c.append(el("p","",it.sum));
   const e=el("button","btn o","แก้ไข"),h=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");
-  e.onclick=()=>{CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";$("cb").value=it.body||"";$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;$("cform").scrollIntoView({behavior:"smooth"})};
+  e.onclick=()=>{CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";setBodyLoc(it.body||"");$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;$("cform").scrollIntoView({behavior:"smooth"})};
   h.onclick=async()=>{h.disabled=true;const u=await call({action:"adminContentSave",item:{id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:it.pin,pub:!it.pub}});if(!u.ok)alert(u.error);loadC()};
-  c.append(e," ",h);return c}):[el("p","mute","ยังไม่มีเนื้อหาที่โพสต์ผ่านหน้านี้")]))}catch(x){$("cl2").replaceChildren(el("p","mute","โหลดไม่ได้: "+x.message))}}
+  const x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";x.onclick=async()=>{if(!confirm("ลบเรื่อง “"+it.title+"” ?\nลบแล้วกู้คืนไม่ได้ (ไม่กระทบเรื่องอื่น)"))return;x.disabled=true;let u;try{u=await call({action:"adminContentDelete",id:it.id})}catch(er){u={ok:false}}
+ if(u&&u.ok){loadC();return}
+ if(confirm("ระบบหลังบ้านยังไม่รองรับการลบถาวร\nซ่อนเรื่องนี้จากเว็บแทนไหม? (ผู้อ่านจะไม่เห็นอีก ไม่กระทบเรื่องอื่น)")){const w=await call({action:"adminContentSave",item:{id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:false,pub:false}});if(!w.ok)alert(w.error)}loadC()};
+  c.append(e," ",h," ",x);return c}):[el("p","mute","ยังไม่มีเนื้อหาที่โพสต์ผ่านหน้านี้")]))}catch(x){$("cl2").replaceChildren(el("p","mute","โหลดไม่ได้: "+x.message))}}
+
+/* ===== ตำแหน่งบนแผนที่ + แทรกรูป + ปุ่มช่วยพิมพ์ ===== */
+function plSet(la,lo,name,zoom){PL={lat:la,lng:lo};if(name)$("plname").value=name;$("plc").textContent="พิกัด "+la.toFixed(5)+", "+lo.toFixed(5);
+ if(PM){if(PMk)PMk.setLatLng([la,lo]);else{PMk=L.marker([la,lo],{draggable:true}).addTo(PM);PMk.on("dragend",()=>{const p=PMk.getLatLng();plSet(p.lat,p.lng)})}PM.setView([la,lo],zoom||PM.getZoom())}}
+function plClear(){PL=null;if(PM&&PMk){PM.removeLayer(PMk)}PMk=null;$("plname").value="";$("plq").value="";$("plres").replaceChildren();$("plc").textContent="ยังไม่เลือกพิกัด แตะบนแผนที่ หรือลากหมุดไปวางให้ตรงจุด"}
+function plInit(){if(PM){setTimeout(()=>PM.invalidateSize(),60);return}
+ const go=()=>{PM=L.map("plmap").setView(PL?[PL.lat,PL.lng]:[14.63,104.34],PL?16:12);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(PM);PM.on("click",e=>plSet(e.latlng.lat,e.latlng.lng));if(PL)plSet(PL.lat,PL.lng,null,16)};
+ if(window.L)return go();const c=document.createElement("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";document.head.append(c);
+ const j=document.createElement("script");j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";j.onload=go;j.onerror=()=>{$("plc").textContent="โหลดแผนที่ไม่ได้ ใช้ปุ่ม ตำแหน่งปัจจุบัน แทนได้"};document.head.append(j)}
+$("pld").addEventListener("toggle",()=>{if($("pld").open)plInit()});
+$("plgps").onclick=()=>{if(!navigator.geolocation)return alert("เครื่องนี้ใช้ตำแหน่งไม่ได้");const b=$("plgps");b.disabled=true;
+ navigator.geolocation.getCurrentPosition(p=>{b.disabled=false;plSet(p.coords.latitude,p.coords.longitude,null,17)},()=>{b.disabled=false;alert("ขอตำแหน่งไม่ได้ ตรวจว่าอนุญาตตำแหน่งให้เบราว์เซอร์แล้ว หรือใช้ค้นหา/แตะบนแผนที่แทน")},{enableHighAccuracy:true,timeout:15000})};
+$("plsb").onclick=async()=>{const q=$("plq").value.trim();if(!q)return;const r=$("plres");r.textContent="กำลังค้นหา…";
+ try{const d=await (await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=th&accept-language=th&q="+encodeURIComponent(q))).json();
+  r.replaceChildren(...(d.length?d.map(x=>{const b=el("button","btn o",x.display_name.split(",").slice(0,3).join(","));b.type="button";b.style.cssText="display:block;width:100%;text-align:left;margin:4px 0";b.onclick=()=>{plSet(+x.lat,+x.lon,x.name||q,16);r.replaceChildren()};return b}):[el("p","mute","ไม่พบ ลองพิมพ์ชื่ออื่น (เช่น ชื่อตำบล) แล้วแตะบนแผนที่เลือกเอง")]))}
+ catch(e){r.textContent="ค้นหาไม่ได้ ตรวจอินเทอร์เน็ต หรือแตะบนแผนที่เลือกเอง"}};
+$("plq").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("plsb").click()}});
+$("plx").onclick=plClear;
+function bodyWithLoc(){const t=$("cb").value.split("\n").filter(l=>!/^@@/.test(l.trim()));
+ if(PL){const ln="@@ "+(($("plname").value||"จุดที่ตั้ง").replace(/[|\n]/g," ").trim())+" | "+PL.lat.toFixed(5)+", "+PL.lng.toFixed(5);const i=t.findIndex(l=>l.trim());t.splice(i<0?t.length:i+1,0,ln)}return t.join("\n")}
+function setBodyLoc(txt){let loc=null;const keep=String(txt||"").split("\n").filter(l=>{const m=/^@@\s*(.+?)\s*\|\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/.exec(l.trim());if(m){loc=m;return false}return !/^@@/.test(l.trim())});
+ $("cb").value=keep.join("\n");plClear();if(loc){$("plname").value=loc[1];plSet(+loc[2],+loc[3]);$("pld").open=true}}
+function insTxt(t){const e=$("cb"),s=e.selectionStart||0,v=e.value;e.value=v.slice(0,s)+t+v.slice(e.selectionEnd||s);e.focus();e.selectionStart=e.selectionEnd=s+t.length}
+$("chb2").onclick=()=>insTxt("\n## ");$("cqb").onclick=()=>insTxt("\n> ");$("chb").onclick=()=>insTxt("\n!! ");
+function shrinkD(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.82))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
+$("cimb").onclick=()=>$("cimf").click();
+$("cimf").onchange=async()=>{const f=$("cimf").files[0];if(!f)return;const b=$("cimb");b.disabled=true;b.textContent="กำลังอัปโหลด…";
+ try{const cap=(prompt("คำบรรยายใต้ภาพ (เว้นว่างได้)")||"").replace(/[\[\]\n]/g," ").trim();const du=await shrinkD(f);
+  const u=await call({action:"adminContentSave",item:{kind:"วิถีกวย",at:today(),cat:"รูปแทรก",title:"[รูปแทรก] "+(cap||f.name).slice(0,60),sum:"",body:"",pub:false,pin:false},photo:du});
+  if(!u.ok)throw new Error(u.error||"อัปโหลดไม่ได้");const url=u.item&&u.item.img;if(!/^https:\/\/\S+$/.test(url||""))throw new Error("ระบบไม่ได้ส่งลิงก์รูปกลับมา (ใช้วิธีอัปโหลดรูปผ่าน GitHub แทนได้)");
+  insTxt("\n!["+cap+"]("+url+")\n")}catch(x){alert("⚠️ "+x.message)}
+ b.disabled=false;b.textContent="🖼 แทรกรูปในเนื้อหา";$("cimf").value=""};
 </script></body></html>
