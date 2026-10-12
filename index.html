@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<!-- version 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
+<!-- version 2569-10-12 (ตัดตัวชัด/ฟังเสียง ปุ่ม ก−ก+ ในหัวเว็บ รูปไร้กรอบ) ; ก่อนหน้า 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="ที่นี่โพธิ์กระสังข์ วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน แจ้งเหตุ ปักหมุด ติดตามเรื่อง ข่าวสาร คลิป และเรื่องเล่าของชาวกวยบ้านโพธิ์กระสังข์">
@@ -240,19 +240,9 @@ header{z-index:20}.mb svg{display:block}
 </style>
 <style id="v6">.pm{margin:22px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.pm iframe{display:block;width:100%;height:220px;border:0;border-radius:8px;margin:8px 0 10px}</style>
 <style id="v8">.dbadge{position:absolute;top:8px;right:8px;z-index:3;background:rgba(20,24,50,.8);color:#fff;font-size:13px;font-weight:700;padding:2px 10px;border-radius:8px}</style>
-<style id="v9">.btn.listen{display:flex;width:100%;justify-content:center;min-height:60px;margin:14px 0 6px;font:700 22px/1.2 Boon,system-ui,sans-serif;background:#2f7d5b;color:#fff;border:0;border-radius:14px}.btn.listen:active{filter:brightness(.9)}body{padding-bottom:0!important}</style>
-<style id="v10">dialog#lhd{border:0;border-radius:20px;padding:20px;width:min(94vw,520px);max-height:88vh;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.4);background:var(--card);color:var(--ink);font-size:18px;line-height:1.7}dialog#lhd::backdrop{background:rgba(10,15,40,.6)}#lhd h2{font-size:24px;margin:0 0 6px;color:#1c2b5e}#lhd h3{font-size:19px;margin:14px 0 4px}#lhd ol{padding-left:24px;margin:4px 0}#lhd .lhb{display:grid;gap:10px;margin-top:14px}#lhd .btn{min-height:54px;justify-content:center;font-size:20px}</style>
 <style id="v11">
-/* แถบเครื่องมือ: เหลือปุ่มที่เข้าใจง่าย 3–4 ปุ่ม ตัวอักษรใหญ่ */
-#z0,#cpl,#lns,.tbs,.tbl{display:none!important}
-.tbi{justify-content:center!important;gap:8px!important;flex-wrap:nowrap!important;padding:8px 8px!important}
-.tb button{min-height:54px!important;font-size:17px!important;flex:1 1 0!important;white-space:nowrap}
-.tb .tlg{display:inline}
 /* ตัดส่วนซ้ำบนหน้าแรก */
 .hero,section:has(>.cta2){display:none!important}
-/* ปุ่มฟังในสไลเดอร์และการ์ด */
-.hl{margin-top:12px;min-height:52px;padding:8px 20px;border:0;border-radius:99px;background:#fff;color:#1c2b5e;font:700 19px/1.2 Boon,system-ui,sans-serif;cursor:pointer}
-.card .cl{display:inline-block;margin:8px 0 0 12px;padding:8px 14px;border-radius:99px;background:#2f7d5b;color:#fff;font-weight:700;font-size:17px}
 /* ปุ่มกลับให้ชัด */
 .back{min-height:52px;font-size:19px;font-weight:700}
 .btn,button.t,a.t{min-height:56px}
@@ -261,24 +251,14 @@ header{z-index:20}.mb svg{display:block}
 <body>
 <header><div class="bar">
 <button class="brand" onclick="go('home')"><img src="img/emb-b1f49dda.png" alt="โลโก้"><span>ที่นี่โพธิ์กระสังข์<small>วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน</small></span></button>
+<div class="zb" role="group" aria-label="ปรับขนาดตัวอักษร"><button type="button" id="zm" aria-label="ตัวอักษรเล็กลง" title="ตัวอักษรเล็กลง"><span>ก</span>−</button><button type="button" id="zp" aria-label="ตัวอักษรใหญ่ขึ้น" title="ตัวอักษรใหญ่ขึ้น"><span>ก</span>+</button></div>
 <button class="mb" id="mb" aria-label="เมนู" aria-expanded="false"><svg id="mbi" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 8h22M4 15h22M4 22h22"/></svg></button></div>
-<div class="tb" role="toolbar" aria-label="ปุ่มช่วยอ่าน"><div class="tbi">
-<span class="tbl">ตัวอักษร</span>
-<button type="button" id="zm" aria-label="ตัวอักษรเล็กลง" title="ตัวอักษรเล็กลง">ก− เล็กลง</button>
-<button type="button" id="z0" aria-label="กลับเป็นขนาดปกติ" title="กลับเป็นขนาดปกติ">↺ ปกติ</button>
-<button type="button" id="zp" aria-label="ตัวอักษรใหญ่ขึ้น" title="ตัวอักษรใหญ่ขึ้น">ก+ ใหญ่ขึ้น</button>
-<span class="tbs"></span>
-<button type="button" id="hcb" aria-pressed="false" aria-label="โหมดตัวหนังสือชัด" title="โหมดตัวหนังสือชัด">◐ ตัวชัด</button>
-<button type="button" id="lsn" hidden aria-label="ฟังเรื่องนี้" title="ฟังเรื่องนี้">🔊 ฟัง</button>
-<span class="tbs"></span>
-<button type="button" id="cpl" class="tb-cp" aria-label="คัดลอกลิงก์หน้านี้">🔗<span class="tlg">&nbsp;คัดลอกลิงก์</span></button>
-<a id="lns" class="tb-ln" target="_blank" rel="noopener" aria-label="ส่งลิงก์หน้านี้ใน LINE">ส่ง&nbsp;LINE</a>
-</div><div id="tbm" class="tbm" role="status" aria-live="polite"></div></div>
+<div id="tbm" class="tbm" role="status" aria-live="polite"></div>
 <div id="menu" class="hide"><div class="mp" id="mlist2"></div></div></header>
 
 <main>
 <div id="v-home">
-<div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p><button type="button" class="hl" id="hl">🔊 ฟังเรื่องนี้</button></div></div><div class="hn" id="hn"></div></div></div></div>
+<div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
 <div class="wrap"><section id="services"><div class="sh"><h2>เมนูเดียวกับใน LINE</h2><span class="mute">กดปุ่มใหญ่ได้เลย</span></div>
 <div class="sv2">
 <button class="t big a" onclick="go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 4.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z"/></svg></i><b>แจ้งเหตุ • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย</span></button>
@@ -473,14 +453,12 @@ if(v==="board")rBoard();if(v==="home")rHome();if(v==="submit")rSubmit();
 if(s)setTimeout(()=>$(s).scrollIntoView({behavior:"smooth"}),30);else window.scrollTo(0,0)}
 function card(o,play){const c=el(o.link||o.body?"a":"div","card");if(o.body){c.href="#/read/"+o.k;c.onclick=e=>{e.preventDefault();openRead(o)}}else if(o.link)ext(c,o.link);
 const t=el("div","thumb"+(o.t?" t-"+o.t:""),play||o.t?"":(o.icon||""));if(o.t&&o.px!=null)t.style.backgroundPosition=o.px+"% "+o.py+"%";t.style.setProperty("--c1",o.c1||"#1c2b5e");t.style.setProperty("--c2",o.c2||"#3b56b8");
-if(o.img){t.style.backgroundImage="url("+o.img+")";t.style.backgroundSize="cover";t.style.backgroundPosition="center";t.append(el("div","blur"));const im=new Image();im.alt="";im.loading="lazy";im.className="cover";im.onerror=()=>im.remove();im.src=o.img;t.append(im)}
+if(o.img){t.classList.add("ph1");const im=new Image();im.alt="";im.loading="lazy";im.className="cover";im.onerror=()=>im.remove();im.src=o.img;t.append(im)}
 if(o.date)t.append(el("div","dbadge",o.date));if(play)t.append(el("div","play","▶"));
-const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.title),el("div","mute",o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);if("speechSynthesis" in window){const L=el("span","cl","🔊 ฟัง");L.setAttribute("role","button");L.onclick=e=>{e.preventDefault();e.stopPropagation();openRead(o);listenSoon()};i.append(L)}}c.append(t,i);return c}
-function listenSoon(){setTimeout(()=>{const b=document.getElementById("lsb");if(b)b.click()},400)}
+const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.title),el("div","mute",o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);}c.append(t,i);return c}
 const BODY={"n0": ["พี่น้องชาวตำบลโพธิ์กระสังข์ ทั้งที่อาศัยอยู่ในพื้นที่และลูกหลานที่ทำงานอยู่ต่างถิ่นทุกคนครับ ผมในฐานะแอดมินเพจ \"ที่นี่โพธิ์กระสังข์\" และ ในฐานะประชาชนคนหนึ่งที่อาศัยอยู่ในพื้นที่บ้านเรา มีข้อมูลสำคัญเกี่ยวกับโครงการพัฒนาพื้นที่ตำบลของเรามาเล่า สรุป และชวนทุกคนร่วมคิดไปด้วยกันครับ", "ล่าสุด (เมื่อวาน พฤหัสที่ 20 ส.ค.69) ผมได้มีโอกาสเข้าร่วมประชุมเชิงปฏิบัติการ ครั้งที่ 2 ร่วมกับผู้นำท้องที่ ผู้นำท้องถิ่น และส่วนราชการ จัดโดย กรมโยธาธิการและผังเมืองจังหวัดศรีสะเกษ ซึ่งเป็นโครงการที่ได้รับงบประมาณจัดสรรลงมาทำในพื้นที่ตำบลโพธิ์กระสังข์ของเรา รวมสูงถึง 250 ล้านบาท! (งบประมาณจากเงินภาษีของพวกเราทุกคน) และจากการประชุมทั้ง 2 ครั้งที่ผ่านมา ได้คำตอบชัดเจนแล้วว่า \"อนุมัติแล้ว\" ครับ", "## สรุปรายละเอียดและผังองค์ประกอบโครงการ (250 ล้านบาท)", "โครงการนี้แบ่งการดำเนินงานออกเป็น 2 ระยะ (2 เฟส) ดังนี้ครับ", "### ระยะที่ 1 (งบประมาณปี 2569) | 120 ล้านบาท", "สิ่งที่ทำ: โครงการพัฒนาระบบระบายน้ำชุมชนอย่างมีประสิทธิภาพ (Integrated Drainage Improvement) เพื่อแก้ไขปัญหาน้ำท่วมขัง", "พื้นที่ดำเนินงาน:", "• ฝั่งตะวันออก: ครอบคลุมพื้นที่หมู่ 2 และ หมู่ 12", "• ฝั่งตะวันตก: ครอบคลุมพื้นที่หมู่ 3, หมู่ 13 และ หมู่ 14", "### ระยะที่ 2 (งบประมาณปี 2570) | 130 ล้านบาท", "สิ่งที่ทำ: การปรับปรุงพื้นที่สาธารณะและพื้นที่ทำกิจกรรม บริเวณหนองซำน้อย (ทะนับพืด) และพื้นที่เทศบาลตำบลโพธิ์กระสังข์ (ขนาดพื้นที่ประมาณ 0.17 ตร.กม.)", "## ผังองค์ประกอบ 5 ZONE หลัก:", "• ZONE 1 ปรับปรุงพื้นที่ริมคลอง: สะพาน, ทางเดินริมคลอง, พื้นที่พักผ่อน และงานระบายน้ำ", "• ZONE 2 ปรับปรุงพื้นที่ริมหนองซำ: ลานกิจกรรม 1-3, เขื่อนป้องกันตลิ่ง, ทางเดิน/ทางวิ่ง/ทางจักรยาน", "• ZONE 3 พื้นที่จอดเฮลิคอปเตอร์: บริเวณใกล้สำนักงานเทศบาล", "• ZONE 4 ปรับปรุงสนามกีฬา: สนามกีฬา, อัฒจันทร์เชียร์, และห้องน้ำ", "• ZONE 5 สวนสาธารณะเชิงนิเวศ: สวนพฤกษศาสตร์, ลานกิจกรรมอเนกประสงค์ และทางเดินชมธรรมชาติ", "## ย้อนชมบรรยากาศการประชุมครั้งแรก", "สำหรับการประชุมครั้งแรก ณ หอประชุมสโมสรพนักงานเทศบาลเมืองศรีสะเกษ ผมได้ไปร่วมในฐานะประชาชนคนหนึ่ง และได้นำเสนอข้อคิดเห็นพร้อมเก็บบรรยากาศมาฝากไว้แล้ว สามารถรับชมคลิปบรรยากาศย้อนหลังได้ที่นี่ครับ:", "## ชวนคิด ชวนคุย: \"คุ้มค่า เกิดประโยชน์ และสมเหตุสมผลจริงหรือ?\"", "เงิน 250 ล้านบาทนี้คือเงินภาษีจากพวกเราทุกคน ไม่ใช่งบหลักแสนหรือหลักล้านที่เราคุ้นเคย ดังนั้นการมองเรื่องนี้ เราอาจไม่ได้มองเพียงแค่ว่า \"มีประโยชน์อะไรบ้าง\" เท่านั้น แต่ต้องมองถึง \"ความสมเหตุสมผล\" กับเงินก้อนโตระดับนี้ด้วยครับ", "หลายคนในชุมชนรวมถึงตัวผมเอง เริ่มมีคำถามและข้อกังวลใจที่น่าสนใจและเป็นประโยชน์มากๆ เช่น:", "• ระบบระบายน้ำเดิม: ท่อระบายน้ำเดิมที่เพิ่งทำเสร็จไปเมื่อไม่กี่ปีในยุคบริหารชุดก่อน จะถูกนำมาเชื่อมต่อหรือจัดการอย่างไรเพื่อไม่ให้ซ้ำซ้อนหรือเสียดายงบเดิม?", "• สัดส่วนงบประมาณ: เหตุใดเฟส 1 ที่ลงพื้นที่ชุมชนโดยตรงเพื่อแก้ปัญหาน้ำท่วมให้ประชาชน ถึงได้งบ 120 ล้านบาท แต่เฟส 2 ที่ทำในพื้นที่เทศบาล (เช่น ปรับปรุงหนองซำ หรือสร้างลานจอดเฮลิคอปเตอร์) กลับได้งบสูงถึง 130 ล้านบาท? สิ่งเหล่านี้เร่งด่วนและจำเป็นมากน้อยเพียงใด?", "• ความจำเป็นพื้นฐานอื่นๆ: ในขณะที่ปัญหาใกล้ตัวอย่าง ถนนทางเข้าซอยยังขรุขระ ไฟส่องสว่างบางซอยยังมืด หรือความแออัดในชุมชนที่ยังรอการแก้ไข สิ่งไหนควรเป็นลำดับความสำคัญแรกๆ ของบ้านเรา?", "• การดูแลในอนาคต: เมื่อสร้างเสร็จแล้ว ใครจะเป็นผู้รับผิดชอบดูแลรักษา และต้องใช้งบประมาณส่วนไหนมาบำรุงรักษาในระยะยาว?", "รวมถึงคำถามอีกมากมายที่หลายคนทั้งในพื้นที่และต่างพื้นที่อาจจะยังมีข้อสังสัย กังวล และอยากเสนอแนะและหาทางออกที่ดีร่วมกัน", "คำถามเหล่านี้ผมมองว่าไม่ได้ทำลายการพัฒนา แต่เป็น \"หัวใจของการพัฒนาที่งดงาม\" ที่ทุกคนในฐานะเจ้าของเงินภาษีมีสิทธิ์ที่จะรับรู้และช่วยกันตั้งคำถามอย่างสร้างสรรค์ เพราะวันหนึ่งลูกหลานที่อยู่ต่างพื้นที่ก็ต้องกลับมาใช้งานพื้นที่เหล่านี้ร่วมกัน", "## บทบาทของแอดมิน", "ผมขอทำหน้าที่เป็น \"สื่อกลาง\" นำข้อมูลมาแจ้งให้ทราบเพื่อความโปร่งใส ส่วนการชี้แจง ตอบคำถาม หรือกระจายความจริงสู่ชุมชนอย่างสมบูรณ์ เป็นหน้าที่หลักของหน่วยงานที่รับผิดชอบและผู้นำหลักในพื้นที่ครับ", "แอดมินไม่ได้เป็นเจ้าของโครงการ ไม่ได้สังกัดองค์กรหรือหน่วยงานใดและไม่มีอำนาจอนุมัติหรือแก้ไขโครงการใดๆ แต่ \"ในฐานะประชาชนคนหนึ่ง ผมพร้อมเปิดใจรับฟังทุกความกังวลใจ ทุกมุมมอง และทุกคำถามของพี่น้องทุกคน\" เพื่อเป็นสะพานเชื่อมส่งต่อเสียงของชุมชนออกไปในวงกว้าง เพื่อให้บ้านเราพัฒนาอย่างสมเหตุสมผล มีประโยชน์สูงสุด และตอบโจทย์ชีวิตความเป็นอยู่ของคนโพธิ์กระสังข์ทุกคนครับ", "หมายเหตุ: ท่านใดต้องการดูรูปภาพ ผังโครงการ หรือไฟล์รายละเอียดเพิ่มเติม ทัก Inbox มาสอบถามส่วนตัวได้เลยครับ ข้อมูลนี้เป็นข้อมูลเปิดเผยเพื่อประโยชน์ของสาธารณะครับ", "เห็นด้วยก็เสนอเหตุผล | สงสัยก็ถามได้ | กังวลก็สะท้อนมา", "ร่วมคิด ร่วมแลกเปลี่ยน และร่วมตั้งคำถามอย่างสร้างสรรค์ เพื่อบ้านเราไปด้วยกันครับ", "ด้วยความเคารพและปรารถนาดีต่อบ้านเราเสมอ", "ขวัญชิต โพธิ์กระสังข์", "(แอดมินเพจ ที่นี่โพธิ์กระสังข์)", "21 สิงหาคม 2569", "เปิดใจรับฟังทุกเสียงด้วยวุฒิภาวะ และไม่มองใครที่แสดงข้อกังวล เสนอแนะ หรือเห็นต่างอย่างมีเหตุผลด้วยใจที่เปิดรับ", "เพื่อบ้านเราร่วมกัน"], "a0": ["เมื่อวันที่ 25 กรกฎาคม 2569 ที่ชุมชนชาวกวยบ้านโพธิ์กระสังข์ หมู่ 2 บ้านเรา ได้จัดพิธีเรียกขวัญหรือช้อนเรียกขวัญ ซึ่งภาษากวยบ้านเราเรียกว่า “กะเยือละวาย” หรือ “เชืองละวาย” อันเป็นพิธีกรรมตามความเชื่อที่ถือปฏิบัติสืบต่อกันมาช้านาน", "เรื่องของเรื่องคือเมื่อช่วงต้นสัปดาห์ที่ผ่านมา คนในครอบครัวได้ประสบอุบัติเหตุในยามค่ำคืนจนได้รับบาดเจ็บ พอได้รับการรักษาและกลับมาพักฟื้นต่อที่บ้านแล้ว ตามความเชื่อของชาวกวยเราก็ต้องทำการช้อนเรียกขวัญเพื่อความเป็นสิริมงคลและเรียกกำลังใจกลับคืนมา", "ในเช้าวันดังกล่าว ต้องไปแจ้งบอกผู้เฒ่าผู้แก่ในชุมชนและญาติพี่น้องในครอบครัวที่เคารพนับถือให้รับรู้รับทราบเพื่อมาร่วมพิธีเรียกขวัญ โดยก่อนวันพิธี เจ้าภาพต้องจัดการหาอาหารคาวหวานและเครื่องเซ่นไหว้ต่างๆ ไว้ต้อนรับญาติพี่น้องที่จะมาร่วมงาน", "หลักๆ สิ่งที่ต้องเตรียมจะมีผลไม้ กล้วย น้ำส้ม น้ำหวาน ขนม ข้าวต้มมัด อาหารคาวหวาน เหล้า เบียร์ ไก่ต้ม และอุปกรณ์สำคัญอย่าง กระบุง ชนาง ที่มีทัพพีวางไว้ข้างบน ขันห่อผ้าขาวบรรจุถ้วยข้าวสุกพร้อมไข่ไก่ต้มยังไม่ปอก 1 ฟองปักด้วยเคียว", "เครื่องเซ่นไหว้จะจัดแบ่งไว้ทั้งหมด 4 ถาด ได้แก่", "• ถาดแรก ใส่พานหมากพลู ยาสูบม้วน และถ้วยข้าวสุกโรยน้ำตาลทรายบางๆ", "• ถาดที่สอง วางไก่ต้มสุกทั้งตัวสำหรับฉีกดูคางไก่ ข้างๆ มีขันโอหุ้มผ้าขาวฝ้ายใส่ข้าวสุก ไข่ต้ม ปักเคียว และมีขันเล็กใส่ฝ้ายผูกแขนโรยผงขมิ้นบางๆ", "• ถาดที่สาม ใส่ขนม ข้าวต้มมัด ผลไม้ตามฤดูกาล โดยผลไม้และของหวานในถาดนี้ต้องผ่าและหั่นเตรียมไว้เรียบร้อย ไม่ได้วางมาทั้งลูก", "• ถาดที่สี่ วางผ้าไหมกวยงานประณีต เครื่องเงิน กำไร ตุ้มหูเงิน และแหวนเพชรแหวนทองของมีค่าไว้อย่างสวยงาม", "นอกจากนี้ยังมี \"คาทอลย์\" คือก้านกล้วยตัดเอาก้านยาวประมาณ 1 ศอกปักธูปไว้ที่ปลายก้าน พร้อมเครื่องเซ่นสังเวยคือน้ำดื่ม เหล้า เบียร์ และน้ำอัดลม", "ในเช้าวันงาน ผู้เฒ่าผู้แก่ที่เชิญไว้ต่างมาร่วมกันจัดเตรียม ทำจวย ห่อหมากพลู และตรวจเช็กความสมบูรณ์ของเครื่องเซ่น ขณะที่แม่ครัวก็เตรียมทำอาหารไว้รองรับแขกเหรื่อและญาติพี่น้องที่มาร่วมพิธี", "เมื่อเตรียมสำรับเสร็จ ก็นำขึ้นรถเดินทางไปยังสถานที่เกิดอุบัติเหตุ โดยก่อนรถจะออกจากบ้าน ตัวแทนผู้เฒ่าผู้แก่จะยืนอยู่ที่ท้ายรถกำข้าวสุก 2-3 กำเล็กๆ เอาไว้ ขณะรถเคลื่อนตัวออกไป ยายจะโยนกำข้าวสุกตามท้ายรถไปห่างๆ โยนไปรอบทิศทางพร้อมเอ่ยบอกกล่าวเป็นนัยๆ", "พอถึงจุดเกิดเหตุ จะเตรียมใบตองสดที่ใบไม่แตกไม่หักมาปูราดบนพื้นแทนเสื่อตามความเชื่อ นำพานและสิ่งของต่างๆ วางลงบนใบตอง จุดธูปบนคาทอลย์ 3 ดอก เทียน 2 เล่มปักไว้ใกล้ๆ อาวุโสทำพิธียกมือไหว้บอกกล่าวและกรวดน้ำ", "จากนั้น ญาติพี่น้องจะถือชนางออกไปตามสุมทุมพุ่มไม้ข้างทาง ใช้ไม้ฟาดและมีดฟันกิ่งไม้บริเวณลานหญ้า เพื่อหาจับแมลงมีปีกขนาดเล็ก 4-5 ตัว นำมาสมมุติเป็นตัวแทนขวัญของผู้บาดเจ็บ นำแมลงมาห่อด้วยใบไม้สีเขียว พันด้วยฝ้ายผูกแขน แล้ววางไว้บนพานฝ้าย", "เสร็จแล้วจึงมากรวดน้ำรอบที่ 3 พร้อมล้างมือล้างเท้า บอกกล่าวเจ้าที่เจ้าทางและสิ่งศักดิ์สิทธิ์ว่ามารับขวัญคนเจ็บกลับบ้านแล้ว จากนั้นทำการฉีกดูคางไก่ต้ม พร้อมฉีกเอาส่วนปาก ตีน และชิ้นส่วนเล็กๆ ผสมวางไว้กับถ้วยข้าวสุกโรยน้ำตาลที่คว่ำลงบนใบตอง วางผลไม้ข้างๆ เป็นการเซ่นบวงสรวงให้ผีเจ้าที่ก่อนพากันเดินทางกลับ", "เมื่อกลับมาถึงบ้านคนเจ็บ ผู้เฒ่าผู้แก่จะทำพิธีผูกแขนและผูกขาให้คนเจ็บด้วยฝ้ายขาว (ฝ้ายบางส่วนมีผูกติดแหวนเงินแหวนทองไว้) เพื่อยึดเหนี่ยวขวัญให้อยู่กับเนื้อกับตัว", "สำหรับเครื่องเซ่นสังเวยที่ห่อผ้าขาว เคียว ชนาง และกระบุง จะต้องนำไปวางไว้ที่หัวนอนของคนเจ็บเป็นเวลา 3 วัน จึงจะสามารถยกออกได้ ก่อนจะปิดท้ายพิธีด้วยการรับประทานอาหารร่วมกันระหว่างญาติพี่น้องและผู้เฒ่าผู้แก่ในชุมชน", "นี่คือวิถีความเชื่อและพิธีกรรมอันเปี่ยมด้วยภูมิปัญญาที่สืบทอดกันมาช้านานของชาวกวยบ้านโพธิ์กระสังข์บ้านเราครับ", "กราบขอบพระคุณผู้นำชุมชน ปราชญ์ชาวบ้าน และผู้เฒ่าผู้แก่ทุกท่าน เปรียบเสมือน “หนังสือเล่มใหญ่” ที่ทรงคุณค่า ให้พวกเราลูกหลานได้เรียนรู้ ค้นคว้า และร่วมกันสืบสานภูมิปัญญาอันกุมรากเหง้าของชาวกวยให้อยู่คู่บ้านเราต่อไป", "และขออนุญาตนำภาพถ่ายของผู้เฒ่าผู้แก่และผู้ร่วมพิธีทุกท่านมาเผยแพร่ ณ ที่นี้ด้วยความเคารพยิ่ง มิได้มีเจตนาล่วงละเมิดแต่อย่างใด หากแต่ตั้งใจบันทึกและส่งต่อเรื่องราว เพื่อให้โลกได้รับรู้ว่า... บ้านเรามีสิ่งดีๆ มีวิถีวัฒนธรรมที่งดงามและน่าภาคภูมิใจมากมายเพียงใดครับ"], "n1": ["แจ้งเกษตรกรในแนวเส้นบ้านแต้ – หนองตะดอก – โคกพยอม ว่ามีการเตรียมขยายเขตไฟฟ้าเพื่อการเกษตร", "สิ่งที่ควรเตรียม: โฉนดที่ดิน และบัตรประชาชน เพื่อรอรับการสำรวจ", "ประกาศเมื่อ 1 ส.ค. 2569 ควรสอบถามวันและขั้นตอนจากผู้นำหมู่บ้านหรือหน่วยงานที่รับผิดชอบอีกครั้ง", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n2": ["เตือนเกษตรกรในตำบลโพธิ์กระสังข์ให้ไปตรวจสอบความถูกต้องของข้อมูลการทำนาปีของตน ที่ทำการผู้ใหญ่บ้าน", "ประกาศเมื่อ 13 ส.ค. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n3": ["แจ้งผู้ลงทะเบียนบัตรสวัสดิการแห่งรัฐ ปี 2569 ให้ตรวจสอบสิทธิ์ผ่านแอป “ทางรัฐ” หรือติดต่อธนาคารรัฐเพื่อดำเนินเรื่องอุทธรณ์", "โพสต์แจ้งเมื่อ 17 ก.ค. และ 23 ส.ค. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n4": ["อ้างอิงข้อแนะนำจาก รพ.สต.บ้านโพธิ์กระสังข์: กินยาฆ่าเชื้อให้ครบตามที่แพทย์สั่ง ไม่หยุดยาเอง และไม่แบ่งยาให้ผู้อื่น เพื่อป้องกันเชื้อดื้อยา", "โพสต์เมื่อ 9 ส.ค. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n5": ["รายงานประกาศของกรมอุตุนิยมวิทยา เตือนฝนตกหนักถึงหนักมากในพื้นที่จังหวัดศรีสะเกษ", "โพสต์ช่วงวันที่ 1–2 ก.ย. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n6": ["29 ก.ย. 2569: แจ้งเตือนเหตุมีคนหยิบเครื่องพ่นปุ๋ยไปตอนกลางวันในพื้นที่หมู่ 2", "1 ต.ค. 2569 ช่วงเช้า: อัปเดตว่าได้รับของคืนแล้ว สรุปว่าเป็นการเข้าใจผิด คือหยิบไปใช้โดยไม่ได้บอกกล่าวกันก่อน", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n7": ["เชิญชวนชาวบ้านร่วมส่งกำลังใจให้ ส.อ.สรศักดิ์ เทาศิริ ศิษย์เก่าโรงเรียนบ้านสาด อ.ขุนหาญ ตัวแทนนักกีฬาเทคบอล (ชายคู่) ทีมชาติไทย ในการแข่งขันเอเชียนเกมส์ 2026 ณ ประเทศญี่ปุ่น", "เดินทางและแข่งขัน 17–20 ก.ย. 2569 โพสต์เมื่อ 17 ก.ย. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "n8": ["ร่วมทำบุญเตะฟุตบอลการกุศลในนามทีมคนชายแดน", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "a1": ["เรื่องราวของการพับกรวยใบตองและตกแต่งดอกเงิน เตรียมไว้ใช้ในเทศกาลเข้าพรรษา", "โพสต์เมื่อ 29 ก.ค. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "a2": ["พิธีทำบุญอุทิศส่วนกุศลส่งถึงบรรพบุรุษ ก่อนเข้าสู่บุญใหญ่ “สากกวย”", "หมู่ 2 กำหนดจัดพิธีวันอาทิตย์ที่ 20 ก.ย. 2569 (เผยแพร่ข่าว 19–20 ก.ย.)", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "a3": ["สากกวย คือวันขึ้น 15 ค่ำ เดือน 10 วันแห่งความกตัญญู ที่ลูกหลานชาวกวยเดินทางกลับบ้านมาร่วมทำบุญใหญ่และบวงสรวงบรรพบุรุษ", "เช้าวันฤกษ์ใหญ่ 26 ก.ย. 2569 (โพสต์สรุปบรรยากาศ 28 ก.ย.)", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"], "a4": ["พิธีบอกกล่าวบรรพบุรุษและสิ่งศักดิ์สิทธิ์ พร้อมผูกข้อไม้ผูกมืออวยพรให้ญาติมิตรที่จะเดินทางไปทำงานต่างประเทศ (ไต้หวัน)", "จัดเมื่อ 15 ก.ย. 2569", "※ นี่เป็นบทสรุปสั้นจากโพสต์ในเพจ เนื้อหาเต็มของเรื่องนี้กำลังเรียบเรียงลงหน้านี้"]};
 news.forEach((o,i)=>{o.k="n"+i;o.body=BODY[o.k]});arts.forEach((o,i)=>{o.k="a"+i;o.body=BODY[o.k]});
 function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.title);const m=el("div","mute",(o.date||"")+(o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);
-if("speechSynthesis" in window){const lb=el("button","btn listen","🔊 ฟังเรื่องนี้");lb.id="lsb";lb.type="button";lb.onclick=()=>$("lsn").click();r.append(lb)}
 if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
 let ul=null;o.body.forEach(x=>{if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null;
 const ml=/^@@\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);
@@ -557,7 +535,7 @@ if(l.length>fn){const b=el("button","btn solid","ดูเพิ่ม ("+(l.len
 const HERO=["n8","a3","n0","a0","a1","a2"].map(k=>FEED.find(f=>f.key===k));let hi=0,htm;
 function rHero(i){hi=i;const f=HERO[i],m=$("hm");
 m.style.backgroundImage=f.big?"url("+f.big+"),url("+f.img+")":"url("+f.img+")";m.style.backgroundPosition=HPOS[f.key]||"center";m.classList.remove("fx");void m.offsetWidth;m.classList.add("fx");
-$("hh").textContent=f.t;{const hl=$("hl");if(hl){hl.style.display=f.kind==="v"?"none":"";hl.onclick=e=>{e.stopPropagation();if(f.kind==="v")return openF(f);openF(f);listenSoon()}}}$("hc").textContent=f.cat;$("hq").textContent=f.s;m.onclick=()=>openF(f);
+$("hh").textContent=f.t;$("hc").textContent=f.cat;$("hq").textContent=f.s;m.onclick=()=>openF(f);
 $("hn").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));
 const p=$("hp");p.classList.remove("run");void p.offsetWidth;if(!htm)return;p.classList.add("run");clearTimeout(htm);htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000)}
 function heroInit(){$("hn").replaceChildren(...HERO.map((f,i)=>{const b=el("button");const n=el("b","","0"+(i+1));b.append(n,el("span","",f.t));b.onclick=()=>{htm=htm||1;rHero(i)};return b}));
@@ -762,23 +740,6 @@ function bd(e,t){String(t).split(/\*\*(.+?)\*\*/).forEach(function(x,i){if(!x)re
 @font-face{font-family:"Boon";font-weight:700;font-style:normal;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}
 </style>
 <style id="ux">
-/* แถบปุ่มช่วยอ่าน (ติดหัวเว็บ) */
-.tb{background:#141f4a;border-top:1px solid rgba(255,255,255,.14)}
-.tbi{max-width:1040px;margin:0 auto;padding:6px 12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-.tbl{color:#dfe5ff;font-size:15px;margin-right:2px;display:none}
-.tb button,.tb a{min-height:44px;min-width:44px;padding:4px 12px;border:0;border-radius:10px;background:rgba(255,255,255,.16);color:#fff;font:700 17px/1.2 Boon,system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;white-space:nowrap}
-.tb button:hover,.tb a:hover{background:rgba(255,255,255,.28)}
-.tb button[disabled]{opacity:.45;cursor:default}
-.tb #zp{font-size:21px}
-.tb .tb-cp{background:var(--gold);color:#241a00}
-.tb .tb-ln{background:#06c755;color:#0a2a14}
-.tbs{width:1px;height:28px;background:rgba(255,255,255,.28);margin:0 2px}
-.tb{position:relative}.tlg{display:none}@media(min-width:480px){.tlg{display:inline}}.tb button[hidden]{display:none}
-.tbm{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);background:#fc8c2c;color:#241a00;font-weight:700;font-size:16px;border-radius:99px;padding:6px 18px;box-shadow:0 4px 14px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap;z-index:30}
-.tbm.on{opacity:1}
-@media(min-width:700px){.tbl{display:inline}.tbi{justify-content:flex-end;gap:8px}}
-@media(max-width:480px){.tbi{flex-wrap:wrap;gap:5px;padding:6px 8px}.tb button,.tb a{padding:4px 8px;font-size:16px;flex:1 1 auto}.tbs{display:none}}
-/* ขยายตัวอักษรเฉพาะเนื้อหา (หัวเว็บคงขนาดเดิม) */
 main,footer{zoom:var(--z,1)}
 </style>
 <script>
@@ -788,20 +749,10 @@ try{var v=parseInt(localStorage.getItem(K),10);if(v>=0&&v<Z.length)i=v}catch(e){
 function ap(){R.style.setProperty("--z",Z[i]);
   document.getElementById("zm").disabled=i===0;
   document.getElementById("zp").disabled=i===Z.length-1;
-  document.getElementById("z0").disabled=i===0;
   try{localStorage.setItem(K,i)}catch(e){}}
 function msg(t){var m=document.getElementById("tbm");m.textContent=t;m.classList.add("on");clearTimeout(msg.t);msg.t=setTimeout(function(){m.classList.remove("on")},2200)}
-function url(){return location.origin+location.pathname+location.hash}
 document.getElementById("zm").onclick=function(){if(i>0){i--;ap();msg("ตัวอักษร "+Math.round(Z[i]*100)+"%")}};
 document.getElementById("zp").onclick=function(){if(i<Z.length-1){i++;ap();msg("ตัวอักษร "+Math.round(Z[i]*100)+"%")}};
-document.getElementById("z0").onclick=function(){i=0;ap();msg("กลับเป็นขนาดปกติแล้ว")};
-document.getElementById("cpl").onclick=function(){var u=url();
-  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){msg("คัดลอกลิงก์แล้ว ✓ นำไปวางในไลน์ได้เลย")},function(){
-    var t=document.createElement("textarea");t.value=u;t.style.cssText="position:fixed;opacity:0";document.body.append(t);t.select();
-    var ok=false;try{ok=document.execCommand("copy")}catch(e){}t.remove();
-    if(ok)msg("คัดลอกลิงก์แล้ว ✓ นำไปวางในไลน์ได้เลย");else prompt("กดค้างเพื่อคัดลอกลิงก์นี้",u)})};
-document.getElementById("lns").addEventListener("click",function(){this.href="https://line.me/R/share?text="+encodeURIComponent(document.title+"\n"+url())});
-document.getElementById("lns").href="https://line.me/R/share?text="+encodeURIComponent(url());
 ap();
 })();
 </script>
@@ -820,16 +771,38 @@ ap();
 .rt{display:flex;gap:16px;align-items:center;margin-top:12px;background:#0e6b73;color:#fff;border-radius:14px;padding:16px 20px;text-decoration:none}
 .rt i{line-height:0}.rt svg{width:44px;height:44px}.rt b{display:block;font:700 22px/1.3 Boon,system-ui,sans-serif}.rt small{display:block;font-size:16px;opacity:.95}
 .rt:hover{filter:brightness(1.1)}
-/* ===== โหมดตัวหนังสือชัด ===== */
-:root[data-hc="1"]{--bg:#fff;--card:#fff;--ink:#000;--mute:#1b1b1b;--line:#1b1b1b;--link:#0a1f8f;--soft:#e8ecff}
-:root[data-hc="1"] .mute,:root[data-hc="1"] .fc .fm,:root[data-hc="1"] .pvn{color:#111;font-size:16px}
-:root[data-hc="1"] .card,:root[data-hc="1"] .fc,:root[data-hc="1"] .panel,:root[data-hc="1"] .list,:root[data-hc="1"] .yc,:root[data-hc="1"] .stp,:root[data-hc="1"] .cm{border:2px solid #111}
-:root[data-hc="1"] main a:not(.btn):not(.t):not(.fc):not(.card):not(.rt){text-decoration:underline}
-:root[data-hc="1"] header{background:#fff;border-bottom:3px solid #111}
-:root[data-hc="1"] .tb #hcb{background:#fc8c2c;color:#241a00}
+</style>
+<style id="v12">
+/* ===== ปุ่มขนาดตัวอักษร: อยู่แถวเดียวกับชื่อเว็บ ===== */
+.bar{gap:8px}
+.brand{flex:1 1 auto;min-width:0;overflow:hidden}.brand>span{min-width:0}.brand small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zb{display:flex;gap:6px;flex:none}
+.zb button{min-width:44px;min-height:44px;padding:0 8px;border:0;border-radius:12px;background:var(--soft);color:var(--ink);font:700 22px/1 Boon,system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:1px}
+.zb button span{font-size:.8em}.zb #zp span{font-size:1.15em}.zb #zp{font-size:22px}
+.zb button:active{filter:brightness(.92)}.zb button[disabled]{opacity:.38;cursor:default}
+.tbm{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);background:#fc8c2c;color:#241a00;font-weight:700;font-size:16px;border-radius:99px;padding:6px 18px;box-shadow:0 4px 14px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap;z-index:30}.tbm.on{opacity:1}
+@media(max-width:480px){.bar{padding:8px 12px;gap:6px}.brand{font-size:17px;gap:8px}.brand img{height:38px;width:38px}.brand small{font-size:11px}.zb{gap:4px}.zb button{min-width:40px;min-height:40px;padding:0 6px;font-size:20px}.mb{padding:2px 4px}}
+
+/* ===== รูปภาพ: ไม่มีกรอบ ให้ภาพเป็นส่วนหนึ่งของหน้า ===== */
+.fc,.card{background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+a.card:hover{border-color:transparent}
+.fc:hover{box-shadow:none;transform:none}
+.fc .fi,.card .thumb,.card .vt{border-radius:18px;overflow:hidden;box-shadow:0 6px 18px rgba(28,43,94,.12)}
+.thumb .cover{object-fit:cover}
+.fc h3{padding:12px 2px 6px;height:calc(4.5em + 18px)}
+.fc .fm{margin:0 2px;border-top:0;padding:2px 0 10px}
+.card .in{padding:12px 2px 6px}
+.vc h3{padding:10px 2px 8px}
+/* หน้าอ่านเรื่อง: ไม่ใส่กล่องกรอบรอบเนื้อหา ภาพกว้างเต็มแนวข้อความ มุมนุ่ม ๆ */
+.panel.read{background:transparent;border:0;box-shadow:none;padding:4px 2px}
+.pf,.gf{margin:26px 0}
+.pf img,.read .rimg,.gf .rimg{width:100%;height:auto;display:block;border:0;border-radius:16px;box-shadow:0 8px 24px rgba(28,43,94,.14)}
+.read>.rimg{margin:16px 0 22px}
+.pf figcaption,.gf figcaption{font-size:15px;line-height:1.6;color:var(--mute);margin:8px 4px 0;text-align:left}
+.hl{margin:22px 0}
 </style>
 <script>
-/* ===== ส่วนเสริม: ตัวหนังสือชัด • ฟังเรื่องนี้ • แถบล่าง • ติดตั้งไอคอน • ออฟไลน์ ===== */
+/* ===== ส่วนเสริม: ติดตั้งไอคอน • ออฟไลน์ ===== */
 function installApp(){
   if(window.__ip){window.__ip.prompt();window.__ip=null;return}
   if(matchMedia("(display-mode: standalone)").matches||navigator.standalone){alert("ติดตั้งไว้บนหน้าจอแล้วครับ");return}
@@ -839,32 +812,6 @@ function installApp(){
 (function(){
  var R=document.documentElement,$=function(i){return document.getElementById(i)};
  function toast(t){var m=$("tbm");m.textContent=t;m.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){m.classList.remove("on")},2600)}
- /* ตัวหนังสือชัด */
- var hc=0;try{hc=localStorage.getItem("kp_hc")==="1"?1:0}catch(e){}
- function aHc(){if(hc)R.setAttribute("data-hc","1");else R.removeAttribute("data-hc");$("hcb").setAttribute("aria-pressed",hc?"true":"false")}
- $("hcb").onclick=function(){hc=hc?0:1;aHc();try{localStorage.setItem("kp_hc",hc)}catch(e){}toast(hc?"เปิดโหมดตัวหนังสือชัดแล้ว":"ปิดโหมดตัวหนังสือชัดแล้ว")};aHc();
- /* ฟังเรื่องนี้ (เสียงอ่านภาษาไทยในมือถือ ฟรี) */
- var ls=$("lsn"),rv=$("v-read"),sp="speechSynthesis" in window,on=0;
- function lab(t,b){ls.firstChild.nodeValue=b?"⏹":"🔊";var x=$("lsb");if(x)x.textContent=b?"⏹ หยุดฟัง":"🔊 ฟังเรื่องนี้"}
- function stop(){if(sp)speechSynthesis.cancel();on=0;lab(0,0)}
- function chunks(t){var out=[],cur="";t.split(/\n+/).forEach(function(p){p.split(/(?<=[\.\!\?])\s+|\s{2,}/).forEach(function(q){q=q.trim();if(!q)return;
-   while(q.length>150){var k=q.lastIndexOf(" ",150);if(k<60)k=150;if(cur){out.push(cur);cur=""}out.push(q.slice(0,k));q=q.slice(k).trim()}
-   if((cur+" "+q).length>150){if(cur)out.push(cur);cur=q}else cur=cur?cur+" "+q:q});if(cur){out.push(cur);cur=""}});return out}
- function help(){stop();var d=$("lhd");if(!d){d=document.createElement("dialog");d.id="lhd";d.innerHTML='<h2>เครื่องนี้ยังไม่มีเสียงอ่านภาษาไทย</h2><p>ไม่ต้องกังวล แก้ได้ฟรีในไม่กี่ขั้นตอน (ทำครั้งเดียว)</p><h3>Android (Samsung, OPPO, Vivo ฯลฯ)</h3><ol><li>เปิด <b>ตั้งค่า</b> → <b>การจัดการทั่วไป</b> (หรือ <b>ระบบ</b>) → <b>ภาษา</b></li><li>เลือก <b>ข้อความเป็นเสียงพูด</b> → <b>บริการเสียงพูดของ Google</b> → รูปเฟือง</li><li>เลือก <b>ติดตั้งข้อมูลเสียง</b> → <b>ภาษาไทย</b></li><li>กลับมาที่หน้านี้ แล้วกด “ลองอีกครั้ง”</li></ol><h3>iPhone</h3><ol><li><b>ตั้งค่า</b> → <b>การช่วยการเข้าถึง</b> → <b>เนื้อหาที่พูดได้</b> → <b>เสียง</b></li><li>เลือก <b>ไทย</b> แล้วดาวน์โหลดเสียง</li></ol><p>ถ้ายังไม่ได้ ลองเปิดเว็บนี้ด้วย Chrome หรือ Safari หรือกด “ส่ง LINE” ให้ลูกหลานอ่านให้ฟัง</p><div class="lhb"><button type="button" id="lhr" class="btn listen">ลองอีกครั้ง</button><button type="button" id="lhx" class="btn">ปิด</button></div>';document.body.append(d);
-   $("lhx").onclick=function(){d.close()};$("lhr").onclick=function(){d.close();say()};d.addEventListener("click",function(e){if(e.target===d)d.close()})}
-   d.showModal?d.showModal():d.setAttribute("open","")}
- function say(){var r=$("rd").cloneNode(true);r.querySelectorAll(".rbar,.pm,figure,script,button").forEach(function(x){x.remove()});
-   var tx=[].map.call(r.querySelectorAll("h1,h2,h3,p,li,blockquote"),function(x){return x.textContent.trim()}).filter(Boolean).join("\n");
-   var vs=speechSynthesis.getVoices(),v=vs.filter(function(x){return /^th/i.test((x.lang||"").replace("_","-"))})[0];
-   speechSynthesis.cancel();on=1;lab(0,1);var q=chunks(tx),i=0,ok=0,bad=0;
-   /* ไม่ปักใจว่าไม่มีเสียงไทยจากรายการเสียง (บางเครื่องไม่แสดงรายการ แต่พูดได้) ลองพูดก่อน ถ้า 3 วินาทีแล้วไม่มีเสียงออกค่อยแสดงวิธีแก้ */
-   var tm=setTimeout(function(){if(on&&!ok){bad=1;help()}},3000);
-   (function nx(){if(!on||i>=q.length){clearTimeout(tm);stop();return}var u=new SpeechSynthesisUtterance(q[i++]);u.lang="th-TH";if(v)u.voice=v;u.rate=.9;
-     u.onstart=function(){ok=1};u.onend=nx;
-     u.onerror=function(e){clearTimeout(tm);if(e&&e.error==="interrupted"||e&&e.error==="canceled")return;if(!bad){bad=1;help()}else stop()};speechSynthesis.speak(u)})()}
- if(sp){ls.onclick=function(){on?stop():say()};try{speechSynthesis.getVoices()}catch(e){}}
- function upd(){var show=sp&&!rv.classList.contains("hide");ls.hidden=!show;if(!show)stop()}
- new MutationObserver(upd).observe(rv,{attributes:true,attributeFilter:["class"]});upd();
  /* ข้อความ LINE ในหน้า สิทธิ์ที่ควรรู้ */
  ext($("rLn"),lineMsg("ขอสอบถามเรื่องสิทธิ์ที่ควรรู้"));
  /* ออฟไลน์ / ติดตั้งไอคอน */
