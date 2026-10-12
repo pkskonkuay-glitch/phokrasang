@@ -152,7 +152,7 @@ header{background:var(--card);color:var(--ink);border-bottom:1px solid var(--lin
 .band2{background:#4f9d8f radial-gradient(rgba(255,255,255,.35) 1.5px,transparent 1.6px) 0 0/22px 22px;padding:22px 0 26px}.band2 .hs{margin:0}
 .fb{display:flex;gap:10px;align-items:center;margin:22px 0 16px}.dd{position:relative}.dd>button,#ddx{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 18px;color:var(--ink);font-weight:700}#ddx{color:var(--mute);font-weight:400}
 #ddl{position:absolute;top:calc(100% + 6px);left:0;z-index:8;min-width:230px;background:var(--soft);border-radius:16px;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}#ddl button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 20px;color:var(--ink)}
-#latest{padding-top:0}
+#latest{padding-top:22px}
 .lg{display:grid;gap:6px;margin:10px 0 14px}.lg .st{display:inline-block;min-width:110px;text-align:center;margin-right:8px}
 .st.wait{background:#fde2e2;color:#a32121}.st.prog{background:#fff3c4;color:#7a5b00}.st.na{background:#e5e7ee;color:#555}
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.cats button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 8px;font-weight:700}.cats button.on{border-color:var(--gold);background:#fff3e2;color:#241a00}
@@ -259,18 +259,7 @@ header{z-index:20}.mb svg{display:block}
 <main>
 <div id="v-home">
 <div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
-<div class="wrap"><section id="services"><div class="sh"><h2>เมนูเดียวกับใน LINE</h2><span class="mute">กดปุ่มใหญ่ได้เลย</span></div>
-<div class="sv2">
-<button class="t big a" onclick="go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 4.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z"/></svg></i><b>แจ้งเหตุ • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย</span></button>
-<button class="t r" onclick="history.replaceState(null,'',location.pathname+'?c=urgent');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.5 1.5 21h21L12 2.5zM10.9 9h2.2v6h-2.2V9zm0 7.6h2.2v2.2h-2.2v-2.2z"/></svg></i><b>เหตุด่วน</b><span>เตือนภัย อุบัติเหตุ</span></button>
-<button class="t n" onclick="go('board')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7" stroke-width="2.4"/><path d="M6.8 10l2.4 2.4 4.2-4.4" stroke-width="2.4"/><path d="M15.5 15.5 21.5 21.5" stroke-width="3"/></svg></i><b>ติดตามเรื่อง</b><span>ดูความคืบหน้า</span></button>
-<button class="t g" onclick="history.replaceState(null,'',location.pathname+'?c=news');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5v5h3.5L14 19V5L6.5 9.5H3zm13.6 2.5a4.6 4.6 0 0 0-2-3.8v7.6a4.6 4.6 0 0 0 2-3.8z"/></svg></i><b>ส่งข่าว</b><span>ฝากข่าวดีบ้านเรา</span></button>
-<button class="t n" onclick="go('home','latest')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h5v4H7zM15 9h2M15 12h2M7 16.5h10"/></svg></i><b>ข่าว • คลิป</b><span>ล่าสุดจากชุมชน</span></button>
-<button class="t b" onclick="go('home','culture')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"><path d="M3 5.5c3-1.4 6-1.2 9 .6v13c-3-1.8-6-2-9-.6v-13zM21 5.5c-3-1.4-6-1.2-9 .6v13c3-1.8 6-2 9-.6v-13z"/></svg></i><b>เรื่องเล่า</b><span>ฮีตคองกวยเรา</span></button>
-<a class="t a" id="lnT"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><g style="fill:var(--bgc)"><circle cx="7.5" cy="10.5" r="1.4"/><circle cx="12" cy="10.5" r="1.4"/><circle cx="16.5" cy="10.5" r="1.4"/></g></svg></i><b>คุยกับทีมงาน</b><span>ถามได้ทุกเรื่อง</span></a>
-</div>
-<a class="rt" href="#/rights" onclick="go('home','rights');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.5 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M14.5 9.5h4M14.5 13h4"/></svg></i><span><b>สิทธิ์ที่ควรรู้</b><small>บัตรสวัสดิการ ไฟฟ้าการเกษตร ตรวจข้อมูลนาปี และเรื่องที่ไม่ควรพลาด</small></span></a>
-<p class="mute" style="margin:10px 0 0">เหตุฉุกเฉินโทร <a href="tel:191">191</a> · <a href="tel:1669">1669</a> · <a href="tel:199">199</a> ก่อนเสมอ ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ <a href="privacy.html">ความเป็นส่วนตัว</a></p></section><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2></div><div class="fb"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
+<div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2></div><div class="fb"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
 <div class="hero"><div class="wrap">
 <h1>วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน</h1>
 <p>รวมวิถี ข่าวสาร และเรื่องราวของชาวกวยบ้านเรา เพื่อคนบ้านเราและทุกคนที่สนใจ</p>
@@ -302,6 +291,18 @@ header{z-index:20}.mb svg{display:block}
 <p>เรื่องราวของโพธิ์กระสังข์ในเว็บไซต์ <b>Borderland Narratives</b> พื้นที่รวมเรื่องราวจากชายแดนไทย–กัมพูชา สแกน QR Code หรือกดปุ่มเพื่อไปอ่านต่อ</p>
 <a class="btn solid" id="hubA">เปิดหน้าโพธิ์กระสังข์</a></div><img class="qr" id="hubQ" alt="QR Code ชายแดน โพธิ์กระสังข์"></div></section>
 <section class="sw hide" id="about"><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โชดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และฉบับ ก.ย. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></section>
+<section id="services"><div class="sh"><h2>เมนูเดียวกับใน LINE</h2><span class="mute">กดปุ่มใหญ่ได้เลย</span></div>
+<div class="sv2">
+<button class="t big a" onclick="go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 4.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z"/></svg></i><b>แจ้งเหตุ • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย</span></button>
+<button class="t r" onclick="history.replaceState(null,'',location.pathname+'?c=urgent');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.5 1.5 21h21L12 2.5zM10.9 9h2.2v6h-2.2V9zm0 7.6h2.2v2.2h-2.2v-2.2z"/></svg></i><b>เหตุด่วน</b><span>เตือนภัย อุบัติเหตุ</span></button>
+<button class="t n" onclick="go('board')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7" stroke-width="2.4"/><path d="M6.8 10l2.4 2.4 4.2-4.4" stroke-width="2.4"/><path d="M15.5 15.5 21.5 21.5" stroke-width="3"/></svg></i><b>ติดตามเรื่อง</b><span>ดูความคืบหน้า</span></button>
+<button class="t g" onclick="history.replaceState(null,'',location.pathname+'?c=news');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5v5h3.5L14 19V5L6.5 9.5H3zm13.6 2.5a4.6 4.6 0 0 0-2-3.8v7.6a4.6 4.6 0 0 0 2-3.8z"/></svg></i><b>ส่งข่าว</b><span>ฝากข่าวดีบ้านเรา</span></button>
+<button class="t n" onclick="go('home','latest')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h5v4H7zM15 9h2M15 12h2M7 16.5h10"/></svg></i><b>ข่าว • คลิป</b><span>ล่าสุดจากชุมชน</span></button>
+<button class="t b" onclick="go('home','culture')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"><path d="M3 5.5c3-1.4 6-1.2 9 .6v13c-3-1.8-6-2-9-.6v-13zM21 5.5c-3-1.4-6-1.2-9 .6v13c3-1.8 6-2 9-.6v-13z"/></svg></i><b>เรื่องเล่า</b><span>ฮีตคองกวยเรา</span></button>
+<a class="t a" id="lnT"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><g style="fill:var(--bgc)"><circle cx="7.5" cy="10.5" r="1.4"/><circle cx="12" cy="10.5" r="1.4"/><circle cx="16.5" cy="10.5" r="1.4"/></g></svg></i><b>คุยกับทีมงาน</b><span>ถามได้ทุกเรื่อง</span></a>
+</div>
+<a class="rt" href="#/rights" onclick="go('home','rights');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.5 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M14.5 9.5h4M14.5 13h4"/></svg></i><span><b>สิทธิ์ที่ควรรู้</b><small>บัตรสวัสดิการ ไฟฟ้าการเกษตร ตรวจข้อมูลนาปี และเรื่องที่ไม่ควรพลาด</small></span></a>
+<p class="mute" style="margin:10px 0 0">เหตุฉุกเฉินโทร <a href="tel:191">191</a> · <a href="tel:1669">1669</a> · <a href="tel:199">199</a> ก่อนเสมอ ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ <a href="privacy.html">ความเป็นส่วนตัว</a></p></section>
 <section><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
 </div></div>
 
@@ -519,19 +520,19 @@ function fcard(f){const a=el("a","fc");if(f.kind==="v")ext(a,f.url);else{a.href=
 const t=el("div","fi"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>im.remove();im.src=f.img;if(CPOS[f.key])im.style.objectPosition=CPOS[f.key];t.append(im);
 if(f.kind==="v"){const y=el("span","yb");y.innerHTML=YT;t.append(y)}
 const m=el("div","fm");m.innerHTML=FOLD;m.append(document.createTextNode(f.cat));a.append(t,el("h3","",f.t),m);return a}
-let ff="ทั้งหมด",fn=4;const FC={"ข่าวสาร":"n","วิถีกวย":"a","คลิป":"v","สิทธิ์ที่ควรรู้":"r"};
+let ff="ทั้งหมด",fn=6;const FC={"ข่าวสาร":"n","วิถีกวย":"a","คลิป":"v","สิทธิ์ที่ควรรู้":"r"};
 let fy="ทั้งหมด",fq="";
 function rRights(){var l=FEED.filter(function(f){return f.cat==="สิทธิ์ที่ควรรู้"});$("rgrid").replaceChildren.apply($("rgrid"),l.length?l.map(fcard):[el("p","mute","ยังไม่มีรายการในหมวดนี้ ติดตามได้ทาง LINE")])}
 function rFeed(){rRights();$("ddb").textContent=(ff==="ทั้งหมด"?"ทุกหมวดหมู่":ff)+" ▾";$("ydb").textContent=(fy==="ทั้งหมด"?"ทุกปี":"ปี "+fy)+" ▾";
 $("ddx").classList.toggle("hide",ff==="ทั้งหมด"&&fy==="ทั้งหมด"&&!fq);
-$("ddl").replaceChildren(...["ทั้งหมด",...Object.keys(FC)].map(k=>{const b=el("button","",k==="ทั้งหมด"?"ทุกหมวดหมู่":k);b.onclick=()=>{ff=k;fn=4;$("ddl").classList.add("hide");rFeed()};return b}));
+$("ddl").replaceChildren(...["ทั้งหมด",...Object.keys(FC)].map(k=>{const b=el("button","",k==="ทั้งหมด"?"ทุกหมวดหมู่":k);b.onclick=()=>{ff=k;fn=6;$("ddl").classList.add("hide");rFeed()};return b}));
 const ys=[...new Set(FEED.map(f=>f.y).filter(Boolean))].sort().reverse();
-$("ydl").replaceChildren(...["ทั้งหมด",...ys].map(k=>{const b=el("button","",k==="ทั้งหมด"?"ทุกปี":"ปี "+k);b.onclick=()=>{fy=k;fn=4;$("ydl").classList.add("hide");rFeed()};return b}));
+$("ydl").replaceChildren(...["ทั้งหมด",...ys].map(k=>{const b=el("button","",k==="ทั้งหมด"?"ทุกปี":"ปี "+k);b.onclick=()=>{fy=k;fn=6;$("ydl").classList.add("hide");rFeed()};return b}));
 const q=fq.trim().toLowerCase();
 const l=FEED.filter(f=>(ff==="ทั้งหมด"||(FC[ff]==="r"?f.cat==="สิทธิ์ที่ควรรู้":f.kind===FC[ff]))&&(fy==="ทั้งหมด"||f.y===fy)&&(!q||(f.t+" "+f.cat+" "+f.s).toLowerCase().includes(q)));
 $("fg").replaceChildren(...l.slice(0,fn).map(fcard));
 const m=$("fmore");m.replaceChildren();if(!l.length)m.append(el("p","mute","ไม่พบรายการที่ตรงกับที่ค้นหา"));
-if(l.length>fn){const b=el("button","btn solid","ดูเพิ่ม ("+(l.length-fn)+" รายการ)");b.onclick=()=>{fn+=8;rFeed()};m.append(b)}}
+if(l.length>fn){const b=el("button","btn solid","ดูเพิ่ม ("+(l.length-fn)+" รายการ)");b.onclick=()=>{fn+=6;rFeed()};m.append(b)}}
 const HERO=["n8","a3","n0","a0","a1","a2"].map(k=>FEED.find(f=>f.key===k));let hi=0,htm;
 function rHero(i){hi=i;const f=HERO[i],m=$("hm");
 m.style.backgroundImage=f.big?"url("+f.big+"),url("+f.img+")":"url("+f.img+")";m.style.backgroundPosition=HPOS[f.key]||"center";m.classList.remove("fx");void m.offsetWidth;m.classList.add("fx");
@@ -675,7 +676,7 @@ $("mlist2").replaceChildren(...MN.map(m=>{if(m[0]==="g")return el("div","mg",m[1
 $("mb").onclick=()=>menu($("menu").classList.contains("hide")?1:0);
 $("menu").onclick=e=>{if(e.target.id==="menu")menu(0)};document.addEventListener("keydown",e=>{if(e.key==="Escape")menu(0)});
 
-$("ddb").onclick=()=>$("ddl").classList.toggle("hide");$("ydb").onclick=()=>$("ydl").classList.toggle("hide");$("ddx").onclick=()=>{ff="ทั้งหมด";fy="ทั้งหมด";fq="";$("fq").value="";fn=4;rFeed()};$("fq").oninput=e=>{fq=e.target.value;fn=4;rFeed()};
+$("ddb").onclick=()=>$("ddl").classList.toggle("hide");$("ydb").onclick=()=>$("ydl").classList.toggle("hide");$("ddx").onclick=()=>{ff="ทั้งหมด";fy="ทั้งหมด";fq="";$("fq").value="";fn=6;rFeed()};$("fq").oninput=e=>{fq=e.target.value;fn=6;rFeed()};
 document.addEventListener("click",e=>{if(!e.target.closest(".dd")){$("ddl").classList.add("hide");$("ydl").classList.add("hide")}});
 function parseCSV(t){const r=[];let row=[],f="",q=false;
 for(let i=0;i<t.length;i++){const ch=t[i];
