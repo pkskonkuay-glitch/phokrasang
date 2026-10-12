@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>หลังบ้าน | ที่นี่โพธิ์กระสังข์</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap">
+<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
 <style>
 :root{--bg:#f5f6fa;--card:#fff;--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--navy:#1c2b5e;--gold:#fc8c2c;--green:#06c755;--red:#c93b2f}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Noto Sans Thai",system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Boon,system-ui,sans-serif}
 header{background:var(--navy);color:#fff;padding:12px 16px;display:flex;gap:12px;align-items:center;position:sticky;top:0;z-index:5}header b{font-size:18px;flex:1}
 button,select,input,textarea{font:inherit}button{cursor:pointer}
 .wrap{max-width:900px;margin:0 auto;padding:14px}
@@ -33,7 +33,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
-<label for="cc">หมวด (เช่น โครงการและบริการ, เตือนภัย, คนบ้านเรา, ประเพณี, ความเชื่อ)</label><input id="cc" list="cl"><datalist id="cl"><option>โครงการและบริการ</option><option>เตือนภัย</option><option>คนบ้านเรา</option><option>ประเพณี</option><option>ความเชื่อ</option><option>วัฒน์กวย</option><option>คลิป</option></datalist>
+<label for="cc">หมวด (เช่น สิทธิ์ที่ควรรู้, โครงการและบริการ, เตือนภัย, คนบ้านเรา, ประเพณี, ความเชื่อ)</label><input id="cc" list="cl"><datalist id="cl"><option>สิทธิ์ที่ควรรู้</option><option>โครงการและบริการ</option><option>เตือนภัย</option><option>คนบ้านเรา</option><option>ประเพณี</option><option>ความเชื่อ</option><option>วัฒน์กวย</option><option>คลิป</option></datalist>
 <label for="ct">หัวข้อ</label><input id="ct" maxlength="150">
 <label for="cs">สรุปสั้น (ไม่เกิน 300 ตัวอักษร)</label><textarea id="cs" rows="2" maxlength="300"></textarea>
 <label for="cb">เนื้อหาเต็ม</label><textarea id="cb" rows="9"></textarea>
