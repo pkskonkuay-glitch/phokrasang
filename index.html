@@ -728,7 +728,7 @@ async function loadContent(){if(!CFG.apiUrl)return;
   if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 /* ===== สถิติผู้เข้าชม (GoatCounter) — ไม่ใช้คุกกี้ ไม่เก็บชื่อ/เบอร์ ใส่รหัสที่ CFG.gc ===== */
 const TRK=(function(){
- const code=CFG.gc,Q=[],tag=new URLSearchParams(location.search).get("s"),TL={line:"LINE",fb:"Facebook",link:"ลิงก์ที่คัดลอก",share:"ปุ่มแชร์ในมือถือ"};
+ const code=CFG.gc,Q=[],qp=new URLSearchParams(location.search),tag=qp.get("s"),src=qp.get("src"),TL={line:"LINE",fb:"Facebook",link:"ลิงก์ที่คัดลอก",share:"ปุ่มแชร์ในมือถือ"};
  let ready=false,first=true,last="",sent=false;
  const send=v=>{try{window.goatcounter.count(v)}catch(e){}},put=v=>{if(!code)return;ready?send(v):Q.push(v)};
  if(code){window.goatcounter={no_onload:true,no_events:true,endpoint:"https://"+code+".goatcounter.com/count"};
@@ -736,10 +736,10 @@ const TRK=(function(){
   j.onload=()=>{ready=true;Q.splice(0).forEach(send)};document.head.append(j)}
  return{
   pv(path,title){if(path===last)return;last=path;sent=true;const v={path:path,title:title||document.title};
-   if(first){first=false;if(tag)v.referrer="แชร์/ติดป้าย: "+(TL[tag]||tag)}put(v)},
+   if(first){first=false;if(tag)v.referrer="แชร์/ติดป้าย: "+(TL[tag]||tag);else if(src)v.referrer="เมนู/ลิงก์ติดป้าย: "+(src==="line"?"LINE OA":src)}put(v)},
   ev(name){put({path:name,title:name,event:true,no_session:true})},
   start(){if(!sent){const h=location.hash;if(h.startsWith("#/read/"))this.pv("/read/"+h.slice(7).replace(/[^\w-]/g,""));else this.pv("/")}
-   if(tag){try{const q=new URLSearchParams(location.search);q.delete("s");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}catch(e){}}}}
+   if(tag||src){try{const q=new URLSearchParams(location.search);q.delete("s");q.delete("src");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}catch(e){}}}}
 })();
 {const PT={latest:"ข่าว คลิป ล่าสุด",culture:"เรื่องเล่ากวยมูไฮ",clips:"คลิป",rights:"สิทธิ์ที่ควรรู้",mags:"ทางอีศาน",hub:"ชายแดน",about:"เกี่ยวกับเรา",news:"ข่าวสาร",products:"ของดีบ้านเรา",board:"ติดตามเรื่อง",submit:"แจ้งเหตุ ปักหมุด",thread:"รายละเอียดเรื่อง"};
  const _g2=go;go=function(v,s){_g2(v,s);if(v==="home"&&s==="products")rProd();
