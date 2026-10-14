@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>หลังบ้าน | ที่นี่โพธิ์กระสังข์</title>
-<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
+<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}.vr{display:grid;grid-template-columns:30px minmax(90px,1fr) minmax(130px,1.4fr) auto;gap:6px;align-items:center;padding:6px 4px;border-bottom:1px solid #dfe2ee}.vr.dirty{background:#fff6dd}
+.vr .vk{min-height:46px;font-size:18px;margin:0}.vem{font-size:22px;text-align:center}.vth{font-size:17px}.vac{display:flex;gap:6px;align-items:center}.vck{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:400;margin:0;white-space:nowrap}
+.vbar{position:sticky;top:0;z-index:5;background:#fff;padding:8px 0;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #dfe2ee}.vbar input{flex:1;min-width:200px;margin:0}
+@media(max-width:620px){.vr{grid-template-columns:30px 1fr}.vr .vk,.vr .vac{grid-column:1/-1}}
+</style>
 <style>
 :root{--bg:#f5f6fa;--card:#fff;--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--navy:#1c2b5e;--gold:#fc8c2c;--green:#06c755;--red:#c93b2f}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Boon,system-ui,sans-serif}
@@ -56,7 +60,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="stats" id="vst"></div>
 <div class="row"><div><input id="vq" placeholder="🔍 ค้นหา คำไทย / คำกวย" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
 <div class="stats" id="vft" style="margin-top:8px"></div>
-<p><button class="btn" id="vnew">➕ เพิ่มคำใหม่</button> <button class="btn o" id="vcsvb">⬇ ดาวน์โหลดสำรอง (CSV)</button></p></div>
+<p><button class="btn" id="vnew">➕ เพิ่มคำใหม่</button> <button class="btn o" id="vtg">🗂 ดูแบบการ์ด</button> <button class="btn o" id="vcsvb">⬇ ดาวน์โหลดสำรอง (CSV)</button></p></div>
 <details class="c" id="vtools"><summary><b>🧰 เครื่องมือจัดการหมวดและเพิ่มหลายคำ</b></summary>
 <h4>📥 เพิ่มหลายคำพร้อมกัน</h4>
 <p class="mute">พิมพ์ทีละบรรทัด แบบ <b>ความหมายไทย</b> หรือ <b>ไทย = คำกวย</b> ถ้ายังไม่รู้คำกวยใส่แค่ภาษาไทยก่อน แล้วค่อยมาเติมทีหลังได้</p>
@@ -67,11 +71,10 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="row"><div><select id="rcf" aria-label="หมวดเดิม"></select></div><div><input id="rt" maxlength="40" placeholder="ชื่อหมวดใหม่"></div></div>
 <p><button class="btn o" id="rgo">เปลี่ยนชื่อหมวด</button></p>
 <h4>✍️ เติมคำกวยให้คำที่มีอยู่แล้ว (เร็วที่สุด)</h4>
-<p class="mute">พิมพ์หรือวางทีละบรรทัดแบบ <b>ไทย = คำกวย</b> ระบบจะหาคำไทยที่มีอยู่แล้วและยังไม่มีคำกวย แล้วเติมให้เป็น “ฉบับร่าง” (ไม่ทับคำกวยที่มีอยู่แล้ว) เหมาะตอนนั่งฟังผู้เฒ่าบอกทีละหมวด</p>
+<p class="mute">พิมพ์หรือวางทีละบรรทัดแบบ <b>ไทย = คำกวย</b> ระบบจะหาคำไทยที่มีอยู่แล้วและยังไม่มีคำกวย แล้วเติมให้เป็น “ฉบับร่าง” (ไม่ทับคำกวยที่มีอยู่แล้ว)</p>
 <div class="row"><div><label for="flc">เฉพาะหมวด (เว้นว่าง = ทุกหมวด)</label><select id="flc"></select></div><div><label for="fls">ที่มา (ใช้กับทุกบรรทัด)</label><input id="fls" maxlength="300" placeholder="เช่น ยายสมใจ บ้านโพธิ์กระสังข์"></div></div>
 <textarea id="flt" rows="6" placeholder="แม่ = ...&#10;พ่อ = ..."></textarea>
-<p><button class="btn" id="flgo">✍️ เติมคำกวย</button> <button class="btn o" id="fldl">⬇ ดาวน์โหลดแบบฟอร์มเปล่า (คำที่ยังไม่มีกวย ของหมวดที่เลือก)</button> <button class="btn o" id="flup">⬆ นำเข้าไฟล์ที่กรอกแล้ว</button><input type="file" id="flfi" accept=".csv,text/csv" hidden></p>
-<p class="mute">แบบฟอร์มเปิดด้วย Google Sheets หรือ Excel ได้ กรอกช่อง “คำกวย” (คอลัมน์ที่ 4) แล้วบันทึกเป็น CSV กลับมานำเข้า ใช้ได้เมื่อมีผู้ช่วยหลายคนช่วยกรอกพร้อมกัน</p>
+<p><button class="btn" id="flgo">✍️ เติมคำกวย</button></p>
 <h4>📚 เติมหมวดและคำมาตรฐาน</h4>
 <p class="mute">ดึงรายการจากไฟล์ kuy-vocab.csv บนเว็บ เฉพาะคำที่ยังไม่มีในระบบ ไม่ทับของเดิม</p>
 <p><button class="btn o" id="igo">📚 เติมคำที่ยังไม่มี</button></p>
@@ -136,9 +139,9 @@ let idleT=null,LOGGED=false;const IDLE=30*60*1000;
 const bump=()=>{if(!LOGGED)return;clearTimeout(idleT);idleT=setTimeout(()=>{try{localStorage.setItem("kp_idle","1")}catch(e){}sessionStorage.clear();location.reload()},IDLE)};
 ["click","keydown","touchstart","scroll"].forEach(t=>document.addEventListener(t,bump,{passive:true}));
 $("lo").onclick=()=>{sessionStorage.clear();location.reload()};$("rf").onclick=load;
-function start(d){document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d)}
+function start(d){document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d);hashTab()}
 async function load(){try{draw(await call({action:"adminList",filter:S.f}))}catch(x){alert("โหลดไม่ได้: "+x.message)}}
-if(S.api&&S.tk)load().then(()=>{document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide")});
+if(S.api&&S.tk)load().then(()=>{document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");hashTab()});
 function draw(d){if(!d.ok){alert(d.error);return}
  const st=$("st");st.replaceChildren(...d.statuses.concat(d.reviews).map((k,i)=>{const c=el("span","chip",k+" ");c.append(el("b","",String(d.stats[k]||0)));return c}));
  const F=[["ทั้งหมด",{}],["รอตรวจเนื้อหา",{review:"รอตรวจ"}],["รอรับเรื่อง",{status:"รอรับเรื่อง"}],["มีธงเตือน",{flagged:1}]];
@@ -224,7 +227,7 @@ $("cimf").onchange=async()=>{const f=$("cimf").files[0];if(!f)return;const b=$("
  b.disabled=false;b.textContent="🖼 แทรกรูปในเนื้อหา";$("cimf").value=""};
 
 /* ===== คำศัพท์กวย ===== */
-let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="empty",VN=40;
+let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="empty",VN=60,VT=true,VSRC="";
 const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},hasK=e=>!!e.kuy,drvId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
 const imgSrc=u=>/^https:\/\//.test(u||"")?u:(u?"img/"+u:"");
 async function loadV(){const ls=$("vls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
@@ -238,11 +241,12 @@ function fillCats(){const v=$("vcat").value;$("vcat").replaceChildren(...[["","�
 const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกวยแล้ว",hasK],empty:["ยังไม่มีคำกวย",e=>!hasK(e)],draft:["ฉบับร่าง",e=>hasK(e)&&e.st!=="ตรวจแล้ว"],ok:["ตรวจแล้ว",e=>e.st==="ตรวจแล้ว"],hid:["ซ่อนอยู่",e=>e.hide]};
 function renderV(){const q=$("vq").value.trim().toLowerCase(),cat=$("vcat").value;
  const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ตรวจแล้ว",VL.filter(vflt.ok[1]).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
- $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=40;renderV()};return b}));
+ $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=VT?60:40;renderV()};return b}));
  const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.note).toLowerCase().includes(q)));
- $("vls").replaceChildren(...(L.length?L.slice(0,VN).map(vcard):[el("p","mute","ไม่พบคำ")]));
+ if(!VL.length&&!VOFF){const b=el("div","c");b.append(el("p","","ยังไม่มีคำในระบบ ให้นำเข้าคำทั้งหมดจากไฟล์ kuy-vocab.csv ก่อน (ทำครั้งเดียว)"));const g=el("button","btn","📚 นำเข้าคำทั้งหมดจากไฟล์");g.onclick=()=>{$("vtools").open=true;$("igo").click()};b.append(g);$("vls").replaceChildren(b)}
+ else if(VT)vtable(L);else $("vls").replaceChildren(...(L.length?L.slice(0,VN).map(vcard):[el("p","mute","ไม่พบคำ")]));
  $("vmore").classList.toggle("hide",L.length<=VN);$("vmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-VN)+" คำ)"}
-$("vq").oninput=()=>{VN=40;renderV()};$("vcat").onchange=()=>{VN=40;renderV()};$("vmore").onclick=()=>{VN+=40;renderV()};
+$("vq").oninput=()=>{VN=VT?60:40;renderV()};$("vcat").onchange=()=>{VN=VT?60:40;renderV()};$("vmore").onclick=()=>{VN+=40;renderV()};
 const vsave=async(item,photo)=>vcall({action:"adminVocabSave",item:item,photo:photo||undefined});
 function vcard(it){const c=el("div","c"),t=el("div","top");
  t.append(el("h3","",(g1(it.emo)?g1(it.emo)+" ":"")+it.th),el("span","badge",it.cat));
@@ -321,8 +325,6 @@ $("igo").onclick=async()=>{try{tmsg("กำลังอ่านไฟล์ kuy
  const have=new Set(VL.map(e=>e.cat+"|"+e.th)),items=vcsv(await r.text()).slice(1).filter(x=>x[2]&&!have.has(x[0]+"|"+x[2])).map(x=>({cat:x[0],emo:x[1],th:x[2],kuy:x[3]||"",ipa:x[4]||"",note:x[5]||"",img:x[6]||"",aud:x[7]||"",st:x[8]||"",src:x[9]||""}));
  if(!items.length){tmsg("✅ ในระบบมีครบทุกคำในไฟล์แล้ว");return}
  const[a,s]=await vbulk(items);tmsg("✅ เติมคำใหม่ "+a+" คำ"+(s?" (ข้ามที่ซ้ำ "+s+" คำ)":""));loadV()}catch(x){tmsg("⚠️ "+x.message,1)}};
-if(location.hash==="#vocab"){try{document.getElementById("t3").click()}catch(e){}}
-if(location.hash==="#products"){try{document.getElementById("t4").click()}catch(e){}}
 
 /* ===== โหมดไม่ต้องใช้หลังบ้าน: แก้ในเครื่อง แล้วดาวน์โหลด kuy-vocab.csv ไปอัปโหลดทับ ===== */
 let VOFF=false;
@@ -340,7 +342,7 @@ function vlocal(b){
  if(b.action==="adminVocabDelete"){VL=VL.filter(e=>e.id!==b.id);vsaveLocal();return{ok:true}}
  if(b.action!=="adminVocabSave")return{ok:false,error:"ไม่รองรับ"};
  const mk=x=>({cat:String(x.cat||"").trim(),emo:String(x.emo||"").trim(),th:String(x.th||"").trim(),kuy:String(x.kuy||"").trim(),ipa:String(x.ipa||"").trim(),note:String(x.note||"").trim(),img:String(x.img||"").trim(),aud:String(x.aud||"").trim(),st:String(x.st||"").trim(),src:String(x.src||"").trim()});
- if(Array.isArray(b.fill)){let n=0,k=0;const nf=[];b.fill.forEach(x=>{const th=String(x.th||"").trim(),cat=String(x.cat||"").trim(),kuy=String(x.kuy||"").trim();if(!th||!kuy)return;const h=VL.filter(e=>e.th===th&&(!cat||e.cat===cat));if(!h.length){nf.push(th);return}h.forEach(e=>{if(e.kuy){k++;return}e.kuy=kuy;e.st="ฉบับร่าง";if(x.src)e.src=String(x.src);n++})});vsaveLocal();return{ok:true,filled:n,kept:k,notfound:nf}}
+ if(Array.isArray(b.fill)){let n=0,k=0;const nf=[];b.fill.forEach(x=>{if(x.id){const e=VL.find(z=>z.id===x.id);if(!e){nf.push(String(x.id));return}e.kuy=String(x.kuy||"").trim();e.st=String(x.st||"");if(x.src)e.src=String(x.src);n++;return}const th=String(x.th||"").trim(),cat=String(x.cat||"").trim(),kuy=String(x.kuy||"").trim();if(!th||!kuy)return;const h=VL.filter(e=>e.th===th&&(!cat||e.cat===cat));if(!h.length){nf.push(th);return}h.forEach(e=>{if(e.kuy){k++;return}e.kuy=kuy;e.st="ฉบับร่าง";if(x.src)e.src=String(x.src);n++})});vsaveLocal();return{ok:true,filled:n,kept:k,notfound:nf}}
  if(Array.isArray(b.items)){let a=0,s=0;const have=new Set(VL.map(e=>e.cat+"|"+e.th));
   b.items.forEach(x=>{const o=mk(x);if(!o.th||!o.cat||have.has(o.cat+"|"+o.th)){s++;return}have.add(o.cat+"|"+o.th);VL.push(Object.assign({id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),hide:false},o));a++});
   vsaveLocal();return{ok:true,added:a,skipped:s}}
@@ -362,15 +364,37 @@ const fillDone=([n,k,nf])=>{tmsg("✅ เติมคำกวยแล้ว "+
 $("flgo").onclick=async()=>{const cat=$("flc").value,src=$("fls").value.trim(),items=$("flt").value.split("\n").map(s=>s.trim()).filter(Boolean).map(s=>{const p=s.split(/\s*[=＝]\s*/);return{cat:cat,th:(p[0]||"").trim(),kuy:(p[1]||"").trim(),src:src}}).filter(x=>x.th&&x.kuy);
  if(!items.length){tmsg("พิมพ์ในรูปแบบ ไทย = คำกวย อย่างน้อย 1 บรรทัดก่อนนะครับ",1);return}
  try{const r=await vfillAll(items);$("flt").value="";fillDone(r)}catch(x){tmsg("⚠️ "+x.message,1)}};
-$("fldl").onclick=()=>{const c=$("flc").value,L=VL.filter(e=>!hasK(e)&&!e.hide&&(!c||e.cat===c));if(!L.length){tmsg("ไม่มีคำที่ยังรอคำกวยในหมวดนี้แล้ว 🎉");return}
- const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',H=["หมวด","อีโมจิ","ความหมายไทย","คำกวย (กรอกช่องนี้)","(ว่างไว้)","อธิบาย","ภาพ","เสียง","สถานะ","ที่มา (กรอกได้)"];
- const blob=new Blob(["\uFEFF"+[H.map(q).join(","),...L.map(e=>[e.cat,e.emo,e.th,"","",e.note,"","","",""].map(q).join(","))].join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");
- a.href=URL.createObjectURL(blob);a.download="แบบฟอร์มเติมคำกวย-"+(c||"ทุกหมวด")+".csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);tmsg("ดาวน์โหลดแล้ว "+L.length+" คำ กรอกช่อง “คำกวย” แล้วกด ⬆ นำเข้า")};
-$("flup").onclick=()=>$("flfi").click();
-$("flfi").onchange=async()=>{const f=$("flfi").files[0];$("flfi").value="";if(!f)return;
- try{const items=vcsv(await f.text()).slice(1).filter(x=>x[2]&&(x[3]||"").trim()).map(x=>({cat:x[0],th:x[2],kuy:x[3],src:x[9]||$("fls").value.trim()}));
-  if(!items.length){tmsg("ไม่พบแถวที่กรอกคำกวยในไฟล์นี้ (ต้องกรอกคอลัมน์ที่ 4)",1);return}
-  if(!confirm("พบ "+items.length+" แถวที่มีคำกวย เติมเข้าระบบเลยไหม?"))return;fillDone(await vfillAll(items))}catch(x){tmsg("⚠️ "+x.message,1)}};
+
+
+/* ===== ตารางกรอกเร็ว: แก้คำกวยหลายคำในหน้าเดียว แล้วบันทึกครั้งเดียว ===== */
+$("vtg").onclick=()=>{VT=!VT;VN=VT?60:40;$("vtg").textContent=VT?"🗂 ดูแบบการ์ด":"📝 ดูแบบตารางกรอกเร็ว";renderV()};
+function vtable(L){const box=el("div","c"),dirty=new Map(),list=el("div"),msg=el("div","msg hide");
+ const bar=el("div","vbar"),so=document.createElement("input"),sb=el("button","btn","💾 บันทึกที่แก้ (0 คำ)");
+ so.placeholder="ที่มา (ใช้กับคำที่แก้) เช่น ยายสมใจ บ้านโพธิ์กระสังข์";so.maxLength=300;so.value=VSRC;so.oninput=()=>{VSRC=so.value};sb.disabled=true;
+ bar.append(so,sb);box.append(el("p","mute","พิมพ์คำกวยในช่องได้เลย (กด Enter ไปช่องถัดไป) แล้วกด 💾 บันทึก ครั้งเดียวทั้งหน้า • ติ๊ก “ตรวจแล้ว” เมื่อผู้เฒ่ายืนยันว่าถูก • ปุ่ม ⋯ ใส่รูป เสียง คำอธิบาย • ลบช่องคำกวยให้ว่างเพื่อลบคำกวยออก"),bar,msg,list);
+ const upd=()=>{sb.textContent="💾 บันทึกที่แก้ ("+dirty.size+" คำ)";sb.disabled=!dirty.size};
+ L.slice(0,VN).forEach(it=>{const r=el("div","vr"),i=document.createElement("input"),ck=document.createElement("input"),lb=el("label","vck"),ac=el("div","vac"),
+   was=!!(hasK(it)&&it.st==="ตรวจแล้ว");
+  i.className="vk";i.value=it.kuy||"";i.maxLength=120;i.placeholder="คำกวย";i.setAttribute("aria-label","คำกวยของ "+it.th);
+  ck.type="checkbox";ck.checked=was;ck.style.cssText="width:22px;height:22px;min-height:0;margin:0";lb.append(ck," ตรวจแล้ว");
+  const chg=()=>{const v=i.value.trim(),same=v===(it.kuy||"")&&ck.checked===was;
+   if(same)dirty.delete(it.id);else dirty.set(it.id,{id:it.id,kuy:v,st:v?(ck.checked?"ตรวจแล้ว":"ฉบับร่าง"):""});
+   r.classList.toggle("dirty",!same);upd()};
+  i.oninput=chg;ck.onchange=()=>{if(ck.checked&&!i.value.trim()){ck.checked=false;return}chg()};
+  i.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const x=[...list.querySelectorAll("input.vk")],k=x.indexOf(i);if(x[k+1])x[k+1].focus()}};
+  const mo=el("button","btn o","⋯"),de=el("button","btn o","🗑");mo.title="รูป เสียง คำอธิบาย";de.title="ลบคำนี้";de.style.color="#c93b2f";mo.onclick=()=>vedit(it);de.onclick=()=>vdelete(it);
+  ac.append(lb,mo,de);
+  r.append(el("span","vem",g1(it.emo)||"💬"),el("b","vth",it.th+(it.img?" 🖼":"")+(it.aud?" 🔊":"")),i,ac);list.append(r)});
+ if(!L.length)list.append(el("p","mute","ไม่พบคำ"));
+ sb.onclick=async()=>{const items=[...dirty.values()];if(!items.length)return;const s=so.value.trim();
+  if(s)items.forEach(x=>{const o=VL.find(e=>e.id===x.id);if(x.kuy&&(!o||x.kuy!==o.kuy))x.src=s});
+  sb.disabled=true;msg.className="msg hide";
+  try{let n=0;for(let k=0;k<items.length;k+=40){sb.textContent="กำลังบันทึก "+Math.min(k+40,items.length)+" / "+items.length+" …";
+    const u=await vcall({action:"adminVocabSave",fill:items.slice(k,k+40)});
+    if(!u.ok||typeof u.filled!=="number")throw new Error(/ความหมายไทยต้องยาว|ไม่ระบุ/.test(u.error||"")?OLDV:(u.error||"บันทึกไม่ได้"));n+=u.filled}
+   await loadV();const m=$("vls").querySelector(".msg");if(m){m.textContent="✅ บันทึกแล้ว "+n+" คำ";m.className="msg"}}
+  catch(x){msg.textContent="⚠️ "+x.message;msg.className="msg err";upd()}};
+ $("vls").replaceChildren(box)}
 
 /* ===== ของดีบ้านเรา ===== */
 let GL=[],GE=null,GU=["","",""],GP=["","",""],GFl="all",GN=40;
@@ -433,4 +457,5 @@ $("pzdel").onclick=()=>{if(GE)pdelete(GE)};
 $("pzseed").onclick=async()=>{const L=[["ผ้าไหม","ผ้าไหมลายลูกแก้ว"],["ผ้าไหม","ผ้าสไบไหมลายลูกแก้ว"],["ผ้าไหม","ผ้าโสร่งไหม"],["ผ้าไหม","ผ้าถุงไหม"],["จักสานไม้ไผ่","ลอบ"],["จักสานไม้ไผ่","ไซ"],["จักสานไม้ไผ่","ชนาง"],["จักสานไม้ไผ่","กระบุง"],["จักสานไม้ไผ่","ตะกร้า"]];
  const u=await call({action:"adminProductSave",items:L.map(x=>({cat:x[0],title:x[1]}))});if(!u.ok){alert("⚠️ "+u.error);return}loadP()};
 pclear();
+function hashTab(){const h=location.hash;if(h==="#vocab")$("t3").click();else if(h==="#products")$("t4").click()}
 </script></body></html>
