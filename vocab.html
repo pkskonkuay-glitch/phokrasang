@@ -24,25 +24,41 @@ main{max-width:960px;margin:0 auto;padding:12px 14px 20px}
 .dw{background:linear-gradient(135deg,#1c2b5e,#2f7d5b);color:#fff;border-radius:16px;padding:14px 20px;margin:8px 0 14px}.dw small{opacity:.9}
 .dw .k{font:700 1.9em/1.3 Boon,sans-serif}.dw .t{font-size:1.1em}.dw .btn{margin-top:8px;background:transparent;color:#fff;border-color:#fff}
 .stat{color:var(--mute);font-size:.85em;margin:2px 0 8px}
-/* หมวด */
-.gh{display:flex;align-items:center;gap:8px;margin:20px 0 8px;font:700 1.1em/1.3 Boon,sans-serif}
-.gh i{width:6px;height:1.4em;border-radius:4px;background:var(--gc);display:block}.gh span{font-weight:400;color:var(--mute);font-size:.8em}
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
-.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--gc);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0;min-height:104px;color:var(--ink)}
-.tile:hover,.tile:focus-visible{border-color:var(--gc);box-shadow:0 2px 8px rgba(0,0,0,.1);outline:none}
-.tile .e{font-size:1.9em;line-height:1.25}.tile b{font-size:.85em;line-height:1.35}.tile small{color:var(--mute);font-size:.75em}
-/* รายการคำ */
-.ct{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 10px}.ct h2{flex:1;min-width:150px;margin:0;font:700 1.35em/1.3 Boon,sans-serif}.ct h2 span{font-weight:400;color:var(--mute);font-size:.7em}
-.w{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
-.w.dim{opacity:.6;background:#f1f2f7}
-.w img{width:68px;height:68px;object-fit:cover;border-radius:10px;flex:none}
-.wb{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px 14px;align-items:baseline}
-.wk{font:700 1.35em/1.35 Boon,sans-serif;color:var(--navy);word-break:break-word}.wk.x{color:#9aa0bd;font-size:1em;font-weight:400}
-.wt{word-break:break-word}.wn{grid-column:1/-1;font-size:.8em;color:var(--mute)}
+/* ---- เลือกกลุ่ม / หมวด ---- */
+.gp{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.pill{min-height:46px;padding:2px 14px;border:2px solid var(--line);background:#fff;border-radius:999px;font-weight:700;font-size:.86em;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pill small{font-weight:400;color:var(--mute);font-size:.82em}
+.pill:hover{border-color:var(--gc,var(--navy))}
+.pill.on{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 16%,#fff);box-shadow:0 0 0 2px var(--gc) inset}
+.cats{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--gc);border-radius:12px}
+.chip{min-height:40px;padding:0 12px;border:1px solid var(--line);background:#f5f6fa;border-radius:10px;font-size:.8em;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.chip small{color:var(--mute);font-size:.85em}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}.chip.on small{color:#d7dcf3}
+.pill:focus-visible,.chip:focus-visible,.sh:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+/* ---- หัวข้อหมวด + บัตรคำ ---- */
+.sec{margin:22px 0 4px}
+.sec-h{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--gc)}
+.sec-h h3{margin:0;flex:1;font:700 1.2em/1.3 Boon,sans-serif;color:var(--navy)}.sec-h span{color:var(--mute);font-size:.8em}
+@media(max-width:699px){.gp,.cats{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}.gp::-webkit-scrollbar,.cats::-webkit-scrollbar{display:none}.gp{padding:2px 36px 6px 2px;-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent);mask-image:linear-gradient(90deg,#000 90%,transparent)}.cats{padding-right:30px}.pill,.chip{flex:none;white-space:nowrap;scroll-snap-align:start}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.w{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gc,var(--navy));border-radius:12px;overflow:hidden}
+.w.dim{opacity:.6;background:#f1f2f7}.w.x .wk{color:#9aa0bd;font-weight:400;font-size:1em}
+.wm{display:flex;gap:12px;padding:10px 14px 8px;flex:1}
+.wm img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}
+.wb{min-width:0;flex:1}
+.wk{font:700 1.4em/1.3 Boon,sans-serif;color:var(--navy);word-break:break-word}
+.wt{margin-top:2px;word-break:break-word}
+.wn{margin-top:2px;font-size:.8em;color:var(--mute)}
+.wf{display:flex;align-items:center;gap:8px;padding:5px 8px 5px 14px;border-top:1px dashed var(--line);background:#fafbfe}
+.at{flex:1;min-width:0;font-size:.7em;color:#646a8a;line-height:1.4}
+.at:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:6px;vertical-align:middle}
+.sh{min-height:36px;padding:0 10px;border:0;background:transparent;border-radius:8px;color:var(--navy);font-weight:700;font-size:.78em;cursor:pointer;white-space:nowrap}
+.sh:hover{background:#eef1fb}
+.wa{display:flex;gap:6px;padding:0 14px 10px}
 .tag{display:inline-block;font-size:.7em;font-weight:700;padding:0 8px;border-radius:999px;background:#eef1fb;color:var(--navy);margin-right:4px;vertical-align:middle}.tag.r{background:#fde2e2;color:#7a1c1c}
-.wa{grid-column:1/-1;display:flex;gap:6px;margin-top:4px}
-@media(max-width:520px){.wb{grid-template-columns:1fr}}
-.more{display:block;width:100%;margin:6px 0}
+.dw .at2{display:block;margin-top:6px;font-size:.75em;opacity:.9}
+.ct{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 10px}.ct h2{flex:1;min-width:150px;margin:0;font:700 1.35em/1.3 Boon,sans-serif}.ct h2 span{font-weight:400;color:var(--mute);font-size:.7em}
+.more{display:block;width:100%;margin:10px 0 0}
 .msg{padding:26px;text-align:center;color:var(--mute)}
 /* เกมฝึกทาย */
 .qz{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
@@ -70,7 +86,7 @@ footer{max-width:960px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);fon
 #tt{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#161a33;color:#fff;padding:10px 16px;border-radius:12px;max-width:90%;z-index:99;display:none;font-size:.85em}
 </style></head><body>
 <div class="band"><div class="hd"><a href="./">← กลับหน้าแรก</a><h1>🗣️ คำศัพท์กวย</h1>
-<p>ภาษากวยของบ้านโพธิ์กระสังข์ เลือกหมวด อ่านคำและคำแปล แล้วลองเล่นเกมทายคำดู</p></div></div>
+<p>ภาษากวยของบ้านโพธิ์กระสังข์ เลือกกลุ่มคำ อ่านคำกวยและคำแปล แล้วลองเล่นเกมทายคำดู</p></div></div>
 
 <div id="adm" class="hide"><div class="in"><b>🛠️ โหมดผู้ดูแล</b>
 <button class="btn sm o" id="a-new">➕ เพิ่มคำ</button><button class="btn sm" id="a-bulk">📝 เพิ่มหลายคำ</button><button class="btn sm" id="a-csv">⬇ สำรองไฟล์</button><button class="btn sm" id="a-out">ออก</button>
@@ -142,37 +158,50 @@ function cats(){const m=new Map();E.filter(vis).forEach(e=>{if(!e.cat)return;let
 function toast(t){const x=$("tt");x.textContent=t;x.style.display="block";clearTimeout(x._t);x._t=setTimeout(()=>x.style.display="none",4500)}
 /* ---------- หน้าจอ ---------- */
 function daily(){const L=E.filter(quizable);if(!L.length)return null;const e=L[Math.floor(Date.now()/864e5)%L.length],w=el("div","dw");
- w.append(el("small","","🌟 คำประจำวัน"),el("div","k",e.kuy),el("div","t","= "+e.th));if(e.note)w.append(el("small","",e.note));
- const b=el("button","btn","📤 ส่งต่อ");b.onclick=()=>share("คำศัพท์กวย","คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\nดูคำศัพท์กวยอื่น ๆ ได้ที่");w.append(el("div"),b);return w}
-function groupEl(g,L){const f=document.createDocumentFragment(),h=el("div","gh");h.style.setProperty("--gc",g.c);h.append(el("i"),el("div","",g.e+" "+g.n),el("span","","("+L.reduce((a,c)=>a+c.n,0)+" คำ)"));
- const t=el("div","tiles");L.forEach(c=>{const b=el("button","tile");b.style.setProperty("--gc",g.c);b.append(el("div","e",g1(c.emo)||g.e),el("b","",c.cat),el("small","",c.n+" คำ"));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};t.append(b)});f.append(h,t);return f}
-function home(){const f=document.createDocumentFragment(),cs=cats(),used=new Set(),n=E.filter(pub).length;
- const d=daily();if(d)f.append(d);
- f.append(el("div","stat","มีคำกวย "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • เลือกหมวดที่สนใจได้เลย"));
- const bar=el("div","ct"),qb=el("button","btn s","🎯 เล่นเกมทายคำ");qb.onclick=()=>{location.hash="quiz"};bar.append(qb);f.append(bar);
- GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)f.append(groupEl(g,L))});
- const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)f.append(groupEl({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180"},rest));
- if(!cs.length)f.append(el("div","msg","ยังไม่มีคำศัพท์"));$("v").replaceChildren(f)}
-function row(e,showCat){const w=el("div","w"+(e.hide?" dim":"")),im=imgSrc(e.img);
- if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();w.append(i)}
- const b=el("div","wb"),k=el("div","wk"+(e.kuy?"":" x"),e.kuy||"ยังไม่มีคำกวย"),t=el("div","wt");
- if(ADM){if(e.hide)t.append(el("span","tag r","ซ่อนอยู่"))}
- if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode("= "+e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));
- if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑 ลบ");x.onclick=()=>openEdit(e);d.onclick=()=>del(e);a.append(x,d);b.append(a)}
- w.append(b);return w}
-function listEl(L,showCat,cap){const f=document.createDocumentFragment();L.slice(0,cap).forEach(e=>f.append(row(e,showCat)));
- if(L.length>cap){const m=el("button","btn more","ดูเพิ่มอีก "+(L.length-cap)+" คำ");m.onclick=()=>{m.replaceWith(listEl(L.slice(cap),showCat,200))};f.append(m)}return f}
-function catView(name){const L=E.filter(e=>e.cat===name&&vis(e)),f=document.createDocumentFragment();
- const bk=el("button","btn","← ทุกหมวด");bk.onclick=()=>{location.hash=""};
- if(!L.length){f.append(bk,el("div","msg","ไม่พบหมวดนี้"));$("v").replaceChildren(f);return}
- const emo=(L.find(e=>e.emo)||{}).emo,bar=el("div","ct"),h=el("h2","",(g1(emo)?g1(emo)+" ":"")+name+" ");h.append(el("span","","("+L.length+" คำ)"));bar.append(bk,h);f.append(bar);
- const bar2=el("div","ct");
- if(L.filter(quizable).length>=4){const q=el("button","btn s","🎯 ทายคำในหมวดนี้");q.onclick=()=>{location.hash="quiz/"+encodeURIComponent(name)};bar2.append(q)}
- if(ADM){const a=el("button","btn o","➕ เพิ่มคำในหมวดนี้");a.onclick=()=>openEdit(null,name);const r=el("button","btn","✏️ เปลี่ยนชื่อหมวด");r.onclick=()=>renameCat(name);bar2.append(a,r)}
- if(bar2.firstChild)f.append(bar2);f.append(listEl(L,false,150));$("v").replaceChildren(f)}
+ w.append(el("small","","🌟 คำประจำวัน"),el("div","k",e.kuy),el("div","t","= "+e.th));if(e.note)w.append(el("small","",e.note));w.append(el("small","at2","— "+ATTR));
+ const b=el("button","btn","📤 ส่งต่อ");b.onclick=()=>share("คำศัพท์กวย",shareTxt(e));w.append(el("div"),b);return w}
+const ATTR="คำศัพท์สำเนียงกวยโพธิ์กระสังข์";
+const shareTxt=e=>"คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\n— "+ATTR+" • ที่นี่โพธิ์กระสังข์\nดูคำอื่น ๆ ได้ที่";
+function groups(){const cs=cats(),used=new Set(),out=[];
+ GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)out.push({n:g.n,e:g.e,c:g.c,L:L})});
+ const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)out.push({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180",L:rest});
+ out.forEach(g=>g.t=g.L.reduce((a,c)=>a+c.n,0));return out}
+function card(e,showCat){const w=el("article","w"+(e.kuy?"":" x")+(e.hide?" dim":"")),im=imgSrc(e.img),m=el("div","wm"),b=el("div","wb");
+ if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();m.append(i)}
+ b.append(el("div","wk",e.kuy||"ยังไม่มีคำกวย"));
+ const t=el("div","wt");if(ADM&&e.hide)t.append(el("span","tag r","ซ่อนอยู่"));if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(t);
+ if(e.note)b.append(el("div","wn",e.note));m.append(b);w.append(m);
+ if(e.kuy){const f=el("div","wf"),s=el("button","sh","📤 ส่งต่อ");s.setAttribute("aria-label","ส่งต่อคำ "+e.kuy);s.onclick=()=>share("คำศัพท์กวย",shareTxt(e));f.append(el("div","at",ATTR),s);w.append(f)}
+ if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑 ลบ");x.onclick=()=>openEdit(e);d.onclick=()=>del(e);a.append(x,d);w.append(a)}
+ return w}
+function gridEl(L,showCat,cap){const g=el("div","grid");L.slice(0,cap).forEach(e=>g.append(card(e,showCat)));
+ if(L.length>cap){const m=el("button","btn more","ดูเพิ่มอีก "+(L.length-cap)+" คำ");m.onclick=()=>{const g2=gridEl(L.slice(cap),showCat,200);g2.style.marginTop="10px";m.replaceWith(g2)};const f=document.createDocumentFragment();f.append(g,m);return f}return g}
+function navEl(G,g,cat){const f=document.createDocumentFragment(),gp=el("div","gp");gp.setAttribute("role","group");gp.setAttribute("aria-label","เลือกกลุ่มคำ");
+ G.forEach(x=>{const b=el("button","pill"+(x===g?" on":""));b.style.setProperty("--gc",x.c);b.append(document.createTextNode(x.e+" "+x.n+" "),el("small","",String(x.t)));if(x===g)b.setAttribute("aria-current","true");b.onclick=()=>{location.hash="g/"+encodeURIComponent(x.n)};gp.append(b)});
+ const cs=el("div","cats");cs.style.setProperty("--gc",g.c);
+ const all=el("button","chip"+(cat?"":" on"),"ทุกหมวดในกลุ่ม");all.onclick=()=>{location.hash="g/"+encodeURIComponent(g.n)};cs.append(all);
+ g.L.forEach(c=>{const b=el("button","chip"+(c.cat===cat?" on":""));b.append(document.createTextNode((g1(c.emo)?g1(c.emo)+" ":"")+c.cat+" "),el("small","",String(c.n)));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};cs.append(b)});
+ f.append(gp,cs);return f}
+function browse(gname,cat){const G=groups(),f=document.createDocumentFragment(),home=!location.hash.slice(1);
+ if(!G.length){$("v").replaceChildren(el("div","msg","ยังไม่มีคำศัพท์"));return}
+ let g=cat?G.find(x=>x.L.some(c=>c.cat===cat)):(gname?G.find(x=>x.n===gname):null);
+ if(!g){if(cat||gname){const bk=el("button","btn","← ทุกหมวด");bk.onclick=()=>{location.hash=""};f.append(bk,el("div","msg","ไม่พบหมวดนี้"));$("v").replaceChildren(f);return}g=G[0]}
+ if(home){const n=E.filter(pub).length,d=daily();if(d)f.append(d);
+  f.append(el("div","stat","มีคำกวย "+n.toLocaleString("th-TH")+" คำ ใน "+cats().length+" หมวด • เลือกกลุ่มคำที่สนใจ"));
+  const bar=el("div","ct"),qb=el("button","btn s","🎯 เล่นเกมทายคำ");qb.onclick=()=>{location.hash="quiz"};bar.append(qb);f.append(bar)}
+ f.append(navEl(G,g,cat));
+ if(cat){const c=g.L.find(x=>x.cat===cat),L=E.filter(e=>e.cat===cat&&vis(e)),sec=el("section","sec");sec.style.setProperty("--gc",g.c);
+  const h=el("div","sec-h");h.append(el("h3","",(g1(c.emo)?g1(c.emo)+" ":"")+cat),el("span","",L.length+" คำ"));
+  if(L.filter(quizable).length>=4){const q=el("button","btn sm s","🎯 ทายคำในหมวดนี้");q.onclick=()=>{location.hash="quiz/"+encodeURIComponent(cat)};h.append(q)}
+  if(ADM){const a=el("button","btn sm o","➕ เพิ่มคำ");a.onclick=()=>openEdit(null,cat);const r=el("button","btn sm","✏️ เปลี่ยนชื่อหมวด");r.onclick=()=>renameCat(cat);h.append(a,r)}
+  sec.append(h,gridEl(L,false,120));f.append(sec)}
+ else g.L.forEach(c=>{const L=E.filter(e=>e.cat===c.cat&&vis(e)),sec=el("section","sec"),h=el("div","sec-h"),cap=L.length<=10?10:8;sec.style.setProperty("--gc",g.c);
+  h.append(el("h3","",(g1(c.emo)?g1(c.emo)+" ":"")+c.cat),el("span","",L.length+" คำ"));sec.append(h,gridEl(L,false,cap));
+  if(L.length>cap){const m=el("button","btn more","ดูทั้งหมดในหมวด “"+c.cat+"” ("+L.length+" คำ)");m.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};sec.lastChild.remove();sec.append(m)}f.append(sec)});
+ $("v").replaceChildren(f);document.querySelectorAll(".gp .pill.on,.cats .chip.on").forEach(x=>{const r=x.parentNode;r.scrollLeft=Math.max(0,x.offsetLeft-r.offsetLeft-24)})}
 function searchView(){const q=norm(QS),L=E.filter(e=>vis(e)&&norm(e.th+e.kuy+e.note+e.cat).includes(q)),f=document.createDocumentFragment();
  const h=el("div","ct"),t=el("h2","","ผลค้นหา “"+QS.trim()+"” ");t.append(el("span","","("+L.length+" คำ)"));h.append(t);f.append(h);
- f.append(L.length?listEl(L,true,100):el("div","msg","ไม่พบคำนี้ ลองพิมพ์คำให้สั้นลง หรือส่งคำที่อยากให้เพิ่มมาทาง LINE"));$("v").replaceChildren(f)}
+ f.append(L.length?gridEl(L,true,100):el("div","msg","ไม่พบคำนี้ ลองพิมพ์คำให้สั้นลง หรือส่งคำที่อยากให้เพิ่มมาทาง LINE"));$("v").replaceChildren(f)}
 /* ---------- เกมทายคำ ---------- */
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 function newQuiz(scope){const pool=E.filter(quizable),sp=scope?pool.filter(e=>e.cat===scope):pool;
@@ -198,7 +227,7 @@ function quiz(scope){const v=$("v"),f=document.createDocumentFragment(),bk=el("b
 /* ---------- เส้นทางหน้า ---------- */
 function route(){let h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
  if(QS.trim()){searchView();return}
- if(h.indexOf("c/")===0)catView(h.slice(2));else if(h==="quiz"||h.indexOf("quiz/")===0)quiz(h.slice(5));else home()}
+ if(h.indexOf("c/")===0)browse("",h.slice(2));else if(h.indexOf("g/")===0)browse(h.slice(2),"");else if(h==="quiz"||h.indexOf("quiz/")===0)quiz(h.slice(5));else browse("","")}
 window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(h==="admin"){history.replaceState(null,"",location.pathname);openAdmin();return}
  Q=null;if(QS){QS="";$("q").value=""}route();window.scrollTo(0,0)});
 $("q").oninput=e=>{QS=e.target.value;route()};
