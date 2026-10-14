@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>คำศัพท์กวย | ที่นี่โพธิ์กระสังข์</title>
+<meta name="description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมความหมาย ภาพ และเสียง ช่วยกันตรวจและเติมคำได้ทาง LINE">
+<meta property="og:title" content="คำศัพท์กวย | ที่นี่โพธิ์กระสังข์"><meta property="og:image" content="share.png">
+<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
+<style>
+:root{--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--navy:#1c2b5e;--gold:#fc8c2c;--green:#2f7d5b;--fs:18px}*{box-sizing:border-box}
+body{margin:0;background:#f5f6fa;color:var(--ink);font:400 var(--fs)/1.7 Boon,system-ui,sans-serif}
+.band{background:#4f9d8f radial-gradient(rgba(255,255,255,.35) 1.5px,transparent 1.6px) 0 0/22px 22px;padding:16px 14px}
+.hd{max-width:1000px;margin:0 auto;background:#fff;border-radius:16px;padding:14px 20px}.hd a{color:var(--navy);font-weight:700}
+h1{font:700 30px/1.3 Boon,system-ui,sans-serif;margin:4px 0}.hd p{margin:4px 0;color:var(--mute);font-size:16px}
+main{max-width:1000px;margin:0 auto;padding:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+input[type=search]{flex:1;min-width:200px;min-height:48px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;font:inherit}
+.btn{min-height:44px;padding:6px 14px;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;font:700 16px Boon,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}.chip{min-height:40px;padding:4px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;font:400 16px Boon,sans-serif;cursor:pointer}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.prog{font-size:15px;color:var(--mute)}.pb{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:4px 0 12px}.pb i{display:block;height:100%;background:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.c{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.em{font-size:46px;line-height:1.1}.c img{width:100%;border-radius:10px;aspect-ratio:4/3;object-fit:cover}
+.k{font:700 28px/1.3 Boon,sans-serif;color:var(--navy)}.k.x{color:#9aa0bd;font-size:20px}.ipa{color:var(--mute);font-size:16px}
+.th{font-weight:700}.nt{font-size:15px;color:var(--mute)}.src{font-size:13px;color:#8a90ad}
+.bd{align-self:flex-start;font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;background:#fff1de;color:#8a4a00}.bd.ok{background:#dff3e8;color:#17603f}
+.act{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.act .btn{min-height:38px;font-size:15px}
+.msg{padding:30px;text-align:center;color:var(--mute)}footer{max-width:1000px;margin:0 auto;padding:6px 14px 30px;color:var(--mute);font-size:15px}
+</style></head><body>
+<div class="band"><div class="hd"><a href="./">← กลับหน้าแรก</a><h1>🗣️ คำศัพท์กวย</h1>
+<p>ภาษากวยของบ้านโพธิ์กระสังข์ คำ ความหมาย ภาพ และเสียง ฉบับร่าง ช่วยกันตรวจและเติมโดยผู้เฒ่าและลูกหลาน</p></div></div>
+<main>
+<div class="bar"><input id="q" type="search" placeholder="🔍 ค้นหา เช่น ข้าว หรือ ซอม" aria-label="ค้นหาคำศัพท์">
+<button class="btn" id="fm" aria-label="ลดขนาดตัวอักษร">ก−</button><button class="btn" id="fp" aria-label="เพิ่มขนาดตัวอักษร">ก+</button>
+<button class="btn s" id="td">✍️ ช่วยกันเติมคำ</button></div>
+<div class="prog" id="pg"></div><div class="pb"><i id="pf" style="width:0"></i></div>
+<div class="chips" id="ch"></div><div class="grid" id="gr"></div>
+<p style="margin-top:18px"><a class="btn g" id="ls" target="_blank" rel="noopener">💬 ส่งคำศัพท์หรือเสียงทาง LINE</a></p>
+</main>
+<footer>คำศัพท์อาจต่างกันตามหมู่บ้านและสำเนียง คำที่มีป้าย “ฉบับร่าง” ยังรอผู้เฒ่าช่วยตรวจ ถ้าเห็นว่าไม่ตรงกับที่ใช้ในบ้านเรา บอกทีมงานทาง LINE ได้เลย<br>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน</footer>
+<script>
+const CSV="kuy-vocab.csv",LINE="@825crkiu",$=id=>document.getElementById(id);
+const msg=t=>"https://line.me/R/oaMessage/"+encodeURIComponent(LINE)+"/?"+encodeURIComponent(t);
+function parse(t){const r=[];let w=[],f="",q=false;t=t.replace(/^\uFEFF/,"");for(let i=0;i<t.length;i++){const c=t[i];
+ if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c=='"')q=true;else if(c==","){w.push(f);f=""}
+ else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;w.push(f);f="";r.push(w);w=[]}else f+=c}
+ if(f||w.length){w.push(f);r.push(w)}return r}
+let E=[],cat="ทั้งหมด",qs="",todo=false;
+const has=e=>!!(e.kuy||e.ipa),el=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n};
+function card(e){const c=el("div","c");
+ if(e.img&&/^[\w.\-\u0E00-\u0E7F]+$/.test(e.img)){const i=new Image();i.src="img/"+e.img;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();c.append(i)}else c.append(el("div","em",e.emo||"💬"));
+ c.append(el("div","k"+(has(e)?"":" x"),has(e)?(e.kuy||e.ipa):"ยังไม่มีคำกวย"));
+ if(e.kuy&&e.ipa)c.append(el("div","ipa",e.ipa));
+ c.append(el("div","th","= "+e.th));
+ if(e.note)c.append(el("div","nt",e.note));
+ if(has(e))c.append(el("span","bd"+(e.st==="ตรวจแล้ว"?" ok":""),e.st==="ตรวจแล้ว"?"✔ ตรวจแล้ว":"ฉบับร่าง รอตรวจ"));
+ if(e.src)c.append(el("div","src","ที่มา: "+e.src));
+ const a=el("div","act");
+ if(/^https:\/\//.test(e.aud||"")){const p=el("a","btn","▶ ฟังเสียง");p.href=e.aud;p.target="_blank";p.rel="noopener";a.append(p)}
+ const l=el("a","btn",has(e)?"แก้คำนี้":"ช่วยบอกคำนี้");l.target="_blank";l.rel="noopener";
+ l.href=msg(has(e)?"คำศัพท์กวย: คำว่า “"+e.th+"” ตอนนี้เป็น “"+(e.kuy||e.ipa)+"” ที่ถูกต้องคือ ...":"คำศัพท์กวย: คำว่า “"+e.th+"” ภาษากวยเรียกว่า ... (ส่งเป็นข้อความเสียงได้)");
+ a.append(l);c.append(a);return c}
+function draw(){const m=e=>!qs||(e.th+e.kuy+e.ipa+e.note).toLowerCase().includes(qs);
+ const vis=e=>todo||has(e),cats=[...new Set(E.map(e=>e.cat))];
+ const ch=$("ch");ch.replaceChildren();
+ [["ทั้งหมด",""],...cats.map(c=>[c,E.find(e=>e.cat===c).emo])].forEach(([c,em])=>{
+  const list=c==="ทั้งหมด"?E:E.filter(e=>e.cat===c),n=list.filter(e=>vis(e)).length;if(!n&&!todo)return;
+  const b=el("button","chip"+(c===cat?" on":""),(c==="ทั้งหมด"?"":(em.slice(0,4)+" "))+c+" ("+n+")");b.onclick=()=>{cat=c;draw()};ch.append(b)});
+ const L=E.filter(e=>(cat==="ทั้งหมด"||e.cat===cat)&&vis(e)&&m(e)),g=$("gr");g.replaceChildren(...L.map(card));
+ if(!L.length)g.append(el("div","msg",todo?"ไม่พบคำที่ค้นหา":"ยังไม่มีคำในหมวดนี้ กด “ช่วยกันเติมคำ” เพื่อดูคำที่รอบอก"));
+ const f=E.filter(has).length;$("pg").textContent="มีคำกวยแล้ว "+f+" จาก "+E.length+" คำที่ตั้งเป้าไว้";$("pf").style.width=Math.round(100*f/Math.max(E.length,1))+"%"}
+fetch(CSV).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{
+ E=parse(t).slice(1).filter(r=>r[2]).map(r=>({cat:r[0],emo:r[1],th:r[2],kuy:r[3]||"",ipa:r[4]||"",note:r[5]||"",img:r[6]||"",aud:r[7]||"",st:r[8]||"",src:r[9]||""}));draw()})
+ .catch(()=>{$("gr").append(el("div","msg","ยังไม่พบไฟล์ kuy-vocab.csv (ต้องอัปโหลดไว้ข้างไฟล์นี้)"))});
+$("q").oninput=e=>{qs=e.target.value.trim().toLowerCase();draw()};
+$("td").onclick=()=>{todo=!todo;$("td").textContent=todo?"✔ กำลังช่วยกันเติมคำ (กดเพื่อปิด)":"✍️ ช่วยกันเติมคำ";draw()};
+$("ls").href=msg("ขอส่งคำศัพท์กวย");
+let z=+localStorage.getItem("kpvfs")||18;const sz=()=>{document.documentElement.style.setProperty("--fs",z+"px");try{localStorage.setItem("kpvfs",z)}catch(e){}};sz();
+$("fp").onclick=()=>{z=Math.min(26,z+2);sz()};$("fm").onclick=()=>{z=Math.max(16,z-2);sz()};
+</script></body></html>
