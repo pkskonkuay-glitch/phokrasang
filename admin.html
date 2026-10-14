@@ -30,7 +30,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
 <details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
-<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
 <label for="cc">หมวด (เช่น สิทธิ์ที่ควรรู้, โครงการและบริการ, เตือนภัย, คนบ้านเรา, ประเพณี, ความเชื่อ)</label><input id="cc" list="cl"><datalist id="cl"><option>สิทธิ์ที่ควรรู้</option><option>โครงการและบริการ</option><option>เตือนภัย</option><option>คนบ้านเรา</option><option>ประเพณี</option><option>ความเชื่อ</option><option>วัฒน์กวย</option><option>คลิป</option></datalist>
@@ -50,7 +50,27 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label style="font-weight:400"><input type="checkbox" id="cp2" checked style="width:auto"> เผยแพร่ทันที</label>
 <label style="font-weight:400"><input type="checkbox" id="cpn" style="width:auto"> ปักหน้าแรก (แสดงในสไลด์ใหญ่ด้านบนสุด สูงสุด 6 เรื่อง)</label>
 <p><button class="btn" id="csv">บันทึก</button> <button class="btn o" id="crs">ล้างฟอร์ม</button></p><div class="msg hide" id="cm"></div></div>
-<h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div></div>
+<h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div><div id="p3" class="hide">
+<div class="c"><h3>🗣️ คำศัพท์กวย</h3><p class="mute">เพิ่ม แก้ไข ซ่อน หรือลบคำได้ที่นี่ หน้าเว็บ <a href="vocab.html" target="_blank" rel="noopener">vocab.html</a> จะอัปเดตตามทันที (ลบแล้วคำไปอยู่แท็บ “ถังขยะคำศัพท์” ในชีต กู้คืนได้)</p>
+<div class="stats" id="vst"></div>
+<div class="row"><div><input id="vq" placeholder="🔍 ค้นหา ไทย / กวย / คำอ่าน" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
+<div class="stats" id="vft" style="margin-top:8px"></div>
+<p><button class="btn" id="vnew">➕ เพิ่มคำใหม่</button> <button class="btn o" id="vcsvb">⬇ ดาวน์โหลดสำรอง (CSV)</button></p></div>
+<div class="c hide" id="vform"><h3 id="vft2">เพิ่มคำใหม่</h3>
+<div class="row"><div><label for="vc">หมวด</label><input id="vc" list="vcl" maxlength="40" placeholder="เช่น ครอบครัว"><datalist id="vcl"></datalist></div><div><label for="ve">อีโมจิ (1–2 ตัว)</label><input id="ve" maxlength="8" placeholder="👪"></div></div>
+<label for="vth">ความหมายไทย *</label><input id="vth" maxlength="120" placeholder="เช่น แม่">
+<div class="row"><div><label for="vkuy">คำกวย (อักษรไทย)</label><input id="vkuy" maxlength="120"></div><div><label for="vipa">คำอ่าน / IPA</label><input id="vipa" maxlength="120"></div></div>
+<label for="vnote">อธิบายเพิ่ม (ไม่เกิน 600 ตัวอักษร)</label><textarea id="vnote" rows="3" maxlength="600"></textarea>
+<label for="vsrc">ที่มา (เช่น ผู้เฒ่าที่บอก หมู่บ้าน หรือหนังสือ)</label><input id="vsrc" maxlength="300">
+<label for="vstat">สถานะ</label><select id="vstat"><option value="">— (ยังไม่มีคำ)</option><option>ฉบับร่าง</option><option>ตรวจแล้ว</option></select>
+<label for="vimgf">ภาพประกอบ (เลือกจากเครื่อง ระบบย่อขนาดให้)</label><input id="vimgf" type="file" accept="image/*"><div id="vimgpv" class="ph"></div>
+<label for="vimgu">หรือใส่ลิงก์ภาพ (https) / ชื่อไฟล์ในโฟลเดอร์ img</label><input id="vimgu" placeholder="https://... หรือ mother.jpg">
+<label for="vaudf">เสียงอ่านคำ (m4a, mp3, ogg, wav ไม่เกิน 8 MB)</label><input id="vaudf" type="file" accept="audio/*,.m4a,.mp3,.ogg,.wav"><div id="vaudpv"></div>
+<label for="vaudu">หรือวางลิงก์เสียง (เช่น ลิงก์ Drive ของเสียงที่ผู้เฒ่าส่งมาทาง LINE)</label><input id="vaudu" placeholder="https://drive.google.com/file/d/.../view">
+<label class="opt"><input type="checkbox" id="vhide"> ซ่อนคำนี้จากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
+<p><button class="btn" id="vsv">บันทึก</button> <button class="btn o" id="vcx">ยกเลิก</button> <button class="btn o hide" id="vdel" style="color:#c93b2f">🗑 ลบคำนี้</button></p><div class="msg hide" id="vm"></div></div>
+<div id="vls"></div><p><button class="btn o hide" id="vmore">ดูเพิ่ม</button></p></div>
+</div>
 <div id="big" class="hide"><img alt="รูปขยาย"></div>
 <script>let PL=null,PM=null,PMk=null,CL=[];
 const API0="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
@@ -93,7 +113,11 @@ function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("d
  t.append(el("h3","",it.no+" • "+it.cat),el("span","badge",it.status),el("span","badge"+(it.review==="ผ่าน"?" g":it.review==="รอตรวจ"?"":" r"),"ตรวจ: "+it.review));if(it.pub)t.append(el("span","badge g","เผยแพร่แล้ว"));c.append(t);
  c.append(el("div","mute",it.at+" • ช่องทาง "+it.ch+" • ส่งถึง "+(it.to||"-")+(it.hasLine?" • ผูก LINE":"")));
  if(it.flags)c.append(el("div","badge r","⚠️ "+it.flags));
- c.append(el("p","",it.what));if(it.want)c.append(el("p","mute","อยากให้ทำ: "+it.want));c.append(el("p","mute","จุดสังเกต: "+(it.spot||"-")));
+ c.append(el("p","",it.what));if(it.want){const au=[],tx=String(it.want).split("\n").map(z=>{const m=/^🎙\s*(https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\/view)\s*$/.exec(z.trim());if(m){au.push(m[2]);return ""}return z}).filter(Boolean).join("\n");
+  if(tx)c.append(el("p","mute","อยากให้ทำ: "+tx));
+  au.forEach((id,i)=>{const b=el("button","btn g","🎙 ฟังเสียง"+(au.length>1?" "+(i+1):"")),w=el("div","hide"),lk=el("a","btn o","เปิดใน Drive");lk.href="https://drive.google.com/file/d/"+id+"/view";lk.target="_blank";lk.rel="noopener";
+   b.onclick=()=>{if(!w.firstChild){const f=document.createElement("iframe");f.src="https://drive.google.com/file/d/"+id+"/preview";f.title="ฟังเสียง";f.allow="autoplay";f.style.cssText="width:100%;height:90px;border:0;margin-top:8px";w.append(f)}w.classList.toggle("hide")};
+   c.append(b," ",lk,w)})}c.append(el("p","mute","จุดสังเกต: "+(it.spot||"-")));
  if(okMap(it.map)){const a=el("a","btn g","📍 เปิดแผนที่ ("+(+it.lat).toFixed(5)+", "+(+it.lng).toFixed(5)+")");a.href=it.map;a.target="_blank";a.rel="noopener";c.append(a)}
  const ph=el("div","ph");it.pics.filter(okImg).forEach(u=>{const i=new Image();i.src=u;i.alt="รูปประกอบ";i.loading="lazy";i.onclick=()=>{$("big").querySelector("img").src=u.replace("sz=w1200","sz=w2000");$("big").classList.remove("hide")};ph.append(i)});c.append(ph);
  const sel=(l,opts,v)=>{const s=el("select");opts.forEach(o=>{const x=el("option","",o);x.value=o;s.append(x)});s.value=v;return s};
@@ -107,8 +131,8 @@ function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("d
 $("big").onclick=()=>$("big").classList.add("hide");
 /* ===== โพสต์เนื้อหา ===== */
 let CE=null,CP="";
-const tab=n=>{$("p1").classList.toggle("hide",n!==1);$("p2").classList.toggle("hide",n!==2);$("t1").classList.toggle("on",n===1);$("t2").classList.toggle("on",n===2);if(n===2)loadC()};
-$("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);
+const tab=n=>{[1,2,3].forEach(i=>{$("p"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});if(n===2)loadC();if(n===3)loadV()};
+$("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);$("t3").onclick=()=>tab(3);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
 function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear()}
 $("crs").onclick=cclear;cclear();
@@ -162,4 +186,73 @@ $("cimf").onchange=async()=>{const f=$("cimf").files[0];if(!f)return;const b=$("
   if(!u.ok)throw new Error(u.error||"อัปโหลดไม่ได้");const url=u.item&&u.item.img;if(!/^https:\/\/\S+$/.test(url||""))throw new Error("ระบบไม่ได้ส่งลิงก์รูปกลับมา (ใช้วิธีอัปโหลดรูปผ่าน GitHub แทนได้)");
   insTxt("\n!["+cap+"]("+url+")\n")}catch(x){alert("⚠️ "+x.message)}
  b.disabled=false;b.textContent="🖼 แทรกรูปในเนื้อหา";$("cimf").value=""};
+
+/* ===== คำศัพท์กวย ===== */
+let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="all",VN=40;
+const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},hasK=e=>!!(e.kuy||e.ipa),drvId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
+const imgSrc=u=>/^https:\/\//.test(u||"")?u:(u?"img/"+u:"");
+async function loadV(){const ls=$("vls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
+ try{const d=await call({action:"adminVocabList"});
+  if(!d.ok)throw new Error(/unknown admin action/.test(d.error||"")?"NOHOOK":(d.error||"โหลดไม่ได้"));
+  VL=d.items;VCATS=d.cats||[];fillCats();renderV()}
+ catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?"⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ (ต้องวางไฟล์ vocab.gs เพิ่มบรรทัดเชื่อมใน รหัส.gs แล้วทำให้ใช้งานได้เป็นเวอร์ชันใหม่ ตามคู่มือ)":"โหลดไม่ได้: "+x.message))}}
+function fillCats(){const v=$("vcat").value;$("vcat").replaceChildren(...[["","ทุกหมวด"],...VCATS.map(c=>[c.cat,(g1(c.emo)?g1(c.emo)+" ":"")+c.cat])].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));$("vcat").value=v;
+ $("vcl").replaceChildren(...VCATS.map(c=>{const o=el("option","",c.cat);o.value=c.cat;return o}))}
+const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกวยแล้ว",hasK],empty:["ยังไม่มีคำกวย",e=>!hasK(e)],draft:["ฉบับร่าง",e=>hasK(e)&&e.st!=="ตรวจแล้ว"],ok:["ตรวจแล้ว",e=>e.st==="ตรวจแล้ว"],hid:["ซ่อนอยู่",e=>e.hide]};
+function renderV(){const q=$("vq").value.trim().toLowerCase(),cat=$("vcat").value;
+ const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ตรวจแล้ว",VL.filter(vflt.ok[1]).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
+ $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=40;renderV()};return b}));
+ const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.ipa+e.note).toLowerCase().includes(q)));
+ $("vls").replaceChildren(...(L.length?L.slice(0,VN).map(vcard):[el("p","mute","ไม่พบคำ")]));
+ $("vmore").classList.toggle("hide",L.length<=VN);$("vmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-VN)+" คำ)"}
+$("vq").oninput=()=>{VN=40;renderV()};$("vcat").onchange=()=>{VN=40;renderV()};$("vmore").onclick=()=>{VN+=40;renderV()};
+const vsave=async(item,photo)=>call({action:"adminVocabSave",item:item,photo:photo||undefined});
+function vcard(it){const c=el("div","c"),t=el("div","top");
+ t.append(el("h3","",(g1(it.emo)?g1(it.emo)+" ":"")+it.th),el("span","badge",it.cat));
+ if(hasK(it))t.append(el("span","badge"+(it.st==="ตรวจแล้ว"?" g":""),it.st==="ตรวจแล้ว"?"✔ ตรวจแล้ว":"ฉบับร่าง"));else t.append(el("span","badge r","ยังไม่มีคำกวย"));
+ if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
+ if(hasK(it)){const k=el("p","",(it.kuy||"")+(it.kuy&&it.ipa?"   ":"")+(it.ipa?"["+it.ipa+"]":""));k.style.cssText="font-size:20px;font-weight:700;margin:6px 0";c.append(k)}
+ if(it.note)c.append(el("p","mute",it.note));
+ if(it.src)c.append(el("p","mute","ที่มา: "+it.src));
+ const im=imgSrc(it.img);if(im){const ph=el("div","ph"),i=new Image();i.src=im;i.alt=it.th;i.loading="lazy";i.onerror=()=>i.remove();ph.append(i);c.append(ph)}
+ const row=el("div"),id=drvId(it.aud);
+ if(it.aud){const b=el("button","btn g","▶ ฟังเสียง"),w=el("div","hide");b.onclick=()=>{if(!w.firstChild){if(id){const f=document.createElement("iframe");f.src="https://drive.google.com/file/d/"+id+"/preview";f.title="ฟังเสียง";f.allow="autoplay";f.style.cssText="width:100%;height:90px;border:0;margin-top:8px";w.append(f)}else{const a=document.createElement("audio");a.controls=true;a.src=it.aud;a.style.cssText="width:100%;margin-top:8px";w.append(a)}}w.classList.toggle("hide")};row.append(b," ",w)}
+ const e=el("button","btn o","แก้ไข"),h=el("button","btn o",it.hide?"แสดงบนเว็บ":"ซ่อน"),x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";
+ e.onclick=()=>vedit(it);
+ h.onclick=async()=>{h.disabled=true;const u=await vsave(Object.assign({},it,{hide:!it.hide}));if(!u.ok)alert(u.error);loadV()};
+ x.onclick=()=>vdelete(it);
+ row.append(e," ",h," ");
+ if(hasK(it)&&it.st!=="ตรวจแล้ว"){const ok=el("button","btn","✔ ตรวจแล้ว");ok.onclick=async()=>{ok.disabled=true;const u=await vsave(Object.assign({},it,{st:"ตรวจแล้ว"}));if(!u.ok)alert(u.error);loadV()};row.append(ok," ")}
+ row.append(x);c.append(row);return c}
+function vclear(){VE=null;VP="";VA="";["vc","ve","vth","vkuy","vipa","vnote","vsrc","vimgu","vaudu"].forEach(i=>$(i).value="");$("vstat").value="";$("vhide").checked=false;$("vimgf").value="";$("vaudf").value="";$("vimgpv").replaceChildren();$("vaudpv").replaceChildren();$("vft2").textContent="เพิ่มคำใหม่";$("vdel").classList.add("hide");$("vm").className="msg hide"}
+function vopen(){$("vform").classList.remove("hide");$("vform").scrollIntoView({behavior:"smooth"});$("vth").focus()}
+function vedit(it){vclear();VE=it;$("vc").value=it.cat||"";$("ve").value=it.emo||"";$("vth").value=it.th||"";$("vkuy").value=it.kuy||"";$("vipa").value=it.ipa||"";$("vnote").value=it.note||"";$("vsrc").value=it.src||"";$("vstat").value=it.st||"";$("vimgu").value=it.img||"";$("vaudu").value=it.aud||"";$("vhide").checked=!!it.hide;
+ const im=imgSrc(it.img);if(im){const i=new Image();i.src=im;i.alt="ภาพเดิม";i.onerror=()=>i.remove();$("vimgpv").append(i)}
+ $("vft2").textContent="แก้ไข: "+it.th;$("vdel").classList.remove("hide");vopen()}
+$("vnew").onclick=()=>{vclear();const c=$("vcat").value;if(c){$("vc").value=c;const f=VCATS.find(z=>z.cat===c);if(f)$("ve").value=f.emo||""}vopen()};
+$("vcx").onclick=()=>{vclear();$("vform").classList.add("hide")};
+$("vc").addEventListener("change",()=>{const f=VCATS.find(z=>z.cat===$("vc").value.trim());if(f&&!$("ve").value)$("ve").value=f.emo||""});
+$("vimgf").onchange=async e=>{const f=e.target.files[0];$("vimgpv").replaceChildren();VP="";if(!f)return;try{VP=await shrinkD(f);const p=new Image();p.src=VP;p.alt="ตัวอย่างภาพ";$("vimgpv").append(p)}catch(x){alert("⚠️ "+x.message);$("vimgf").value=""}};
+$("vaudf").onchange=e=>{const f=e.target.files[0];$("vaudpv").replaceChildren();VA="";if(!f)return;
+ if(f.size>8*1024*1024){alert("⚠️ ไฟล์เสียงใหญ่เกิน 8 MB ตัดให้สั้นลงหรือแปลงเป็น mp3 ก่อน");$("vaudf").value="";return}
+ const r=new FileReader();r.onload=()=>{VA=r.result;const a=document.createElement("audio");a.controls=true;a.src=URL.createObjectURL(f);a.style.cssText="width:100%;margin-top:6px";$("vaudpv").append(a)};r.onerror=()=>alert("⚠️ อ่านไฟล์เสียงไม่ได้");r.readAsDataURL(f)};
+$("vsv").onclick=async()=>{const b=$("vsv"),m=$("vm");b.disabled=true;m.className="msg hide";
+ try{const item={id:VE?VE.id:undefined,cat:$("vc").value.trim(),emo:$("ve").value.trim(),th:$("vth").value.trim(),kuy:$("vkuy").value.trim(),ipa:$("vipa").value.trim(),note:$("vnote").value.trim(),src:$("vsrc").value.trim(),st:$("vstat").value,img:$("vimgu").value.trim(),aud:$("vaudu").value.trim(),hide:$("vhide").checked};
+  if(!item.th)throw new Error("กรุณาใส่ความหมายไทย");if(!item.cat)throw new Error("กรุณาใส่หมวด");
+  if((item.kuy||item.ipa)&&!item.st)item.st="ฉบับร่าง";
+  const send=()=>call({action:"adminVocabSave",item:item,photo:VP||undefined,audio:VA?{data:VA}:undefined});
+  m.textContent=(VP||VA)?"กำลังอัปโหลด…":"กำลังบันทึก…";m.className="msg";
+  let u=await send();
+  if(!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
+  if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");
+  m.textContent="✅ บันทึกแล้ว";m.className="msg";vclear();$("vform").classList.add("hide");await loadV()}
+ catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
+async function vdelete(it){if(!confirm("ลบคำ “"+it.th+"”"+(hasK(it)?" ("+(it.kuy||it.ipa)+")":"")+" ?\nคำจะถูกย้ายไปแท็บ “ถังขยะคำศัพท์” ในชีต (กู้คืนได้) และหายจากหน้าเว็บ"))return;
+ const u=await call({action:"adminVocabDelete",id:it.id});if(!u.ok){alert("⚠️ "+u.error);return}
+ if(VE&&VE.id===it.id){vclear();$("vform").classList.add("hide")}loadV()}
+$("vdel").onclick=()=>{if(VE)vdelete(VE)};
+$("vcsvb").onclick=()=>{if(!VL.length){alert("ยังไม่มีข้อมูลให้ดาวน์โหลด");return}
+ const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',H=["หมวด","อีโมจิ","ความหมายไทย","คำกวย (อักษรไทย)","คำอ่าน/IPA","อธิบาย","ภาพ (ชื่อไฟล์ใน img/)","เสียง (ลิงก์)","สถานะ","ที่มา"];
+ const rows=VL.filter(e=>!e.hide).map(e=>[e.cat,e.emo,e.th,e.kuy,e.ipa,e.note,e.img,e.aud,e.st,e.src].map(q).join(","));
+ const blob=new Blob(["\uFEFF"+[H.map(q).join(","),...rows].join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kuy-vocab.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 </script></body></html>

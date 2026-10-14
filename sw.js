@@ -1,6 +1,6 @@
 /* ที่นี่โพธิ์กระสังข์ — ให้เว็บเปิดเร็วและเปิดได้แม้สัญญาณอ่อน
    เปลี่ยนเลขเวอร์ชันด้านล่างทุกครั้งที่อัปโหลดไฟล์ชุดใหม่ เพื่อให้เครื่องผู้ใช้ล้างของเก่า */
-const V = "kp-2569-10-13-a";
+const V = "kp-2569-10-14-a";
 const CORE = ["./", "index.html", "privacy.html", "manifest.webmanifest",
   "fonts/Boon-Regular.woff2", "fonts/Boon-Bold.woff2", "icons/icon-192.png"];
 self.addEventListener("install", e => {
