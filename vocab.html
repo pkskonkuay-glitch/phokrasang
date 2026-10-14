@@ -53,7 +53,7 @@ function parse(t){const r=[];let w=[],f="",q=false;t=t.replace(/^\uFEFF/,"");for
  else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;w.push(f);f="";r.push(w);w=[]}else f+=c}
  if(f||w.length){w.push(f);r.push(w)}return r}
 let E=[],cat="ทั้งหมด",qs="",todo=false;
-const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},has=e=>!!(e.kuy||e.ipa),el=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n};
+const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},has=e=>!!e.kuy,el=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n};
 const driveId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
 function player(e,host){ /* เล่นเสียงในหน้านี้: ลิงก์ Drive ใช้ตัวเล่นของ Drive, ไฟล์เสียงตรง ๆ ใช้ audio */
  const b=el("button","btn","▶ ฟังเสียง"),w=el("div","pl hide");
@@ -65,28 +65,27 @@ function player(e,host){ /* เล่นเสียงในหน้านี�
 function card(e,big){const c=el("div",big?"":"c");
  if(!big){const im=e.img||"";
   if(/^https:\/\//.test(im)||/^[\w.\-\u0E00-\u0E7F]+$/.test(im)&&im){const i=new Image();i.src=/^https:\/\//.test(im)?im:"img/"+im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.replaceWith(el("div","em",e.emo||"💬"));c.append(i)}else c.append(el("div","em",e.emo||"💬"))}
- c.append(el("div","k"+(has(e)?"":" x"),has(e)?(e.kuy||e.ipa):"ยังไม่มีคำกวย"));
- if(e.kuy&&e.ipa)c.append(el("div","ipa",e.ipa));
+ c.append(el("div","k"+(has(e)?"":" x"),has(e)?e.kuy:"ยังไม่มีคำกวย"));
  c.append(el("div","th","= "+e.th));
  if(e.note)c.append(el("div","nt",e.note));
  if(!big){if(has(e))c.append(el("span","bd"+(e.st==="ตรวจแล้ว"?" ok":""),e.st==="ตรวจแล้ว"?"✔ ตรวจแล้ว":"ฉบับร่าง รอตรวจ"));
   if(e.src)c.append(el("div","src","ที่มา: "+e.src))}
  const a=el("div","act");let pw=null;
  if(/^https:\/\//.test(e.aud||""))pw=player(e,a);
- if(has(e)){const s=el("button","btn","📤 ส่งต่อ");s.onclick=()=>share("คำศัพท์กวย","คำกวย: “"+(e.kuy||e.ipa)+"” แปลว่า “"+e.th+"”\nดูคำศัพท์กวยอื่น ๆ ได้ที่");a.append(s)}
+ if(has(e)){const s=el("button","btn","📤 ส่งต่อ");s.onclick=()=>share("คำศัพท์กวย","คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\nดูคำศัพท์กวยอื่น ๆ ได้ที่");a.append(s)}
  c.append(a);if(pw)c.append(pw);return c}
 function daily(){const L=E.filter(has);if(!L.length){$("dw").replaceChildren();return}
  const V=L.filter(e=>e.st==="ตรวจแล้ว"),P=V.length?V:L,d=Math.floor(Date.now()/864e5),e=P[d%P.length];
  const w=el("div","dw");w.append(el("small","","🌟 คำประจำวัน"));w.append(card(e,true));$("dw").replaceChildren(w)}
-function draw(){const m=e=>!qs||(e.th+e.kuy+e.ipa+e.note).toLowerCase().includes(qs);
+function draw(){const m=e=>!qs||(e.th+e.kuy+e.note).toLowerCase().includes(qs);
  const vis=e=>todo||has(e),cats=[...new Set(E.map(e=>e.cat))];
  const ch=$("ch");ch.replaceChildren();
  [["ทั้งหมด",""],...cats.map(c=>[c,E.find(e=>e.cat===c).emo||""])].forEach(([c,em])=>{
   const list=c==="ทั้งหมด"?E:E.filter(e=>e.cat===c),n=list.filter(e=>vis(e)).length;if(!n&&!todo)return;
   const b=el("button","chip"+(c===cat?" on":""),(c==="ทั้งหมด"?"":(g1(em)?g1(em)+" ":""))+c+" ("+n+")");b.onclick=()=>{cat=c;draw()};ch.append(b)});
- const L=E.filter(e=>(cat==="ทั้งหมด"||e.cat===cat)&&vis(e)&&m(e)),g=$("gr");g.replaceChildren(...L.map(e=>card(e)));
+ const L=E.filter(e=>(cat==="ทั้งหมด"||e.cat===cat)&&vis(e)&&m(e)),g=$("gr");L.sort((a,b)=>has(b)-has(a));g.replaceChildren(...L.map(e=>card(e)));
  if(!L.length)g.append(el("div","msg",todo?"ไม่พบคำที่ค้นหา":"ยังไม่มีคำในหมวดนี้ กด “ดูคำที่ยังรอคำกวย” เพื่อดูคำที่รอเติม"));
- const f=E.filter(has).length;$("pg").textContent="มีคำกวยแล้ว "+f+" จาก "+E.length+" คำที่ตั้งเป้าไว้";$("pf").style.width=Math.round(100*f/Math.max(E.length,1))+"%"}
+ const f=E.filter(has).length;$("pg").textContent="มีคำกวยแล้ว "+f+" จาก "+E.length+" คำที่รวบรวมไว้ (ที่เหลือรอผู้เฒ่าและลูกหลานช่วยเติม)";$("pf").style.width=Math.round(100*f/Math.max(E.length,1))+"%"}
 const fromCsv=()=>fetch(CSV).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>parse(t).slice(1).filter(r=>r[2]).map(r=>({cat:r[0],emo:r[1],th:r[2],kuy:r[3]||"",ipa:r[4]||"",note:r[5]||"",img:r[6]||"",aud:r[7]||"",st:r[8]||"",src:r[9]||""})));
 const fromApi=()=>fetch(API+"?action=vocab").then(r=>r.json()).then(d=>{if(!d||!d.ok||!Array.isArray(d.items)||!d.items.length)throw 0;return d.items});
 Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv)

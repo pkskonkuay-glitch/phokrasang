@@ -54,7 +54,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="c"><h3>🗣️ คำศัพท์กวย</h3><p class="mute">เพิ่ม แก้ไข ซ่อน หรือลบคำได้ที่นี่ หน้าเว็บ <a href="vocab.html" target="_blank" rel="noopener">vocab.html</a> จะอัปเดตตามทันที (ลบแล้วคำไปอยู่แท็บ “ถังขยะคำศัพท์” ในชีต กู้คืนได้)</p>
 <div class="msg warn hide" id="voff"><b>โหมดไม่ต้องใช้หลังบ้าน (ใช้งานได้ทันที)</b><br>แก้ เพิ่ม ลบคำได้ตามปกติ แล้วกด “⬇ ดาวน์โหลดไฟล์” นำไฟล์ <b>kuy-vocab.csv</b> ไปอัปโหลดทับบนเว็บ หน้า vocab.html จะอัปเดตตาม ที่แก้ไว้เก็บในเครื่องนี้ชั่วคราวจนกว่าจะอัปโหลด<br><span id="vdirty"></span> <button class="btn o" id="vreset" style="margin-top:6px">↺ โหลดใหม่จากไฟล์บนเว็บ (ทิ้งส่วนที่ยังไม่อัปโหลด)</button></div>
 <div class="stats" id="vst"></div>
-<div class="row"><div><input id="vq" placeholder="🔍 ค้นหา ไทย / กวย / คำอ่าน" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
+<div class="row"><div><input id="vq" placeholder="🔍 ค้นหา คำไทย / คำกวย" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
 <div class="stats" id="vft" style="margin-top:8px"></div>
 <p><button class="btn" id="vnew">➕ เพิ่มคำใหม่</button> <button class="btn o" id="vcsvb">⬇ ดาวน์โหลดสำรอง (CSV)</button></p></div>
 <details class="c" id="vtools"><summary><b>🧰 เครื่องมือจัดการหมวดและเพิ่มหลายคำ</b></summary>
@@ -73,7 +73,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="c hide" id="vform"><h3 id="vft2">เพิ่มคำใหม่</h3>
 <div class="row"><div><label for="vc">หมวด</label><input id="vc" list="vcl" maxlength="40" placeholder="เช่น ครอบครัว"><datalist id="vcl"></datalist></div><div><label for="ve">อีโมจิ (1–2 ตัว)</label><input id="ve" maxlength="8" placeholder="👪"></div></div>
 <label for="vth">ความหมายไทย *</label><input id="vth" maxlength="120" placeholder="เช่น แม่">
-<div class="row"><div><label for="vkuy">คำกวย (อักษรไทย)</label><input id="vkuy" maxlength="120"></div><div><label for="vipa">คำอ่าน / IPA</label><input id="vipa" maxlength="120"></div></div>
+<label for="vkuy">คำกวย (พิมพ์เป็นอักษรไทย)</label><input id="vkuy" maxlength="120"><input id="vipa" type="hidden">
 <label for="vnote">อธิบายเพิ่ม (ไม่เกิน 600 ตัวอักษร)</label><textarea id="vnote" rows="3" maxlength="600"></textarea>
 <label for="vsrc">ที่มา (เช่น ผู้เฒ่าที่บอก หมู่บ้าน หรือหนังสือ)</label><input id="vsrc" maxlength="300">
 <label for="vstat">สถานะ</label><select id="vstat"><option value="">— (ยังไม่มีคำ)</option><option>ฉบับร่าง</option><option>ตรวจแล้ว</option></select>
@@ -202,8 +202,8 @@ $("cimf").onchange=async()=>{const f=$("cimf").files[0];if(!f)return;const b=$("
  b.disabled=false;b.textContent="🖼 แทรกรูปในเนื้อหา";$("cimf").value=""};
 
 /* ===== คำศัพท์กวย ===== */
-let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="all",VN=40;
-const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},hasK=e=>!!(e.kuy||e.ipa),drvId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
+let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="empty",VN=40;
+const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},hasK=e=>!!e.kuy,drvId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
 const imgSrc=u=>/^https:\/\//.test(u||"")?u:(u?"img/"+u:"");
 async function loadV(){const ls=$("vls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
  if(VOFF){VCATS=vcats();fillCats();fillRf();renderV();return}
@@ -217,7 +217,7 @@ const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกว�
 function renderV(){const q=$("vq").value.trim().toLowerCase(),cat=$("vcat").value;
  const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ตรวจแล้ว",VL.filter(vflt.ok[1]).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
  $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=40;renderV()};return b}));
- const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.ipa+e.note).toLowerCase().includes(q)));
+ const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.note).toLowerCase().includes(q)));
  $("vls").replaceChildren(...(L.length?L.slice(0,VN).map(vcard):[el("p","mute","ไม่พบคำ")]));
  $("vmore").classList.toggle("hide",L.length<=VN);$("vmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-VN)+" คำ)"}
 $("vq").oninput=()=>{VN=40;renderV()};$("vcat").onchange=()=>{VN=40;renderV()};$("vmore").onclick=()=>{VN+=40;renderV()};
@@ -226,12 +226,12 @@ function vcard(it){const c=el("div","c"),t=el("div","top");
  t.append(el("h3","",(g1(it.emo)?g1(it.emo)+" ":"")+it.th),el("span","badge",it.cat));
  if(hasK(it))t.append(el("span","badge"+(it.st==="ตรวจแล้ว"?" g":""),it.st==="ตรวจแล้ว"?"✔ ตรวจแล้ว":"ฉบับร่าง"));else t.append(el("span","badge r","ยังไม่มีคำกวย"));
  if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
- if(hasK(it)){const k=el("p","",(it.kuy||"")+(it.kuy&&it.ipa?"   ":"")+(it.ipa?"["+it.ipa+"]":""));k.style.cssText="font-size:20px;font-weight:700;margin:6px 0";c.append(k)}
+ if(hasK(it)){const k=el("p","",it.kuy||"");k.style.cssText="font-size:20px;font-weight:700;margin:6px 0";c.append(k)}
  if(it.note)c.append(el("p","mute",it.note));
  if(it.src)c.append(el("p","mute","ที่มา: "+it.src));
 
- if(!hasK(it)){const w=el("div"),i=document.createElement("input");i.placeholder="พิมพ์คำกวย แล้วกด Enter";i.maxLength=120;i.style.marginTop="8px";const sv=el("button","btn","✔ บันทึกคำกวย");sv.style.marginTop="6px";
-  const go=async()=>{const v=i.value.trim();if(!v)return;sv.disabled=true;const u=await vsave(Object.assign({},it,{kuy:v,st:"ฉบับร่าง"}));if(!u.ok){alert("⚠️ "+u.error);sv.disabled=false;return}loadV()};
+ if(!hasK(it)){const w=el("div"),i=document.createElement("input");i.placeholder="พิมพ์คำกวยของคำนี้ แล้วกด Enter (ไปคำถัดไปเอง)";i.maxLength=120;i.style.marginTop="8px";const sv=el("button","btn","✔ บันทึกคำกวย");sv.style.marginTop="6px";
+  const go=async()=>{const v=i.value.trim();if(!v)return;sv.disabled=true;i.disabled=true;const u=await vsave(Object.assign({},it,{kuy:v,st:"ฉบับร่าง"}));if(!u.ok){alert("⚠️ "+u.error);sv.disabled=false;i.disabled=false;return}const k=VL.findIndex(z=>z.id===it.id);if(k>=0)VL[k]=Object.assign({},VL[k],u.item||{kuy:v,st:"ฉบับร่าง"});renderV();const nx=$("vls").querySelector("input");if(nx)nx.focus()};
   sv.onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()};w.append(i,sv);c.append(w)}
  const im=imgSrc(it.img);if(im){const ph=el("div","ph"),i=new Image();i.src=im;i.alt=it.th;i.loading="lazy";i.onerror=()=>i.remove();ph.append(i);c.append(ph)}
  const row=el("div"),id=drvId(it.aud);
@@ -271,8 +271,8 @@ async function vdelete(it){if(!confirm("ลบคำ “"+it.th+"”"+(hasK(it)?
  if(VE&&VE.id===it.id){vclear();$("vform").classList.add("hide")}loadV()}
 $("vdel").onclick=()=>{if(VE)vdelete(VE)};
 $("vcsvb").onclick=()=>{if(!VL.length){alert("ยังไม่มีข้อมูลให้ดาวน์โหลด");return}
- const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',H=["หมวด","อีโมจิ","ความหมายไทย","คำกวย (อักษรไทย)","คำอ่าน/IPA","อธิบาย","ภาพ (ชื่อไฟล์ใน img/)","เสียง (ลิงก์)","สถานะ","ที่มา"];
- const rows=VL.filter(e=>!e.hide).map(e=>[e.cat,e.emo,e.th,e.kuy,e.ipa,e.note,e.img,e.aud,e.st,e.src].map(q).join(","));
+ const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',H=["หมวด","อีโมจิ","ความหมายไทย","คำกวย (อักษรไทย)","(ว่างไว้)","อธิบาย","ภาพ (ชื่อไฟล์ใน img/)","เสียง (ลิงก์)","สถานะ","ที่มา"];
+ const rows=VL.filter(e=>!e.hide).map(e=>[e.cat,e.emo,e.th,e.kuy,"",e.note,e.img,e.aud,e.st,e.src].map(q).join(","));
  const blob=new Blob(["\uFEFF"+[H.map(q).join(","),...rows].join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kuy-vocab.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 
 /* ===== เครื่องมือหมวด / เพิ่มหลายคำ ===== */
