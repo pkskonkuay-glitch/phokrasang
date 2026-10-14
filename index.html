@@ -274,7 +274,7 @@ header{z-index:20}.mb svg{display:block}
 <section id="yr"><div class="sh"><h2>ปีกวย ตลอดปีของบ้านเรา</h2><span class="mute">เลื่อนดูได้</span></div><div class="yr" id="yrl"></div></section>
 
 <section><div class="cta2"><h3>ฝากเรื่องราวถึงชุมชน</h3><p>มีภาพเก่า เรื่องราวของผู้เฒ่า หรือข่าวดีของลูกหลานบ้านเรา ส่งมาทาง LINE หรืออีเมลได้เลย ทีมงานจะเรียบเรียงและเผยแพร่ โดยขออนุญาตเจ้าของเรื่องก่อนทุกครั้ง</p><a class="btn line" id="lnC" style="margin:0">ส่งเรื่องทาง LINE</a> <a class="btn alt" id="mailA">ส่งอีเมล</a> <a class="btn alt" id="fbA">Facebook</a> <a class="btn alt" id="ytA">YouTube</a></div></section>
-<section class="sw hide" id="products"><div class="sh"><h2>ของดีบ้านเรา</h2><span class="mute">ฝีมือคนบ้านโพธิ์กระสังข์</span></div><p class="mute">ผ้าไหมที่ทอด้วยลายของบ้านเรา และเครื่องจักสานไม้ไผ่ฝีมือผู้เฒ่า หน้านี้บอกว่ามีอะไร ใครทำ ราคาประมาณเท่าไหร่ ไม่ได้ขายสินค้า ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้</p><div class="chips" id="pchips"></div><div class="grid" id="pgrid"></div></section>
+<section class="sw hide" id="products"><div class="sh"><h2>ของดีบ้านเรา</h2><span class="mute">ฝีมือคนบ้านโพธิ์กระสังข์</span></div><p class="mute">ผ้าไหมที่ทอด้วยลายของบ้านเรา และเครื่องจักสานไม้ไผ่ฝีมือผู้เฒ่า หน้านี้บอกว่ามีอะไร ใครทำ ราคาประมาณเท่าไหร่ ไม่ได้ขายสินค้า ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้</p><div class="chips" id="pchips"></div><div class="grid" id="pgrid"></div><p class="mute" style="margin-top:14px"><a href="admin.html#products">ผู้ดูแล: เพิ่ม/แก้ไขของดีบ้านเรา</a></p></section>
 <section class="sw hide" id="rights"><div class="sh"><h2>สิทธิ์ที่ควรรู้</h2><span class="mute">อย่าให้ตกหล่น</span></div>
 <p>รวมเรื่องที่ชาวบ้านควรรู้เพื่อไม่ตกหล่นสิทธิ์ของตัวเอง เช่น บัตรสวัสดิการแห่งรัฐ ไฟฟ้าเพื่อการเกษตร และการตรวจสอบข้อมูลการทำนา</p>
 <div class="fg" id="rgrid"></div>
@@ -748,7 +748,7 @@ const TRK=(function(){
   if(v!=="read"){const p=v==="home"?(s?"/"+s:"/"):"/"+v;TRK.pv(p,v==="home"?(s?PT[s]:"หน้าแรก"):PT[v])}}}
 
 /* ===== ของดีบ้านเรา — ให้ข้อมูลผลิตภัณฑ์ชุมชน (ไม่ได้ขาย) =====
-   เพิ่ม/แก้ชิ้นงานที่รายการ PLIST ด้านล่าง ช่องที่เว้นว่างจะไม่แสดง
+   ปกติแก้ผ่านหน้า admin.html > แท็บ "ของดีบ้านเรา" (ข้อมูลอยู่ในชีต) รายการ PLIST ด้านล่างเป็นรายการสำรองเมื่อชีตยังว่าง ช่องที่เว้นว่างจะไม่แสดง
    ช่องที่ใช้ได้: kuay=ชื่อเรียกภาษากวย maker=ชื่อช่าง village=หมู่บ้าน desc=คำอธิบายสั้น pattern=ลาย/แบบ
    material=วัสดุ size=ขนาด price=ราคา (พิมพ์เอง เช่น "เริ่มต้น 1,200 บาท") wait=ระยะเวลารอ
    status=พร้อมส่ง / รับทำตามสั่ง / หมดชั่วคราว story=เรื่องของช่าง img=ไฟล์รูป เช่น "img/silk-1.jpg" */
@@ -764,7 +764,10 @@ const PLIST=[
  PD("bam-chanang","จักสานไม้ไผ่","ชนาง"),
  PD("bam-kabung","จักสานไม้ไผ่","กระบุง"),
  PD("bam-takra","จักสานไม้ไผ่","ตะกร้า")];
-const PRODUCTS=PLIST.map(p=>{const cc=PCAT[p.cat],b=[];
+const PPAL=[["#7a2f6e","#4a1a44","🧵"],["#8a5a1a","#4f3210","🧺"],["#2f7d5b","#1d4d38","🌿"],["#1c2b5e","#0f1a3d","🎁"],["#b3261e","#6e1712","🏺"],["#3f55b5","#26357a","✨"]];
+const pcc=c=>PCAT[c]||PPAL[[...String(c)].reduce((a,x)=>a+x.charCodeAt(0),0)%PPAL.length];
+const mkProd=p=>{const cc=pcc(p.cat),b=[];
+ [p.img2,p.img3].filter(u=>u&&okSrc(u)).forEach(u=>b.push("![]("+(/^https:/.test(u)?u:"img/"+u)+")"));
  if(p.desc)b.push(p.desc);
  const rows=[["ชื่อเรียกภาษากวย",p.kuay],["ช่างผู้ทำ",p.maker?p.maker+(p.village?" ("+p.village+")":""):""],["ลาย/แบบ",p.pattern],["วัสดุ",p.material],["ขนาด",p.size],["ราคา",p.price],["ระยะเวลารอ",p.wait],["สถานะ",p.status]].filter(r=>r[1]);
  if(rows.length){b.push("## ข้อมูลสินค้า");rows.forEach(r=>b.push("• "+r[0]+": "+r[1]))}
@@ -772,12 +775,19 @@ const PRODUCTS=PLIST.map(p=>{const cc=PCAT[p.cat],b=[];
  if(!b.length)b.push("ข้อมูลของชิ้นนี้กำลังรวบรวมจากช่างในชุมชน ชื่อช่าง รูป และราคาจะมาเพิ่มที่นี่ ถ้าสนใจสอบถามทีมงานทาง LINE ได้เลยครับ");
  b.push("※ หน้านี้ให้ข้อมูลผลิตภัณฑ์ชุมชนเท่านั้น ไม่ได้ขายสินค้า ราคาเป็นราคาโดยประมาณ ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้ครับ");
  const sum=[p.status,p.price?"ราคา "+p.price:"",p.maker?"ช่าง"+p.maker:""].filter(Boolean).join(" • ")||"กำลังรวบรวมข้อมูล • สอบถามทาง LINE";
- return{k:"p-"+p.id,prod:1,cat:p.cat,title:p.title,sum:sum,date:"",img:p.img,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:b}});
+ return{k:"p-"+p.id,prod:1,cat:p.cat,title:p.title,sum:sum,date:"",img:p.img?(/^https:/.test(p.img)||/^img\//.test(p.img)?p.img:"img/"+p.img):undefined,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:b}};
+let PRODUCTS=PLIST.map(mkProd);const PKEY="kp_prod";
+/* ของดีดึงจากชีต (แท็บ "ของดี") แก้ผ่านหน้า admin.html ถ้าดึงไม่ได้หรือชีตยังว่าง ใช้รายการ PLIST ด้านบนแทน */
+async function loadProducts(){if(!CFG.apiUrl)return;
+ const use=L=>{if(!Array.isArray(L)||!L.length)return false;PRODUCTS=L.map(mkProd);if(!PRODUCTS.some(o=>o.cat===prodF))prodF="ทั้งหมด";if(!$("products").classList.contains("hide"))rProd();return true};
+ try{use(JSON.parse(localStorage.getItem(PKEY)||"null"))}catch(e){}
+ try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000),r=await fetch(CFG.apiUrl+"?action=products",{signal:ctl.signal});clearTimeout(t);const d=await r.json();
+  if(d&&d.ok&&Array.isArray(d.items)){if(use(d.items)){try{localStorage.setItem(PKEY,JSON.stringify(d.items))}catch(e){}}}}catch(e){}}
 let prodF="ทั้งหมด";
-function rProd(){const cats=["ทั้งหมด",...Object.keys(PCAT)];
+function rProd(){const cats=["ทั้งหมด",...new Set(PRODUCTS.map(o=>o.cat))];
  $("pchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===prodF?" on":""),k);b.onclick=()=>{prodF=k;rProd()};return b}));
  $("pgrid").replaceChildren(...PRODUCTS.filter(o=>prodF==="ทั้งหมด"||o.cat===prodF).map(o=>card(o)))}
-rHome();route();TRK.start();loadBoard();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
+rHome();route();TRK.start();loadBoard();loadProducts();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
 
 {const pa=el("a","","ประกาศความเป็นส่วนตัว");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}
