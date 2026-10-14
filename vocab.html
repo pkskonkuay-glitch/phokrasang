@@ -26,7 +26,7 @@ input[type=search]{flex:1;min-width:200px;min-height:48px;padding:8px 14px;borde
 .bd{align-self:flex-start;font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;background:#fff1de;color:#8a4a00}.bd.ok{background:#dff3e8;color:#17603f}
 .act{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.act .btn{min-height:38px;font-size:15px}
 .pl{margin-top:6px}.pl iframe{width:100%;height:90px;border:0;border-radius:10px;background:#eef1fb}.pl audio{width:100%}
-.hide{display:none!important}
+.hide{display:none!important}#tt{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#161a33;color:#fff;padding:10px 16px;border-radius:12px;max-width:90%;z-index:9;display:none;font-size:15px}
 .msg{padding:30px;text-align:center;color:var(--mute)}footer{max-width:1000px;margin:0 auto;padding:6px 14px 30px;color:var(--mute);font-size:15px}
 </style></head><body>
 <div class="band"><div class="hd"><a href="./">← กลับหน้าแรก</a><h1>🗣️ คำศัพท์กวย</h1>
@@ -40,7 +40,8 @@ input[type=search]{flex:1;min-width:200px;min-height:48px;padding:8px 14px;borde
 <div class="chips" id="ch"></div><div class="grid" id="gr"><div class="msg" style="grid-column:1/-1">กำลังโหลดคำศัพท์…</div></div>
 <p style="margin-top:18px"><a class="btn g" id="ls" target="_blank" rel="noopener">💬 ส่งคำศัพท์หรือเสียงทาง LINE</a></p>
 </main>
-<footer>คำศัพท์อาจต่างกันตามหมู่บ้านและสำเนียง คำที่มีป้าย “ฉบับร่าง” ยังรอผู้เฒ่าช่วยตรวจ ถ้าเห็นว่าไม่ตรงกับที่ใช้ในบ้านเรา บอกทีมงานทาง LINE ได้เลย<br>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • <a href="privacy.html">ความเป็นส่วนตัว</a></footer>
+<footer>คำศัพท์อาจต่างกันตามหมู่บ้านและสำเนียง คำที่มีป้าย “ฉบับร่าง” ยังรอผู้เฒ่าช่วยตรวจ ถ้าเห็นว่าไม่ตรงกับที่ใช้ในบ้านเรา บอกทีมงานทาง LINE ได้เลย<br>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • <a href="privacy.html">ความเป็นส่วนตัว</a> • <a href="admin.html#vocab">ผู้ดูแล: แก้ไขคำศัพท์</a></footer>
+<div id="tt" role="status"></div>
 <script>
 /* คำศัพท์ดึงจากหลังบ้าน (Google Sheet แท็บ "คำศัพท์") ถ้าหลังบ้านยังไม่พร้อมหรือช้า จะใช้ไฟล์ kuy-vocab.csv แทนอัตโนมัติ */
 const API="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";
@@ -97,6 +98,9 @@ Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv)
 $("q").oninput=e=>{qs=e.target.value.trim().toLowerCase();draw()};
 $("td").onclick=()=>{todo=!todo;$("td").textContent=todo?"✔ กำลังช่วยกันเติมคำ (กดเพื่อปิด)":"✍️ ช่วยกันเติมคำ";draw()};
 $("ls").href=msg("ขอส่งคำศัพท์กวย");
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="https://line.me/R/oaMessage"]');if(!a)return;let t="";try{t=decodeURIComponent(a.href.split("/?")[1]||"")}catch(_){}
+ if(t)try{navigator.clipboard.writeText(t)}catch(_){}
+ const x=$("tt");x.textContent="คัดลอกข้อความไว้แล้ว ถ้า LINE ไม่เปิด ให้เปิด LINE ค้นหา "+LINE+" แล้ววางข้อความส่งได้เลย";x.style.display="block";clearTimeout(x._t);x._t=setTimeout(()=>x.style.display="none",8000)});
 let z=+localStorage.getItem("kpvfs")||18;const sz=()=>{document.documentElement.style.setProperty("--fs",z+"px");try{localStorage.setItem("kpvfs",z)}catch(e){}};sz();
 $("fp").onclick=()=>{z=Math.min(26,z+2);sz()};$("fm").onclick=()=>{z=Math.max(16,z-2);sz()};
 </script>
