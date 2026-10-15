@@ -822,7 +822,7 @@ const mkProd=p=>{const cc=pcc(p.cat),b=[];
 let PRODUCTS=PLIST.map(mkProd);const PKEY="kp_prod";
 /* ของดีดึงจากชีต (แท็บ "ของดี") แก้ผ่านหน้า admin.html ถ้าดึงไม่ได้หรือชีตยังว่าง ใช้รายการ PLIST ด้านบนแทน */
 async function loadProducts(){if(!CFG.apiUrl)return;
- const use=L=>{if(!Array.isArray(L)||!L.length)return false;PRODUCTS=L.map(mkProd);if(!PRODUCTS.some(o=>o.cat===prodF))prodF="ทั้งหมด";if(!$("products").classList.contains("hide"))rProd();return true};
+ const use=L=>{if(!Array.isArray(L)||!L.length)return false;PRODUCTS=L.map(mkProd);if(!PRODUCTS.some(o=>o.cat===prodF))prodF="ทั้งหมด";if(!$("products").classList.contains("hide"))rProd();if(location.hash.indexOf("#/read/p-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let hadP=false;try{hadP=use(JSON.parse(localStorage.getItem(PKEY)||"null"))}catch(e){}
  if(hadP&&FRESH("prod",300000))return;
  try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000),r=await fetch(CFG.apiUrl+"?action=products",{signal:ctl.signal});clearTimeout(t);const d=await r.json();

@@ -68,9 +68,15 @@ function page(it) {
 
 (async () => {
   const items = staticItems(), seen = new Set(items.map(i => i.k));
+  // กันกรณี regex ดึงข่าว/บทความจาก index.html พลาดหลังแก้โครงสร้าง: เทียบกับจำนวนครั้งก่อน
+  try {
+    const sf = path.join(__dirname, "data", "static-count.txt"), prev = parseInt(fs.readFileSync(sf, "utf8"), 10) || 0;
+    if (prev && items.length < prev * 0.7) { console.error("ERROR: staticItems ลดจาก " + prev + " เหลือ " + items.length + " — โครงสร้าง index.html อาจเปลี่ยน หยุดเพื่อไม่ให้ลบหน้าแชร์"); process.exit(1); }
+    fs.mkdirSync(path.dirname(sf), { recursive: true }); fs.writeFileSync(sf, String(items.length));
+  } catch (_) {}
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
   const [c, e, p, lf] = await Promise.all([api("content"), api("events"), api("products"), api("life")]);
-  list(c).forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img }));
+  list(c).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));
   list(e).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
   list(p).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
   list(lf).forEach(x => add({ k: "lf-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));   // วิถีชีวิตกวย (ดุงกวย/กัวออ/จาเอม)
@@ -80,9 +86,10 @@ function page(it) {
   dump("content", c); dump("events", e); dump("products", p); dump("life", lf);
   dump("vocab", await api("vocab"));
   // ===== sitemap.xml =====
-  const urls = [BASE, BASE + "vocab.html", BASE + "privacy.html"].concat(items.map(i => BASE + "s/" + encodeURIComponent(i.k) + ".html"));
   const today = new Date().toISOString().slice(0, 10);
-  fs.writeFileSync(path.join(__dirname, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(u => "<url><loc>" + esc(u) + "</loc><lastmod>" + today + "</lastmod></url>").join("\n") + "\n</urlset>\n");
+  const lm = d => { const m = String(d || "").match(/^\d{4}-\d{2}-\d{2}/); return m ? m[0] : today; };
+  const urls = [[BASE, today], [BASE + "vocab.html", today], [BASE + "privacy.html", today]].concat(items.map(i => [BASE + "s/" + encodeURIComponent(i.k) + ".html", lm(i.at)]));
+  fs.writeFileSync(path.join(__dirname, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(u => "<url><loc>" + esc(u[0]) + "</loc><lastmod>" + u[1] + "</lastmod></url>").join("\n") + "\n</urlset>\n");
   fs.writeFileSync(path.join(__dirname, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: " + BASE + "sitemap.xml\n");
   // ===== เลื่อนเลขเวอร์ชันของ service worker อัตโนมัติ เมื่อไฟล์หลักเปลี่ยน =====
   const h = crypto.createHash("sha1");
