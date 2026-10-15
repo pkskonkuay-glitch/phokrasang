@@ -23,7 +23,7 @@ label{display:block;font-weight:700;margin:12px 0 4px;font-size:14px}input,selec
 .ph{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.ph img{width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}
 .msg{background:#dcf3e7;color:#14502f;border-radius:8px;padding:6px 12px;margin-top:8px}.err{background:#fde2e2;color:#8a1c1c}
-#big{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20}#big img{max-width:96vw;max-height:92vh}.hide{display:none!important}
+#big{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20}#big img{max-width:96vw;max-height:92vh}.hide{display:none!important}body.rev .pubonly,body.rev #t2,body.rev #t3,body.rev #t4,body.rev #t5,body.rev #t6{display:none!important}
 .opt{font-weight:400;display:flex;gap:8px;align-items:center;margin:8px 0;font-size:15px}.opt input{width:auto}.msg.warn{background:#fff3c4;color:#6b5000}#adv{margin:14px 0 4px;color:var(--mute);font-size:14px}#adv summary{cursor:pointer}
 body:not(.in) #rf,body:not(.in) #lo{display:none}
 </style></head><body>
@@ -163,7 +163,11 @@ const $=i=>document.getElementById(i);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 let S={api:sessionStorage.getItem("api")||API0||localStorage.getItem("api")||"",tk:sessionStorage.getItem("tk")||"",nm:localStorage.getItem("nm")||"",f:{}};
 const ACID=(()=>{try{let c=localStorage.getItem("kp_acid");if(!c){c=(window.crypto&&crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):Math.random().toString(36).slice(2)+Date.now().toString(36));localStorage.setItem("kp_acid",c)}return c}catch(e){return"admin"}})(); // รหัสประจำเครื่องแอดมิน ใช้แยกตัวนับพิมพ์รหัสผิด
-async function call(body){const r=await fetch(S.api,{method:"POST",body:JSON.stringify(Object.assign({token:S.tk,by:S.nm,cid:ACID},body))});return r.json()}
+async function call(body){const r=await fetch(S.api,{method:"POST",body:JSON.stringify(Object.assign({token:S.tk,by:S.nm,cid:ACID},body))});const d=await r.json();if(d&&d.ok&&d.role)setRole(d.role);return d}
+/* รหัสผู้ตรวจ (rev): ดูรายการและเปลี่ยนสถานะเรื่องแจ้งได้เท่านั้น → ซ่อนแท็บและปุ่มที่ต้องใช้รหัสผู้เผยแพร่ (หลังบ้านปฏิเสธอยู่แล้ว นี่คือให้หน้าจอตรงกับสิทธิ์) */
+function setRole(r){const rev=r==="rev";document.body.classList.toggle("rev",rev);let n=document.getElementById("revnote");
+  if(rev&&!n){n=document.createElement("div");n.id="revnote";n.className="msg warn";n.textContent="🔎 เข้าด้วยรหัสผู้ตรวจ: ดูรายการและเปลี่ยนสถานะเรื่องแจ้งได้ ส่วนแก้เนื้อหาเว็บ ลบ หรือทำให้ไม่ระบุตัวตน ต้องใช้รหัสผู้เผยแพร่";const ap=document.getElementById("app");ap.insertBefore(n,ap.firstChild)}
+  if(n)n.classList.toggle("hide",!rev)}
 $("api").value=S.api;$("nm").value=S.nm;$("adv").open=!S.api;
 try{if(localStorage.getItem("kp_idle")){localStorage.removeItem("kp_idle");$("li").textContent="ออกจากระบบอัตโนมัติ เพราะไม่ได้ใช้งานเกิน 30 นาที กรุณาเข้าสู่ระบบอีกครั้ง";$("li").classList.remove("hide")}}catch(e){}
 $("sp").onchange=()=>{$("tk").type=$("sp").checked?"text":"password"};
@@ -213,7 +217,7 @@ function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("d
  const ck=el("label");ck.style.fontWeight="400";ck.append(pk," เผยแพร่ในหน้า “ติดตามเรื่อง” ของเว็บ"+(it.allow?" (ผู้แจ้งอนุญาตแล้ว)":" — ผู้แจ้งไม่ได้อนุญาต"));c.append(ck);
  const sv=el("button","btn","บันทึก"),m=el("div","msg hide");sv.onclick=async()=>{sv.disabled=true;m.className="msg hide";
   try{const u=await call({action:"adminUpdate",no:it.no,patch:{status:ss.value,review:rs.value,org:org.value,prog:pg.value,pub:pk.checked}});m.textContent=u.ok?"✅ บันทึกแล้ว"+(u.item.pub?" • เผยแพร่":" • ไม่เผยแพร่")+(it.hasLine?" • แจ้งผู้แจ้งทาง LINE แล้ว":""):"⚠️ "+u.error;m.className="msg"+(u.ok?"":" err");if(u.ok){pk.checked=u.item.pub;load()}}catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}sv.disabled=false};
-  const an=el("button","btn o","🕶 ทำให้ไม่ระบุตัวตน"),dl=el("button","btn r","🗑 ลบเรื่องนี้");an.type=dl.type="button";
+  const an=el("button","btn o pubonly","🕶 ทำให้ไม่ระบุตัวตน"),dl=el("button","btn r pubonly","🗑 ลบเรื่องนี้");an.type=dl.type="button";
   an.onclick=async()=>{if(!confirm("ทำให้ "+it.no+" ไม่ระบุตัวตน?\n• ลบรหัส LINE ผู้แจ้ง (จะไม่ส่งความคืบหน้าให้เขาอีก)\n• ลบรูป/ไฟล์เสียงที่แนบ (ย้ายไปถังขยะของ Drive)\n• ลบจุดสังเกต และปัดพิกัดให้หยาบลง (~100 เมตร)\n• ปิดการเผยแพร่\nทำย้อนกลับไม่ได้"))return;an.disabled=true;
    try{const u=await call({action:"adminReportAnon",no:it.no});m.textContent=u.ok?"✅ ทำให้ไม่ระบุตัวตนแล้ว":"⚠️ "+u.error;m.className="msg"+(u.ok?"":" err");if(u.ok)load()}catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}an.disabled=false};
   dl.onclick=async()=>{if(!confirm("ลบเรื่อง "+it.no+" ?\nเรื่องจะถูกย้ายไปแท็บ “ถังขยะเรื่องแจ้ง” ในชีต (รหัส LINE ถูกล้าง) และลิงก์รูปจะเปิดไม่ได้แล้ว"))return;dl.disabled=true;

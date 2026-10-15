@@ -92,8 +92,9 @@ function page(it) {
   if (!cf.includes('version: "' + ver + '"')) { cf = cf.replace(/version:\s*"[^"]*"/, 'version: "' + ver + '"'); fs.writeFileSync(CONFIG_PATH, cf); console.log("เลื่อนเวอร์ชัน → " + ver); }
   const dir = path.join(__dirname, "s"); fs.mkdirSync(dir, { recursive: true });
   const keep = new Set(items.map(i => i.k + ".html"));
-  const dyn = c || e || p || lf;   // ถ้าดึงข้อมูลไม่ได้เลย ไม่ลบไฟล์เก่า
-  if (dyn) fs.readdirSync(dir).filter(f => f.endsWith(".html") && !keep.has(f)).forEach(f => fs.unlinkSync(path.join(dir, f)));
+  // ลบหน้าที่ไม่มีในข้อมูลแล้ว "เฉพาะกลุ่มที่ดึงข้อมูลสำเร็จรอบนี้" (กลุ่มไหนดึงไม่ได้ เก็บหน้าเก่าของกลุ่มนั้นไว้ ไม่ลบมั่ว)
+  const okGroup = f => f.startsWith("ev-") ? !!e : f.startsWith("p-") ? !!p : f.startsWith("lf-") ? !!lf : f.startsWith("c") ? !!c : false;
+  fs.readdirSync(dir).filter(f => f.endsWith(".html") && !keep.has(f) && okGroup(f)).forEach(f => fs.unlinkSync(path.join(dir, f)));
   items.forEach(it => fs.writeFileSync(path.join(dir, it.k + ".html"), page(it)));
   console.log("สร้างหน้าแชร์ " + items.length + " เรื่อง");
 })();
