@@ -170,7 +170,7 @@ function catView(name){const L=E.filter(e=>e.cat===name&&vis(e)),f=document.crea
  if(bar2.firstChild)f.append(bar2);f.append(listEl(L,false,150));if(ADM)f.append(quickAdd(name,g1(emo)?emo:""));const b2=el("button","btn","← กลับไปเลือกหมวดอื่น");b2.style.marginTop="8px";b2.onclick=()=>{location.hash="";window.scrollTo(0,0)};f.append(b2);$("v").replaceChildren(f)}
 function quickAdd(cat,emo){const w=el("div","qa"),a=document.createElement("input"),b=document.createElement("input"),go=el("button","btn s","➕ เพิ่ม");
  a.placeholder="คำไทย";b.placeholder="คำกวย";a.maxLength=b.maxLength=120;a.setAttribute("aria-label","คำไทย");b.setAttribute("aria-label","คำกวย");
- const add=async()=>{const th=a.value.trim(),kuy=b.value.trim();if(!th){a.focus();return}go.disabled=true;const item={cat:cat,emo:emo,th:th,kuy:kuy,st:kuy?"ฉบับร่าง":""};
+ const add=async()=>{const th=a.value.trim(),kuy=b.value.trim();if(!th){a.focus();return}go.disabled=true;const item={cat:cat,emo:emo,th:th,kuy:kuy,st:""};
   try{let u=await op({action:"adminVocabSave",item:item});if(u&&!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await op({action:"adminVocabSave",item:item})}
    if(!u||!u.ok)throw new Error((u&&u.error)||"บันทึกไม่ได้");await merge(u);fillCl();toast("✅ เพิ่ม “"+th+"” แล้ว");route();
    const n=document.querySelector(".qa input");if(n){n.scrollIntoView({block:"center"});n.focus()}}
@@ -273,7 +273,7 @@ async function save(more){const b1=$("e-ok"),b2=$("e-more");
  const th=$("e-th").value.trim(),cat=$("e-cat").value.trim();if(!th){em("กรุณาใส่ความหมายไทย",1);$("e-th").focus();return}if(!cat){em("กรุณาใส่หมวด",1);$("e-cat").focus();return}
  const item=Object.assign({},EDIT||{},{id:EDIT?EDIT.id:undefined,cat:cat,emo:$("e-emo").value.trim(),th:th,kuy:$("e-kuy").value.trim(),note:$("e-note").value.trim(),hide:$("e-hide").checked});
  if(MODE==="local")item.img=$("e-img").value.trim();else if(RMI)item.img="";
- if(item.kuy&&!item.st)item.st="ฉบับร่าง";
+ 
  b1.disabled=b2.disabled=true;em(VP?"กำลังอัปโหลดภาพและบันทึก…":"กำลังบันทึก…");
  try{const send=()=>op({action:"adminVocabSave",item:item,photo:VP||undefined});let u=await send();
   if(u&&!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
@@ -313,7 +313,7 @@ $("a-bulk").onclick=()=>{fillCl();bm("");try{const h=decodeURIComponent(location
 $("b-x").onclick=()=>$("bk").classList.add("hide");
 $("b-ok").onclick=async()=>{const cat=$("b-cat").value.trim(),L=$("b-t").value.split("\n").map(s=>s.trim()).filter(Boolean);
  if(!cat||!L.length){bm("ใส่หมวดและคำอย่างน้อย 1 บรรทัดก่อนนะครับ",1);return}
- const emo=(cats().find(x=>x.cat===cat)||{}).emo||"",items=L.map(s=>{const p=s.split(/\s*[=＝]\s*/);return{cat:cat,emo:emo,th:p[0].trim(),kuy:(p[1]||"").trim(),st:p[1]?"ฉบับร่าง":""}});
+ const emo=(cats().find(x=>x.cat===cat)||{}).emo||"",items=L.map(s=>{const p=s.split(/\s*[=＝]\s*/);return{cat:cat,emo:emo,th:p[0].trim(),kuy:(p[1]||"").trim(),st:""}});
  const b=$("b-ok");b.disabled=true;let add=0,skip=0;
  try{for(let i=0;i<items.length;i+=80){bm("กำลังบันทึก "+Math.min(i+80,items.length)+" / "+items.length+" …");const u=await op({action:"adminVocabSave",items:items.slice(i,i+80)});if(!u||!u.ok||typeof u.added!=="number")throw new Error((u&&u.error)||"บันทึกไม่ได้");add+=u.added;skip+=u.skipped}
   if(MODE==="api")await refetch();else{fillCl();route()}

@@ -822,7 +822,7 @@ const mkEvt=e=>{const b=[];
    else{const p=el("p"),a=ext(el("a","btn alt",(/facebook\.com|fb\.watch|fb\.com/.test(u)?"📘 ":"🔗 ")+(t||"เปิดลิงก์")),u);a.style.margin="0";a.addEventListener("click",()=>TRK.ev("evt-link/"+e.id));p.append(a);r.append(p)}})}
   if(e.elder){const q=el("blockquote","pq");bd(q,e.elder);q.append(el("cite","",e.elderby||"ผู้เฒ่าในชุมชน"));r.append(q)}
   r.append(el("p","mute","※ วันที่ตามปฏิทินกวยอาจต่างกันเล็กน้อยในแต่ละหมู่บ้าน ถามผู้นำหมู่บ้านหรือทีมงานทาง LINE ก่อนไปร่วมงาน"))};
- return{k:"ev-"+e.id,evt:1,src:e,cat:"ปีกวย",title:e.title,date:"",meta:(e.when||"")+(e.kuay?" • "+e.kuay:"")+(e.checked==="ใช่"?" • ผู้เฒ่าตรวจข้อมูลแล้ว":""),body:b,extra:extra}};
+ return{k:"ev-"+e.id,evt:1,src:e,cat:"ปีกวย",title:e.title,date:"",meta:(e.when||"")+(e.kuay?" • "+e.kuay:""),body:b,extra:extra}};
 let EVTS=K["เซ (ฮีตคอง)"].map((r,i)=>mkEvt({id:"e"+(i+1),when:r[0],title:r[1],sum:r[2]}));
 function rYear(){const L=$("yrl");if(!L)return;
  L.replaceChildren(...EVTS.map(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");

@@ -71,7 +71,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="row"><div><select id="rcf" aria-label="หมวดเดิม"></select></div><div><input id="rt" maxlength="40" placeholder="ชื่อหมวดใหม่"></div></div>
 <p><button class="btn o" id="rgo">เปลี่ยนชื่อหมวด</button></p>
 <h4>✍️ เติมคำกวยให้คำที่มีอยู่แล้ว (เร็วที่สุด)</h4>
-<p class="mute">พิมพ์หรือวางทีละบรรทัดแบบ <b>ไทย = คำกวย</b> ระบบจะหาคำไทยที่มีอยู่แล้วและยังไม่มีคำกวย แล้วเติมให้เป็น “ฉบับร่าง” (ไม่ทับคำกวยที่มีอยู่แล้ว)</p>
+<p class="mute">พิมพ์หรือวางทีละบรรทัดแบบ <b>ไทย = คำกวย</b> ระบบจะหาคำไทยที่มีอยู่แล้วและยังไม่มีคำกวย แล้วเติมให้ขึ้นเว็บทันที (ไม่ทับคำกวยที่มีอยู่แล้ว)</p>
 <div class="row"><div><label for="flc">เฉพาะหมวด (เว้นว่าง = ทุกหมวด)</label><select id="flc"></select></div><div><label for="fls">ที่มา (ใช้กับทุกบรรทัด)</label><input id="fls" maxlength="300" placeholder="เช่น ยายสมใจ บ้านโพธิ์กระสังข์"></div></div>
 <textarea id="flt" rows="6" placeholder="แม่ = ...&#10;พ่อ = ..."></textarea>
 <p><button class="btn" id="flgo">✍️ เติมคำกวย</button></p>
@@ -85,7 +85,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="vkuy">คำกวย (พิมพ์เป็นอักษรไทย)</label><input id="vkuy" maxlength="120"><input id="vipa" type="hidden">
 <label for="vnote">อธิบายเพิ่ม (ไม่เกิน 600 ตัวอักษร)</label><textarea id="vnote" rows="3" maxlength="600"></textarea>
 <label for="vsrc">ที่มา (เช่น ผู้เฒ่าที่บอก หมู่บ้าน หรือหนังสือ)</label><input id="vsrc" maxlength="300">
-<label for="vstat">สถานะ</label><select id="vstat"><option value="">— (ยังไม่มีคำ)</option><option>ฉบับร่าง</option><option>ตรวจแล้ว</option></select>
+
 <label for="vimgf">ภาพประกอบ (เลือกจากเครื่อง ระบบย่อขนาดให้)</label><input id="vimgf" type="file" accept="image/*"><div id="vimgpv" class="ph"></div>
 <label for="vimgu">หรือใส่ลิงก์ภาพ (https) / ชื่อไฟล์ในโฟลเดอร์ img</label><input id="vimgu" placeholder="https://... หรือ mother.jpg">
 <label for="vaudf">เสียงอ่านคำ (m4a, mp3, ogg, wav ไม่เกิน 8 MB)</label><input id="vaudf" type="file" accept="audio/*,.m4a,.mp3,.ogg,.wav"><div id="vaudpv"></div>
@@ -125,7 +125,6 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div class="row"><div><label for="evvc">หมวดในหน้าคำศัพท์ที่ให้ลิงก์ไป</label><input id="evvc" maxlength="60" placeholder="ประเพณีตลอดปี"></div><div></div></div>
 <label for="evel">คำบอกเล่าของผู้เฒ่า 1–2 ประโยค</label><textarea id="evel" rows="2" maxlength="600"></textarea>
 <label for="evby">ผู้เฒ่า / ผู้ให้ข้อมูล (ชื่อ หมู่บ้าน)</label><input id="evby" maxlength="120">
-<label class="opt"><input type="checkbox" id="evchk"> ผู้เฒ่า/ผู้นำพิธีตรวจวันที่และเนื้อหาแล้ว (ติ๊กแล้วเว็บจะแสดง “ผู้เฒ่าตรวจข้อมูลแล้ว”)</label>
 <label for="evnote">บันทึกภายในทีมงาน (ไม่แสดงบนเว็บ เช่น สิ่งที่ต้องตรวจ ผู้ติดต่อ)</label><textarea id="evnote" rows="2" maxlength="1000"></textarea>
 <label class="opt"><input type="checkbox" id="evhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="evsv">บันทึก</button> <button class="btn o" id="evcx">ยกเลิก</button> <button class="btn o hide" id="evdel" style="color:#c93b2f">🗑 ลบงานนี้</button></p><div class="msg hide" id="evmsg"></div></div>
@@ -259,9 +258,9 @@ async function loadV(){const ls=$("vls");ls.replaceChildren(el("p","mute","ก�
  catch(x){if(x.message==="NOHOOK"){await vinitOff();return}ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?"⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ (ต้องวางไฟล์ vocab.gs เพิ่มบรรทัดเชื่อมใน รหัส.gs แล้วทำให้ใช้งานได้เป็นเวอร์ชันใหม่ ตามคู่มือ)":"โหลดไม่ได้: "+x.message))}}
 function fillCats(){const v=$("vcat").value;$("vcat").replaceChildren(...[["","ทุกหมวด"],...VCATS.map(c=>[c.cat,(g1(c.emo)?g1(c.emo)+" ":"")+c.cat])].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));$("vcat").value=v;
  $("vcl").replaceChildren(...VCATS.map(c=>{const o=el("option","",c.cat);o.value=c.cat;return o}))}
-const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกวยแล้ว",hasK],empty:["ยังไม่มีคำกวย",e=>!hasK(e)],draft:["ฉบับร่าง",e=>hasK(e)&&e.st!=="ตรวจแล้ว"],ok:["ตรวจแล้ว",e=>e.st==="ตรวจแล้ว"],hid:["ซ่อนอยู่",e=>e.hide]};
+const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกวยแล้ว",hasK],empty:["ยังไม่มีคำกวย",e=>!hasK(e)],hid:["ซ่อนอยู่",e=>e.hide]};
 function renderV(){const q=$("vq").value.trim().toLowerCase(),cat=$("vcat").value;
- const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ตรวจแล้ว",VL.filter(vflt.ok[1]).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
+ const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
  $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=VT?60:40;renderV()};return b}));
  const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.note).toLowerCase().includes(q)));
  if(!VL.length&&!VOFF){const b=el("div","c");b.append(el("p","","ยังไม่มีคำในระบบ ให้นำเข้าคำทั้งหมดจากไฟล์ kuy-vocab.csv ก่อน (ทำครั้งเดียว)"));const g=el("button","btn","📚 นำเข้าคำทั้งหมดจากไฟล์");g.onclick=()=>{$("vtools").open=true;$("igo").click()};b.append(g);$("vls").replaceChildren(b)}
@@ -271,14 +270,14 @@ $("vq").oninput=()=>{VN=VT?60:40;renderV()};$("vcat").onchange=()=>{VN=VT?60:40;
 const vsave=async(item,photo)=>vcall({action:"adminVocabSave",item:item,photo:photo||undefined});
 function vcard(it){const c=el("div","c"),t=el("div","top");
  t.append(el("h3","",(g1(it.emo)?g1(it.emo)+" ":"")+it.th),el("span","badge",it.cat));
- if(hasK(it))t.append(el("span","badge"+(it.st==="ตรวจแล้ว"?" g":""),it.st==="ตรวจแล้ว"?"✔ ตรวจแล้ว":"ฉบับร่าง"));else t.append(el("span","badge r","ยังไม่มีคำกวย"));
+ if(!hasK(it))t.append(el("span","badge r","ยังไม่มีคำกวย"));
  if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
  if(hasK(it)){const k=el("p","",it.kuy||"");k.style.cssText="font-size:20px;font-weight:700;margin:6px 0";c.append(k)}
  if(it.note)c.append(el("p","mute",it.note));
  if(it.src)c.append(el("p","mute","ที่มา: "+it.src));
 
  if(!hasK(it)){const w=el("div"),i=document.createElement("input");i.placeholder="พิมพ์คำกวยของคำนี้ แล้วกด Enter (ไปคำถัดไปเอง)";i.maxLength=120;i.style.marginTop="8px";const sv=el("button","btn","✔ บันทึกคำกวย");sv.style.marginTop="6px";
-  const go=async()=>{const v=i.value.trim();if(!v)return;sv.disabled=true;i.disabled=true;const u=await vsave(Object.assign({},it,{kuy:v,st:"ฉบับร่าง"}));if(!u.ok){alert("⚠️ "+u.error);sv.disabled=false;i.disabled=false;return}const k=VL.findIndex(z=>z.id===it.id);if(k>=0)VL[k]=Object.assign({},VL[k],u.item||{kuy:v,st:"ฉบับร่าง"});renderV();const nx=$("vls").querySelector("input");if(nx)nx.focus()};
+  const go=async()=>{const v=i.value.trim();if(!v)return;sv.disabled=true;i.disabled=true;const u=await vsave(Object.assign({},it,{kuy:v,st:""}));if(!u.ok){alert("⚠️ "+u.error);sv.disabled=false;i.disabled=false;return}const k=VL.findIndex(z=>z.id===it.id);if(k>=0)VL[k]=Object.assign({},VL[k],u.item||{kuy:v,st:""});renderV();const nx=$("vls").querySelector("input");if(nx)nx.focus()};
   sv.onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()};w.append(i,sv);c.append(w)}
  const im=imgSrc(it.img);if(im){const ph=el("div","ph"),i=new Image();i.src=im;i.alt=it.th;i.loading="lazy";i.onerror=()=>i.remove();ph.append(i);c.append(ph)}
  const row=el("div"),id=drvId(it.aud);
@@ -288,11 +287,11 @@ function vcard(it){const c=el("div","c"),t=el("div","top");
  h.onclick=async()=>{h.disabled=true;const u=await vsave(Object.assign({},it,{hide:!it.hide}));if(!u.ok)alert(u.error);loadV()};
  x.onclick=()=>vdelete(it);
  row.append(e," ",h," ");
- if(hasK(it)&&it.st!=="ตรวจแล้ว"){const ok=el("button","btn","✔ ตรวจแล้ว");ok.onclick=async()=>{ok.disabled=true;const u=await vsave(Object.assign({},it,{st:"ตรวจแล้ว"}));if(!u.ok)alert(u.error);loadV()};row.append(ok," ")}
+ 
  row.append(x);c.append(row);return c}
-function vclear(){VE=null;VP="";VA="";["vc","ve","vth","vkuy","vipa","vnote","vsrc","vimgu","vaudu"].forEach(i=>$(i).value="");$("vstat").value="";$("vhide").checked=false;$("vimgf").value="";$("vaudf").value="";$("vimgpv").replaceChildren();$("vaudpv").replaceChildren();$("vft2").textContent="เพิ่มคำใหม่";$("vdel").classList.add("hide");$("vm").className="msg hide"}
+function vclear(){VE=null;VP="";VA="";["vc","ve","vth","vkuy","vipa","vnote","vsrc","vimgu","vaudu"].forEach(i=>$(i).value="");$("vhide").checked=false;$("vimgf").value="";$("vaudf").value="";$("vimgpv").replaceChildren();$("vaudpv").replaceChildren();$("vft2").textContent="เพิ่มคำใหม่";$("vdel").classList.add("hide");$("vm").className="msg hide"}
 function vopen(){$("vform").classList.remove("hide");$("vform").scrollIntoView({behavior:"smooth"});$("vth").focus()}
-function vedit(it){vclear();VE=it;$("vc").value=it.cat||"";$("ve").value=it.emo||"";$("vth").value=it.th||"";$("vkuy").value=it.kuy||"";$("vipa").value=it.ipa||"";$("vnote").value=it.note||"";$("vsrc").value=it.src||"";$("vstat").value=it.st||"";$("vimgu").value=it.img||"";$("vaudu").value=it.aud||"";$("vhide").checked=!!it.hide;
+function vedit(it){vclear();VE=it;$("vc").value=it.cat||"";$("ve").value=it.emo||"";$("vth").value=it.th||"";$("vkuy").value=it.kuy||"";$("vipa").value=it.ipa||"";$("vnote").value=it.note||"";$("vsrc").value=it.src||"";$("vimgu").value=it.img||"";$("vaudu").value=it.aud||"";$("vhide").checked=!!it.hide;
  const im=imgSrc(it.img);if(im){const i=new Image();i.src=im;i.alt="ภาพเดิม";i.onerror=()=>i.remove();$("vimgpv").append(i)}
  $("vft2").textContent="แก้ไข: "+it.th;$("vdel").classList.remove("hide");vopen()}
 $("vnew").onclick=()=>{vclear();const c=$("vcat").value;if(c){$("vc").value=c;const f=VCATS.find(z=>z.cat===c);if(f)$("ve").value=f.emo||""}vopen()};
@@ -303,9 +302,9 @@ $("vaudf").onchange=e=>{const f=e.target.files[0];$("vaudpv").replaceChildren();
  if(f.size>8*1024*1024){alert("⚠️ ไฟล์เสียงใหญ่เกิน 8 MB ตัดให้สั้นลงหรือแปลงเป็น mp3 ก่อน");$("vaudf").value="";return}
  const r=new FileReader();r.onload=()=>{VA=r.result;const a=document.createElement("audio");a.controls=true;a.src=URL.createObjectURL(f);a.style.cssText="width:100%;margin-top:6px";$("vaudpv").append(a)};r.onerror=()=>alert("⚠️ อ่านไฟล์เสียงไม่ได้");r.readAsDataURL(f)};
 $("vsv").onclick=async()=>{const b=$("vsv"),m=$("vm");b.disabled=true;m.className="msg hide";
- try{const item={id:VE?VE.id:undefined,cat:$("vc").value.trim(),emo:$("ve").value.trim(),th:$("vth").value.trim(),kuy:$("vkuy").value.trim(),ipa:$("vipa").value.trim(),note:$("vnote").value.trim(),src:$("vsrc").value.trim(),st:$("vstat").value,img:$("vimgu").value.trim(),aud:$("vaudu").value.trim(),hide:$("vhide").checked};
+ try{const item={id:VE?VE.id:undefined,cat:$("vc").value.trim(),emo:$("ve").value.trim(),th:$("vth").value.trim(),kuy:$("vkuy").value.trim(),ipa:$("vipa").value.trim(),note:$("vnote").value.trim(),src:$("vsrc").value.trim(),st:"",img:$("vimgu").value.trim(),aud:$("vaudu").value.trim(),hide:$("vhide").checked};
   if(!item.th)throw new Error("กรุณาใส่ความหมายไทย");if(!item.cat)throw new Error("กรุณาใส่หมวด");
-  if((item.kuy||item.ipa)&&!item.st)item.st="ฉบับร่าง";
+  
   const send=()=>vcall({action:"adminVocabSave",item:item,photo:VP||undefined,audio:VA?{data:VA}:undefined});
   m.textContent=(VP||VA)?"กำลังอัปโหลด…":"กำลังบันทึก…";m.className="msg";
   let u=await send();
@@ -335,7 +334,7 @@ async function vbulk(items){let add=0,skip=0;for(let i=0;i<items.length;i+=80){t
  if(!u.ok||typeof u.added!=="number")throw new Error(/ความหมายไทยต้องยาว/.test(u.error||"")?OLDV:(u.error||"บันทึกไม่ได้"));add+=u.added;skip+=u.skipped}return[add,skip]}
 $("bgo").onclick=async()=>{const cat=$("bc").value.trim(),emo=$("be").value.trim()||(VCATS.find(z=>z.cat===cat)||{}).emo||"",L=$("bt").value.split("\n").map(s=>s.trim()).filter(Boolean);
  if(!cat||!L.length){tmsg("ใส่หมวดและคำอย่างน้อย 1 บรรทัดก่อนนะครับ",1);return}
- const items=L.map(s=>{const p=s.split(/\s*[=＝]\s*/);return{cat:cat,emo:emo,th:p[0].trim(),kuy:(p[1]||"").trim(),st:p[1]?"ฉบับร่าง":""}});
+ const items=L.map(s=>{const p=s.split(/\s*[=＝]\s*/);return{cat:cat,emo:emo,th:p[0].trim(),kuy:(p[1]||"").trim(),st:""}});
  try{const[a,s]=await vbulk(items);tmsg("✅ เพิ่ม "+a+" คำ"+(s?" (ข้ามที่ซ้ำ "+s+" คำ)":""));$("bt").value="";loadV()}catch(x){tmsg("⚠️ "+x.message,1)}};
 $("rgo").onclick=async()=>{const f=$("rcf").value,t=$("rt").value.trim();if(!f||!t){tmsg("เลือกหมวดเดิมและพิมพ์ชื่อใหม่ก่อนนะครับ",1);return}
  if(!confirm("เปลี่ยนชื่อหมวด “"+f+"” เป็น “"+t+"” ทุกคำในหมวดนี้?"))return;
@@ -363,7 +362,7 @@ function vlocal(b){
  if(b.action==="adminVocabDelete"){VL=VL.filter(e=>e.id!==b.id);vsaveLocal();return{ok:true}}
  if(b.action!=="adminVocabSave")return{ok:false,error:"ไม่รองรับ"};
  const mk=x=>({cat:String(x.cat||"").trim(),emo:String(x.emo||"").trim(),th:String(x.th||"").trim(),kuy:String(x.kuy||"").trim(),ipa:String(x.ipa||"").trim(),note:String(x.note||"").trim(),img:String(x.img||"").trim(),aud:String(x.aud||"").trim(),st:String(x.st||"").trim(),src:String(x.src||"").trim()});
- if(Array.isArray(b.fill)){let n=0,k=0;const nf=[];b.fill.forEach(x=>{if(x.id){const e=VL.find(z=>z.id===x.id);if(!e){nf.push(String(x.id));return}e.kuy=String(x.kuy||"").trim();e.st=String(x.st||"");if(x.src)e.src=String(x.src);n++;return}const th=String(x.th||"").trim(),cat=String(x.cat||"").trim(),kuy=String(x.kuy||"").trim();if(!th||!kuy)return;const h=VL.filter(e=>e.th===th&&(!cat||e.cat===cat));if(!h.length){nf.push(th);return}h.forEach(e=>{if(e.kuy){k++;return}e.kuy=kuy;e.st="ฉบับร่าง";if(x.src)e.src=String(x.src);n++})});vsaveLocal();return{ok:true,filled:n,kept:k,notfound:nf}}
+ if(Array.isArray(b.fill)){let n=0,k=0;const nf=[];b.fill.forEach(x=>{if(x.id){const e=VL.find(z=>z.id===x.id);if(!e){nf.push(String(x.id));return}e.kuy=String(x.kuy||"").trim();e.st="";if(x.src)e.src=String(x.src);n++;return}const th=String(x.th||"").trim(),cat=String(x.cat||"").trim(),kuy=String(x.kuy||"").trim();if(!th||!kuy)return;const h=VL.filter(e=>e.th===th&&(!cat||e.cat===cat));if(!h.length){nf.push(th);return}h.forEach(e=>{if(e.kuy){k++;return}e.kuy=kuy;e.st="";if(x.src)e.src=String(x.src);n++})});vsaveLocal();return{ok:true,filled:n,kept:k,notfound:nf}}
  if(Array.isArray(b.items)){let a=0,s=0;const have=new Set(VL.map(e=>e.cat+"|"+e.th));
   b.items.forEach(x=>{const o=mk(x);if(!o.th||!o.cat||have.has(o.cat+"|"+o.th)){s++;return}have.add(o.cat+"|"+o.th);VL.push(Object.assign({id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),hide:false},o));a++});
   vsaveLocal();return{ok:true,added:a,skipped:s}}
@@ -392,19 +391,18 @@ $("vtg").onclick=()=>{VT=!VT;VN=VT?60:40;$("vtg").textContent=VT?"🗂 ดูแ
 function vtable(L){const box=el("div","c"),dirty=new Map(),list=el("div"),msg=el("div","msg hide");
  const bar=el("div","vbar"),so=document.createElement("input"),sb=el("button","btn","💾 บันทึกที่แก้ (0 คำ)");
  so.placeholder="ที่มา (ใช้กับคำที่แก้) เช่น ยายสมใจ บ้านโพธิ์กระสังข์";so.maxLength=300;so.value=VSRC;so.oninput=()=>{VSRC=so.value};sb.disabled=true;
- bar.append(so,sb);box.append(el("p","mute","พิมพ์คำกวยในช่องได้เลย (กด Enter ไปช่องถัดไป) แล้วกด 💾 บันทึก ครั้งเดียวทั้งหน้า • ติ๊ก “ตรวจแล้ว” เมื่อผู้เฒ่ายืนยันว่าถูก • ปุ่ม ⋯ ใส่รูป เสียง คำอธิบาย • ลบช่องคำกวยให้ว่างเพื่อลบคำกวยออก"),bar,msg,list);
+ bar.append(so,sb);box.append(el("p","mute","พิมพ์คำกวยในช่องได้เลย (กด Enter ไปช่องถัดไป) แล้วกด 💾 บันทึก ครั้งเดียวทั้งหน้า • ปุ่ม ⋯ ใส่รูป เสียง คำอธิบาย • ลบช่องคำกวยให้ว่างเพื่อลบคำกวยออก"),bar,msg,list);
  const upd=()=>{sb.textContent="💾 บันทึกที่แก้ ("+dirty.size+" คำ)";sb.disabled=!dirty.size};
- L.slice(0,VN).forEach(it=>{const r=el("div","vr"),i=document.createElement("input"),ck=document.createElement("input"),lb=el("label","vck"),ac=el("div","vac"),
-   was=!!(hasK(it)&&it.st==="ตรวจแล้ว");
+ L.slice(0,VN).forEach(it=>{const r=el("div","vr"),i=document.createElement("input"),ac=el("div","vac");
   i.className="vk";i.value=it.kuy||"";i.maxLength=120;i.placeholder="คำกวย";i.setAttribute("aria-label","คำกวยของ "+it.th);
-  ck.type="checkbox";ck.checked=was;ck.style.cssText="width:22px;height:22px;min-height:0;margin:0";lb.append(ck," ตรวจแล้ว");
-  const chg=()=>{const v=i.value.trim(),same=v===(it.kuy||"")&&ck.checked===was;
-   if(same)dirty.delete(it.id);else dirty.set(it.id,{id:it.id,kuy:v,st:v?(ck.checked?"ตรวจแล้ว":"ฉบับร่าง"):""});
+  
+  const chg=()=>{const v=i.value.trim(),same=v===(it.kuy||"");
+   if(same)dirty.delete(it.id);else dirty.set(it.id,{id:it.id,kuy:v,st:""});
    r.classList.toggle("dirty",!same);upd()};
-  i.oninput=chg;ck.onchange=()=>{if(ck.checked&&!i.value.trim()){ck.checked=false;return}chg()};
+  i.oninput=chg;
   i.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const x=[...list.querySelectorAll("input.vk")],k=x.indexOf(i);if(x[k+1])x[k+1].focus()}};
   const mo=el("button","btn o","⋯"),de=el("button","btn o","🗑");mo.title="รูป เสียง คำอธิบาย";de.title="ลบคำนี้";de.style.color="#c93b2f";mo.onclick=()=>vedit(it);de.onclick=()=>vdelete(it);
-  ac.append(lb,mo,de);
+  ac.append(mo,de);
   r.append(el("span","vem",g1(it.emo)||"💬"),el("b","vth",it.th+(it.img?" 🖼":"")+(it.aud?" 🔊":"")),i,ac);list.append(r)});
  if(!L.length)list.append(el("p","mute","ไม่พบคำ"));
  sb.onclick=async()=>{const items=[...dirty.values()];if(!items.length)return;const s=so.value.trim();
@@ -486,9 +484,9 @@ async function loadE(){const ls=$("evls");ls.replaceChildren(el("p","mute","ก�
   EL=d.items;renderE()}
  catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?NOHOOKE:"โหลดไม่ได้: "+x.message))}}
 const eclip=e=>String(e.links||"").split(/\n+/).filter(Boolean);
-const eflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องเล่า",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noclip:["ยังไม่มีลิงก์/คลิป",e=>!eclip(e).length],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],unchk:["ผู้เฒ่ายังไม่ตรวจ",e=>!e.checked],hid:["ซ่อนอยู่",e=>e.hide]};
+const eflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องเล่า",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noclip:["ยังไม่มีลิงก์/คลิป",e=>!eclip(e).length],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],hid:["ซ่อนอยู่",e=>e.hide]};
 function renderE(){const q=$("evq").value.trim().toLowerCase();
- $("evst").replaceChildren(...[["ทั้งหมด",EL.length],["ผู้เฒ่าตรวจแล้ว",EL.filter(e=>e.checked).length],["มีรูปแล้ว",EL.filter(e=>e.img).length],["มีลิงก์/คลิปแล้ว",EL.filter(e=>eclip(e).length).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
+ $("evst").replaceChildren(...[["ทั้งหมด",EL.length],["มีรูปแล้ว",EL.filter(e=>e.img).length],["มีลิงก์/คลิปแล้ว",EL.filter(e=>eclip(e).length).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
  $("evft").replaceChildren(...Object.keys(eflt).map(k=>{const b=el("button","chip"+(EFl===k?" on":""),eflt[k][0]+" ("+EL.filter(eflt[k][1]).length+")");b.onclick=()=>{EFl=k;EN=40;renderE()};return b}));
   const L=EL.filter(e=>eflt[EFl][1](e)&&(!q||(e.title+e.kuay+e.when+e.story).toLowerCase().includes(q)));
  $("evls").replaceChildren(...(L.length?L.slice(0,EN).map(ecard):[el("p","mute",EL.length?"ไม่พบรายการ":"ยังไม่มีงานในระบบ กด “➕ เพิ่มงานใหม่” หรือ “📦 เติมงานเริ่มต้น” ได้เลย")]));
@@ -496,7 +494,7 @@ function renderE(){const q=$("evq").value.trim().toLowerCase();
 $("evq").oninput=()=>{EN=40;renderE()};$("evmore").onclick=()=>{EN+=40;renderE()};
 const esave=async(item,photos)=>call({action:"adminEventSave",item:item,photos:photos||undefined});
 function ecard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title));if(it.when)t.append(el("span","badge",it.when));
- t.append(it.checked?el("span","badge g","ผู้เฒ่าตรวจแล้ว"):el("span","badge r","ผู้เฒ่ายังไม่ตรวจ"));if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
+ if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
  if(it.sum)c.append(el("p","mute",it.sum.slice(0,160)));
  const np=[it.img,it.img2,it.img3,it.img4,it.img5].filter(Boolean).length,nw=String(it.words||"").split(/\n+/).filter(Boolean).length;
  c.append(el("p","mute","เรื่องเล่า "+(it.story?"✓":"—")+"  •  รูป "+np+"/5  •  ลิงก์/คลิป "+eclip(it).length+"  •  คำศัพท์ "+nw+"  •  คำผู้เฒ่า "+(it.elder?"✓":"—")));
@@ -516,14 +514,14 @@ function eslots(){const box=$("evph");box.replaceChildren();
   if(src){const rb=el("button","btn o","✕ เอาภาพนี้ออก");rb.type="button";rb.style.color="#c93b2f";rb.onclick=()=>{EP[i]="";EU[i]="";EC[i]="";eslots()};w.append(" ",rb);
    const ci=document.createElement("input");ci.maxLength=200;ci.value=EC[i]||"";ci.placeholder="คำบรรยาย • ผู้ถ่าย • ปี เช่น ขบวนแห่กฐิน ภาพโดย … ปี 2568";ci.setAttribute("aria-label","คำบรรยายภาพที่ "+(i+1));ci.oninput=()=>{EC[i]=ci.value};ci.style.marginTop="6px";w.append(ci)}
   box.append(w)}}
-function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evchk","evhide"].forEach(i=>$(i).checked=false);$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots()}
+function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evhide"].forEach(i=>$(i).checked=false);$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots()}
 function eopen(){$("evform").classList.remove("hide");$("evform").scrollIntoView({behavior:"smooth"});$("evt").focus()}
 function eedit(it){eclear();EE=it;EF.forEach((id,j)=>$(id).value=it[EK[j]]||"");EU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];EC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
- $("evchk").checked=!!it.checked;$("evhide").checked=!!it.hide;$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eopen()}
+ $("evhide").checked=!!it.hide;$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eopen()}
 $("evnew").onclick=()=>{eclear();$("evvc").value="ประเพณีตลอดปี";eopen()};
 $("evcx").onclick=()=>{eclear();$("evform").classList.add("hide")};
 $("evsv").onclick=async()=>{const b=$("evsv"),m=$("evmsg");b.disabled=true;m.className="msg hide";
- try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,allow:true,clip:"",checked:$("evchk").checked,img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());
+ try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,allow:true,clip:"",img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());
   if(!item.title)throw new Error("กรุณาใส่ชื่องาน");
   ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!EU[j]&&!EP[j])item[k]=""});
   const send=()=>esave(item,EP);m.textContent=EP.some(Boolean)?"กำลังอัปโหลดภาพ…":"กำลังบันทึก…";m.className="msg";
