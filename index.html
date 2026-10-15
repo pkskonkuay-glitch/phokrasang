@@ -751,8 +751,9 @@ function applyContent(items){
  const byT={};add.forEach(f=>byT[f.t]=f);let nh=STATIC0.hero.map(f=>byT[f.t]||f);
  const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){nh=[...pins];STATIC0.hero.map(f=>byT[f.t]).filter(Boolean).forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
  clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rNews();rFeed()}
-async function getJ(act,name){try{const c=new AbortController(),t=setTimeout(()=>c.abort(),12000),r=await fetch(CFG.apiUrl+"?action="+act,{signal:c.signal});clearTimeout(t);const d=await r.json();if(d&&d.ok)return d}catch(e){}
- try{const r=await fetch("data/"+name+".json");const d=await r.json();if(d&&d.ok)return d}catch(e){}return null} // API ช้า/ล่ม → ใช้ไฟล์สำรอง data/*.json ที่ GitHub Action สร้างให้
+async function getJ(act,name,nofb){const S=(window.KPSRC=window.KPSRC||{});try{const c=new AbortController(),t=setTimeout(()=>c.abort(),20000),r=await fetch(CFG.apiUrl+"?action="+act+"&_="+Date.now(),{signal:c.signal});clearTimeout(t);const d=await r.json();if(d&&d.ok){S[name]="api";return d}}catch(e){}
+ if(nofb){S[name]="cache";return null} /* มีข้อมูลในเครื่องแล้ว: ไม่เอาไฟล์สำรอง (อาจเก่ากว่า) มาทับ */
+ try{const r=await fetch("data/"+name+".json");const d=await r.json();if(d&&d.ok){S[name]="backup";return d}}catch(e){}S[name]="none";return null} // API ช้า/ล่ม → ใช้ไฟล์สำรอง data/*.json ที่ GitHub Action สร้างให้
 async function loadContent(){if(!CFG.apiUrl)return;let hadC=false;
  try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){hadC=true;LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
  if(hadC&&FRESH("content",300000))return;
@@ -858,8 +859,9 @@ function rYear(){const L=$("yrl");if(!L)return;
 async function loadEvents(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;EVTS=L.map(mkEvt);rYear();try{if(typeof rCul==="function")rCul()}catch(_){}if(location.hash.indexOf("#/read/ev-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let hadE=false;try{hadE=use(JSON.parse(localStorage.getItem(EKEY)||"null"))}catch(e){}
- if(hadE&&FRESH("evt",300000))return;
- try{const d=await getJ("events","events");
+ if(hadE&&FRESH("evt",30000))return;
+ try{const d=await getJ("events","events",hadE);
+  if(/[?&]debug=1/.test(location.search)){const y=$("yr");if(y)y.prepend(el("p","mute","[debug] ข้อมูลปีกวยมาจาก: "+(window.KPSRC.events||"?")+" • "+((d&&d.items)||[]).length+" งาน"))}
   if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
 rYear();
 rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
