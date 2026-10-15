@@ -337,7 +337,7 @@ const CFG={
  lineUrl:"https://line.me/R/ti/p/%40825crkiu",      // ลิงก์เพิ่มเพื่อน LINE OA
  lineId:"@825crkiu",                      // LINE ID ของ OA (ขึ้นต้นด้วย @)
  formUrl:"",                             // ลิงก์ Google Form (แผ่น "สรุป" ช่อง E3)
- boardCsv:"",                            // ลิงก์ CSV ของแผ่น "สำหรับเผยแพร่" (ว่าง = แสดงตัวอย่าง)
+ boardCsv:"",                            // ลิงก์ CSV ของแผ่น "สำหรับเผยแพร่" (ว่าง = ไม่แสดงรายการ)
  qrImg:"img/emb-908e6381.png",                               // ไฟล์ภาพ QR Code จาก LINE OA เช่น "images/line-qr.png"
  email:"pkskonkuay@gmail.com",
  fbUrl:"https://www.facebook.com/kuayphokrasang",
@@ -377,11 +377,8 @@ A("ประเพณี","จวยใบตอง และเปียลย�
 A("ประเพณี","ทำบุญซัก ส่งบุญถึงบรรพบุรุษ","พิธีก่อนบุญใหญ่สากกวย หมู่ 2 จัดวันอาทิตย์ที่ 20 ก.ย.","19–20 ก.ย. 2569"),
 A("ประเพณี","สากกวย วันแห่งความกตัญญู","ขึ้น 15 ค่ำ เดือน 10 ลูกหลานกลับบ้านร่วมทำบุญใหญ่ เช้าวันฤกษ์ 26 ก.ย.","โพสต์ 28 ก.ย. 2569"),
 A("ความเชื่อ","พิธีเซน ส่งญาติไปทำงานต่างประเทศ","บอกกล่าวบรรพบุรุษและผูกข้อไม้ผูกมืออวยพรผู้เดินทางไปไต้หวัน","15 ก.ย. 2569")];
-/* ตัวอย่างกระทู้ (ใช้เมื่อยังไม่ตั้ง boardCsv) */
-let th=[
-{no:"KP-0001",type:"แจ้งปัญหา",topic:"ถนนและการเดินทาง",place:"",at:"1 ต.ค. 2569",status:"ดำเนินการ",title:"ตัวอย่าง: ถนนเข้าหมู่บ้านเป็นหลุมหลังฝนตก",progress:"ทีมงานรับเรื่องแล้ว กำลังประสานหน่วยงานที่ดูแลถนนสายนี้"},
-{no:"KP-0002",type:"เสนอแนะ",topic:"อื่น ๆ",place:"",at:"29 ก.ย. 2569",status:"ส่งต่อ",title:"ตัวอย่าง: ขอเสนอให้ติดไฟส่องสว่างหน้าศาลาประชาคม",progress:"ส่งเรื่องต่อไปยังผู้รับผิดชอบแล้ว จะแจ้งความคืบหน้าที่นี่"},
-{no:"KP-0003",type:"ร้องเรียน",topic:"น้ำและสิ่งแวดล้อม",place:"",at:"25 ก.ย. 2569",status:"เสร็จสิ้น",title:"ตัวอย่าง: น้ำประปาหมู่บ้านไม่ไหลหลายวัน",progress:"ปั๊มน้ำซ่อมเสร็จแล้ว น้ำกลับมาไหลปกติ"}];
+/* รายการเรื่องที่ติดตาม: เริ่มว่าง แล้วโหลดของจริงจากหลังบ้าน */
+let th=[],thLoaded=false;
 const K={
 "เซ (ฮีตคอง)":[
 ["ม.ค.","บุญปีใหม่ และทักษิณานุปาทาน","ทำบุญวันขึ้นปีใหม่ร่วมกับครอบครัวที่วัด และวันที่ 16 ม.ค. อุทิศส่วนกุศลให้อดีตเจ้าอาวาสรูปแรกของตำบล"],
@@ -558,7 +555,7 @@ function rNews(){const cats=["ทั้งหมด",...new Set(news.map(n=>n.ca
 $("nchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===nf?" on":""),k);b.onclick=()=>{nf=k;rNews()};return b}));
 $("ngrid").replaceChildren(...news.filter(n=>nf==="ทั้งหมด"||n.cat===nf).map(n=>card(n)))}
 const stc=s=>({"แก้ไขแล้ว":"done","เสร็จสิ้น":"done","ส่งต่อหน่วยงาน":"fwd","ส่งต่อ":"fwd","รอรับเรื่อง":"wait","ดำเนินการ":"prog","ไม่เกี่ยวข้อง":"na"})[s]||"";
-function rows(list,box){if(!list.length){box.replaceChildren(el("div","row","ยังไม่มีเรื่องที่เผยแพร่ในขณะนี้"));return}
+function rows(list,box){if(!list.length){box.replaceChildren(el("div","row",thLoaded?"ยังไม่มีเรื่องที่เผยแพร่ในขณะนี้":"กำลังโหลดเรื่องที่ติดตาม…"));return}
 box.replaceChildren(...list.map(x=>{const r=el("button","row"),d=el("div");
 d.append(el("div","t",x.title),el("div","mute",[x.no,x.type,x.topic,x.place,x.at].filter(Boolean).join(" • ")));
 r.append(d,el("span","st "+stc(x.status),x.status));r.onclick=()=>openT(x);return r}))}
@@ -697,7 +694,8 @@ if(q){if(ch==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=ch}
 else if(ch==='"')q=true;else if(ch===","){row.push(f);f=""}
 else if(ch==="\n"){row.push(f);r.push(row);row=[];f=""}else if(ch!=="\r")f+=ch}
 if(f||row.length){row.push(f);r.push(row)}return r}
-async function loadBoard(){if(CFG.apiUrl){try{const d=await (await fetch(CFG.apiUrl+"?action=board")).json();th=d.items||[];live=true}catch(e){th=[];$("bnote").textContent="ขณะนี้โหลดรายการเรื่องไม่ได้ ลองใหม่อีกครั้ง หรือถามความคืบหน้าทาง LINE"}return}if(!CFG.boardCsv)return;
+async function loadBoard(){try{await loadBoard0()}finally{thLoaded=true;rHome();if(!$("v-board").classList.contains("hide"))rBoard()}}
+async function loadBoard0(){if(CFG.apiUrl){try{const d=await (await fetch(CFG.apiUrl+"?action=board")).json();th=d.items||[];live=true}catch(e){th=[];$("bnote").textContent="ขณะนี้โหลดรายการเรื่องไม่ได้ ลองใหม่อีกครั้ง หรือถามความคืบหน้าทาง LINE"}return}if(!CFG.boardCsv)return;
 try{const t=await (await fetch(CFG.boardCsv)).text();
 th=parseCSV(t).slice(1).filter(r=>r[0]).map(r=>({no:r[0],at:r[1],type:r[2],topic:r[3],place:r[4],status:r[5],progress:r[6],title:r[7]||r[6]||r[0]}));live=true}
 catch(e){th=[];$("bnote").textContent="ขณะนี้โหลดรายการเรื่องไม่ได้ ลองใหม่อีกครั้ง หรือถามความคืบหน้าทาง LINE"}}
