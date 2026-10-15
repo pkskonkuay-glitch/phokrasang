@@ -335,5 +335,5 @@ $("a-csv").onclick=()=>{if(!E.length){alert("ยังไม่มีข้อ�
  const blob=new Blob(["\uFEFF"+[H.map(q).join(","),...rows].join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kuy-vocab.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
  toast(MODE==="local"?"ดาวน์โหลดแล้ว นำไฟล์ kuy-vocab.csv ไปอัปโหลดทับบนเว็บ":"ดาวน์โหลดไฟล์สำรองแล้ว")};
 </script>
-<script data-goatcounter="https://kuayphokrasang.goatcounter.com/count" data-goatcounter-settings='{"path":"/vocab"}' async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){var c=(window.KP_CONFIG||{}).gc||"kuayphokrasang",s=document.createElement("script");s.async=true;s.src="https://gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://"+c+".goatcounter.com/count");s.setAttribute("data-goatcounter-settings","{\"path\":\"/vocab\"}");document.head.appendChild(s)})()</script>
 </body></html>
