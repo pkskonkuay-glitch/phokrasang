@@ -35,7 +35,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
 <details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
-<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button><button class="chip" id="t6">🏡 วิถีชีวิตกวย</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
 <div class="row"><div><label for="cx">หมดอายุ (ไม่บังคับ) ข่าวเตือนที่หมดเวลาแล้วจะขึ้นว่า “ข่าวเก่า” เอง</label><input id="cx" type="date"></div></div>
@@ -133,6 +133,27 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label class="opt"><input type="checkbox" id="evhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="evsv">บันทึก</button> <button class="btn o" id="evcx">ยกเลิก</button> <button class="btn o hide" id="evdel" style="color:#c93b2f">🗑 ลบงานนี้</button></p><div class="msg hide" id="evmsg"></div></div>
 <div id="evls"></div><p><button class="btn o hide" id="evmore">ดูเพิ่ม</button></p></div>
+<div id="p6" class="hide"><div class="c"><h3>🏡 วิถีชีวิตกวย — ดุงกวย • กัวออ • จาเอม</h3><p class="mute">เรื่องราวที่ไม่ผูกกับวันที่ (แท็บ “วิถีชีวิตกวย” ในชีต) แบ่งเป็น 3 หมวด <b>ดุงกวย</b> = บ้านกวย (ชุมชน บ้านเรือน ผู้คน สัตว์เลี้ยง) • <b>กัวออ</b> = อยู่ดี (ความเป็นอยู่ ประเพณี ความเชื่อ) • <b>จาเอม</b> = กินอิ่ม (อาหารตามวิถีและฤดูกาล) เรียงลำดับ 1, 2, 3… แยกตามหมวด ใช้ปุ่ม ▲ ▼ ย้ายลำดับ เพิ่ม แก้ไข ซ่อน หรือลบได้เอง ช่องไหนเว้นว่างหน้าเว็บจะไม่แสดงช่องนั้น ลบแล้วไปอยู่แท็บ “ถังขยะวิถีชีวิตกวย” ในชีต (กู้คืนได้)</p>
+<div class="stats" id="lfst"></div><div class="row"><div><input id="lfq" placeholder="🔍 ค้นหาชื่อเรื่อง" aria-label="ค้นหาเรื่อง"></div></div>
+<div class="stats" id="lfft" style="margin-top:8px"></div><p><button class="btn" id="lfnew">➕ เพิ่มเรื่องใหม่</button> <button class="btn o" id="lfseed">📦 เติมเนื้อหาเริ่มต้น 14 เรื่อง (รันซ้ำได้ ไม่ทับที่คุณแก้เอง)</button></p></div>
+<div class="c hide" id="lfform"><h3 id="lfh">เพิ่มเรื่องใหม่</h3>
+<div class="row"><div><label for="lfc">หมวด *</label><select id="lfc"><option value="">— เลือก —</option><option value="ดุงกวย">🏡 ดุงกวย (บ้านกวย)</option><option value="กัวออ">🌾 กัวออ (อยู่ดี)</option><option value="จาเอม">🍲 จาเอม (กินอิ่ม)</option></select></div><div><label for="lftag">ป้ายบนการ์ด (ฤดูกาล / หัวข้อย่อย)</label><input id="lftag" maxlength="60" placeholder="เช่น หน้าฝน • ทำนา • บ้านเรือน"></div></div>
+<div class="row"><div><label for="lft">ชื่อเรื่อง *</label><input id="lft" maxlength="120" placeholder="เช่น กะตาม"></div><div><label for="lfk">ชื่อเรียกภาษากวย</label><input id="lfk" maxlength="120"></div></div>
+<div class="row"><div><label for="lfaf">ตำแหน่งในหมวด</label><select id="lfaf"></select></div><div><p class="mute" style="margin:30px 0 0">ระบบเรียงเลข 1, 2, 3… ให้ต่อเนื่องเอง ไม่ต้องพิมพ์เลข เลือกว่าจะวางต่อจากเรื่องไหน (หรือกดปุ่ม ▲ ▼ ที่การ์ดภายหลัง)</p></div></div>
+<label for="lfs">เล่าสั้น ๆ บนการ์ด (1–2 ประโยค)</label><textarea id="lfs" rows="2" maxlength="500"></textarea>
+<label for="lfso">เรื่องราว (เล่า 3–5 ประโยค ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่)</label><textarea id="lfso" rows="6" maxlength="3000"></textarea>
+<label for="lfwho">ใครเกี่ยวข้อง / ที่ไหน</label><input id="lfwho" maxlength="300" placeholder="เช่น ผู้เฒ่าบ้านโพธิ์กระสังข์ ทุกหมู่บ้านในสังกัดวัด">
+<label for="lftip">สิ่งที่ควรรู้ (บรรทัดละข้อ)</label><textarea id="lftip" rows="3" maxlength="1200"></textarea>
+<label>ภาพ 1–5 ภาพ พร้อมคำบรรยาย (ระบบย่อให้เล็กพอเปิดเร็วเมื่อสัญญาณอ่อน) <span class="mute">ภาพแรกเป็นปกการ์ด สัดส่วนปกประมาณ 1.6 : 1 ภาพแนวนอนจะสวยที่สุด</span></label><div id="lfph"></div>
+<label for="lfcl">ลิงก์คลิป บทความ หรือโพสต์ Facebook (บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์) รูปแบบ: ชื่อที่จะแสดง | ลิงก์ หรือวางลิงก์เปล่า ๆ ก็ได้</label><textarea id="lfcl" rows="3" maxlength="2500" placeholder="คลิปหาปลาหน้าแล้ง | https://youtu.be/xxxxxxxxxxx"></textarea>
+<label for="lfwd">คำศัพท์กวยที่เกี่ยวข้อง (บรรทัดละคำ รูปแบบ ไทย = กวย)</label><textarea id="lfwd" rows="3" maxlength="1200" placeholder="ปูนา = กะตาม"></textarea>
+<div class="row"><div><label for="lfvc">หมวดในหน้าคำศัพท์ที่ให้ลิงก์ไป</label><input id="lfvc" maxlength="60" placeholder="เช่น อาหาร"></div><div></div></div>
+<label for="lfel">คำบอกเล่าของผู้เฒ่า 1–2 ประโยค</label><textarea id="lfel" rows="2" maxlength="600"></textarea>
+<label for="lfby">ผู้เฒ่า / ผู้ให้ข้อมูล (ชื่อ หมู่บ้าน)</label><input id="lfby" maxlength="120">
+<label for="lfnote">บันทึกภายในทีมงาน (ไม่แสดงบนเว็บ เช่น สิ่งที่ต้องไปถามผู้เฒ่าเพิ่ม)</label><textarea id="lfnote" rows="2" maxlength="1000"></textarea>
+<label class="opt"><input type="checkbox" id="lfhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
+<p><button class="btn" id="lfsv">บันทึก</button> <button class="btn o" id="lfcx">ยกเลิก</button> <button class="btn o hide" id="lfdel" style="color:#c93b2f">🗑 ลบเรื่องนี้</button></p><div class="msg hide" id="lfmsg"></div></div>
+<div id="lfls"></div><p><button class="btn o hide" id="lfmore">ดูเพิ่ม</button></p></div>
 </div>
 <div id="big" class="hide"><img alt="รูปขยาย"></div>
 <script src="config.js"></script>
@@ -201,8 +222,8 @@ function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("d
 $("big").onclick=()=>$("big").classList.add("hide");
 /* ===== โพสต์เนื้อหา ===== */
 let CE=null,CP="";
-const tab=n=>{[1,2,3,4,5].forEach(i=>{$("p"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});if(n===2)loadC();if(n===3)loadV();if(n===4)loadP();if(n===5)loadE()};
-$("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);$("t3").onclick=()=>tab(3);$("t4").onclick=()=>tab(4);$("t5").onclick=()=>tab(5);
+const tab=n=>{[1,2,3,4,5,6].forEach(i=>{$("p"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});if(n===2)loadC();if(n===3)loadV();if(n===4)loadP();if(n===5)loadE();if(n===6)loadF()};
+$("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);$("t3").onclick=()=>tab(3);$("t4").onclick=()=>tab(4);$("t5").onclick=()=>tab(5);$("t6").onclick=()=>tab(6);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
 function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cx").value="";$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear()}
 $("crs").onclick=cclear;cclear();
@@ -553,6 +574,75 @@ $("evforce").onclick=async()=>{if(!confirm("ใช้เนื้อหาให
  try{const u=await call({action:"adminEventForceSeed"});if(!u.ok){alert("⚠️ "+u.error);return}
   alert("เรียบร้อย ✅\nทับด้วยเนื้อหาใหม่ "+(u.updated||[]).length+" งาน"+((u.updated||[]).length?":\n"+u.updated.join("\n"):"")+"\nเหมือนใหม่อยู่แล้ว "+(u.unchanged||0)+" งาน"+((u.missing||[]).length?"\n\nไม่พบงานชื่อนี้ (อาจถูกเปลี่ยนชื่อ) ข้ามไว้: "+u.missing.join(", "):""));loadE()}
  catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}};
+/* ===== วิถีชีวิตกวย: ดุงกวย / กัวออ / จาเอม ===== */
+let FL=[],FE=null,FU=["","","","",""],FP=["","","","",""],FC=["","","","",""],FFl="all",FN=40;
+const FCI={"ดุงกวย":"🏡","กัวออ":"🌾","จาเอม":"🍲"};
+const NOHOOKF="⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนวิถีชีวิตกวย ต้องวางไฟล์ life.gs ในโปรเจกต์ KP-Backend แล้วเพิ่ม 2 บรรทัดใน รหัส.gs (action=life และ adminLife) และ Deploy เป็นเวอร์ชันใหม่";
+async function loadF(){const ls=$("lfls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
+  try{const d=await call({action:"adminLifeList"});
+   if(!d.ok)throw new Error(/unknown admin action/.test(d.error||"")?"NOHOOK":(d.error||"โหลดไม่ได้"));
+   FL=d.items;renderF()}
+  catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?NOHOOKF:"โหลดไม่ได้: "+x.message))}}
+const fclip=e=>String(e.links||"").split(/\n+/).filter(Boolean);
+const fflt={all:["ทั้งหมด",()=>true],c1:["🏡 ดุงกวย",e=>e.cat==="ดุงกวย"],c2:["🌾 กัวออ",e=>e.cat==="กัวออ"],c3:["🍲 จาเอม",e=>e.cat==="จาเอม"],nostory:["ยังไม่มีเรื่องราว",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],hid:["ซ่อนอยู่",e=>e.hide]};
+function renderF(){const q=$("lfq").value.trim().toLowerCase();
+  $("lfst").replaceChildren(...[["ทั้งหมด",FL.length],["มีรูปแล้ว",FL.filter(e=>e.img).length],["มีเรื่องราวแล้ว",FL.filter(e=>e.story).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
+  $("lfft").replaceChildren(...Object.keys(fflt).map(k=>{const b=el("button","chip"+(FFl===k?" on":""),fflt[k][0]+" ("+FL.filter(fflt[k][1]).length+")");b.onclick=()=>{FFl=k;FN=40;renderF()};return b}));
+  const L=FL.filter(e=>fflt[FFl][1](e)&&(!q||(e.title+e.kuay+e.tag+e.story+e.sum).toLowerCase().includes(q)));
+  $("lfls").replaceChildren(...(L.length?L.slice(0,FN).map(fcard):[el("p","mute",FL.length?"ไม่พบรายการ":"ยังไม่มีเรื่องในระบบ กด “➕ เพิ่มเรื่องใหม่” หรือ “📦 เติมเนื้อหาเริ่มต้น” ได้เลย")]));
+  $("lfmore").classList.toggle("hide",L.length<=FN);$("lfmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-FN)+" รายการ)"}
+$("lfq").oninput=()=>{FN=40;renderF()};$("lfmore").onclick=()=>{FN+=40;renderF()};
+const fsave=async(item,photos)=>call({action:"adminLifeSave",item:item,photos:photos||undefined});
+function fcard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",(it.ord?it.ord+". ":"")+it.title));t.append(el("span","badge",(FCI[it.cat]||"")+" "+it.cat));if(it.tag)t.append(el("span","badge",it.tag));
+  if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
+  if(it.sum)c.append(el("p","mute",it.sum.slice(0,160)));
+  const imgs=[it.img,it.img2,it.img3,it.img4,it.img5].filter(Boolean),nw=String(it.words||"").split(/\n+/).filter(Boolean).length;
+  c.append(el("p","mute","เรื่องราว "+(it.story?"✓":"—")+"  •  รูป "+imgs.length+"/5  •  ลิงก์/คลิป "+fclip(it).length+"  •  คำศัพท์ "+nw+"  •  คำผู้เฒ่า "+(it.elder?"✓":"—")));
+  const ph=el("div","ph");imgs.forEach(u=>{const i=new Image();i.src=imgSrc(u);i.alt=it.title;i.loading="lazy";i.onerror=()=>i.remove();ph.append(i)});if(ph.firstChild)c.append(ph);
+  const row=el("div"),e=el("button","btn","แก้ไข / เติมข้อมูล"),h=el("button","btn o",it.hide?"แสดงบนเว็บ":"ซ่อน"),x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";
+  e.onclick=()=>fedit(it);h.onclick=async()=>{h.disabled=true;const u=await fsave(Object.assign({},it,{hide:!it.hide}));if(!u.ok)alert(u.error);loadF()};x.onclick=()=>fdelete(it);
+  const mv=async d=>{const u=await call({action:"adminLifeMove",id:it.id,dir:d});if(!u.ok)alert("⚠️ "+u.error);loadF()};
+  const up=el("button","btn o","▲ ขึ้น"),dn=el("button","btn o","▼ ลง");up.onclick=()=>mv("up");dn.onclick=()=>mv("down");
+  row.append(up," ",dn," ",e," ",h," ",x);c.append(row);return c}
+function fafill(cur){const s=$("lfaf"),cat=$("lfc").value;s.replaceChildren();
+  const a=el("option","",cur&&cur.cat===cat?"(คงตำแหน่งเดิม)":"ท้ายสุดของหมวด");a.value="";s.append(a);const f=el("option","","บนสุด (ลำดับ 1)");f.value="first";s.append(f);
+  FL.filter(e=>e.cat===cat&&(!cur||e.id!==cur.id)).forEach(e=>{const o=el("option","","ต่อจาก "+(e.ord||"")+". "+e.title);o.value=e.id;s.append(o)})}
+$("lfc").onchange=()=>fafill(FE);
+const FF=["lfc","lft","lfk","lftag","lfs","lfso","lfwho","lftip","lfcl","lfwd","lfvc","lfel","lfby","lfnote"],FK=["cat","title","kuay","tag","sum","story","who","tips","links","words","vcat","elder","elderby","note"];
+function fslots(){const box=$("lfph");box.replaceChildren();
+  for(let i=0;i<5;i++){const w=el("div","c");w.style.margin="6px 0";w.append(el("b","","ภาพที่ "+(i+1)));
+   const src=FP[i]||imgSrc(FU[i]);if(src){const im=new Image();im.src=src;im.alt="ภาพที่ "+(i+1);im.style.cssText="display:block;max-width:100%;max-height:180px;border-radius:10px;margin:6px 0";im.onerror=()=>im.remove();w.append(im)}
+   const fi=document.createElement("input");fi.type="file";fi.accept="image/*";fi.hidden=true;
+   const pb=el("button","btn o",src?"🔄 เปลี่ยนภาพ":"📷 เลือกภาพ / ถ่ายภาพ");pb.type="button";pb.onclick=()=>fi.click();
+   fi.onchange=async()=>{const f=fi.files[0];if(!f)return;try{FP[i]=await shrinkE(f);fslots()}catch(x){alert("⚠️ "+x.message)}};
+   w.append(pb,fi);
+   if(src){const rb=el("button","btn o","✕ เอาภาพนี้ออก");rb.type="button";rb.style.color="#c93b2f";rb.onclick=()=>{FP[i]="";FU[i]="";FC[i]="";fslots()};w.append(" ",rb);
+    const ci=document.createElement("input");ci.maxLength=200;ci.value=FC[i]||"";ci.placeholder="คำบรรยาย • ผู้ถ่าย • ปี เช่น ปลูกข้าวร่วมแรง ภาพโดย … ปี 2568";ci.setAttribute("aria-label","คำบรรยายภาพที่ "+(i+1));ci.oninput=()=>{FC[i]=ci.value};ci.style.marginTop="6px";w.append(ci)}
+   box.append(w)}}
+function fclear(){FE=null;FU=["","","","",""];FP=["","","","",""];FC=["","","","",""];FF.forEach(i=>$(i).value="");$("lfhide").checked=false;$("lfh").textContent="เพิ่มเรื่องใหม่";$("lfdel").classList.add("hide");$("lfmsg").className="msg hide";fslots();fafill(null)}
+function fopen(){$("lfform").classList.remove("hide");$("lfform").scrollIntoView({behavior:"smooth"});$("lft").focus()}
+function fedit(it){fclear();FE=it;FF.forEach((id,j)=>$(id).value=it[FK[j]]||"");FU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];FC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
+  $("lfhide").checked=!!it.hide;$("lfh").textContent="แก้ไข: "+it.title;$("lfdel").classList.remove("hide");fslots();fafill(it);fopen()}
+$("lfnew").onclick=()=>{fclear();if(/^c[123]$/.test(FFl)){$("lfc").value=({c1:"ดุงกวย",c2:"กัวออ",c3:"จาเอม"})[FFl];fafill(null)}fopen()};
+$("lfcx").onclick=()=>{fclear();$("lfform").classList.add("hide")};
+$("lfsv").onclick=async()=>{const b=$("lfsv"),m=$("lfmsg");b.disabled=true;m.className="msg hide";
+  try{const item={id:FE?FE.id:undefined,hide:$("lfhide").checked,img:FU[0],img2:FU[1],img3:FU[2],img4:FU[3],img5:FU[4],cap:FC[0],cap2:FC[1],cap3:FC[2],cap4:FC[3],cap5:FC[4]};FF.forEach((id,j)=>item[FK[j]]=$(id).value.trim());item.after=$("lfaf").value;
+   if(!item.cat)throw new Error("กรุณาเลือกหมวด ดุงกวย / กัวออ / จาเอม");
+   if(!item.title)throw new Error("กรุณาใส่ชื่อเรื่อง");
+   ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!FU[j]&&!FP[j])item[k]=""});
+   const send=()=>fsave(item,FP);m.textContent=FP.some(Boolean)?"กำลังอัปโหลดภาพ…":"กำลังบันทึก…";m.className="msg";
+   let u=await send();if(!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
+   if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");
+   m.textContent="✅ บันทึกแล้ว หน้าเว็บจะอัปเดตเมื่อเปิดใหม่";fclear();$("lfform").classList.add("hide");await loadF()}
+  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
+async function fdelete(it){if(!confirm("ลบ “"+it.title+"” ?\nรายการจะถูกย้ายไปแท็บ “ถังขยะวิถีชีวิตกวย” ในชีต (กู้คืนได้) และหายจากหน้าเว็บ"))return;
+  const u=await call({action:"adminLifeDelete",id:it.id});if(!u.ok){alert("⚠️ "+u.error);return}
+  if(FE&&FE.id===it.id){fclear();$("lfform").classList.add("hide")}loadF()}
+$("lfdel").onclick=()=>{if(FE)fdelete(FE)};
+$("lfseed").onclick=async()=>{if(!confirm("เติมเนื้อหาเริ่มต้น 14 เรื่อง?\n• เพิ่มเฉพาะเรื่องที่ยังไม่มี (เทียบหมวด + ชื่อ)\n• ไม่ทับเรื่องที่คุณแก้เองแล้ว\nรันซ้ำได้ปลอดภัย"))return;const b=$("lfseed");b.disabled=true;
+  try{const u=await call({action:"adminLifeSeed"});if(!u.ok){alert("⚠️ "+u.error);return}alert("เรียบร้อย ✅\nเพิ่ม "+(u.added||0)+" เรื่อง • ข้าม (มีอยู่แล้ว) "+(u.skipped||0)+" เรื่อง");loadF()}
+  catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}};
+fclear();
 eclear();
 pclear();
 function hashTab(){const h=location.hash;if(h==="#vocab")$("t3").click();else if(h==="#products")$("t4").click();else if(h==="#events")$("t5").click()}

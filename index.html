@@ -247,7 +247,12 @@ header{z-index:20}.mb svg{display:block}
 </style>
 <style id="evt">.yc .ycov{aspect-ratio:3/2;background:#e8eaf3;overflow:hidden}.yc .ycov img{width:100%;height:100%;object-fit:cover;display:block}.yc a.go{display:inline-block;padding:8px 0}
 .wch{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}.wch span{background:#eef1fb;border:1px solid var(--line);border-radius:99px;padding:4px 14px;font-size:16px}.wch b{color:#1c2b5e;margin-right:8px}
-.yt{margin:12px 0}.yt button{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:linear-gradient(135deg,#1c2b5e,#3b56b8);color:#fff;font:700 20px Boon,system-ui,sans-serif;cursor:pointer}.yt iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;display:block}.yt a{display:inline-block;margin-top:6px;font-size:15px}</style>
+.yt{margin:12px 0}.yt button{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:linear-gradient(135deg,#1c2b5e,#3b56b8);color:#fff;font:700 20px Boon,system-ui,sans-serif;cursor:pointer}.yt iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;display:block}.yt a{display:inline-block;margin-top:6px;font-size:15px}
+.lead{margin:0 0 18px;padding:12px 18px;border-left:5px solid var(--gold);background:var(--card);border-radius:0 12px 12px 0;font-size:18px;line-height:1.85}.lead:empty{display:none}
+.card .cov{aspect-ratio:1.618/1;overflow:hidden;background:var(--soft)}.card .cov img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.card[role=link]{transition:border-color .2s,box-shadow .2s}.card[role=link]:hover{border-color:var(--gold);box-shadow:0 8px 22px rgba(28,43,94,.12)}.card[role=link]:hover .cov img{transform:scale(1.04)}
+@media(prefers-reduced-motion:reduce){.card .cov img,.card[role=link]{transition:none}.card[role=link]:hover .cov img{transform:none}}
+</style>
 </head>
 <body>
 <header><div class="bar">
@@ -262,8 +267,8 @@ header{z-index:20}.mb svg{display:block}
 <div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
 <div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2></div><div class="fb"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
 <div class="wrap">
-<section id="topics"><div class="sh"><h2>เรื่องราวชาวกวยบ้านเรา</h2></div><div class="topics"><button class="tp" style="--b:#1c2b5e" onclick="goC('เซ (ฮีตคอง)')"><span>🕯️</span>เซ (ฮีตคอง)<small>ประเพณีตลอดปี</small></button><button class="tp" style="--b:#5a2f7d" onclick="goC('ละวาย')"><span>🎗️</span>ละวาย<small>ขวัญคนตามวงจรชีวิต</small></button><button class="tp" style="--b:#9a5b12" onclick="goC('ดุง')"><span>🏡</span>ดุง<small>บ้านเรือน ตานชิ โคะอ์โค</small></button><button class="tp" style="--b:#2f7d5b" onclick="goC('กัวออ')"><span>🙏</span>กัวออ<small>พิธีกรรมและวันจริง</small></button><button class="tp" style="--b:#c9462e" onclick="goC('จาแอม')"><span>🍲</span>จาแอม<small>วิถีกิน วิถีอยู่</small></button><button class="tp" style="--b:#3b56b8" onclick="goC('ภาษากวย')"><span>🗣️</span>ภาษากวย<small>คำและความหมาย</small></button></div></section>
-<section class="sw hide" id="culture"><div class="sh"><h2>เรื่องเล่ากวยมูไฮ</h2></div><p class="mute">กวยวอแธร คือกวยที่ทำการเกษตร ข้อมูลรวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน</p><p><a class="btn alt" href="vocab.html" style="margin:0">🗣️ ดูคำศัพท์กวย →</a></p><div class="chips" id="cchips"></div><div class="grid" id="cgr"></div></section>
+<section id="topics"><div class="sh"><h2>เรื่องราวชาวกวยบ้านเรา</h2></div><div class="topics"><button class="tp" style="--b:#1c2b5e" onclick="goC('เซ (ฮีตคอง)')"><span>🕯️</span>เซ (ฮีตคอง)<small>ประเพณีตลอดปี</small></button><button class="tp" style="--b:#5a2f7d" onclick="goC('ละวาย')"><span>🎗️</span>ละวาย<small>ขวัญคนตามวงจรชีวิต</small></button><button class="tp" style="--b:#9a5b12" onclick="goC('ดุงกวย')"><span>🏡</span>ดุงกวย<small>บ้านเรือน ตานชิ โคะอ์โค</small></button><button class="tp" style="--b:#2f7d5b" onclick="goC('กัวออ')"><span>🙏</span>กัวออ<small>พิธีกรรมและวันจริง</small></button><button class="tp" style="--b:#c9462e" onclick="goC('จาเอม')"><span>🍲</span>จาเอม<small>วิถีกิน วิถีอยู่</small></button><button class="tp" style="--b:#3b56b8" onclick="goC('ภาษากวย')"><span>🗣️</span>ภาษากวย<small>คำและความหมาย</small></button></div></section>
+<section class="sw hide" id="culture"><div class="sh"><h2>เรื่องเล่ากวยมูไฮ</h2></div><p class="mute">กวยวอแธร คือกวยที่ทำการเกษตร ข้อมูลรวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน</p><p><a class="btn alt" href="vocab.html" style="margin:0">🗣️ ดูคำศัพท์กวย →</a></p><div class="chips" id="cchips"></div><p class="lead" id="cintro"></p><div class="grid" id="cgr"></div></section>
 <section id="yr"><div class="sh"><h2>ปีกวย ตลอดปีของบ้านเรา</h2><span class="mute">เลื่อนดูได้</span></div><p class="mute" style="margin:0 0 8px">☀️ สุริยคติ = วันที่ตายตัวตามปฏิทินสากล • 🌙 จันทรคติ = ตามข้างขึ้นข้างแรม วันที่เปลี่ยนทุกปี</p><div class="yr" id="yrl"></div></section>
 
 <section class="sw hide" id="products"><div class="sh"><h2>ของดีบ้านเรา</h2><span class="mute">ฝีมือคนบ้านโพธิ์กระสังข์</span></div><p class="mute">ผ้าไหมที่ทอด้วยลายของบ้านเรา และเครื่องจักสานไม้ไผ่ฝีมือผู้เฒ่า หน้านี้บอกว่ามีอะไร ใครทำ ราคาประมาณเท่าไหร่ ไม่ได้ขายสินค้า ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้</p><div class="chips" id="pchips"></div><div class="grid" id="pgrid"></div></section>
@@ -386,7 +391,7 @@ const K={
 ["เจ็บป่วย","สะเองกวย","ลูกหลานทั้งตระกูลร่วมเล่นดนตรีและรำถวายผีบรรพบุรุษตั้งแต่ตะวันตกดินจนรุ่งเช้า ตามที่เคยบนบานไว้"],
 ["หลังจากจากไป","อลาวขมุ้ย","ทำหลังผู้ล่วงลับอย่างน้อย 2 เดือน นอกเข้าพรรษา อัญเชิญวิญญาณมาอยู่กับญาติ และทำบุญชำระให้สะอาด"],
 ["บ้านเรือน","เซนเล้อะอ์ดุง","เซ่นบอกเจ้าที่เจ้าทางก่อนสร้างหรือต่อเติมบ้านเรือน ดูคางไก่และกรวดน้ำบอกกล่าว"]],
-"ดุง":[
+"ดุงกวย":[
 ["บ้านเรือน","ดุงกวย","เรือนไม้สองชั้นแบบดั้งเดิม ปัจจุบันหลายหลังต่อเติมชั้นล่างเป็นปูน แต่ชั้นบนยังเป็นไม้"],
 ["ตานชิ","ตานชิ ผ้าไหมชิโซด ลายชิเก็บ","ผ้าไหมลายลูกแก้ว 3 แบบ คือผ้าสไบ ผ้าไหมทั่วไป และเสื้ออัตลักษณ์ ผู้ทอเป็นส่วนมากคือผู้สูงอายุ"],
 ["โคะอ์โค","โคะอ์โค","โรงเรือนเลี้ยงสัตว์ โดยเฉพาะคอกวัวควาย ใกล้เรือนหรือใต้ถุน วัวควายคือสมาชิกของบ้าน"],
@@ -394,7 +399,7 @@ const K={
 ["ศาลพระภูมิ","ศาลพระภูมิ","รูปแบบหนึ่งของที่สถิตของสิ่งที่มองไม่เห็นแต่ยังศรัทธา"]],
 "กัวออ":[
 ["15 ก.ย. 2569","เซน ส่งญาติไปไต้หวัน","บอกกล่าวบรรพบุรุษและสิ่งศักดิ์สิทธิ์ ผูกข้อไม้ผูกมืออวยพร"]],
-"จาแอม":[
+"จาเอม":[
 ["ทำนา","ซธูงธรอ","ซธูง คือปักดำ ธรอ คือข้าว ทำนาร่วมแรง ได้ปลา ผักสะเดา เห็ด และเด็กๆ ไล่จับหนูนา"],
 ["ปูนา","กะตาม","ขุดปูนาช่วงข้าวออกใหม่ เมนูขึ้นชื่อคือละแวกะตาม แกงมันปูนา"],
 ["หาปลา","กลอ สูบธระ ตอกา","งมหอย ม.ค.–พ.ค. สูบน้ำจับปลาหน้าแล้ง และวางเบ็ดยามค่ำราวเดือน 9–10"],
@@ -427,19 +432,24 @@ i.append(el("small","","ฉบับที่"),el("b","",String(m[0])),el("smal
 b.append(el("span","tag",m[4]+" • หน้า "+m[3]),el("h3","",m[2]),el("div","mute",m[5]));
 if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl);$("hubQ").src=CFG.hubQr}
 let cf="เซ (ฮีตคอง)";
+/* วิถีชีวิตกวย 3 หมวด (ข้อมูลไม่ผูกวันที่ มาจากชีต "วิถีชีวิตกวย" ผ่าน action=life; ถ้ายังไม่มีข้อมูลในชีตจะใช้การ์ดในโค้ด K เดิม) */
+const LCATS=["ดุงกวย","กัวออ","จาเอม"];
+const LINTRO={"ดุงกวย":"ดุงกวย แปลว่า บ้านกวย คือความเป็นชุมชน ความเป็นอยู่ บ้านเรือน ผู้คน และสัตว์เลี้ยงต่าง ๆ","กัวออ":"กัวออ แปลว่า อยู่ดี คือความเป็นอยู่ภายใต้วิถีชีวิต วัฒนธรรมประเพณี และวิถีความเชื่อ","จาเอม":"จาเอม แปลว่า กินอิ่ม คือของกินตามวิถีและฤดูกาล ผักหัวไร่ปลายนา อาหารจากธรรมชาติ รวมถึงอาหารว่างและอาหารสมุนไพรของชาวกวย"};
+function covOf(x,band){if(!(x.img&&evOk(evSrc(x.img))))return band;const d=el("div","cov"),im=new Image();im.alt="";im.loading="lazy";im.src=evSrc(x.img);im.onerror=()=>{if(d.parentNode)d.replaceWith(band)};d.append(im);return d}
 var CALI={"สุริยคติ":"☀️","จันทรคติ":"🌙","ตามเหตุการณ์ชีวิต":"🧵"};
 function evFind(t){const k=String(t).split(" ")[0];try{return EVTS.find(o=>o.src.title===t)||EVTS.find(o=>String(o.src.title).split(" ")[0]===k)||null}catch(_){return null}}
-function rCul(){$("cchips").replaceChildren(...Object.keys(K).map(k=>{const b=el("button","chip"+(k===cf?" on":""),k);b.onclick=()=>{cf=k;rCul()};return b}));
-const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุง":"scarf","กัวออ":"silk","จาแอม":"plaid","ภาษากวย":"scarf"};
+function rCul(){$("cintro").textContent=LINTRO[cf]||"";$("cchips").replaceChildren(...Object.keys(K).map(k=>{const b=el("button","chip"+(k===cf?" on":""),k);b.onclick=()=>{cf=k;rCul()};return b}));
+const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงกวย":"scarf","กัวออ":"silk","จาเอม":"plaid","ภาษากวย":"scarf"};
 /* หมวดฮีตคอง = ปฏิทินงานประจำปีจากชีต "งานประจำปี" ที่เดียว (เรียงลำดับตามที่แอดมินจัด) หมวดอื่นใช้การ์ดในโค้ด แต่ถ้ามีงานชื่อตรงกันในชีตจะเปิดหน้าเรื่องราวให้ */
 const hee=cf==="เซ (ฮีตคอง)";
-const L=hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
-const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cf]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(bd);i.append(el("div","tag",x.tag),el("h3","",x.title),el("div","mute",x.sum));
+const L=hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cf]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title),el("div","mute",x.sum));
   const ev0=x.ev;
-  if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute","ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2)}
+  if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2)}
   c.append(i);return c});
 if(hee){const lg=el("p","mute","☀️ สุริยคติ = วันที่ตายตัวตามปฏิทินสากล • 🌙 จันทรคติ = ตามข้างขึ้นข้างแรม วันที่เปลี่ยนทุกปี เรียงตามลำดับของปี");lg.style.gridColumn="1/-1";lg.style.margin="0";out.unshift(lg);
  const lf=el("div","card"),li=el("div","in");li.append(el("div","tag","🧵 ตามเหตุการณ์ชีวิต"),el("h3","","พิธีที่ไม่มีวันตายตัว"),el("div","mute","เรียกขวัญ เด็กเกิดใหม่ เจ็บป่วย หรือสูญเสีย ทำเมื่อมีเหตุในครอบครัว ไม่ใช่งานประจำปี"));const lm=el("div","mute","ดูหมวดละวาย →");lm.style.fontWeight="700";li.append(lm);lf.style.cursor="pointer";lf.tabIndex=0;lf.setAttribute("role","link");lf.onclick=()=>{cf="ละวาย";rCul()};lf.onkeydown=ke=>{if(ke.key==="Enter")lf.onclick()};lf.append(li);out.push(lf)}
+if(!out.length&&!hee){const e0=el("p","mute","เรื่องในหมวดนี้กำลังรวบรวม ส่งเรื่องเล่าหรือภาพเก่ามาทาง LINE "+CFG.lineId+" ได้เลย");e0.style.gridColumn="1/-1";out.push(e0)}
 $("cgr").replaceChildren(...out)}
 function goC(k){cf=k;go("home","culture")}
 let live=false;
@@ -475,9 +485,9 @@ if(o.extra)o.extra(r);
 b.append(mk("ส่งต่อใน LINE","https://line.me/R/share?text="+encodeURIComponent(o.title+"\n"+U("line")),"solid","line"),mk("แชร์ Facebook","https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(U("fb")),"","fb"));
 if(navigator.share){const sh=el("button","btn","แชร์…");sh.onclick=()=>{TRK.ev("share-native/"+o.k);navigator.share({title:o.title,url:U("share")}).catch(()=>{})};b.append(sh)}
 const cp=el("button","btn","คัดลอกลิงก์");cp.onclick=()=>{TRK.ev("share-copy/"+o.k);(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{cp.textContent="คัดลอกแล้ว ✓"},()=>{prompt("คัดลอกลิงก์นี้",u)})};b.append(cp);r.append(b);
-const b2=el("div","rbar");b2.append((o.evt?(()=>{const a=ext(el("a","btn line","📷 มีภาพเก่าหรือเรื่องของงานนี้ ส่งมาทาง LINE"),lineMsg("ส่งภาพหรือเรื่องของงาน: "+o.title));a.addEventListener("click",()=>TRK.ev("evt-send/"+o.k));return a})():o.prod?(()=>{const a=ext(el("a","btn line","💬 สอบถามข้อมูลทาง LINE"),lineMsg("สอบถามผลิตภัณฑ์: "+o.title));a.addEventListener("click",()=>TRK.ev("ask/"+o.k));return a})():ext(el("a","btn","💬 ส่งความคิดเห็นเรื่องนี้ทาง LINE"),lineMsg("ความคิดเห็นเรื่อง: "+o.title))),ext(el("a","btn","เพิ่มเพื่อน LINE"),CFG.lineUrl),ext(el("a","btn","ติดตามเพจ Facebook"),F));r.append(b2)}
+const b2=el("div","rbar");b2.append((o.evt||o.life?(()=>{const a=ext(el("a","btn line",o.life?"📷 มีภาพเก่าหรือเรื่องเล่าเรื่องนี้ ส่งมาทาง LINE":"📷 มีภาพเก่าหรือเรื่องของงานนี้ ส่งมาทาง LINE"),lineMsg((o.life?"ส่งภาพหรือเรื่องเล่า: ":"ส่งภาพหรือเรื่องของงาน: ")+o.title));a.addEventListener("click",()=>TRK.ev("evt-send/"+o.k));return a})():o.prod?(()=>{const a=ext(el("a","btn line","💬 สอบถามข้อมูลทาง LINE"),lineMsg("สอบถามผลิตภัณฑ์: "+o.title));a.addEventListener("click",()=>TRK.ev("ask/"+o.k));return a})():ext(el("a","btn","💬 ส่งความคิดเห็นเรื่องนี้ทาง LINE"),lineMsg("ความคิดเห็นเรื่อง: "+o.title))),ext(el("a","btn","เพิ่มเพื่อน LINE"),CFG.lineUrl),ext(el("a","btn","ติดตามเพจ Facebook"),F));r.append(b2)}
 go("read");TRK.pv("/read/"+o.k,o.title);if(push!==false)history.pushState({kp:1},"","#/read/"+o.k)}
-function readFrom(h){const k=(h||"").replace("#/read/","");const o=[...news,...arts,...PRODUCTS,...EVTS].find(x=>x.k===k);if(o)openRead(o,false)}
+function readFrom(h){const k=(h||"").replace("#/read/","");const o=[...news,...arts,...PRODUCTS,...EVTS,...LIFEOBJ].find(x=>x.k===k);if(o)openRead(o,false)}
 const ROUTES={"#/submit":["submit"],"#/board":["board"],"#/news":["home","latest"],"#/rights":["home","rights"],"#/newsonly":["home","news"],"#/culture":["home","culture"],"#/clips":["home","clips"],"#/mags":["home","mags"],"#/products":["home","products"]};
 function goBack(){if(history.state&&history.state.kp)history.back();else{history.replaceState(null,"",location.pathname);go("home")}}
 function route(){const h=location.hash;if(h.startsWith("#/read/"))return readFrom(h);const m=ROUTES[h.split("?")[0]];if(m)go(m[0],m[1])}
@@ -824,7 +834,7 @@ function rProd(){const cats=["ทั้งหมด",...new Set(PRODUCTS.map(o=>
 /* ===== ปีกวย งานประจำปี: การ์ดหน้าแรก + หน้ารายละเอียดเมื่อแตะ =====
    ข้อมูลอยู่ในชีตแท็บ "งานประจำปี" แก้ผ่านหน้า admin.html > 📅 งานประจำปี ถ้าดึงไม่ได้หรือชีตว่าง ใช้การ์ดจาก K["เซ (ฮีตคอง)"] แทน
    ช่องที่เว้นว่างจะไม่แสดงอะไรเลย (ไม่มีข้อความ "ยังไม่มี") */
-const EKEY="kp_evt";
+const EKEY="kp_evt",LKEY="kp_life";let LIFEOBJ=[];
 const evOk=u=>/^(https:\/\/|img\/)/.test(u||"");
 const evSrc=u=>/^https:/.test(u)||/^img\//.test(u)?u:"img/"+u;
 const evLines=s=>String(s||"").split(/\n+/).map(x=>x.trim()).filter(Boolean);
@@ -864,8 +874,36 @@ async function loadEvents(){if(!CFG.apiUrl)return;
  try{const d=await getJ("events","events",hadE);
   if(/[?&]debug=1/.test(location.search)){const y=$("yr");if(y)y.prepend(el("p","mute","[debug] ข้อมูลปีกวยมาจาก: "+(window.KPSRC.events||"?")+" • "+((d&&d.items)||[]).length+" งาน"))}
   if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
+/* ===== วิถีชีวิตกวย: หน้าอ่านของแต่ละเรื่อง (ดุงกวย / กัวออ / จาเอม) ===== */
+const mkLife=e=>{const b=[];
+ [[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].forEach(x=>{if(x[0]&&evOk(evSrc(x[0])))b.push("!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")")});
+ const st=evLines(e.story);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));
+ if(e.who)b.push("**เกี่ยวข้องกับ:** "+e.who);
+ const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ควรรู้");tp.forEach(x=>b.push("• "+x))}
+ if(!b.length)b.push(e.title);
+ const extra=r=>{
+  const ws=evLines(e.words).map(x=>x.split(/\s*=\s*/)).filter(x=>x[0]&&x[1]);
+  if(ws.length){r.append(el("h2","","คำศัพท์กวยที่เกี่ยวข้อง"));const w=el("div","wch");ws.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[0]);w.append(s)});r.append(w)}
+  if(e.vcat||ws.length){const vc=e.vcat||"ประเพณีตลอดปี",vp=el("p"),va=el("a","btn alt","🗣️ ดูหมวด “"+vc+"” ในหน้าคำศัพท์ →");va.href="vocab.html#c/"+encodeURIComponent(vc);va.style.margin="0";vp.append(va);r.append(vp)}
+  const ls=evLinks(e);
+  if(ls.length){r.append(el("h2","","คลิป บทความ และลิงก์ของเรื่องนี้"));ls.forEach(z=>{const t=z[0],u=z[1],id=ytId(u);
+   if(id){const w=el("div","yt"),bt=el("button","","▶ "+(t||"กดเพื่อดูคลิป"));bt.type="button";
+    bt.onclick=()=>{TRK.ev("life-clip/"+e.id);const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";f.title=t||("คลิป "+e.title);f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;bt.replaceWith(f)};
+    w.append(bt,ext(el("a","","เปิดใน YouTube"),"https://www.youtube.com/watch?v="+id));r.append(w)}
+   else{const p=el("p"),a=ext(el("a","btn alt",(/facebook\.com|fb\.watch|fb\.com/.test(u)?"📘 ":"🔗 ")+(t||"เปิดลิงก์")),u);a.style.margin="0";a.addEventListener("click",()=>TRK.ev("life-link/"+e.id));p.append(a);r.append(p)}})}
+  if(e.elder){const q=el("blockquote","pq");bd(q,e.elder);q.append(el("cite","",e.elderby||"ผู้เฒ่าในชุมชน"));r.append(q)}
+  r.append(el("p","mute","※ เรื่องเล่านี้รวบรวมจากคำบอกเล่าของผู้เฒ่าและคนในชุมชน แต่ละหมู่บ้านอาจต่างกันเล็กน้อย ถ้าอยากเพิ่มเติมหรือแก้ไข ส่งมาทาง LINE "+CFG.lineId)) };
+ return{k:"lf-"+e.id,life:1,src:e,cat:e.cat,title:e.title,date:"",meta:[e.tag,e.kuay].filter(Boolean).join(" • "),body:b,extra:extra}};
+async function loadLife(){if(!CFG.apiUrl)return;
+ const use=L=>{if(!Array.isArray(L)||!L.length)return false;LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
+ let had=false;try{had=use(JSON.parse(localStorage.getItem(LKEY)||"null"))}catch(e){}
+ if(had&&FRESH("life",30000))return;
+ try{const d=await getJ("life","life",had);
+  if(d&&d.ok&&Array.isArray(d.items)){STAMP("life");
+   if(d.items.length){if(use(d.items)){try{localStorage.setItem(LKEY,JSON.stringify(d.items))}catch(e){}}}
+   else{LIFEOBJ=[];try{localStorage.removeItem(LKEY)}catch(e){}try{rCul()}catch(_){}}}}catch(e){}}
 rYear();
-rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
+rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadLife();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
 
 {const pa=el("a","","พื้นที่ของเรา");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}

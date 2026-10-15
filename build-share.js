@@ -69,14 +69,15 @@ function page(it) {
 (async () => {
   const items = staticItems(), seen = new Set(items.map(i => i.k));
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
-  const [c, e, p] = await Promise.all([api("content"), api("events"), api("products")]);
+  const [c, e, p, lf] = await Promise.all([api("content"), api("events"), api("products"), api("life")]);
   list(c).forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img }));
   list(e).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
   list(p).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
+  list(lf).forEach(x => add({ k: "lf-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));   // วิถีชีวิตกวย (ดุงกวย/กัวออ/จาเอม)
   // ===== ข้อ 14: ส่งออกข้อมูลเป็นไฟล์นิ่ง data/*.json (หน้าเว็บใช้สำรองเมื่อ Apps Script ช้า/ล่ม) =====
   const dd = path.join(__dirname, "data"); fs.mkdirSync(dd, { recursive: true });
   const dump = (name, j) => { if (j) fs.writeFileSync(path.join(dd, name + ".json"), JSON.stringify(j)); };
-  dump("content", c); dump("events", e); dump("products", p);
+  dump("content", c); dump("events", e); dump("products", p); dump("life", lf);
   dump("vocab", await api("vocab"));
   // ===== sitemap.xml =====
   const urls = [BASE, BASE + "vocab.html", BASE + "privacy.html"].concat(items.map(i => BASE + "s/" + encodeURIComponent(i.k) + ".html"));
@@ -91,7 +92,7 @@ function page(it) {
   if (!cf.includes('version: "' + ver + '"')) { cf = cf.replace(/version:\s*"[^"]*"/, 'version: "' + ver + '"'); fs.writeFileSync(CONFIG_PATH, cf); console.log("เลื่อนเวอร์ชัน → " + ver); }
   const dir = path.join(__dirname, "s"); fs.mkdirSync(dir, { recursive: true });
   const keep = new Set(items.map(i => i.k + ".html"));
-  const dyn = c || e || p;   // ถ้าดึงข้อมูลไม่ได้เลย ไม่ลบไฟล์เก่า
+  const dyn = c || e || p || lf;   // ถ้าดึงข้อมูลไม่ได้เลย ไม่ลบไฟล์เก่า
   if (dyn) fs.readdirSync(dir).filter(f => f.endsWith(".html") && !keep.has(f)).forEach(f => fs.unlinkSync(path.join(dir, f)));
   items.forEach(it => fs.writeFileSync(path.join(dir, it.k + ".html"), page(it)));
   console.log("สร้างหน้าแชร์ " + items.length + " เรื่อง");
