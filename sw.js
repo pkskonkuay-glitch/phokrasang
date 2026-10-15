@@ -1,6 +1,6 @@
 /* ที่นี่โพธิ์กระสังข์ — ให้เว็บเปิดเร็วและเปิดได้แม้สัญญาณอ่อน
    เปลี่ยนเลขเวอร์ชันด้านล่างทุกครั้งที่อัปโหลดไฟล์ชุดใหม่ เพื่อให้เครื่องผู้ใช้ล้างของเก่า */
-const V = "kp-2569-10-15-j";
+const V = "kp-2569-10-15-k";
 const CORE = ["./", "index.html", "vocab.html", "privacy.html", "manifest.webmanifest",
   "fonts/Boon-Regular.woff2", "fonts/Boon-Bold.woff2", "icons/icon-192.png"];
 const MAX = 60;   // เก็บไฟล์ในเครื่องไม่เกินกี่รายการ (กันแคชบวมเมื่อใช้ไปนาน ๆ)

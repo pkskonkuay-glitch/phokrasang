@@ -304,7 +304,7 @@ header{z-index:20}.mb svg{display:block}
 <div id="v-board" class="wrap hide"><section>
 <div class="sh"><h2>ติดตามเรื่องที่แจ้งเข้ามา</h2><button class="btn solid" onclick="go('submit')">ส่งเรื่องใหม่</button></div>
 <p class="mute" id="bnote">แสดงเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว เรื่องของคุณที่ไม่ได้แสดงที่นี่ ถามความคืบหน้าทาง LINE โดยพิมพ์เลขติดตาม</p>
-<style>.trk{background:#f4f6fc;border:1px solid #dfe2ee;border-radius:14px;padding:12px 14px;margin:10px 0 14px}.trk label{font-weight:700;display:block;margin-bottom:6px}.trkrow{display:flex;gap:8px;flex-wrap:wrap}.trkrow input{flex:1;min-width:160px;font:inherit;padding:10px 12px;border:1px solid #c9cde0;border-radius:10px;text-transform:uppercase}#tkOut{margin-top:8px;font-size:16px;line-height:1.6;white-space:pre-line}</style>
+<style>.trk{background:#f4f6fc;border:1px solid #dfe2ee;border-radius:14px;padding:12px 14px;margin:10px 0 14px}.trk label{font-weight:700;display:block;margin-bottom:6px}.trkrow{display:flex;gap:8px;flex-wrap:wrap}.trkrow input{flex:1;min-width:160px;font:inherit;padding:10px 12px;border:1px solid #c9cde0;border-radius:10px;text-transform:uppercase}#tkOut{margin-top:8px;font-size:16px;line-height:1.6;white-space:pre-line}.msr{display:flex;gap:8px;margin:8px 0 4px}.msr input{flex:1;min-width:0;font:inherit;padding:10px 12px;border:1px solid #c9cde0;border-radius:10px}.mres{font-size:15px;color:#5b6180;margin-bottom:6px}.mres .mi{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:1px solid #dfe2ee;border-radius:10px;padding:9px 12px;margin:4px 0}.msr2{margin:2px 0 8px}</style>
 <div class="trk"><label for="tkIn">มีเลขติดตามแล้ว? ใส่เลขเพื่อดูสถานะ</label><div class="trkrow"><input id="tkIn" maxlength="12" placeholder="เช่น KP-7K3M9Q" autocapitalize="characters" autocomplete="off" inputmode="text"><button class="btn solid" id="tkGo" type="button">ตรวจสถานะ</button></div><div id="tkOut" role="status" aria-live="polite"></div></div>
 <div class="lg"><div><span class="st wait">รอรับเรื่อง</span>รอทีมงานรับเรื่อง</div><div><span class="st prog">ดำเนินการ</span>กำลังแก้ไขปัญหา</div><div><span class="st fwd">ส่งต่อ</span>ส่งต่อให้หน่วยงานที่เกี่ยวข้อง</div><div><span class="st na">ไม่เกี่ยวข้อง</span>ไม่ใช่เรื่องที่ชุมชนแก้ได้</div><div><span class="st done">เสร็จสิ้น</span>แก้ไขเรียบร้อย</div></div><div class="chips" id="bchips"></div><div class="list" id="blist"></div></section></div>
 
@@ -569,7 +569,7 @@ CFG.mapLat=14.63622;CFG.mapLng=104.33793; /* จุดกึ่งกลาง�
 const CATS=[["🛣️","ถนน / ไฟส่องสว่าง","หลุม ถนนพัง ไฟดับ"],["🚰","น้ำ / ท่อระบายน้ำ","น้ำท่วม ประปา ท่อตัน"],["⚡","ไฟฟ้า / สายไฟ","เสาล้ม สายขาด"],["🗑️","ขยะ / สิ่งแวดล้อม","ขยะ กลิ่น ควันไฟ"],["⚠️","เตือนภัย / อุบัติเหตุ","เหตุด่วน อันตราย"],["🌾","เกษตร / สัตว์","วัวควาย นาไร่"],["🔒","ความปลอดภัย","ของหาย คนแปลกหน้า"],["💬","เสนอแนะ / อื่น ๆ","เรื่องอื่น ๆ"],["📣","ฝากข่าว / ภาพเก่า","ข่าวดี เรื่องเล่า ภาพเก่า"]];
 const WANT=["ช่วยซ่อมแซม","มาตรวจสอบ","ประสานหน่วยงาน","แจ้งให้ทราบเฉย ๆ"];
 const ORGS=["ไม่แน่ใจ (ทีมงานช่วยส่งต่อ)","ผู้ใหญ่บ้าน / ผู้นำท้องที่","เทศบาล / อบต.","พัฒนาชุมชน","รพ.สต.","วัด / กรรมการหมู่บ้าน"];
-let R={ph:[],want:[]},map,meM,meC,wId=null;
+let R={ph:[],want:[]},map,meM,meC,wId=null,tlO,tlS;
 const CID=(()=>{try{let c=localStorage.getItem("kpcid");if(!c){c=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem("kpcid",c)}return c}catch(e){return"anon"}})();
 const rdURL=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.onerror=()=>r("");x.readAsDataURL(f)});
 async function sendApi(){const b=$("send"),er=$("er");b.disabled=true;const old=b.textContent;b.textContent="⏳ กำลังส่งเรื่อง…";er.textContent="";
@@ -601,7 +601,22 @@ R.lat=ll[0];R.lng=ll[1];R.ok=true;if(map){map.setView(ll,18,{animate:false});upd
 if(wId==null)wId=navigator.geolocation.watchPosition(q=>{showMe([q.coords.latitude,q.coords.longitude],q.coords.accuracy||30);upd()},()=>{},{enableHighAccuracy:true})},
 e=>{g.classList.remove("busy");$("rd2").textContent=e.code===1?"❌ ไม่ได้รับอนุญาตใช้ตำแหน่ง เปิด GPS/ตำแหน่งในมือถือ หรือลากแผนที่แทน":"❌ หาตำแหน่งไม่เจอ ลองไปที่โล่ง หรือลากแผนที่แทน"},{enableHighAccuracy:true,timeout:20000,maximumAge:0})}
 function initMap(){if(map){map.remove();map=meM=meC=null}$("map").textContent="";
-map=L.map("map").setView([CFG.mapLat,CFG.mapLng],17);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);map.on("moveend",moved);if(R.me)showMe(R.me,R.acc||30);upd()}
+map=L.map("map").setView([CFG.mapLat,CFG.mapLng],17);tlO=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);tlS=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18,attribution:"© Esri"});map.on("moveend",moved);map.on("click",e=>map.panTo(e.latlng));if(R.me)showMe(R.me,R.acc||30);upd()}
+/* ===== ค้นหาพิกัด (ไม่จำกัดระยะ) / วางพิกัด / ภาพดาวเทียม ===== */
+function mGo(la,ln,name){const o=$("mr");
+ if(!(la>4&&la<22&&ln>96&&ln<107)){o.textContent="⚠️ พิกัดนี้อยู่นอกพื้นที่ที่ระบบรับ (ประเทศไทยและใกล้เคียง) ตรวจตัวเลขอีกครั้ง";return}
+ if(!map){o.textContent="แผนที่ยังโหลดไม่เสร็จ รอสักครู่แล้วลองใหม่";return}
+ map.setView([la,ln],18,{animate:false});R.ok=false;upd();
+ o.textContent="📍 ไปที่ “"+name+"” แล้ว ลากหรือแตะแผนที่ให้หมุดตรงจุดจริง แล้วกด “ยืนยันตำแหน่ง”"}
+function mSearch(){const q=$("mq").value.trim(),o=$("mr");if(!q)return;
+ const m=/(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{2,3}\.\d+)/.exec(q);   // วางพิกัด หรือลิงก์ Google Maps ที่มีพิกัด
+ if(m){mGo(+m[1],+m[2],"พิกัดที่วาง");return}
+ o.textContent="⏳ กำลังค้นหา…";
+ fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=th,kh&accept-language=th&q="+encodeURIComponent(q)).then(r=>r.json()).then(L=>{
+  if(!L.length){o.textContent="ไม่พบชื่อนี้ ลองพิมพ์ชื่อวัด/โรงเรียน/ตำบลที่ใกล้ที่สุด หรือใช้นิ้วลากแผนที่เอง";return}
+  o.replaceChildren(...L.map(x=>{const b=el("button","mi",String(x.display_name||"").split(",").slice(0,3).join(", "));b.type="button";b.onclick=()=>mGo(+x.lat,+x.lon,String(x.display_name||"").split(",")[0]);return b}))
+ }).catch(()=>{o.textContent="ค้นหาไม่ได้ตอนนี้ ใช้นิ้วลากแผนที่แทนได้"})}
+function mSat(){if(!map||!tlO||!tlS)return;const on=map.hasLayer(tlS);if(on){map.removeLayer(tlS);map.addLayer(tlO)}else{map.addLayer(tlS);map.removeLayer(tlO)}$("msat").textContent=on?"🛰 ดูภาพดาวเทียม":"🗺 กลับเป็นแผนที่ถนน"}
 function loadMap(){if(window.L)return initMap();const c=el("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";document.head.append(c);const j=el("script");j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";j.onload=initMap;j.onerror=()=>{$("map").textContent="โหลดแผนที่ไม่ได้ ลองกด “ฉันอยู่ตรงจุดเกิดเหตุ” แทน"};document.head.append(j)}
 function shrink(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);cv.toBlob(b=>{URL.revokeObjectURL(u);r(b?new File([b],"kp-"+Date.now()+"-"+Math.floor(Math.random()*999)+".jpg",{type:"image/jpeg"}):null)},"image/jpeg",.8)};im.onerror=()=>r(null);im.src=u})}
 async function addPh(fs){for(const f of fs){if(R.ph.length>=3)break;const c=await shrink(f);if(!c){alert("เปิดรูปนี้ไม่ได้ (รับเฉพาะ JPEG/PNG) ลองเลือกรูปอื่น");continue}R.ph.push({f:c,u:URL.createObjectURL(c)})}renderPh()}
@@ -616,7 +631,9 @@ b.innerHTML=
 '<div class="stp" id="s1"><div class="sn"><i>1</i><h3>เรื่องอะไร</h3></div><div class="cats" id="cats"></div></div>'+
 '<div class="stp" id="s2"><div class="sn"><i>2</i><h3>เกิดที่ไหน</h3></div>'+
 '<button class="big go" id="gps" type="button"><span class="bi">📍</span><span><b>ฉันอยู่ตรงจุดเกิดเหตุ</b><small>กดปุ่มนี้ โทรศัพท์จะหาตำแหน่งให้เอง</small></span></button>'+
-'<p class="hint">เหตุเกิดที่อื่น? <b>ใช้นิ้วลากแผนที่</b> ให้หมุดสีแดงอยู่ตรงจุดที่เกิดเหตุ แล้วกด “ยืนยันตำแหน่ง” (จุดสีน้ำเงิน “คุณอยู่ที่นี่” คือตัวคุณ)</p>'+
+'<p class="hint">เหตุเกิดที่อื่น หรือไม่ได้อยู่ตรงนั้นแล้ว? <b>พิมพ์ค้นหาชื่อสถานที่</b> หรือ<b>ใช้นิ้วลาก/แตะแผนที่</b> ให้หมุดสีแดงอยู่ตรงจุดที่เกิดเหตุ แล้วกด “ยืนยันตำแหน่ง” (จุดสีน้ำเงิน “คุณอยู่ที่นี่” คือตัวคุณ)</p>'+
+'<div class="msr"><input id="mq" placeholder="ค้นหา เช่น วัดโพธิ์กระสังข์ หรือวางพิกัด 14.60,104.30" enterkeyhint="search" autocomplete="off"><button type="button" id="mg" class="btn solid">ค้นหา</button></div><div id="mr" class="mres" role="status" aria-live="polite"></div>'+
+'<div class="msr2"><button type="button" class="chip" id="msat">🛰 ดูภาพดาวเทียม</button></div>'+
 '<div class="mw"><div id="map">กำลังโหลดแผนที่…</div><div class="cpin"><span>จุดเกิดเหตุ</span><svg viewBox="0 0 40 56" width="42" height="59"><path d="M20 2C10 2 2 10 2 20c0 14 18 34 18 34s18-20 18-34C38 10 30 2 20 2z" fill="#e53935" stroke="#fff" stroke-width="3"/><circle cx="20" cy="20" r="7" fill="#fff"/></svg></div></div>'+
 '<div class="rdo" id="rd2">กำลังโหลดแผนที่…</div><button class="big ok" id="cf" type="button">✔ ยืนยันตำแหน่งนี้</button>'+
 '<label for="rPl">จุดสังเกต (ไม่บังคับ) เช่น หน้าวัด ใกล้ศาลาประชาคม</label><input id="rPl"></div>'+
@@ -636,7 +653,7 @@ if(CFG.apiUrl)$("send").textContent="ส่งเรื่อง (ถึงท�
 const cb=$("cats");CATS.forEach(c=>{const x=el("button");x.type="button";x.append(el("span","ce",c[0]),el("b","",c[1]),el("small","",c[2]));x.onclick=()=>{R.cat=c[1];[...cb.children].forEach(y=>y.classList.toggle("on",y===x));steps()};cb.append(x)});
 {const pc=new URLSearchParams(location.search).get("c")||(window.urgPre?"urgent":""),pm={urgent:"เตือนภัย / อุบัติเหตุ",news:"ฝากข่าว / ภาพเก่า"}[pc],pi=CATS.findIndex(c=>c[1]===pm);window.urgPre=0;if(pi>=0){cb.children[pi].click();history.replaceState(null,"",location.pathname+location.hash)}}
 WANT.forEach(w=>{const x=el("button","",w);x.type="button";x.onclick=()=>{const i=R.want.indexOf(w);i<0?R.want.push(w):R.want.splice(i,1);x.classList.toggle("on",i<0)};$("wc").append(x)});
-$("gps").onclick=locate;$("cf").onclick=()=>{if(!map)return;const c=map.getCenter();R.lat=c.lat;R.lng=c.lng;R.ok=true;upd()};
+$("mg").onclick=mSearch;$("mq").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();mSearch()}});$("msat").onclick=mSat;$("gps").onclick=locate;$("cf").onclick=()=>{if(!map)return;const c=map.getCenter();R.lat=c.lat;R.lng=c.lng;R.ok=true;upd()};
 $("cam").onclick=()=>$("f1").click();$("gal").onclick=()=>$("f2").click();
 $("f1").onchange=e=>{addPh([...e.target.files]);e.target.value=""};$("f2").onchange=e=>{addPh([...e.target.files]);e.target.value=""};
 $("rWh").oninput=steps;
