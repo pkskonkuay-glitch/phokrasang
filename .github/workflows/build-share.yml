@@ -2,7 +2,7 @@ name: build-share
 on:
   push:
     branches: [main]
-    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js"]
+    paths: ["index.html", "build-share.js"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
@@ -21,4 +21,4 @@ jobs:
           git config user.name "share-bot"
           git config user.email "share-bot@users.noreply.github.com"
           git add s data sitemap.xml robots.txt config.js
-          git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์ ข้อมูลสำรอง sitemap และเลขเวอร์ชันอัตโนมัติ" && git push)
+          git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์รายเรื่อง" && git push)
