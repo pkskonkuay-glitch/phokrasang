@@ -884,7 +884,7 @@ const mkLife=e=>{const b=[];
  const extra=r=>{
   const ws=evLines(e.words).map(x=>x.split(/\s*=\s*/)).filter(x=>x[0]&&x[1]);
   if(ws.length){r.append(el("h2","","คำศัพท์กวยที่เกี่ยวข้อง"));const w=el("div","wch");ws.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[0]);w.append(s)});r.append(w)}
-  if(e.vcat||ws.length){const vc=e.vcat||"ประเพณีตลอดปี",vp=el("p"),va=el("a","btn alt","🗣️ ดูหมวด “"+vc+"” ในหน้าคำศัพท์ →");va.href="vocab.html#c/"+encodeURIComponent(vc);va.style.margin="0";vp.append(va);r.append(vp)}
+  if(e.vcat||ws.length){const vp=el("p"),va=el("a","btn alt",e.vcat?"🗣️ ดูหมวด “"+e.vcat+"” ในหน้าคำศัพท์ →":"🗣️ ดูคำศัพท์กวยทั้งหมด →");va.href=e.vcat?"vocab.html#c/"+encodeURIComponent(e.vcat):"vocab.html";va.style.margin="0";vp.append(va);r.append(vp)}
   const ls=evLinks(e);
   if(ls.length){r.append(el("h2","","คลิป บทความ และลิงก์ของเรื่องนี้"));ls.forEach(z=>{const t=z[0],u=z[1],id=ytId(u);
    if(id){const w=el("div","yt"),bt=el("button","","▶ "+(t||"กดเพื่อดูคลิป"));bt.type="button";
