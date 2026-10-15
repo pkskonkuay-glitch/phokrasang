@@ -1,0 +1,24 @@
+  name: build-share
+  on:
+    push:
+      branches: [main]
+      paths: ["index.html", "build-share.js"]
+    schedule:
+      - cron: "*/30 * * * *"
+    workflow_dispatch:
+  permissions:
+    contents: write
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - run: node build-share.js
+        - run: |
+            git config user.name "share-bot"
+            git config user.email "share-bot@users.noreply.github.com"
+            git add s
+            git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์รายเรื่อง" && git push)
