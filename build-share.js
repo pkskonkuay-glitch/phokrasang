@@ -1,8 +1,11 @@
 // สร้างหน้าแชร์รายเรื่อง s/<key>.html (ภาพปก+หัวข้อ+สรุปของเรื่องนั้น) ให้ LINE/Facebook อ่านได้
 // ใช้: node build-share.js   (Node 18+)
 const fs = require("fs"), path = require("path"), vm = require("vm");
-const BASE = "https://pkskonkuay-glitch.github.io/phokrasang/";
-const API = "https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";
+const crypto = require("crypto");
+// ค่ากลางอ่านจาก config.js ที่เดียว (ไม่ต้องแก้ลิงก์ซ้ำในไฟล์นี้)
+const CONFIG_PATH = path.join(__dirname, "config.js");
+const KP = (() => { const g = {}; vm.runInNewContext(fs.readFileSync(CONFIG_PATH, "utf8"), { self: g }); return g.KP_CONFIG; })();
+const BASE = KP.base, API = KP.apiUrl;
 const DEFAULT_IMG = BASE + "share.png";
 const SITE = "ที่นี่โพธิ์กระสังข์";
 const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -70,6 +73,22 @@ function page(it) {
   list(c).forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img }));
   list(e).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
   list(p).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
+  // ===== ข้อ 14: ส่งออกข้อมูลเป็นไฟล์นิ่ง data/*.json (หน้าเว็บใช้สำรองเมื่อ Apps Script ช้า/ล่ม) =====
+  const dd = path.join(__dirname, "data"); fs.mkdirSync(dd, { recursive: true });
+  const dump = (name, j) => { if (j) fs.writeFileSync(path.join(dd, name + ".json"), JSON.stringify(j)); };
+  dump("content", c); dump("events", e); dump("products", p);
+  dump("vocab", await api("vocab"));
+  // ===== sitemap.xml =====
+  const urls = [BASE, BASE + "vocab.html", BASE + "privacy.html"].concat(items.map(i => BASE + "s/" + encodeURIComponent(i.k) + ".html"));
+  const today = new Date().toISOString().slice(0, 10);
+  fs.writeFileSync(path.join(__dirname, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(u => "<url><loc>" + esc(u) + "</loc><lastmod>" + today + "</lastmod></url>").join("\n") + "\n</urlset>\n");
+  fs.writeFileSync(path.join(__dirname, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: " + BASE + "sitemap.xml\n");
+  // ===== เลื่อนเลขเวอร์ชันของ service worker อัตโนมัติ เมื่อไฟล์หลักเปลี่ยน =====
+  const h = crypto.createHash("sha1");
+  ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
+  const ver = "kp-" + h.digest("hex").slice(0, 8);
+  let cf = fs.readFileSync(CONFIG_PATH, "utf8");
+  if (!cf.includes('version: "' + ver + '"')) { cf = cf.replace(/version:\s*"[^"]*"/, 'version: "' + ver + '"'); fs.writeFileSync(CONFIG_PATH, cf); console.log("เลื่อนเวอร์ชัน → " + ver); }
   const dir = path.join(__dirname, "s"); fs.mkdirSync(dir, { recursive: true });
   const keep = new Set(items.map(i => i.k + ".html"));
   const dyn = c || e || p;   // ถ้าดึงข้อมูลไม่ได้เลย ไม่ลบไฟล์เก่า

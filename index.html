@@ -320,23 +320,16 @@ header{z-index:20}.mb svg{display:block}
 
 <footer><div class="wrap"><div id="foot"></div></div></footer>
 
+<script src="config.js"></script>
 <script>
 /* ===== ตั้งค่า: แก้เฉพาะส่วนนี้ ===== */
-const CFG={
- apiUrl:"https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec",                              // ลิงก์ Web App ของ Apps Script (…/exec) — ใส่แล้วระบบจะส่งเรื่องเข้าหลังบ้านและ LINE ทีมงานอัตโนมัติ
+const CFG=Object.assign({
  liffId:"",                              // (ไม่บังคับ) LIFF ID เพื่อผูกเรื่องกับบัญชี LINE ผู้แจ้ง
- lineUrl:"https://line.me/R/ti/p/%40825crkiu",      // ลิงก์เพิ่มเพื่อน LINE OA
- lineId:"@825crkiu",                      // LINE ID ของ OA (ขึ้นต้นด้วย @)
  formUrl:"",                             // ลิงก์ Google Form (แผ่น "สรุป" ช่อง E3)
  boardCsv:"",                            // ลิงก์ CSV ของแผ่น "สำหรับเผยแพร่" (ว่าง = ไม่แสดงรายการ)
- qrImg:"img/emb-908e6381.png",                               // ไฟล์ภาพ QR Code จาก LINE OA เช่น "images/line-qr.png"
- email:"pkskonkuay@gmail.com",
- fbUrl:"https://www.facebook.com/kuayphokrasang",
- ytList:"https://www.youtube.com/playlist?list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
- ytFirst:"https://www.youtube.com/watch?v=ySVkiyR5XGM&list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
- hours:"",
- gc:"kuayphokrasang"                                 // รหัส GoatCounter (ส่วนหน้า .goatcounter.com) เช่น "kuayphokrasang" — ว่าง = ยังไม่นับสถิติ
-};
+ qrImg:"img/emb-908e6381.png",           // ไฟล์ภาพ QR Code จาก LINE OA
+ hours:""
+},window.KP_CONFIG||{});                 // ค่ากลาง (API, LINE, FB, YouTube, อีเมล, GoatCounter) แก้ที่ config.js ที่เดียว
 /* ===== เนื้อหา: แก้/เพิ่ม/ลบได้ (ลบคำว่า "ตัวอย่าง:" เมื่อใส่ของจริง) =====
    img = ไฟล์ภาพหน้าปก (ไม่ใส่ก็ได้) link = ลิงก์ข่าว/คลิป (Facebook, YouTube, เว็บ) */
 const F=CFG.fbUrl,P=CFG.ytList;
@@ -749,10 +742,12 @@ function applyContent(items){
  const byT={};add.forEach(f=>byT[f.t]=f);let nh=STATIC0.hero.map(f=>byT[f.t]||f);
  const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){nh=[...pins];STATIC0.hero.map(f=>byT[f.t]).filter(Boolean).forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
  clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rNews();rFeed()}
+async function getJ(act,name){try{const c=new AbortController(),t=setTimeout(()=>c.abort(),12000),r=await fetch(CFG.apiUrl+"?action="+act,{signal:c.signal});clearTimeout(t);const d=await r.json();if(d&&d.ok)return d}catch(e){}
+ try{const r=await fetch("data/"+name+".json");const d=await r.json();if(d&&d.ok)return d}catch(e){}return null} // API ช้า/ล่ม → ใช้ไฟล์สำรอง data/*.json ที่ GitHub Action สร้างให้
 async function loadContent(){if(!CFG.apiUrl)return;let hadC=false;
  try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){hadC=true;LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
  if(hadC&&FRESH("content",300000))return;
- try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items)return;STAMP("content");const j=JSON.stringify(d.items);
+ try{const d=await getJ("content","content");if(!d||!d.ok||!d.items)return;STAMP("content");const j=JSON.stringify(d.items);
   if(j!==LASTJ){LASTJ=j;applyContent(d.items);try{localStorage.setItem(CKEY,JSON.stringify({items:d.items}))}catch(e){}}
   if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 /* ===== สถิติผู้เข้าชม (GoatCounter) — ไม่ใช้คุกกี้ ไม่เก็บชื่อ/เบอร์ ใส่รหัสที่ CFG.gc ===== */
@@ -829,6 +824,7 @@ const mkEvt=e=>{const b=[];
  [[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].forEach(x=>{if(x[0]&&evOk(evSrc(x[0])))b.push("!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")")});
  const st=evLines(e.story);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));
  if(e.who)b.push("**ใครทำ ที่ไหน:** "+e.who);
+ const sc=evLines(e.sched);b.push("## 📅 กำหนดการปีนี้");if(sc.length)sc.forEach(x=>b.push("• "+x));else b.push("ยังไม่ประกาศกำหนดการปีนี้ — ติดตามประกาศทาง LINE "+CFG.lineId+" หรือถามผู้นำหมู่บ้าน");
  const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ผู้มาร่วมงานควรรู้");tp.forEach(x=>b.push("• "+x))}
  if(!b.length)b.push(e.title);
  const extra=r=>{
@@ -854,7 +850,7 @@ async function loadEvents(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;EVTS=L.map(mkEvt);rYear();try{if(typeof rCul==="function")rCul()}catch(_){}if(location.hash.indexOf("#/read/ev-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let hadE=false;try{hadE=use(JSON.parse(localStorage.getItem(EKEY)||"null"))}catch(e){}
  if(hadE&&FRESH("evt",300000))return;
- try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000),r=await fetch(CFG.apiUrl+"?action=events",{signal:ctl.signal});clearTimeout(t);const d=await r.json();
+ try{const d=await getJ("events","events");
   if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
 rYear();
 rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});

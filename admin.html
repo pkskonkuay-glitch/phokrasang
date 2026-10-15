@@ -120,6 +120,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="evs">เล่าสั้น ๆ บนการ์ด (1–2 ประโยค)</label><textarea id="evs" rows="2" maxlength="500"></textarea>
 <label for="evso">เรื่องราวของงาน (เล่า 3–5 ประโยค: คืออะไร ทำเมื่อไร คนในบ้านทำอะไรกัน ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่)</label><textarea id="evso" rows="6" maxlength="3000"></textarea>
 <label for="evwho">ใครทำ / ทำที่ไหน</label><input id="evwho" maxlength="300" placeholder="เช่น ทุกครัวเรือนที่ศาลาประชาคม และวัดโพธิ์กระสังข์">
+<label for="evsc">📅 กำหนดการปีนี้ (วัน เวลา สถานที่ของปีนี้ บรรทัดละข้อ — เปลี่ยนทุกปี ไม่ต้องแก้เรื่องราวด้านบน ถ้ายังไม่ทราบให้เว้นว่าง)</label><textarea id="evsc" rows="3" maxlength="800" placeholder="เช่น ปี 2569: วันที่ … เวลา … ที่ … (ใส่เมื่อได้รับยืนยันจากผู้นำชุมชนแล้ว)"></textarea>
 <label for="evtip">สิ่งที่ผู้มาร่วมงานควรรู้ (บรรทัดละข้อ)</label><textarea id="evtip" rows="3" maxlength="1200"></textarea>
 <label>ภาพ 3–5 ภาพ พร้อมคำบรรยาย (ระบบย่อให้เล็กพอเปิดเร็วเมื่อสัญญาณอ่อน) <span class="mute">ใส่ได้สูงสุด 5 ภาพ ภาพแรกเป็นปกการ์ดบนหน้าแรก</span></label><div id="evph"></div>
 <label for="evcl">ลิงก์คลิป บทความ หรือโพสต์ Facebook (บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์ ไม่ต้องอัปโหลดคลิปเอง) รูปแบบ: ชื่อที่จะแสดง | ลิงก์ — หรือวางลิงก์เปล่า ๆ ก็ได้ ลิงก์ YouTube จะกดเล่นในหน้าเว็บได้เลย</label><textarea id="evcl" rows="4" maxlength="2500" placeholder="คลิปสงกรานต์กวย | https://youtu.be/xxxxxxxxxxx&#10;บทความบุญเดือนสิบ | https://www.facebook.com/..."></textarea>
@@ -133,8 +134,9 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <div id="evls"></div><p><button class="btn o hide" id="evmore">ดูเพิ่ม</button></p></div>
 </div>
 <div id="big" class="hide"><img alt="รูปขยาย"></div>
+<script src="config.js"></script>
 <script>let PL=null,PM=null,PMk=null,CL=[];
-const API0="https://script.google.com/macros/s/AKfycbwVYSnBo5ArYjcj-C2Noh7YuS6fcNOGaq-WRi3IbVPi7Jw8-6usFshzZS6qNE58JWXE1w/exec";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
+const API0=(window.KP_CONFIG||{}).apiUrl||"";                       // ใส่ลิงก์ Web App ตรงนี้ได้ (หรือกรอกตอนเข้าสู่ระบบ)
 const $=i=>document.getElementById(i);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 let S={api:sessionStorage.getItem("api")||API0||localStorage.getItem("api")||"",tk:sessionStorage.getItem("tk")||"",nm:localStorage.getItem("nm")||"",f:{}};
@@ -510,7 +512,7 @@ function ecard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",i
  const row=el("div"),e=el("button","btn","แก้ไข / เติมข้อมูล"),h=el("button","btn o",it.hide?"แสดงบนเว็บ":"ซ่อน"),x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";
  e.onclick=()=>eedit(it);h.onclick=async()=>{h.disabled=true;const u=await esave(Object.assign({},it,{hide:!it.hide}));if(!u.ok)alert(u.error);loadE()};x.onclick=()=>edelete(it);
  row.append(e," ",h," ",x);c.append(row);return c}
-const EF=["evt","evk","evw","evs","evso","evwho","evtip","evcl","evwd","evvc","evel","evby","evnote","evo"],EK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","ord"];
+const EF=["evt","evk","evw","evs","evso","evwho","evtip","evcl","evwd","evvc","evel","evby","evnote","evo","evsc"],EK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","ord","sched"];
 function shrinkE(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.74))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
 function eslots(){const box=$("evph");box.replaceChildren();
  for(let i=0;i<5;i++){const w=el("div","c");w.style.margin="6px 0";w.append(el("b","","ภาพที่ "+(i+1)));
