@@ -304,6 +304,8 @@ header{z-index:20}.mb svg{display:block}
 <div id="v-board" class="wrap hide"><section>
 <div class="sh"><h2>ติดตามเรื่องที่แจ้งเข้ามา</h2><button class="btn solid" onclick="go('submit')">ส่งเรื่องใหม่</button></div>
 <p class="mute" id="bnote">แสดงเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว เรื่องของคุณที่ไม่ได้แสดงที่นี่ ถามความคืบหน้าทาง LINE โดยพิมพ์เลขติดตาม</p>
+<style>.trk{background:#f4f6fc;border:1px solid #dfe2ee;border-radius:14px;padding:12px 14px;margin:10px 0 14px}.trk label{font-weight:700;display:block;margin-bottom:6px}.trkrow{display:flex;gap:8px;flex-wrap:wrap}.trkrow input{flex:1;min-width:160px;font:inherit;padding:10px 12px;border:1px solid #c9cde0;border-radius:10px;text-transform:uppercase}#tkOut{margin-top:8px;font-size:16px;line-height:1.6;white-space:pre-line}</style>
+<div class="trk"><label for="tkIn">มีเลขติดตามแล้ว? ใส่เลขเพื่อดูสถานะ</label><div class="trkrow"><input id="tkIn" maxlength="12" placeholder="เช่น KP-7K3M9Q" autocapitalize="characters" autocomplete="off" inputmode="text"><button class="btn solid" id="tkGo" type="button">ตรวจสถานะ</button></div><div id="tkOut" role="status" aria-live="polite"></div></div>
 <div class="lg"><div><span class="st wait">รอรับเรื่อง</span>รอทีมงานรับเรื่อง</div><div><span class="st prog">ดำเนินการ</span>กำลังแก้ไขปัญหา</div><div><span class="st fwd">ส่งต่อ</span>ส่งต่อให้หน่วยงานที่เกี่ยวข้อง</div><div><span class="st na">ไม่เกี่ยวข้อง</span>ไม่ใช่เรื่องที่ชุมชนแก้ได้</div><div><span class="st done">เสร็จสิ้น</span>แก้ไขเรียบร้อย</div></div><div class="chips" id="bchips"></div><div class="list" id="blist"></div></section></div>
 
 <div id="v-read" class="wrap hide"><button class="back" onclick="goBack()">← กลับ</button><article class="panel read" id="rd"></article></div>
@@ -601,8 +603,8 @@ e=>{g.classList.remove("busy");$("rd2").textContent=e.code===1?"❌ ไม่ไ
 function initMap(){if(map){map.remove();map=meM=meC=null}$("map").textContent="";
 map=L.map("map").setView([CFG.mapLat,CFG.mapLng],17);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);map.on("moveend",moved);if(R.me)showMe(R.me,R.acc||30);upd()}
 function loadMap(){if(window.L)return initMap();const c=el("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";document.head.append(c);const j=el("script");j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";j.onload=initMap;j.onerror=()=>{$("map").textContent="โหลดแผนที่ไม่ได้ ลองกด “ฉันอยู่ตรงจุดเกิดเหตุ” แทน"};document.head.append(j)}
-function shrink(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);cv.toBlob(b=>{URL.revokeObjectURL(u);r(b?new File([b],"kp-"+Date.now()+"-"+Math.floor(Math.random()*999)+".jpg",{type:"image/jpeg"}):f)},"image/jpeg",.8)};im.onerror=()=>r(f);im.src=u})}
-async function addPh(fs){for(const f of fs){if(R.ph.length>=3)break;const c=await shrink(f);R.ph.push({f:c,u:URL.createObjectURL(c)})}renderPh()}
+function shrink(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);cv.toBlob(b=>{URL.revokeObjectURL(u);r(b?new File([b],"kp-"+Date.now()+"-"+Math.floor(Math.random()*999)+".jpg",{type:"image/jpeg"}):null)},"image/jpeg",.8)};im.onerror=()=>r(null);im.src=u})}
+async function addPh(fs){for(const f of fs){if(R.ph.length>=3)break;const c=await shrink(f);if(!c){alert("เปิดรูปนี้ไม่ได้ (รับเฉพาะ JPEG/PNG) ลองเลือกรูปอื่น");continue}R.ph.push({f:c,u:URL.createObjectURL(c)})}renderPh()}
 function renderPh(){$("ph").replaceChildren(...R.ph.map((o,i)=>{const d=el("div","pt"),im=new Image();im.src=o.u;im.alt="รูปที่ "+(i+1);const x=el("button","","✕");x.type="button";x.setAttribute("aria-label","ลบรูปที่ "+(i+1));x.onclick=()=>{URL.revokeObjectURL(o.u);R.ph.splice(i,1);renderPh()};d.append(im,x,el("span","",String(i+1)));return d}));
 $("cam").disabled=$("gal").disabled=R.ph.length>=3;$("pc").textContent="แนบแล้ว "+R.ph.length+" / 3 รูป";steps()}
 function rSubmit(sk){const b=$("sub");if(wId!=null){navigator.geolocation.clearWatch(wId);wId=null}
@@ -694,6 +696,17 @@ catch(e){th=[];$("bnote").textContent="ขณะนี้โหลดราย�
 if(CFG.liffId){const j=document.createElement("script");j.src="https://static.line-scdn.net/liff/edge/2/sdk.js";j.onload=()=>liff.init({liffId:CFG.liffId}).then(()=>{if(!liff.isLoggedIn())liff.login();const st=new URLSearchParams(location.search).get("liff.state");if(st&&st.indexOf("#")>=0){location.hash=st.slice(st.indexOf("#"));route()}}).catch(()=>{});document.head.append(j)}
 {const f=$("foot");f.append(el("b","","ที่นี่โพธิ์กระสังข์")," • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • LINE "+CFG.lineId+" • ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ")}
 
+/* ===== ตรวจสถานะด้วยเลขติดตาม (เลขสุ่ม KP-XXXXXX) ===== */
+function tkCheck(){const v=$("tkIn").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g,""),o=$("tkOut");
+ if(!/^KP-[0-9A-Z]{6}$/.test(v)){o.textContent="เลขติดตามมี KP- ตามด้วยตัวอักษร/ตัวเลข 6 ตัว เช่น KP-7K3M9Q";return}
+ o.textContent="⏳ กำลังตรวจ…";
+ fetch(CFG.apiUrl+"?action=track&no="+encodeURIComponent(v)+"&cid="+encodeURIComponent(CID)).then(r=>r.json()).then(d=>{
+  if(!d.ok){o.textContent="⚠️ "+(d.error||"ไม่พบเลขติดตามนี้ ตรวจตัวอักษรอีกครั้ง");return}
+  o.replaceChildren(el("b","",d.no+" • "+d.cat),document.createTextNode("\nแจ้งเมื่อ "+d.at+"\nสถานะ: "+d.status+(d.prog?"\nความคืบหน้า: "+d.prog:"")))
+ }).catch(()=>{o.textContent="⚠️ ตรวจไม่ได้ในตอนนี้ ลองใหม่ หรือพิมพ์เลขใน LINE "+CFG.lineId})}
+$("tkGo").onclick=tkCheck;$("tkIn").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();tkCheck()}});
+/* จำเวลาที่ดึงข้อมูลล่าสุด: ถ้าเพิ่งดึงไปไม่ถึง 5 นาที ไม่ต้องยิงไปหลังบ้านซ้ำ */
+const FRESH=(k,ms)=>{try{return Date.now()-(+localStorage.getItem("kp_t_"+k)||0)<ms}catch(e){return false}},STAMP=k=>{try{localStorage.setItem("kp_t_"+k,String(Date.now()))}catch(e){}};
 /* ===== เนื้อหาจากหลังบ้าน (ข่าวสาร/วิถีกวย/คลิป) ===== */
 const TMN=["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
 const thD=x=>{const m=/^(\d{4})-(\d\d)-(\d\d)/.exec(x||"");return m?(+m[3])+" "+TMN[+m[2]-1]+" "+(+m[1]+543):""};
@@ -719,9 +732,10 @@ function applyContent(items){
  const byT={};add.forEach(f=>byT[f.t]=f);let nh=STATIC0.hero.map(f=>byT[f.t]||f);
  const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){nh=[...pins];STATIC0.hero.map(f=>byT[f.t]).filter(Boolean).forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
  clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rNews();rFeed()}
-async function loadContent(){if(!CFG.apiUrl)return;
- try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
- try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items)return;const j=JSON.stringify(d.items);
+async function loadContent(){if(!CFG.apiUrl)return;let hadC=false;
+ try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){hadC=true;LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
+ if(hadC&&FRESH("content",300000))return;
+ try{const d=await (await fetch(CFG.apiUrl+"?action=content")).json();if(!d.ok||!d.items)return;STAMP("content");const j=JSON.stringify(d.items);
   if(j!==LASTJ){LASTJ=j;applyContent(d.items);try{localStorage.setItem(CKEY,JSON.stringify({items:d.items}))}catch(e){}}
   if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}catch(e){}}
 /* ===== สถิติผู้เข้าชม (GoatCounter) — ไม่ใช้คุกกี้ ไม่เก็บชื่อ/เบอร์ ใส่รหัสที่ CFG.gc ===== */
@@ -776,9 +790,10 @@ let PRODUCTS=PLIST.map(mkProd);const PKEY="kp_prod";
 /* ของดีดึงจากชีต (แท็บ "ของดี") แก้ผ่านหน้า admin.html ถ้าดึงไม่ได้หรือชีตยังว่าง ใช้รายการ PLIST ด้านบนแทน */
 async function loadProducts(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;PRODUCTS=L.map(mkProd);if(!PRODUCTS.some(o=>o.cat===prodF))prodF="ทั้งหมด";if(!$("products").classList.contains("hide"))rProd();return true};
- try{use(JSON.parse(localStorage.getItem(PKEY)||"null"))}catch(e){}
+ let hadP=false;try{hadP=use(JSON.parse(localStorage.getItem(PKEY)||"null"))}catch(e){}
+ if(hadP&&FRESH("prod",300000))return;
  try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000),r=await fetch(CFG.apiUrl+"?action=products",{signal:ctl.signal});clearTimeout(t);const d=await r.json();
-  if(d&&d.ok&&Array.isArray(d.items)){if(use(d.items)){try{localStorage.setItem(PKEY,JSON.stringify(d.items))}catch(e){}}}}catch(e){}}
+  if(d&&d.ok&&Array.isArray(d.items)){STAMP("prod");if(use(d.items)){try{localStorage.setItem(PKEY,JSON.stringify(d.items))}catch(e){}}}}catch(e){}}
 let prodF="ทั้งหมด";
 function rProd(){const cats=["ทั้งหมด",...new Set(PRODUCTS.map(o=>o.cat))];
  $("pchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===prodF?" on":""),k);b.onclick=()=>{prodF=k;rProd()};return b}));
@@ -820,9 +835,10 @@ function rYear(){const L=$("yrl");if(!L)return;
   i.append(el("span","w",e.when||""),el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));i.append(a);d.append(i);return d}))}
 async function loadEvents(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;EVTS=L.map(mkEvt);rYear();try{if(typeof rCul==="function")rCul()}catch(_){}if(location.hash.indexOf("#/read/ev-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
- try{use(JSON.parse(localStorage.getItem(EKEY)||"null"))}catch(e){}
+ let hadE=false;try{hadE=use(JSON.parse(localStorage.getItem(EKEY)||"null"))}catch(e){}
+ if(hadE&&FRESH("evt",300000))return;
  try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000),r=await fetch(CFG.apiUrl+"?action=events",{signal:ctl.signal});clearTimeout(t);const d=await r.json();
-  if(d&&d.ok&&Array.isArray(d.items)&&use(d.items)){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
+  if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
 rYear();
 rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
 
