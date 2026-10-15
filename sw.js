@@ -7,7 +7,8 @@ const CORE = ["./", "index.html", "config.js", "vocab.html", "privacy.html", "ma
 const MAX = 60;   // เก็บไฟล์ในเครื่องไม่เกินกี่รายการ (กันแคชบวมเมื่อใช้ไปนาน ๆ)
 const trim = c => c.keys().then(ks => ks.length > MAX ? Promise.all(ks.slice(0, ks.length - MAX).map(k => c.delete(k))) : 0);
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(V).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
+  // เก็บทีละไฟล์: ไฟล์ไหนหาไม่เจอ (ฟอนต์/ไอคอน) ข้ามไปเฉย ๆ ไม่ทำให้ติดตั้งทั้งชุดล้ม (เดิมใช้ addAll ซึ่งล้มทั้งหมดถ้าขาดไฟล์เดียว)
+  e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(u).catch(err => console.warn("sw: เก็บไฟล์ไม่ได้ ข้ามไป →", u, err && err.message))))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim()));

@@ -2,7 +2,7 @@
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>คำศัพท์กวย | ที่นี่โพธิ์กระสังข์</title>
 <meta name="description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมคำแปล แยกเป็นหมวดอ่านง่าย เสนอคำใหม่ได้ทาง LINE">
-<meta property="og:title" content="คำศัพท์กวย | ที่นี่โพธิ์กระสังข์"><meta property="og:image" content="share.png">
+<meta property="og:type" content="website"><meta property="og:locale" content="th_TH"><meta property="og:site_name" content="ที่นี่โพธิ์กระสังข์"><meta property="og:title" content="คำศัพท์กวย | ที่นี่โพธิ์กระสังข์"><meta property="og:description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมคำแปล แยกเป็นหมวดอ่านง่าย"><meta property="og:url" content="https://pkskonkuay-glitch.github.io/phokrasang/vocab.html"><meta property="og:image" content="https://pkskonkuay-glitch.github.io/phokrasang/share.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://pkskonkuay-glitch.github.io/phokrasang/share.png">
 <style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
 <style>
 :root{--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--navy:#1c2b5e;--gold:#fc8c2c;--green:#2f7d5b;--red:#c93b2f;--fs:18px}*{box-sizing:border-box}
@@ -149,15 +149,24 @@ function groupEl(g,L){const f=document.createDocumentFragment(),h=el("div","gh")
  const t=el("div","tiles");L.forEach(c=>{const b=el("button","tile");b.style.setProperty("--gc",g.c);b.append(el("div","e",g1(c.emo)||g.e),el("b","",c.cat),el("small","",c.n+" คำ"));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};t.append(b)});f.append(h,t);return f}
 function home(){const f=document.createDocumentFragment(),cs=cats(),used=new Set(),n=E.filter(pub).length;
  const d=daily();if(d)f.append(d);
- f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • คำที่มีบรรทัด “ที่มา” บอกผู้ให้ข้อมูลไว้แล้ว ถ้าไม่มีแปลว่ายังไม่ได้ระบุ • เลือกหมวดที่สนใจได้เลย"));
+ const ns=E.filter(e=>pub(e)&&e.kuy&&e.src).length;
+ f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • "+(ns?"คำที่มีบรรทัด “ที่มา” บอกผู้ให้ข้อมูลไว้แล้ว ("+ns.toLocaleString("th-TH")+" คำ) ถ้าไม่มีแปลว่ายังไม่ได้ระบุ":"ตอนนี้ยังไม่ได้ระบุที่มาของคำ ถ้าท่านเป็นผู้เฒ่าหรือผู้รู้ที่ช่วยบอกคำ แจ้งทาง LINE ได้ ทีมงานจะใส่ชื่อ/หมู่บ้านให้")+" • เลือกหมวดที่สนใจได้เลย"));
  GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)f.append(groupEl(g,L))});
  const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)f.append(groupEl({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180"},rest));
  if(!cs.length)f.append(el("div","msg","ยังไม่มีคำศัพท์"));$("v").replaceChildren(f)}
+/* ปุ่ม “ฟังเสียง” แสดงเฉพาะคำที่มีลิงก์เสียง (ตอนนี้ยังไม่มีคำไหนมี) ลิงก์ Drive เปิดด้วยตัวเล่นของ Drive ลิงก์ไฟล์เสียงตรง ๆ ใช้ตัวเล่นของเบราว์เซอร์ */
+function audEl(u){u=String(u||"").trim();const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u);if(!m&&!/^https:\/\/\S+$/.test(u))return null;
+ const w=el("div","wn"),b=el("button","btn sm g","🔊 ฟังเสียง");b.type="button";w.append(b);
+ b.onclick=()=>{if(w.querySelector("iframe,audio"))return;
+  if(m){const f=document.createElement("iframe");f.src="https://drive.google.com/file/d/"+m[1]+"/preview";f.title="ฟังเสียง";f.allow="autoplay";f.style.cssText="width:100%;height:90px;border:0;margin-top:6px";w.append(f)}
+  else{const a=document.createElement("audio");a.controls=true;a.preload="none";a.src=u;a.style.cssText="width:100%;margin-top:6px";w.append(a);a.play().catch(()=>{})}};
+ return w}
 function row(e,showCat){const w=el("div","w"+(e.hide?" dim":"")),im=imgSrc(e.img);
  if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();w.append(i)}
  const b=el("div","wb"),k=el("div","wk"+(e.kuy?"":" x"),e.kuy||"ยังไม่มีคำกวย"),t=el("div","wt");
  if(ADM){if(e.hide)t.append(el("span","tag r","ซ่อนอยู่"))}
  if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));if(e.kuy&&e.src)b.append(el("div","wn","ที่มา: "+e.src));
+  if(e.kuy){const au=audEl(e.aud);if(au)b.append(au)}
  if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑");x.onclick=()=>openEdit(e);d.title="ลบคำนี้";d.setAttribute("aria-label","ลบคำนี้");d.onclick=()=>del(e);a.append(x,d);w.append(b,a);return w}
  w.append(b);return w}
 function listEl(L,showCat,cap){const f=document.createDocumentFragment();L.slice(0,cap).forEach(e=>f.append(row(e,showCat)));
