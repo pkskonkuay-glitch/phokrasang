@@ -18,7 +18,10 @@ const absImg = u => {
   return BASE + (/^img\//.test(u) ? u : "img/" + u).split("/").map(encodeURIComponent).join("/");
 };
 async function api(q) {
-  try { const r = await fetch(API + "?action=" + q, { redirect: "follow" }); const j = await r.json(); return j; }
+  try { const r = await fetch(API + "?action=" + q, { redirect: "follow" }); const j = await r.json();
+    // รับเฉพาะ {ok:true, items:[...]} กันกรณี Apps Script ตอบ error เป็น JSON แล้วไปลบหน้าแชร์/ทับไฟล์สำรอง
+    if (j && j.ok === true && Array.isArray(j.items)) return j;
+    console.warn("ข้าม", q, "— คำตอบไม่ถูกต้อง:", JSON.stringify(j).slice(0, 120)); return null; }
   catch (e) { console.warn("ข้าม", q, e.message); return null; }
 }
 const list = j => Array.isArray(j) ? j : (j && (j.items || j.rows || j.data || j.events || j.products)) || [];

@@ -5,7 +5,8 @@ const V = (self.KP_CONFIG && self.KP_CONFIG.version) || "kp-fallback";
 const CORE = ["./", "index.html", "config.js", "vocab.html", "privacy.html", "manifest.webmanifest",
   "fonts/Boon-Regular.woff2", "fonts/Boon-Bold.woff2", "icons/icon-192.png"];
 const MAX = 60;   // เก็บไฟล์ในเครื่องไม่เกินกี่รายการ (กันแคชบวมเมื่อใช้ไปนาน ๆ)
-const trim = c => c.keys().then(ks => ks.length > MAX ? Promise.all(ks.slice(0, ks.length - MAX).map(k => c.delete(k))) : 0);
+const CORE_ABS = CORE.map(u => new URL(u, self.registration.scope).href);
+const trim = c => c.keys().then(ks => { ks = ks.filter(k => CORE_ABS.indexOf(k.url) < 0); return ks.length > MAX ? Promise.all(ks.slice(0, ks.length - MAX).map(k => c.delete(k))) : 0; });   // ไม่ลบไฟล์หลัก (CORE)
 self.addEventListener("install", e => {
   // เก็บทีละไฟล์: ไฟล์ไหนหาไม่เจอ (ฟอนต์/ไอคอน) ข้ามไปเฉย ๆ ไม่ทำให้ติดตั้งทั้งชุดล้ม (เดิมใช้ addAll ซึ่งล้มทั้งหมดถ้าขาดไฟล์เดียว)
   e.waitUntil(caches.open(V).then(c => Promise.all(CORE.map(u => c.add(u).catch(err => console.warn("sw: เก็บไฟล์ไม่ได้ ข้ามไป →", u, err && err.message))))).then(() => self.skipWaiting()));
