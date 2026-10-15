@@ -111,12 +111,13 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label class="opt"><input type="checkbox" id="pzhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="pzsv">บันทึก</button> <button class="btn o" id="pzcx">ยกเลิก</button> <button class="btn o hide" id="pzdel" style="color:#c93b2f">🗑 ลบรายการนี้</button></p><div class="msg hide" id="pzmsg"></div></div>
 <div id="pzls"></div><p><button class="btn o hide" id="pzmore">ดูเพิ่ม</button></p></div>
-<div id="p5" class="hide"><div class="c"><h3>📅 ปีกวย งานประจำปี</h3><p class="mute">จัดการงานประเพณีตลอดปีที่ขึ้นเป็นการ์ดบนหน้าแรก เมื่อคนแตะการ์ดจะเห็นหน้าเรื่องราวของงาน (ภาพ 1–5 ภาพ เรื่องเล่า คำศัพท์ ลิงก์คลิป/บทความ คำผู้เฒ่า) เติมได้ทีละงาน ช่องไหนเว้นว่างหน้าเว็บจะไม่แสดงช่องนั้นเลย แก้ไข ซ่อน หรือลบภายหลังได้ (ลบแล้วไปอยู่แท็บ “ถังขยะงานประจำปี” ในชีต กู้คืนได้)</p>
+<div id="p5" class="hide"><div class="c"><h3>📅 ปีกวย งานประจำปี</h3><p class="mute">งานประเพณีตลอดปีทั้งหมดอยู่ที่นี่ที่เดียว (แท็บ “งานประจำปี” ในชีต) ทั้งการ์ดบนหน้าแรก หมวดฮีตคอง และหน้าเรื่องราวของงาน เรียงลำดับ 1, 2, 3… แยกเป็นสุริยคติ / จันทรคติ / ตามเหตุการณ์ชีวิต ใช้ปุ่ม ▲ ▼ ย้ายลำดับ เพิ่ม แก้ไข ซ่อน หรือลบได้เอง เมื่อคนแตะการ์ดจะเห็นหน้าเรื่องราวของงาน (ภาพ 1–5 ภาพ เรื่องเล่า คำศัพท์ ลิงก์คลิป/บทความ คำผู้เฒ่า) เติมได้ทีละงาน ช่องไหนเว้นว่างหน้าเว็บจะไม่แสดงช่องนั้นเลย แก้ไข ซ่อน หรือลบภายหลังได้ (ลบแล้วไปอยู่แท็บ “ถังขยะงานประจำปี” ในชีต กู้คืนได้)</p>
 <div class="stats" id="evst"></div><div class="row"><div><input id="evq" placeholder="🔍 ค้นหาชื่องาน" aria-label="ค้นหางาน"></div></div>
-<div class="stats" id="evft" style="margin-top:8px"></div><p><button class="btn" id="evnew">➕ เพิ่มงานใหม่</button> <button class="btn o" id="evseed">📦 เติมเนื้อหาเริ่มต้น 10 งาน (ไม่ทับของเดิม)</button></p></div>
+<div class="stats" id="evft" style="margin-top:8px"></div><p><button class="btn" id="evnew">➕ เพิ่มงานใหม่</button> <button class="btn o" id="evseed">🔄 ปรับเป็นปฏิทินใหม่ 20 งาน (ทำครั้งเดียว รันซ้ำได้ ไม่ทับที่คุณแก้เอง)</button></p></div>
 <div class="c hide" id="evform"><h3 id="evh">เพิ่มงานใหม่</h3>
 <div class="row"><div><label for="evt">ชื่องาน *</label><input id="evt" maxlength="120" placeholder="เช่น สากกวย"></div><div><label for="evk">ชื่อเรียกภาษากวย</label><input id="evk" maxlength="120"></div></div>
-<div class="row"><div><label for="evw">ช่วงเวลา (แสดงบนการ์ด)</label><input id="evw" maxlength="60" placeholder="เช่น ขึ้น 15 ค่ำ เดือน 10"></div><div><label for="evo">ลำดับในปี (ตัวเลข ใช้เรียงการ์ด)</label><input id="evo" inputmode="decimal" maxlength="8" placeholder="เช่น 7"></div></div>
+<div class="row"><div><label for="evw">ช่วงเวลา (แสดงบนการ์ด)</label><input id="evw" maxlength="60" placeholder="เช่น ขึ้น 15 ค่ำ เดือน 10"></div><div><label for="evcal">ปฏิทินที่ใช้กำหนดงาน</label><select id="evcal"><option value="">— เลือก —</option><option value="สุริยคติ">☀️ สุริยคติ (ปฏิทินสากล วันที่ตายตัว)</option><option value="จันทรคติ">🌙 จันทรคติ (ขึ้น/แรม ค่ำ เดือน … วันที่เปลี่ยนทุกปี)</option><option value="ตามเหตุการณ์ชีวิต">🧵 ตามเหตุการณ์ชีวิต (ไม่ใช่งานประจำปี ไม่มีวันตายตัว)</option></select></div></div>
+<div class="row"><div><label for="evaf">ตำแหน่งในลำดับของปี</label><select id="evaf"></select></div><div><p class="mute" style="margin:30px 0 0">ระบบเรียงเลข 1, 2, 3… ให้ต่อเนื่องเอง ไม่ต้องพิมพ์เลข แค่เลือกว่าจะวางต่อจากงานไหน (หรือกดปุ่ม ▲ ▼ ที่การ์ดภายหลัง)</p></div></div>
 <label for="evs">เล่าสั้น ๆ บนการ์ด (1–2 ประโยค)</label><textarea id="evs" rows="2" maxlength="500"></textarea>
 <label for="evso">เรื่องราวของงาน (เล่า 3–5 ประโยค: คืออะไร ทำเมื่อไร คนในบ้านทำอะไรกัน ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่)</label><textarea id="evso" rows="6" maxlength="3000"></textarea>
 <label for="evwho">ใครทำ / ทำที่ไหน</label><input id="evwho" maxlength="300" placeholder="เช่น ทุกครัวเรือนที่ศาลาประชาคม และวัดโพธิ์กระสังข์">
@@ -494,7 +495,7 @@ async function loadE(){const ls=$("evls");ls.replaceChildren(el("p","mute","ก�
   EL=d.items;renderE()}
  catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?NOHOOKE:"โหลดไม่ได้: "+x.message))}}
 const eclip=e=>String(e.links||"").split(/\n+/).filter(Boolean);
-const eflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องเล่า",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noclip:["ยังไม่มีลิงก์/คลิป",e=>!eclip(e).length],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],hid:["ซ่อนอยู่",e=>e.hide]};
+const eflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องเล่า",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noclip:["ยังไม่มีลิงก์/คลิป",e=>!eclip(e).length],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],sol:["☀️ สุริยคติ",e=>e.cal==="สุริยคติ"],lun:["🌙 จันทรคติ",e=>e.cal==="จันทรคติ"],life:["🧵 ตามเหตุการณ์ชีวิต",e=>e.cal==="ตามเหตุการณ์ชีวิต"],nocal:["ยังไม่ระบุปฏิทิน",e=>!e.cal],hid:["ซ่อนอยู่",e=>e.hide]};
 function renderE(){const q=$("evq").value.trim().toLowerCase();
  $("evst").replaceChildren(...[["ทั้งหมด",EL.length],["มีรูปแล้ว",EL.filter(e=>e.img).length],["มีลิงก์/คลิปแล้ว",EL.filter(e=>eclip(e).length).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
  $("evft").replaceChildren(...Object.keys(eflt).map(k=>{const b=el("button","chip"+(EFl===k?" on":""),eflt[k][0]+" ("+EL.filter(eflt[k][1]).length+")");b.onclick=()=>{EFl=k;EN=40;renderE()};return b}));
@@ -503,7 +504,7 @@ function renderE(){const q=$("evq").value.trim().toLowerCase();
  $("evmore").classList.toggle("hide",L.length<=EN);$("evmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-EN)+" รายการ)"}
 $("evq").oninput=()=>{EN=40;renderE()};$("evmore").onclick=()=>{EN+=40;renderE()};
 const esave=async(item,photos)=>call({action:"adminEventSave",item:item,photos:photos||undefined});
-function ecard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title));if(it.when)t.append(el("span","badge",it.when));
+function ecard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",(it.ord?it.ord+". ":"")+it.title));if(it.cal)t.append(el("span","badge",(it.cal==="สุริยคติ"?"☀️ ":it.cal==="จันทรคติ"?"🌙 ":"🧵 ")+it.cal));if(it.when)t.append(el("span","badge",it.when));
  if(it.hide)t.append(el("span","badge r","ซ่อนอยู่"));c.append(t);
  if(it.sum)c.append(el("p","mute",it.sum.slice(0,160)));
  const np=[it.img,it.img2,it.img3,it.img4,it.img5].filter(Boolean).length,nw=String(it.words||"").split(/\n+/).filter(Boolean).length;
@@ -511,8 +512,11 @@ function ecard(it){const c=el("div","c"),t=el("div","top");t.append(el("h3","",i
  const ph=el("div","ph");[it.img,it.img2,it.img3,it.img4,it.img5].filter(Boolean).forEach(u=>{const i=new Image();i.src=imgSrc(u);i.alt=it.title;i.loading="lazy";i.onerror=()=>i.remove();ph.append(i)});if(ph.firstChild)c.append(ph);
  const row=el("div"),e=el("button","btn","แก้ไข / เติมข้อมูล"),h=el("button","btn o",it.hide?"แสดงบนเว็บ":"ซ่อน"),x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";
  e.onclick=()=>eedit(it);h.onclick=async()=>{h.disabled=true;const u=await esave(Object.assign({},it,{hide:!it.hide}));if(!u.ok)alert(u.error);loadE()};x.onclick=()=>edelete(it);
- row.append(e," ",h," ",x);c.append(row);return c}
-const EF=["evt","evk","evw","evs","evso","evwho","evtip","evcl","evwd","evvc","evel","evby","evnote","evo","evsc"],EK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","ord","sched"];
+ const mv=async d=>{const u=await call({action:"adminEventMove",id:it.id,dir:d});if(!u.ok)alert("⚠️ "+u.error);loadE()};
+ const up=el("button","btn o","▲ ขึ้น"),dn=el("button","btn o","▼ ลง");up.onclick=()=>mv("up");dn.onclick=()=>mv("down");
+ row.append(up," ",dn," ",e," ",h," ",x);c.append(row);return c}
+function eafill(cur){const s=$("evaf");s.replaceChildren();const a=el("option","",cur?"(คงตำแหน่งเดิม)":"ท้ายสุดของปี");a.value="";s.append(a);const f=el("option","","บนสุด (ลำดับ 1)");f.value="first";s.append(f);EL.filter(e=>!cur||e.id!==cur.id).forEach(e=>{const o=el("option","","ต่อจาก "+(e.ord||"")+". "+e.title);o.value=e.id;s.append(o)})}
+const EF=["evt","evk","evw","evs","evso","evwho","evtip","evcl","evwd","evvc","evel","evby","evnote","evcal","evsc"],EK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","cal","sched"];
 function shrinkE(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.74))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
 function eslots(){const box=$("evph");box.replaceChildren();
  for(let i=0;i<5;i++){const w=el("div","c");w.style.margin="6px 0";w.append(el("b","","ภาพที่ "+(i+1)));
@@ -524,14 +528,14 @@ function eslots(){const box=$("evph");box.replaceChildren();
   if(src){const rb=el("button","btn o","✕ เอาภาพนี้ออก");rb.type="button";rb.style.color="#c93b2f";rb.onclick=()=>{EP[i]="";EU[i]="";EC[i]="";eslots()};w.append(" ",rb);
    const ci=document.createElement("input");ci.maxLength=200;ci.value=EC[i]||"";ci.placeholder="คำบรรยาย • ผู้ถ่าย • ปี เช่น ขบวนแห่กฐิน ภาพโดย … ปี 2568";ci.setAttribute("aria-label","คำบรรยายภาพที่ "+(i+1));ci.oninput=()=>{EC[i]=ci.value};ci.style.marginTop="6px";w.append(ci)}
   box.append(w)}}
-function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evhide"].forEach(i=>$(i).checked=false);$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots()}
+function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evhide"].forEach(i=>$(i).checked=false);$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots();eafill(null)}
 function eopen(){$("evform").classList.remove("hide");$("evform").scrollIntoView({behavior:"smooth"});$("evt").focus()}
 function eedit(it){eclear();EE=it;EF.forEach((id,j)=>$(id).value=it[EK[j]]||"");EU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];EC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
- $("evhide").checked=!!it.hide;$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eopen()}
-$("evnew").onclick=()=>{eclear();$("evvc").value="ประเพณีตลอดปี";eopen()};
+ $("evhide").checked=!!it.hide;$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eafill(it);eopen()}
+$("evnew").onclick=()=>{eclear();$("evvc").value="ประเพณีตลอดปี";eafill(null);eopen()};
 $("evcx").onclick=()=>{eclear();$("evform").classList.add("hide")};
 $("evsv").onclick=async()=>{const b=$("evsv"),m=$("evmsg");b.disabled=true;m.className="msg hide";
- try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,allow:true,clip:"",img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());
+ try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,allow:true,clip:"",img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());item.after=$("evaf").value;
   if(!item.title)throw new Error("กรุณาใส่ชื่องาน");
   ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!EU[j]&&!EP[j])item[k]=""});
   const send=()=>esave(item,EP);m.textContent=EP.some(Boolean)?"กำลังอัปโหลดภาพ…":"กำลังบันทึก…";m.className="msg";
@@ -543,7 +547,7 @@ async function edelete(it){if(!confirm("ลบ “"+it.title+"” ?\nราย�
  const u=await call({action:"adminEventDelete",id:it.id});if(!u.ok){alert("⚠️ "+u.error);return}
  if(EE&&EE.id===it.id){eclear();$("evform").classList.add("hide")}loadE()}
 $("evdel").onclick=()=>{if(EE)edelete(EE)};
-$("evseed").onclick=async()=>{if(!confirm("เติมเนื้อหาเริ่มต้น 10 งาน?\nเพิ่มเฉพาะงานที่ยังไม่มี และเติมเฉพาะช่องที่ยังว่าง ไม่ทับสิ่งที่คุณแก้ไว้"))return;const b=$("evseed");b.disabled=true;try{const u=await call({action:"adminEventSeed"});if(!u.ok){alert("⚠️ "+u.error);return}alert("เรียบร้อย ✅ เพิ่มงานใหม่ "+(u.added||0)+" งาน เติมช่องว่างของงานเดิม "+(u.filled||0)+" ช่อง")}catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}loadE()};
+$("evseed").onclick=async()=>{if(!confirm("ปรับเป็นปฏิทินใหม่ 20 งาน?\n• เปลี่ยนชื่องานเดิมให้ตรงคำใหม่ (บุญชัก / สากกวย แยกเป็นคนละงาน ฯลฯ) รูปและคำผู้เฒ่าที่เติมไว้คงเดิม\n• เติมงานที่ยังไม่มี เรียงลำดับ 1–20\n• งานที่คุณแก้เนื้อหาเองแล้ว จะไม่ถูกทับ (เปลี่ยนเฉพาะชื่อ)\nรันซ้ำได้ปลอดภัย"))return;const b=$("evseed");b.disabled=true;try{const u=await call({action:"adminEventMigrate"});if(!u.ok){alert("⚠️ "+u.error);return}alert("เรียบร้อย ✅\nเปลี่ยนชื่อ "+(u.renamed||0)+" งาน • แทนที่ข้อความเริ่มต้น "+(u.replaced||0)+" งาน • เพิ่มงานใหม่ "+(u.added||0)+" งาน"+((u.keptEdited||[]).length?"\n\nงานที่คุณเคยแก้เอง ไม่ได้แตะเนื้อหา ให้ตรวจเอง: "+u.keptEdited.join(", "):""))}catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}loadE()};
 eclear();
 pclear();
 function hashTab(){const h=location.hash;if(h==="#vocab")$("t3").click();else if(h==="#products")$("t4").click();else if(h==="#events")$("t5").click()}
