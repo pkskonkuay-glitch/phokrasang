@@ -2,7 +2,7 @@ name: build-share
 on:
   push:
     branches: [main]
-    paths: ["index.html", "build-share.js"]
+    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
