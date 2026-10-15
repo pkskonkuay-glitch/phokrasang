@@ -148,7 +148,7 @@ function groupEl(g,L){const f=document.createDocumentFragment(),h=el("div","gh")
  const t=el("div","tiles");L.forEach(c=>{const b=el("button","tile");b.style.setProperty("--gc",g.c);b.append(el("div","e",g1(c.emo)||g.e),el("b","",c.cat),el("small","",c.n+" คำ"));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};t.append(b)});f.append(h,t);return f}
 function home(){const f=document.createDocumentFragment(),cs=cats(),used=new Set(),n=E.filter(pub).length;
  const d=daily();if(d)f.append(d);
- f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • เลือกหมวดที่สนใจได้เลย"));
+ f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • คำที่มีบรรทัด “ที่มา” บอกผู้ให้ข้อมูลไว้แล้ว ถ้าไม่มีแปลว่ายังไม่ได้ระบุ • เลือกหมวดที่สนใจได้เลย"));
  GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)f.append(groupEl(g,L))});
  const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)f.append(groupEl({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180"},rest));
  if(!cs.length)f.append(el("div","msg","ยังไม่มีคำศัพท์"));$("v").replaceChildren(f)}
@@ -156,7 +156,7 @@ function row(e,showCat){const w=el("div","w"+(e.hide?" dim":"")),im=imgSrc(e.img
  if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();w.append(i)}
  const b=el("div","wb"),k=el("div","wk"+(e.kuy?"":" x"),e.kuy||"ยังไม่มีคำกวย"),t=el("div","wt");
  if(ADM){if(e.hide)t.append(el("span","tag r","ซ่อนอยู่"))}
- if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));
+ if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));if(e.kuy&&e.src)b.append(el("div","wn","ที่มา: "+e.src));
  if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑");x.onclick=()=>openEdit(e);d.title="ลบคำนี้";d.setAttribute("aria-label","ลบคำนี้");d.onclick=()=>del(e);a.append(x,d);w.append(b,a);return w}
  w.append(b);return w}
 function listEl(L,showCat,cap){const f=document.createDocumentFragment();L.slice(0,cap).forEach(e=>f.append(row(e,showCat)));

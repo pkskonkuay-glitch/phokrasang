@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <!-- version 2569-10-12-f (นับสถิติ GoatCounter + หน้า "ของดีบ้านเรา") ; ก่อนหน้า 2569-10-12 (ตัดตัวชัด/ฟังเสียง ปุ่ม ก−ก+ ในหัวเว็บ รูปไร้กรอบ) ; ก่อนหน้า 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
-<meta charset="utf-8">
+<meta charset="utf-8"><meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="ที่นี่โพธิ์กระสังข์ วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน แจ้งเหตุ ปักหมุด ติดตามเรื่อง ข่าวสาร คลิป และเรื่องเล่าของชาวกวยบ้านโพธิ์กระสังข์">
 <meta property="og:type" content="website"><meta property="og:locale" content="th_TH"><meta property="og:site_name" content="ที่นี่โพธิ์กระสังข์">
@@ -18,8 +18,6 @@
 <style>
 :root{--bg:#f5f6fa;--card:#fff;--ink:#161a33;--mute:#5b6180;--line:#dfe2ee;--hero:#1c2b5e;--link:#1c2b5e;--soft:#e8ecfa;--gold:#fc8c2c;--leaf:#2f7d5b;--warn:#b4531a;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1226;--card:#181c3a;--ink:#eceefb;--mute:#a2a8cc;--line:#2a2f57;--link:#a9b8ff;--soft:#232852}}
-:root[data-theme="dark"]{--bg:#0f1226;--card:#181c3a;--ink:#eceefb;--mute:#a2a8cc;--line:#2a2f57;--link:#a9b8ff;--soft:#232852}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 19px/1.75 Boon,system-ui,sans-serif}
@@ -98,7 +96,7 @@ nav a.line{padding:6px 12px;border-radius:99px;text-decoration:none}
 .cta2{background:var(--hero);color:#fff;border-radius:14px;padding:24px}.cta2 h3{font-size:22px}.cta2 p{color:#dfe5ff;margin:8px 0 14px}
 .mag{display:grid;grid-template-columns:92px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
 .iss{background:var(--hero);color:#fff;border-radius:10px;text-align:center;padding:10px 4px;align-self:start;line-height:1.3}.iss b{display:block;font:800 26px Boon,system-ui,sans-serif;color:var(--gold)}.iss small{font-size:12px;color:#dfe5ff}
-.mag h3{font-size:19px}.mag a.rd{display:inline-block;margin-top:6px;font-weight:700}
+.mag h3{font-size:19px}.mag a.fl{display:inline-block;margin-top:6px;font-weight:700}
 .hub{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}.hub .qr{margin:0;max-width:170px}
 @media(max-width:600px){.hub{grid-template-columns:1fr}.mag{grid-template-columns:70px 1fr}}
 .kw{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;max-width:40em}.kw span{border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:2px 13px;font-size:15px;color:#fff}
@@ -184,7 +182,7 @@ header{background:var(--card);color:var(--ink);border-bottom:1px solid var(--lin
 .me{position:relative}.me i{position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;background:#1a73e8;border:3px solid #fff;box-shadow:0 0 0 0 rgba(26,115,232,.6);animation:pl 1.8s infinite}
 .me span{position:absolute;left:-44px;top:14px;white-space:nowrap;background:#1a73e8;color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 9px}
 @keyframes pl{70%{box-shadow:0 0 0 16px rgba(26,115,232,0)}100%{box-shadow:0 0 0 0 rgba(26,115,232,0)}}
-.rd{background:var(--soft);border-radius:12px;padding:10px 14px;margin:10px 0 0;font-weight:700;font-size:16px}
+.rdo,.fl{background:var(--soft);border-radius:12px;padding:10px 14px;margin:10px 0 0;font-weight:700;font-size:16px}
 .pb{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pb .big{font-size:19px;margin:0}
 .ph{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}.ph:empty{display:none}
 .pt{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden}.pt img{width:100%;height:100%;object-fit:cover}
@@ -308,7 +306,7 @@ header{z-index:20}.mb svg{display:block}
 <p class="mute" id="bnote">แสดงเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว เรื่องของคุณที่ไม่ได้แสดงที่นี่ ถามความคืบหน้าทาง LINE โดยพิมพ์เลขติดตาม</p>
 <div class="lg"><div><span class="st wait">รอรับเรื่อง</span>รอทีมงานรับเรื่อง</div><div><span class="st prog">ดำเนินการ</span>กำลังแก้ไขปัญหา</div><div><span class="st fwd">ส่งต่อ</span>ส่งต่อให้หน่วยงานที่เกี่ยวข้อง</div><div><span class="st na">ไม่เกี่ยวข้อง</span>ไม่ใช่เรื่องที่ชุมชนแก้ได้</div><div><span class="st done">เสร็จสิ้น</span>แก้ไขเรียบร้อย</div></div><div class="chips" id="bchips"></div><div class="list" id="blist"></div></section></div>
 
-<div id="v-read" class="wrap hide"><button class="back" onclick="history.back()">← กลับ</button><article class="panel read" id="rd"></article></div>
+<div id="v-read" class="wrap hide"><button class="back" onclick="goBack()">← กลับ</button><article class="panel read" id="rd"></article></div>
 
 <div id="v-thread" class="wrap hide"><button class="back" onclick="go('board')">← กลับไปหน้ารวม</button>
 <div class="panel" id="th"></div></div>
@@ -431,7 +429,7 @@ $("mchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===mf?"
 $("mlist").replaceChildren(...MG.filter(m=>mf==="ทั้งหมด"||m[4]===mf).map(m=>{const d=el("div","mag"),i=el("div","iss"),b=el("div");
 i.append(el("small","","ฉบับที่"),el("b","",String(m[0])),el("small","",m[1]));
 b.append(el("span","tag",m[4]+" • หน้า "+m[3]),el("h3","",m[2]),el("div","mute",m[5]));
-if(m[6])b.append(ext(el("a","rd","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl);$("hubQ").src=CFG.hubQr}
+if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl);$("hubQ").src=CFG.hubQr}
 let cf="เซ (ฮีตคอง)";
 function rCul(){$("cchips").replaceChildren(...Object.keys(K).map(k=>{const b=el("button","chip"+(k===cf?" on":""),k);b.onclick=()=>{cf=k;rCul()};return b}));
 const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุง":"scarf","กัวออ":"silk","จาแอม":"plaid","ภาษากวย":"scarf"};
@@ -474,9 +472,10 @@ b.append(mk("ส่งต่อใน LINE","https://line.me/R/share?text="+enco
 if(navigator.share){const sh=el("button","btn","แชร์…");sh.onclick=()=>{TRK.ev("share-native/"+o.k);navigator.share({title:o.title,url:U("share")}).catch(()=>{})};b.append(sh)}
 const cp=el("button","btn","คัดลอกลิงก์");cp.onclick=()=>{TRK.ev("share-copy/"+o.k);(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{cp.textContent="คัดลอกแล้ว ✓"},()=>{prompt("คัดลอกลิงก์นี้",u)})};b.append(cp);r.append(b);
 const b2=el("div","rbar");b2.append((o.evt?(()=>{const a=ext(el("a","btn line","📷 มีภาพเก่าหรือเรื่องของงานนี้ ส่งมาทาง LINE"),lineMsg("ส่งภาพหรือเรื่องของงาน: "+o.title));a.addEventListener("click",()=>TRK.ev("evt-send/"+o.k));return a})():o.prod?(()=>{const a=ext(el("a","btn line","💬 สอบถามข้อมูลทาง LINE"),lineMsg("สอบถามผลิตภัณฑ์: "+o.title));a.addEventListener("click",()=>TRK.ev("ask/"+o.k));return a})():ext(el("a","btn","💬 ส่งความคิดเห็นเรื่องนี้ทาง LINE"),lineMsg("ความคิดเห็นเรื่อง: "+o.title))),ext(el("a","btn","เพิ่มเพื่อน LINE"),CFG.lineUrl),ext(el("a","btn","ติดตามเพจ Facebook"),F));r.append(b2)}
-go("read");TRK.pv("/read/"+o.k,o.title);if(push!==false)history.pushState(null,"","#/read/"+o.k)}
+go("read");TRK.pv("/read/"+o.k,o.title);if(push!==false)history.pushState({kp:1},"","#/read/"+o.k)}
 function readFrom(h){const k=(h||"").replace("#/read/","");const o=[...news,...arts,...PRODUCTS,...EVTS].find(x=>x.k===k);if(o)openRead(o,false)}
 const ROUTES={"#/submit":["submit"],"#/board":["board"],"#/news":["home","latest"],"#/rights":["home","rights"],"#/newsonly":["home","news"],"#/culture":["home","culture"],"#/clips":["home","clips"],"#/mags":["home","mags"],"#/products":["home","products"]};
+function goBack(){if(history.state&&history.state.kp)history.back();else{history.replaceState(null,"",location.pathname);go("home")}}
 function route(){const h=location.hash;if(h.startsWith("#/read/"))return readFrom(h);const m=ROUTES[h.split("?")[0]];if(m)go(m[0],m[1])}
 window.addEventListener("popstate",()=>{const h=location.hash;if(h.startsWith("#/read/"))readFrom(h);else if(ROUTES[h.split("?")[0]])route();else go("home")});
 news.forEach((o,i)=>{if(o.cat==="คนบ้านเรา"){o.t="silk";o.px=(i*31)%100;o.py=(i*47)%100}});
@@ -617,7 +616,7 @@ b.innerHTML=
 '<button class="big go" id="gps" type="button"><span class="bi">📍</span><span><b>ฉันอยู่ตรงจุดเกิดเหตุ</b><small>กดปุ่มนี้ โทรศัพท์จะหาตำแหน่งให้เอง</small></span></button>'+
 '<p class="hint">เหตุเกิดที่อื่น? <b>ใช้นิ้วลากแผนที่</b> ให้หมุดสีแดงอยู่ตรงจุดที่เกิดเหตุ แล้วกด “ยืนยันตำแหน่ง” (จุดสีน้ำเงิน “คุณอยู่ที่นี่” คือตัวคุณ)</p>'+
 '<div class="mw"><div id="map">กำลังโหลดแผนที่…</div><div class="cpin"><span>จุดเกิดเหตุ</span><svg viewBox="0 0 40 56" width="42" height="59"><path d="M20 2C10 2 2 10 2 20c0 14 18 34 18 34s18-20 18-34C38 10 30 2 20 2z" fill="#e53935" stroke="#fff" stroke-width="3"/><circle cx="20" cy="20" r="7" fill="#fff"/></svg></div></div>'+
-'<div class="rd" id="rd2">กำลังโหลดแผนที่…</div><button class="big ok" id="cf" type="button">✔ ยืนยันตำแหน่งนี้</button>'+
+'<div class="rdo" id="rd2">กำลังโหลดแผนที่…</div><button class="big ok" id="cf" type="button">✔ ยืนยันตำแหน่งนี้</button>'+
 '<label for="rPl">จุดสังเกต (ไม่บังคับ) เช่น หน้าวัด ใกล้ศาลาประชาคม</label><input id="rPl"></div>'+
 '<div class="stp" id="s3"><div class="sn"><i>3</i><h3>ถ่ายรูป <small>แนะนำ 2–3 รูป (สูงสุด 3)</small></h3></div>'+
 '<div class="pb"><button class="big cam" id="cam" type="button">📷 ถ่ายรูป</button><button class="big gal" id="gal" type="button">🖼️ เลือกจากเครื่อง</button></div>'+
