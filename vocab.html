@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>คำศัพท์กวย | ที่นี่โพธิ์กระสังข์</title>
-<meta name="description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมคำแปล แยกเป็นหมวดอ่านง่าย มีเกมฝึกทายคำ เสนอคำใหม่ได้ทาง LINE">
+<meta name="description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมคำแปล แยกเป็นหมวดอ่านง่าย เสนอคำใหม่ได้ทาง LINE">
 <meta property="og:title" content="คำศัพท์กวย | ที่นี่โพธิ์กระสังข์"><meta property="og:image" content="share.png">
 <style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
 <style>
@@ -10,8 +10,9 @@ body{margin:0;background:#f5f6fa;color:var(--ink);font:400 var(--fs)/1.65 Boon,s
 button,input,select,textarea{font:inherit}
 .hide{display:none!important}
 .band{background:#4f9d8f radial-gradient(rgba(255,255,255,.35) 1.5px,transparent 1.6px) 0 0/22px 22px;padding:14px}
-.hd{max-width:960px;margin:0 auto;background:#fff;border-radius:16px;padding:12px 20px}.hd a{color:var(--navy);font-weight:700;font-size:16px}
-h1{font:700 1.7em/1.3 Boon,system-ui,sans-serif;margin:2px 0}.hd p{margin:2px 0;color:var(--mute);font-size:.9em}
+.hd{max-width:960px;margin:0 auto;background:#fff;border-radius:18px;padding:14px 22px 16px;box-shadow:0 4px 14px rgba(28,43,94,.12)}.hd a{color:var(--navy);font-weight:700;font-size:16px}
+h1{font:700 1.7em/1.3 Boon,system-ui,sans-serif;margin:2px 0}.hd .sub{margin:2px 0 0;color:var(--mute);font-size:.95em}
+.note{margin-top:12px;background:#fff8ec;border-left:5px solid var(--gold);border-radius:10px;padding:8px 14px;font-size:.82em;line-height:1.6;color:#5a4320}.note b:first-child{display:block;color:#8a4a00}
 main{max-width:960px;margin:0 auto;padding:12px 14px 20px}
 .btn{min-height:44px;padding:4px 14px;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;font-weight:700;font-size:.9em;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 .btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#fff}.btn.o{background:var(--gold);border-color:var(--gold);color:#161a33}.btn.r{border-color:var(--red);color:var(--red)}.btn.sm{min-height:36px;padding:0 12px;font-size:.8em}
@@ -24,51 +25,28 @@ main{max-width:960px;margin:0 auto;padding:12px 14px 20px}
 .dw{background:linear-gradient(135deg,#1c2b5e,#2f7d5b);color:#fff;border-radius:16px;padding:14px 20px;margin:8px 0 14px}.dw small{opacity:.9}
 .dw .k{font:700 1.9em/1.3 Boon,sans-serif}.dw .t{font-size:1.1em}.dw .btn{margin-top:8px;background:transparent;color:#fff;border-color:#fff}
 .stat{color:var(--mute);font-size:.85em;margin:2px 0 8px}
-/* ---- เลือกกลุ่ม / หมวด ---- */
-.gp{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
-.pill{min-height:46px;padding:2px 14px;border:2px solid var(--line);background:#fff;border-radius:999px;font-weight:700;font-size:.86em;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.pill small{font-weight:400;color:var(--mute);font-size:.82em}
-.pill:hover{border-color:var(--gc,var(--navy))}
-.pill.on{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 16%,#fff);box-shadow:0 0 0 2px var(--gc) inset}
-.cats{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--gc);border-radius:12px}
-.chip{min-height:40px;padding:0 12px;border:1px solid var(--line);background:#f5f6fa;border-radius:10px;font-size:.8em;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
-.chip small{color:var(--mute);font-size:.85em}
-.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}.chip.on small{color:#d7dcf3}
-.pill:focus-visible,.chip:focus-visible,.sh:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-/* ---- หัวข้อหมวด + บัตรคำ ---- */
-.sec{margin:22px 0 4px}
-.sec-h{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--gc)}
-.sec-h h3{margin:0;flex:1;font:700 1.2em/1.3 Boon,sans-serif;color:var(--navy)}.sec-h span{color:var(--mute);font-size:.8em}
-@media(max-width:699px){.gp,.cats{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}.gp::-webkit-scrollbar,.cats::-webkit-scrollbar{display:none}.gp{padding:2px 36px 6px 2px;-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent);mask-image:linear-gradient(90deg,#000 90%,transparent)}.cats{padding-right:30px}.pill,.chip{flex:none;white-space:nowrap;scroll-snap-align:start}}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
-.w{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gc,var(--navy));border-radius:12px;overflow:hidden}
-.w.dim{opacity:.6;background:#f1f2f7}.w.x .wk{color:#9aa0bd;font-weight:400;font-size:1em}
-.wm{display:flex;gap:12px;padding:10px 14px 8px;flex:1}
-.wm img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}
-.wb{min-width:0;flex:1}
-.wk{font:700 1.4em/1.3 Boon,sans-serif;color:var(--navy);word-break:break-word}
-.wt{margin-top:2px;word-break:break-word}
-.wn{margin-top:2px;font-size:.8em;color:var(--mute)}
-.wf{display:flex;align-items:center;gap:8px;padding:5px 8px 5px 14px;border-top:1px dashed var(--line);background:#fafbfe}
-.at{flex:1;min-width:0;font-size:.7em;color:#646a8a;line-height:1.4}
-.at:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:6px;vertical-align:middle}
-.sh{min-height:36px;padding:0 10px;border:0;background:transparent;border-radius:8px;color:var(--navy);font-weight:700;font-size:.78em;cursor:pointer;white-space:nowrap}
-.sh:hover{background:#eef1fb}
-.wa{display:flex;gap:6px;padding:0 14px 10px}
-.tag{display:inline-block;font-size:.7em;font-weight:700;padding:0 8px;border-radius:999px;background:#eef1fb;color:var(--navy);margin-right:4px;vertical-align:middle}.tag.r{background:#fde2e2;color:#7a1c1c}
-.dw .at2{display:block;margin-top:6px;font-size:.75em;opacity:.9}
+/* หมวด */
+.gh{display:flex;align-items:center;gap:8px;margin:20px 0 8px;font:700 1.1em/1.3 Boon,sans-serif}
+.gh i{width:6px;height:1.4em;border-radius:4px;background:var(--gc);display:block}.gh span{font-weight:400;color:var(--mute);font-size:.8em}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.tile{background:#fff;border:1px solid var(--line);border-top:5px solid var(--gc);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0;min-height:108px;justify-content:center;color:var(--ink)}
+.tile:hover,.tile:focus-visible{border-color:var(--gc);box-shadow:0 2px 8px rgba(0,0,0,.1);outline:none}
+.tile .e{font-size:1.9em;line-height:1.25}.tile b{font-size:.85em;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.tile small{color:var(--mute);font-size:.75em}
+/* รายการคำ */
 .ct{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 10px}.ct h2{flex:1;min-width:150px;margin:0;font:700 1.35em/1.3 Boon,sans-serif}.ct h2 span{font-weight:400;color:var(--mute);font-size:.7em}
-.more{display:block;width:100%;margin:10px 0 0}
+.w{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin-bottom:8px}
+.w.dim{opacity:.6;background:#f1f2f7}
+.w img{width:68px;height:68px;object-fit:cover;border-radius:10px;flex:none}
+.wb{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2px 0;align-items:center}
+.wk{font:700 1.35em/1.35 Boon,sans-serif;color:var(--navy);word-break:break-word}.wk.x{color:#9aa0bd;font-size:1em;font-weight:400}
+.wt{word-break:break-word;border-left:3px solid #f2c48f;padding-left:14px}.wn{grid-column:1/-1;font-size:.8em;color:var(--mute);margin-top:2px}
+.tag{display:inline-block;font-size:.7em;font-weight:700;padding:0 8px;border-radius:999px;background:#eef1fb;color:var(--navy);margin-right:4px;vertical-align:middle}.tag.r{background:#fde2e2;color:#7a1c1c}
+.wa{display:flex;gap:6px;flex:none}
+@media(max-width:520px){.wb{grid-template-columns:1fr}.wt{border-left:0;padding-left:0}.w{flex-wrap:wrap}.wb{flex-basis:100%}.wa{width:100%;padding-top:6px;border-top:1px dashed var(--line)}}
+.qa{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff8ec;border:2px dashed var(--gold);border-radius:12px;padding:10px 12px;margin:10px 0}.qa .qt{flex-basis:100%;font-weight:700;font-size:.85em;color:#8a4a00}.qa input{flex:1;min-width:130px;min-height:46px;padding:6px 12px;border:2px solid var(--line);border-radius:10px;background:#fff}.qa input:focus{outline:none;border-color:var(--navy)}
+.more{display:block;width:100%;margin:6px 0}
 .msg{padding:26px;text-align:center;color:var(--mute)}
-/* เกมฝึกทาย */
-.qz{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
-.qz .qn{color:var(--mute);font-size:.85em}.qz .qq{font:700 1.4em/1.4 Boon,sans-serif;margin:6px 0 12px}
-.op{display:block;width:100%;text-align:left;min-height:52px;margin:0 0 8px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;background:#fff;font-weight:700;font-size:1.15em;cursor:pointer;color:var(--navy)}
-.op.ok{background:#dff3e8;border-color:var(--green);color:#17603f}.op.no{background:#fde2e2;border-color:var(--red);color:#7a1c1c}
-.fb{margin:8px 0;font-weight:700}
-.sc{font:700 2.2em/1.3 Boon,sans-serif;color:var(--navy)}
-.miss{margin:8px 0 0;padding:0;list-style:none}.miss li{padding:4px 0;border-bottom:1px dashed var(--line)}
-.sug{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 18px}
+.sug{margin-top:26px;background:#fff;border:1px solid var(--line);border-top:5px solid #06c755;border-radius:14px;padding:14px 20px;font-size:.92em}
 footer{max-width:960px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);font-size:.8em}
 /* ผู้ดูแล */
 #adm{position:sticky;top:0;z-index:20;background:#fff1de;border-bottom:2px solid var(--gold);padding:8px 14px}
@@ -82,24 +60,26 @@ footer{max-width:960px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);fon
 .md .opt{font-weight:400;display:flex;gap:8px;align-items:center;margin-top:12px}.md .opt input{width:22px;height:22px}
 .md .bt{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.md .hint{color:var(--mute);font-size:.75em;margin:2px 0}
 .md .mm{margin-top:10px;padding:8px 12px;border-radius:10px;background:#eef1fb;font-size:.85em}.md .mm.err{background:#fde2e2;color:#7a1c1c}
+.sgh{font-weight:700;margin:12px 0 4px;font-size:.9em}.chps{display:flex;flex-wrap:wrap;gap:6px}.chp{min-height:38px;padding:2px 12px;border:1px solid var(--line);background:#fff8ec;border-radius:999px;cursor:pointer;color:var(--navy)}.chp:hover{border-color:var(--gold)}
 #pv img{max-width:140px;max-height:110px;border-radius:10px;margin-top:6px;display:block}
 #tt{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#161a33;color:#fff;padding:10px 16px;border-radius:12px;max-width:90%;z-index:99;display:none;font-size:.85em}
 </style></head><body>
-<div class="band"><div class="hd"><a href="./">← กลับหน้าแรก</a><h1>🗣️ คำศัพท์กวย</h1>
-<p>ภาษากวยของบ้านโพธิ์กระสังข์ เลือกกลุ่มคำ อ่านคำกวยและคำแปล แล้วลองเล่นเกมทายคำดู</p></div></div>
+<div class="band"><div class="hd"><a href="./">← กลับหน้าแรก</a>
+<h1>🗣️ คำศัพท์กวย</h1><p class="sub">ภาษากวยบ้านโพธิ์กระสังข์ อ่านคำ รู้ความหมาย เลือกดูตามหมวด</p>
+<div class="note"><b>📝 ก่อนอ่านโปรดทราบ</b> คำและสำเนียงในหน้านี้มาจากการรวบรวมของคนในพื้นที่เท่านั้น เขียนเป็นอักษรไทยเพื่อให้อ่านสะดวก จึงอาจไม่ถูกหลักการเขียนหรือหลักสัทศาสตร์ เป็นสำเนียงของกวยโพธิ์กระสังข์ ผู้รู้ท่านใดมีข้อเสนอแนะหรืออยากเพิ่มเติม แจ้งได้ทาง LINE <b>@825crkiu</b></div></div></div>
 
 <div id="adm" class="hide"><div class="in"><b>🛠️ โหมดผู้ดูแล</b>
-<button class="btn sm o" id="a-new">➕ เพิ่มคำ</button><button class="btn sm" id="a-bulk">📝 เพิ่มหลายคำ</button><button class="btn sm" id="a-csv">⬇ สำรองไฟล์</button><button class="btn sm" id="a-out">ออก</button>
+<button class="btn sm o" id="a-new">➕ เพิ่มคำ</button><button class="btn sm" id="a-bulk">📝 เพิ่มหลายคำ</button><button class="btn sm" id="a-sug">💡 คำที่ควรเพิ่ม</button><button class="btn sm" id="a-csv">⬇ สำรองไฟล์</button><button class="btn sm" id="a-out">ออก</button>
 <small id="a-note"></small></div></div>
 
 <main>
-<div class="tools"><input id="q" type="search" placeholder="🔍 ค้นหา เช่น ข้าว หรือ ซอม" aria-label="ค้นหาคำศัพท์" autocomplete="off">
+<div class="tools"><input id="q" name="kuy-vocab-search" type="search" placeholder="🔍 ค้นหาคำ" aria-label="ค้นหาคำศัพท์" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
 <button class="btn" id="fm" aria-label="ลดขนาดตัวอักษร">ก−</button><button class="btn" id="fp" aria-label="เพิ่มขนาดตัวอักษร">ก+</button></div>
 <div id="v"><div class="msg">กำลังโหลดคำศัพท์…</div></div>
-<div class="sug"><b>💬 อยากเสนอคำใหม่ หรือเห็นว่าคำไหนไม่ตรงกับที่ใช้ในบ้านเรา?</b><br>ส่งมาทาง LINE <b>@825crkiu</b> ได้เลย แอดมินจะตรวจและเป็นผู้แก้ไขเพิ่มเติมให้
-<p style="margin:8px 0 0"><a class="btn g" href="https://line.me/R/ti/p/%40825crkiu" target="_blank" rel="noopener">เปิด LINE</a> <button class="btn" id="ls">📋 คัดลอก LINE ID</button></p></div>
+<div class="sug"><b>💬 ช่วยกันเพิ่มคำ</b><br>มีคำพื้นบ้านที่ยังไม่มี โดยเฉพาะคำที่ใช้ในนา ในสวน ในครัว หรือคำที่ผู้เฒ่าพูดกัน หรืออยากแก้คำที่ไม่ตรงกับบ้านเรา ส่งมาทาง LINE ได้เลย แอดมินจะตรวจและเป็นผู้เพิ่มหรือแก้ไขให้
+<p style="margin:10px 0 0"><a class="btn g" id="ln" href="#" target="_blank" rel="noopener">✉️ ส่งคำเสนอแนะทาง LINE</a> <button class="btn" id="ls">📋 คัดลอก LINE ID</button></p></div>
 </main>
-<footer>คำศัพท์อาจต่างกันตามหมู่บ้านและสำเนียง คำทั้งหมดเป็นฉบับรวบรวม ยังรอผู้เฒ่าช่วยตรวจเพิ่มเติม<br>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • <a href="privacy.html">ความเป็นส่วนตัว</a> • <a href="#admin" id="al">ผู้ดูแล</a></footer>
+<footer>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • <a href="privacy.html">ความเป็นส่วนตัว</a> • <a href="#admin" id="al">ผู้ดูแล</a></footer>
 
 <!-- แก้ไข / เพิ่มคำ -->
 <div id="ed" class="ov hide"><div class="md"><h2 id="e-h">เพิ่มคำใหม่</h2>
@@ -113,6 +93,10 @@ footer{max-width:960px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);fon
 <label class="opt"><input type="checkbox" id="e-hide"> ซ่อนคำนี้จากหน้าเว็บ</label>
 <div id="e-m" class="mm hide"></div>
 <div class="bt"><button class="btn s" id="e-ok">💾 บันทึก</button><button class="btn" id="e-more">บันทึก + เพิ่มคำต่อ</button><button class="btn r hide" id="e-del">🗑 ลบคำนี้</button><button class="btn" id="e-x">ยกเลิก</button></div></div></div>
+
+<!-- คำที่ควรเพิ่ม -->
+<div id="sg" class="ov hide"><div class="md"><h2>💡 คำที่ควรเพิ่ม</h2><p class="hint">คำพื้นบ้านในชีวิตชาวนาและชาวบ้านทั่วไป (ภาษาไทยเท่านั้น) แตะคำที่ต้องการ ระบบใส่ความหมายและหมวดให้ แอดมินพิมพ์เฉพาะคำกวย คำที่เพิ่มแล้วจะหายไปจากรายการ</p>
+<div id="sg-l"></div><div class="bt"><button class="btn" id="sg-x">ปิด</button></div></div></div>
 
 <!-- เพิ่มหลายคำ -->
 <div id="bk" class="ov hide"><div class="md"><h2>📝 เพิ่มหลายคำพร้อมกัน</h2>
@@ -145,96 +129,70 @@ const GROUPS=[
 {n:"ร่างกายและสุขภาพ",e:"🧍",c:"#b3261e",cats:["ร่างกาย","อวัยวะและอาการเจ็บป่วย","สุขภาพและสมุนไพร"]},
 {n:"บ้านและชีวิตประจำวัน",e:"🏠",c:"#7a5ab8",cats:["บ้านและเรือน","กิจวัตรประจำวัน","เสื้อผ้าและเครื่องแต่งกาย","ของใช้ส่วนตัว","เครื่องมือและของใช้","ครัวและภาชนะ","วัสดุและสิ่งของ","เทคโนโลยีและของสมัยใหม่","การเดินทางและพาหนะ","เงินและการค้า","สถานที่ในชุมชน","โรงเรียนและการเรียนรู้"]},
 {n:"อาหารและพืชผัก",e:"🍚",c:"#2f7d5b",cats:["อาหารและการกิน","ข้าวและอาหารพื้นถิ่นเพิ่มเติม","พืช ผัก ผลไม้","ป่าและอาหารป่า"]},
-{n:"นา ป่า และธรรมชาติ",e:"🌾",c:"#4f9d8f",cats:["เกษตรและการทำนา","ที่ดินและแหล่งน้ำ","ธรรมชาติ","ฟ้าฝนและฤดู","ดวงดาวและท้องฟ้า","ภัยธรรมชาติและการเตือนภัย","ป่าชุมชนและศาลปู่ตา"]},
+{n:"นา ป่า และธรรมชาติ",e:"🌾",c:"#4f9d8f",cats:["เกษตรและการทำนา","ที่ดินและแหล่งน้ำ","ธรรมชาติ","ฟ้าฝนและฤดู","ดวงดาวและท้องฟ้า","ภัยธรรมชาติและการเตือนภัย","ป่าชุมชนและศาลปู่ตา","ชีวิตชาวนาและการลงแขก"]},
 {n:"สัตว์",e:"🐘",c:"#8a5a2b",cats:["สัตว์เลี้ยง","สัตว์ป่าและแมลง","นกและแมลง","สัตว์น้ำและปลา","ช้างและพิธีปะกำ"]},
 {n:"ภูมิปัญญากวย",e:"🧵",c:"#d4691e",cats:["ผ้าไหมและการทอ","ผ้าไหมและลวดลายเพิ่มเติม","ย้อมสีธรรมชาติ","จักสานและเครื่องมือจับสัตว์น้ำ","เหล็กและการตีเหล็ก","ดนตรีและการละเล่น"]},
 {n:"ประเพณี ความเชื่อ และสังคม",e:"🕯️",c:"#6b4a9e",cats:["วัดและพุทธศาสนา","ความเชื่อและพิธีกรรม","ประเพณีตลอดปี","เหตุการณ์สำคัญในชีวิต","นิทานและเรื่องเล่า","สังคมและกฎกติกาของหมู่บ้าน","ชายแดนและการข้ามแดน"]}];
-let E=[],ADM=false,MODE="",TK="",QS="",Q=null,EDIT=null,VP="",RMI=false,CATN=null;
+let FROMSUG=false,E=[],ADM=false,MODE="",TK="",QS="",EDIT=null,VP="",RMI=false,CATN=null;
 const NM=()=>localStorage.getItem("nm")||"แอดมิน";
-const pub=e=>!!e.kuy&&!e.hide,vis=e=>ADM||pub(e),quizable=e=>pub(e)&&e.kuy!==e.th;
+const pub=e=>!!e.kuy&&!e.hide,vis=e=>ADM||pub(e),good=e=>pub(e)&&e.kuy!==e.th;
 const imgSrc=u=>/^https:\/\//.test(u||"")?u:(/^[\w.\-\u0E00-\u0E7F]+$/.test(u||"")?"img/"+u:"");
 const norm=s=>String(s||"").toLowerCase().replace(/\s+/g,"");
 function cats(){const m=new Map();E.filter(vis).forEach(e=>{if(!e.cat)return;let c=m.get(e.cat);if(!c){c={cat:e.cat,emo:"",n:0};m.set(e.cat,c)}c.n++;if(!c.emo&&e.emo)c.emo=e.emo});return[...m.values()]}
 function toast(t){const x=$("tt");x.textContent=t;x.style.display="block";clearTimeout(x._t);x._t=setTimeout(()=>x.style.display="none",4500)}
 /* ---------- หน้าจอ ---------- */
-function daily(){const L=E.filter(quizable);if(!L.length)return null;const e=L[Math.floor(Date.now()/864e5)%L.length],w=el("div","dw");
- w.append(el("small","","🌟 คำประจำวัน"),el("div","k",e.kuy),el("div","t","= "+e.th));if(e.note)w.append(el("small","",e.note));w.append(el("small","at2","— "+ATTR));
- const b=el("button","btn","📤 ส่งต่อ");b.onclick=()=>share("คำศัพท์กวย",shareTxt(e));w.append(el("div"),b);return w}
-const ATTR="คำศัพท์สำเนียงกวยโพธิ์กระสังข์";
-const shareTxt=e=>"คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\n— "+ATTR+" • ที่นี่โพธิ์กระสังข์\nดูคำอื่น ๆ ได้ที่";
-function groups(){const cs=cats(),used=new Set(),out=[];
- GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)out.push({n:g.n,e:g.e,c:g.c,L:L})});
- const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)out.push({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180",L:rest});
- out.forEach(g=>g.t=g.L.reduce((a,c)=>a+c.n,0));return out}
-function card(e,showCat){const w=el("article","w"+(e.kuy?"":" x")+(e.hide?" dim":"")),im=imgSrc(e.img),m=el("div","wm"),b=el("div","wb");
- if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();m.append(i)}
- b.append(el("div","wk",e.kuy||"ยังไม่มีคำกวย"));
- const t=el("div","wt");if(ADM&&e.hide)t.append(el("span","tag r","ซ่อนอยู่"));if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(t);
- if(e.note)b.append(el("div","wn",e.note));m.append(b);w.append(m);
- if(e.kuy){const f=el("div","wf"),s=el("button","sh","📤 ส่งต่อ");s.setAttribute("aria-label","ส่งต่อคำ "+e.kuy);s.onclick=()=>share("คำศัพท์กวย",shareTxt(e));f.append(el("div","at",ATTR),s);w.append(f)}
- if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑 ลบ");x.onclick=()=>openEdit(e);d.onclick=()=>del(e);a.append(x,d);w.append(a)}
- return w}
-function gridEl(L,showCat,cap){const g=el("div","grid");L.slice(0,cap).forEach(e=>g.append(card(e,showCat)));
- if(L.length>cap){const m=el("button","btn more","ดูเพิ่มอีก "+(L.length-cap)+" คำ");m.onclick=()=>{const g2=gridEl(L.slice(cap),showCat,200);g2.style.marginTop="10px";m.replaceWith(g2)};const f=document.createDocumentFragment();f.append(g,m);return f}return g}
-function navEl(G,g,cat){const f=document.createDocumentFragment(),gp=el("div","gp");gp.setAttribute("role","group");gp.setAttribute("aria-label","เลือกกลุ่มคำ");
- G.forEach(x=>{const b=el("button","pill"+(x===g?" on":""));b.style.setProperty("--gc",x.c);b.append(document.createTextNode(x.e+" "+x.n+" "),el("small","",String(x.t)));if(x===g)b.setAttribute("aria-current","true");b.onclick=()=>{location.hash="g/"+encodeURIComponent(x.n)};gp.append(b)});
- const cs=el("div","cats");cs.style.setProperty("--gc",g.c);
- const all=el("button","chip"+(cat?"":" on"),"ทุกหมวดในกลุ่ม");all.onclick=()=>{location.hash="g/"+encodeURIComponent(g.n)};cs.append(all);
- g.L.forEach(c=>{const b=el("button","chip"+(c.cat===cat?" on":""));b.append(document.createTextNode((g1(c.emo)?g1(c.emo)+" ":"")+c.cat+" "),el("small","",String(c.n)));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};cs.append(b)});
- f.append(gp,cs);return f}
-function browse(gname,cat){const G=groups(),f=document.createDocumentFragment(),home=!location.hash.slice(1);
- if(!G.length){$("v").replaceChildren(el("div","msg","ยังไม่มีคำศัพท์"));return}
- let g=cat?G.find(x=>x.L.some(c=>c.cat===cat)):(gname?G.find(x=>x.n===gname):null);
- if(!g){if(cat||gname){const bk=el("button","btn","← ทุกหมวด");bk.onclick=()=>{location.hash=""};f.append(bk,el("div","msg","ไม่พบหมวดนี้"));$("v").replaceChildren(f);return}g=G[0]}
- if(home){const n=E.filter(pub).length,d=daily();if(d)f.append(d);
-  f.append(el("div","stat","มีคำกวย "+n.toLocaleString("th-TH")+" คำ ใน "+cats().length+" หมวด • เลือกกลุ่มคำที่สนใจ"));
-  const bar=el("div","ct"),qb=el("button","btn s","🎯 เล่นเกมทายคำ");qb.onclick=()=>{location.hash="quiz"};bar.append(qb);f.append(bar)}
- f.append(navEl(G,g,cat));
- if(cat){const c=g.L.find(x=>x.cat===cat),L=E.filter(e=>e.cat===cat&&vis(e)),sec=el("section","sec");sec.style.setProperty("--gc",g.c);
-  const h=el("div","sec-h");h.append(el("h3","",(g1(c.emo)?g1(c.emo)+" ":"")+cat),el("span","",L.length+" คำ"));
-  if(L.filter(quizable).length>=4){const q=el("button","btn sm s","🎯 ทายคำในหมวดนี้");q.onclick=()=>{location.hash="quiz/"+encodeURIComponent(cat)};h.append(q)}
-  if(ADM){const a=el("button","btn sm o","➕ เพิ่มคำ");a.onclick=()=>openEdit(null,cat);const r=el("button","btn sm","✏️ เปลี่ยนชื่อหมวด");r.onclick=()=>renameCat(cat);h.append(a,r)}
-  sec.append(h,gridEl(L,false,120));f.append(sec)}
- else g.L.forEach(c=>{const L=E.filter(e=>e.cat===c.cat&&vis(e)),sec=el("section","sec"),h=el("div","sec-h"),cap=L.length<=10?10:8;sec.style.setProperty("--gc",g.c);
-  h.append(el("h3","",(g1(c.emo)?g1(c.emo)+" ":"")+c.cat),el("span","",L.length+" คำ"));sec.append(h,gridEl(L,false,cap));
-  if(L.length>cap){const m=el("button","btn more","ดูทั้งหมดในหมวด “"+c.cat+"” ("+L.length+" คำ)");m.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};sec.lastChild.remove();sec.append(m)}f.append(sec)});
- $("v").replaceChildren(f);document.querySelectorAll(".gp .pill.on,.cats .chip.on").forEach(x=>{const r=x.parentNode;r.scrollLeft=Math.max(0,x.offsetLeft-r.offsetLeft-24)})}
+function daily(){const L=E.filter(good);if(!L.length)return null;const e=L[Math.floor(Date.now()/864e5)%L.length],w=el("div","dw");
+ w.append(el("small","","🌟 คำประจำวัน"),el("div","k",e.kuy),el("div","t","แปลว่า "+e.th));if(e.note)w.append(el("small","",e.note));
+ const b=el("button","btn","📤 ส่งต่อ");b.onclick=()=>share("คำศัพท์กวย","คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\nดูคำศัพท์กวยอื่น ๆ ได้ที่");w.append(el("div"),b);return w}
+function groupEl(g,L){const f=document.createDocumentFragment(),h=el("div","gh");h.style.setProperty("--gc",g.c);h.append(el("i"),el("div","",g.e+" "+g.n),el("span","","("+L.reduce((a,c)=>a+c.n,0)+" คำ)"));
+ const t=el("div","tiles");L.forEach(c=>{const b=el("button","tile");b.style.setProperty("--gc",g.c);b.append(el("div","e",g1(c.emo)||g.e),el("b","",c.cat),el("small","",c.n+" คำ"));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};t.append(b)});f.append(h,t);return f}
+function home(){const f=document.createDocumentFragment(),cs=cats(),used=new Set(),n=E.filter(pub).length;
+ const d=daily();if(d)f.append(d);
+ f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • เลือกหมวดที่สนใจได้เลย"));
+ GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)f.append(groupEl(g,L))});
+ const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)f.append(groupEl({n:"หมวดอื่น ๆ",e:"📂",c:"#5b6180"},rest));
+ if(!cs.length)f.append(el("div","msg","ยังไม่มีคำศัพท์"));$("v").replaceChildren(f)}
+function row(e,showCat){const w=el("div","w"+(e.hide?" dim":"")),im=imgSrc(e.img);
+ if(im){const i=new Image();i.src=im;i.alt=e.th;i.loading="lazy";i.onerror=()=>i.remove();w.append(i)}
+ const b=el("div","wb"),k=el("div","wk"+(e.kuy?"":" x"),e.kuy||"ยังไม่มีคำกวย"),t=el("div","wt");
+ if(ADM){if(e.hide)t.append(el("span","tag r","ซ่อนอยู่"))}
+ if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));
+ if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑");x.onclick=()=>openEdit(e);d.title="ลบคำนี้";d.setAttribute("aria-label","ลบคำนี้");d.onclick=()=>del(e);a.append(x,d);w.append(b,a);return w}
+ w.append(b);return w}
+function listEl(L,showCat,cap){const f=document.createDocumentFragment();L.slice(0,cap).forEach(e=>f.append(row(e,showCat)));
+ if(L.length>cap){const m=el("button","btn more","ดูเพิ่มอีก "+(L.length-cap)+" คำ");m.onclick=()=>{m.replaceWith(listEl(L.slice(cap),showCat,200))};f.append(m)}return f}
+function catView(name){const L=E.filter(e=>e.cat===name&&vis(e)),f=document.createDocumentFragment();
+ const bk=el("button","btn","← ทุกหมวด");bk.onclick=()=>{location.hash=""};
+ if(!L.length){f.append(bk,el("div","msg","ไม่พบหมวดนี้"));$("v").replaceChildren(f);return}
+ const emo=(L.find(e=>e.emo)||{}).emo,bar=el("div","ct"),h=el("h2","",(g1(emo)?g1(emo)+" ":"")+name+" ");h.append(el("span","","("+L.length+" คำ)"));bar.append(bk,h);f.append(bar);
+ const bar2=el("div","ct");
+ if(ADM){const a=el("button","btn o","➕ เพิ่มคำในหมวดนี้");a.onclick=()=>openEdit(null,name);const r=el("button","btn","✏️ เปลี่ยนชื่อหมวด");r.onclick=()=>renameCat(name);bar2.append(a,r)}
+ if(bar2.firstChild)f.append(bar2);f.append(listEl(L,false,150));if(ADM)f.append(quickAdd(name,g1(emo)?emo:""));const b2=el("button","btn","← กลับไปเลือกหมวดอื่น");b2.style.marginTop="8px";b2.onclick=()=>{location.hash="";window.scrollTo(0,0)};f.append(b2);$("v").replaceChildren(f)}
+function quickAdd(cat,emo){const w=el("div","qa"),a=document.createElement("input"),b=document.createElement("input"),go=el("button","btn s","➕ เพิ่ม");
+ a.placeholder="คำไทย";b.placeholder="คำกวย";a.maxLength=b.maxLength=120;a.setAttribute("aria-label","คำไทย");b.setAttribute("aria-label","คำกวย");
+ const add=async()=>{const th=a.value.trim(),kuy=b.value.trim();if(!th){a.focus();return}go.disabled=true;const item={cat:cat,emo:emo,th:th,kuy:kuy,st:kuy?"ฉบับร่าง":""};
+  try{let u=await op({action:"adminVocabSave",item:item});if(u&&!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await op({action:"adminVocabSave",item:item})}
+   if(!u||!u.ok)throw new Error((u&&u.error)||"บันทึกไม่ได้");await merge(u);fillCl();toast("✅ เพิ่ม “"+th+"” แล้ว");route();
+   const n=document.querySelector(".qa input");if(n){n.scrollIntoView({block:"center"});n.focus()}}
+  catch(x){alert("⚠️ "+x.message);go.disabled=false}};
+ go.onclick=add;[a,b].forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();if(i===a&&!b.value)b.focus();else add()}}));
+ const t=el("div","qt","⚡ เพิ่มคำเร็ว ๆ ในหมวดนี้ (พิมพ์แล้วกด Enter)");w.append(t,a,b,go);return w}
 function searchView(){const q=norm(QS),L=E.filter(e=>vis(e)&&norm(e.th+e.kuy+e.note+e.cat).includes(q)),f=document.createDocumentFragment();
  const h=el("div","ct"),t=el("h2","","ผลค้นหา “"+QS.trim()+"” ");t.append(el("span","","("+L.length+" คำ)"));h.append(t);f.append(h);
- f.append(L.length?gridEl(L,true,100):el("div","msg","ไม่พบคำนี้ ลองพิมพ์คำให้สั้นลง หรือส่งคำที่อยากให้เพิ่มมาทาง LINE"));$("v").replaceChildren(f)}
-/* ---------- เกมทายคำ ---------- */
-const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-function newQuiz(scope){const pool=E.filter(quizable),sp=scope?pool.filter(e=>e.cat===scope):pool;
- const qs=shuf(sp).slice(0,8).map(e=>{const near=shuf(pool.filter(z=>z.cat===e.cat&&z.kuy!==e.kuy)),far=shuf(pool.filter(z=>z.kuy!==e.kuy)),seen=new Set([e.kuy]),ops=[e.kuy];
-  [...near,...far].forEach(z=>{if(ops.length<4&&!seen.has(z.kuy)){seen.add(z.kuy);ops.push(z.kuy)}});return{e:e,ops:shuf(ops),pick:null}});
- return{scope:scope,qs:qs,i:0,score:0}}
-function quiz(scope){const v=$("v"),f=document.createDocumentFragment(),bk=el("button","btn","← กลับ");bk.onclick=()=>{location.hash=scope?"c/"+encodeURIComponent(scope):""};
- if(!Q||Q.scope!==scope)Q=newQuiz(scope);
- if(Q.qs.length<2){f.append(bk,el("div","msg","คำยังไม่พอสำหรับเล่นเกม"));v.replaceChildren(f);return}
- const bar=el("div","ct"),h=el("h2","","🎯 ทายคำกวย"+(scope?" • "+scope:""));bar.append(bk,h);f.append(bar);
- const box=el("div","qz");f.append(box);v.replaceChildren(f);
- if(Q.i>=Q.qs.length){const miss=Q.qs.filter(x=>x.pick!==x.e.kuy);
-  box.append(el("div","qn","เล่นจบแล้ว"),el("div","sc",Q.score+" / "+Q.qs.length),el("div","",Q.score===Q.qs.length?"เก่งมาก ตอบถูกทุกข้อ 🎉":Q.score>=Q.qs.length/2?"ดีมาก ลองเล่นอีกรอบเพื่อจำให้แม่นขึ้น":"ไม่เป็นไร ลองอ่านคำด้านล่าง แล้วเล่นอีกรอบ"));
-  if(miss.length){box.append(el("div","fb","คำที่ควรจำ"));const ul=el("ul","miss");miss.forEach(x=>ul.append(el("li","",x.e.kuy+" = "+x.e.th)));box.append(ul)}
-  const again=el("button","btn s","🔁 เล่นอีกครั้ง");again.style.marginTop="12px";again.onclick=()=>{Q=null;quiz(scope)};box.append(again);return}
- const q=Q.qs[Q.i];box.append(el("div","qn","ข้อ "+(Q.i+1)+" จาก "+Q.qs.length+" • คะแนน "+Q.score),el("div","qq","“"+q.e.th+"” ภาษากวยว่าอย่างไร?"));
- const fb=el("div","fb"),btns=[];
- q.ops.forEach(o=>{const b=el("button","op",o);btns.push(b);b.onclick=()=>{if(q.pick!==null)return;q.pick=o;if(o===q.e.kuy)Q.score++;
-  btns.forEach(x=>{x.disabled=true;if(x.textContent===q.e.kuy)x.classList.add("ok");else if(x===b)x.classList.add("no")});
-  fb.textContent=o===q.e.kuy?"✅ ถูกต้อง":"❌ คำตอบคือ “"+q.e.kuy+"”";
-  const nx=el("button","btn s",Q.i+1>=Q.qs.length?"ดูคะแนน":"ข้อต่อไป →");nx.onclick=()=>{Q.i++;quiz(scope)};box.append(nx)};box.append(b)});
- box.append(fb)}
+ f.append(L.length?listEl(L,true,100):el("div","msg","ไม่พบคำนี้ ลองพิมพ์คำให้สั้นลง หรือส่งคำที่อยากให้เพิ่มมาทาง LINE"));$("v").replaceChildren(f)}
 /* ---------- เส้นทางหน้า ---------- */
 function route(){let h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
  if(QS.trim()){searchView();return}
- if(h.indexOf("c/")===0)browse("",h.slice(2));else if(h.indexOf("g/")===0)browse(h.slice(2),"");else if(h==="quiz"||h.indexOf("quiz/")===0)quiz(h.slice(5));else browse("","")}
+ if(h.indexOf("c/")===0)catView(h.slice(2));else home()}
 window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(h==="admin"){history.replaceState(null,"",location.pathname);openAdmin();return}
- Q=null;if(QS){QS="";$("q").value=""}route();window.scrollTo(0,0)});
-$("q").oninput=e=>{QS=e.target.value;route()};
+ if(QS){QS="";$("q").value=""}route();window.scrollTo(0,0)});
+$("q").oninput=e=>{let v=e.target.value;if(/^\s*(https?:\/\/|www\.)/i.test(v)){v="";e.target.value="";toast("ช่องนี้ใช้ค้นหาคำศัพท์ ไม่ใช้วางลิงก์")}QS=v;route()};
+window.addEventListener("pageshow",()=>{if(/^\s*(https?:\/\/|www\.)/i.test($("q").value)){$("q").value="";QS="";route()}});
 /* ---------- แชร์ / LINE / ขนาดตัวอักษร ---------- */
 async function share(title,text){const url=location.origin+location.pathname;
  if(navigator.share){try{await navigator.share({title:title,text:text,url:url});return}catch(e){if(e&&e.name==="AbortError")return}}
  try{await navigator.clipboard.writeText(text+"\n"+url);toast("คัดลอกข้อความและลิงก์แล้ว เปิด LINE หรือ Facebook แล้ววางส่งได้เลย")}catch(e){prompt("คัดลอกข้อความนี้แล้วส่งต่อ",text+"\n"+url)}}
+$("ln").href="https://line.me/R/oaMessage/"+encodeURIComponent(LINE)+"/?"+encodeURIComponent("เสนอคำกวย\nคำไทย: \nคำกวย: \nหมู่บ้าน/ผู้บอก (ถ้าอยากให้ระบุ): ");
 $("ls").onclick=async()=>{try{await navigator.clipboard.writeText(LINE);toast("คัดลอก LINE ID "+LINE+" แล้ว เปิด LINE > เพิ่มเพื่อน > ค้นหา ID แล้ววางได้เลย")}catch(e){prompt("LINE ID",LINE)}};
 let z=+localStorage.getItem("kpvfs")||18;const sz=()=>{document.documentElement.style.setProperty("--fs",z+"px");try{localStorage.setItem("kpvfs",z)}catch(e){}};sz();
 $("fp").onclick=()=>{z=Math.min(26,z+2);sz()};$("fm").onclick=()=>{z=Math.max(16,z-2);sz()};
@@ -281,6 +239,7 @@ async function enterLocal(){let L=null;try{L=JSON.parse(localStorage.getItem("kp
 $("a-out").onclick=()=>{ADM=false;MODE="";TK="";sessionStorage.removeItem("tk");$("adm").classList.add("hide");
  Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv).then(L=>{E=L.filter(e=>!e.hide);route()}).catch(()=>route())};
 function fillCl(){$("cl").replaceChildren(...cats().map(c=>{const o=el("option");o.value=c.cat;return o}))}
+async function merge(u){if(MODE!=="api")return;if(u.item&&u.item.id){const k=E.findIndex(z=>z.id===u.item.id);if(k>=0)E[k]=Object.assign({},E[k],u.item);else E.push(u.item)}else await refetch()}
 async function refetch(){const d=await call({action:"adminVocabList"});if(d&&d.ok)E=d.items;fillCl();route()}
 /* โหมดในเครื่อง (ไม่ใช้หลังบ้าน) เก็บร่างใน localStorage คีย์เดียวกับ admin.html */
 function saveLocal(){try{localStorage.setItem("kp_vdraft",JSON.stringify(E))}catch(e){}}
@@ -297,13 +256,16 @@ function local(b){const mk=x=>({cat:String(x.cat||"").trim(),emo:String(x.emo||"
 const em=(t,err)=>{const m=$("e-m");m.textContent=t||"";m.className=t?"mm"+(err?" err":""):"mm hide"};
 function shrink(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.82))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
 function pvShow(src){const p=$("pv");p.replaceChildren();if(src){const i=new Image();i.src=src;i.alt="ภาพประกอบ";i.onerror=()=>i.remove();p.append(i)}$("e-rm").classList.toggle("hide",!src)}
-function openEdit(it,cat){EDIT=it||null;VP="";RMI=false;em("");fillCl();
+function openEdit(it,cat,pre){FROMSUG=!!pre;EDIT=it||null;VP="";RMI=false;em("");fillCl();
  const c=it?it.cat:(cat||"");const emo=it?it.emo:((cats().find(x=>x.cat===c)||{}).emo||"");
  $("e-h").textContent=it?"แก้ไข: "+it.th:"เพิ่มคำใหม่";$("e-th").value=it?it.th:"";$("e-kuy").value=it?it.kuy:"";$("e-note").value=it?it.note:"";$("e-cat").value=c;$("e-emo").value=emo||"";
  $("e-img").value=it?it.img:"";$("e-file").value="";$("e-hide").checked=!!(it&&it.hide);pvShow(it?imgSrc(it.img):"");
- $("e-del").classList.toggle("hide",!it);$("e-more").classList.toggle("hide",!!it);$("ed").classList.remove("hide");$("e-th").focus()}
+ $("e-del").classList.toggle("hide",!it);$("e-more").classList.toggle("hide",!!it||FROMSUG);
+ if(pre){$("e-th").value=pre.th;if(!$("e-emo").value)$("e-emo").value=pre.emo||""}
+ $("ed").classList.remove("hide");(pre?$("e-kuy"):$("e-th")).focus()}
+function closeEd(){$("ed").classList.add("hide");if(FROMSUG){FROMSUG=false;openSug()}}
 $("a-new").onclick=()=>openEdit(null,(()=>{try{const h=decodeURIComponent(location.hash.slice(1));return h.indexOf("c/")===0?h.slice(2):""}catch(e){return""}})());
-$("e-x").onclick=()=>$("ed").classList.add("hide");
+$("e-x").onclick=closeEd;
 $("e-cat").addEventListener("change",()=>{const f=cats().find(x=>x.cat===$("e-cat").value.trim());if(f&&!$("e-emo").value)$("e-emo").value=f.emo||""});
 $("e-file").onchange=async e=>{const f=e.target.files[0];VP="";if(!f){pvShow(EDIT&&!RMI?imgSrc(EDIT.img):"");return}try{VP=await shrink(f);RMI=false;pvShow(VP)}catch(x){em("⚠️ "+x.message,1);$("e-file").value=""}};
 $("e-rm").onclick=()=>{VP="";RMI=true;$("e-file").value="";pvShow("")};
@@ -316,20 +278,35 @@ async function save(more){const b1=$("e-ok"),b2=$("e-more");
  try{const send=()=>op({action:"adminVocabSave",item:item,photo:VP||undefined});let u=await send();
   if(u&&!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
   if(!u||!u.ok)throw new Error((u&&u.error)||"บันทึกไม่ได้");
-  if(MODE==="api"){if(u.item&&u.item.id){const k=E.findIndex(z=>z.id===u.item.id);if(k>=0)E[k]=Object.assign({},E[k],u.item);else E.push(u.item)}else await refetch()}
+  await merge(u);
   fillCl();toast("✅ บันทึกแล้ว");
-  if(more){const keep={cat:cat,emo:item.emo};openEdit(null,keep.cat);$("e-emo").value=keep.emo;em("✅ บันทึก “"+th+"” แล้ว พิมพ์คำถัดไปได้เลย")}else $("ed").classList.add("hide");
+  if(more){const keep={cat:cat,emo:item.emo};openEdit(null,keep.cat);$("e-emo").value=keep.emo;em("✅ บันทึก “"+th+"” แล้ว พิมพ์คำถัดไปได้เลย")}else closeEd();
   route()}
  catch(x){em("⚠️ "+x.message,1)}b1.disabled=b2.disabled=false}
 $("e-ok").onclick=()=>save(false);$("e-more").onclick=()=>save(true);
 $("ed").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type==="text"){e.preventDefault();save(!EDIT)}});
 async function del(it){if(!confirm("ลบคำ “"+it.th+"”"+(it.kuy?" ("+it.kuy+")":"")+" ?"+(MODE==="api"?"\nคำจะย้ายไปแท็บ “ถังขยะคำศัพท์” ในชีต (กู้คืนได้) และหายจากหน้าเว็บ":"")))return;
  try{const u=await op({action:"adminVocabDelete",id:it.id});if(!u||!u.ok)throw new Error((u&&u.error)||"ลบไม่ได้");
-  if(MODE==="api")E=E.filter(e=>e.id!==it.id);$("ed").classList.add("hide");fillCl();toast("🗑 ลบแล้ว");route()}catch(x){alert("⚠️ "+x.message)}}
+  if(MODE==="api")E=E.filter(e=>e.id!==it.id);FROMSUG=false;$("ed").classList.add("hide");fillCl();toast("🗑 ลบแล้ว");route()}catch(x){alert("⚠️ "+x.message)}}
 $("e-del").onclick=()=>{if(EDIT)del(EDIT)};
 async function renameCat(from){const to=(prompt("ชื่อหมวดใหม่ (แทน “"+from+"” ทุกคำในหมวดนี้)",from)||"").trim();if(!to||to===from)return;
  try{const u=await op({action:"adminVocabSave",renameCat:{from:from,to:to}});if(!u||!u.ok||typeof u.n!=="number")throw new Error((u&&u.error)||"เปลี่ยนชื่อไม่ได้");
   if(MODE==="api")await refetch();toast("✅ เปลี่ยนชื่อหมวดแล้ว "+u.n+" คำ");location.hash="c/"+encodeURIComponent(to)}catch(x){alert("⚠️ "+x.message)}}
+/* ---------- คำที่ควรเพิ่ม (ข้อเสนอแนะคำพื้นบ้านบริบทชาวนา) ---------- */
+const SUG=[
+{cat:"เกษตรและการทำนา",emo:"🌾",w:"เตรียมดิน ไถดะ ไถกลบ ย่ำนา แช่เมล็ดพันธุ์ หว่านกล้า ตอซัง เผาตอซัง ข้าวตั้งท้อง ข้าวออกรวง รวงข้าว ข้าวลีบ ฟาดข้าว ฝัดข้าว กองฟาง ข้าวหอมมะลิ ข้าวไวแสง ทดน้ำ ปล่อยน้ำเข้านา นาล่ม หุ่นไล่กา ปุ๋ยหมัก ปลูกมันสำปะหลัง ปลูกอ้อย ปลูกยางพารา หัวมัน ปลูกผัก ปลูกพริก ข้าวโพด ศัตรูข้าว หอยเชอรี่ ปูนา"},
+{cat:"ที่ดินและแหล่งน้ำ",emo:"💧",w:"ห้วย หนองน้ำ ร่องน้ำ ฝายกั้นน้ำ บ่อบาดาล ที่ลุ่ม ที่ดอน ดินเหนียว ดินทราย ดินร่วน น้ำหลาก น้ำลด น้ำแล้ง น้ำขัง"},
+{cat:"เครื่องมือและของใช้",emo:"🧰",w:"ไม้คาน หาบ งอบ หมวกสาน ผ้าขาวม้า รองเท้าบูท เสื้อกันฝน เครื่องสูบน้ำ ปิ่นโต กระติกน้ำ กระท่อมนา เสื่อ เครื่องตัดหญ้า รถอีแต๋น รถไถเดินตาม ถุงมือ ตะเกียง มีด"},
+{cat:"ฟ้าฝนและฤดู",emo:"🌧️",w:"ฝนแล้ง ฝนทิ้งช่วง ฝนต้นฤดู ฟ้าร้อง ฟ้าผ่า ลมแรง พายุ หมอกลง แดดจัด น้ำค้าง เมฆ ฟ้าครึ้ม ฟ้าใส"},
+{cat:"สัตว์น้ำและปลา",emo:"🐟",w:"ปลาช่อน ปลาดุก ปลาหมอ ปลาไหล ปลาซิว ปลากระดี่ ปลาตะเพียน กบ เขียด อึ่งอ่าง หอย กุ้งฝอย ลูกปลา"},
+{cat:"สัตว์เลี้ยง",emo:"🐃",w:"คอกวัว คอกควาย ฝูงวัว เลี้ยงควาย ไก่ไข่ ลูกเป็ด แม่ไก่ ฟักไข่ ขี้วัว หญ้าเลี้ยงวัว"},
+{cat:"อาหารและการกิน",emo:"🍽️",w:"ข้าวเหนียวนึ่ง น้ำพริก แจ่ว ลาบ ก้อย แกงอ่อม ผักต้ม ผักสด ปลาย่าง ปลาร้าบอง กบย่าง ข้าวจี่ ข้าวโพดต้ม มันต้ม อ้อย ห่อข้าว ขนมกล้วย"},
+{cat:"ชีวิตชาวนาและการลงแขก",emo:"🤝",w:"ลงแขก เอาแรงกัน ช่วยกันทำงาน ขอแรงช่วย ผู้ใหญ่บ้าน กำนัน ประชุมหมู่บ้าน ตลาดนัด เก็บเกี่ยว ข้าวใหม่ ทำบุญข้าวใหม่ หน้านา หน้าเกี่ยว ขายข้าว ไปนาไหม ไปนาหรือยัง วันนี้ฝนจะตกไหม ข้าวงามไหม น้ำพอไหม เกี่ยวข้าวเสร็จแล้ว เหนื่อยไหม พักก่อนนะ กินน้ำก่อน ปีนี้ข้าวได้ดี"}];
+function openSug(){const have=new Set(E.map(e=>norm(e.th))),box=$("sg-l");box.replaceChildren();let n=0;
+ SUG.forEach(g=>{const L=[...new Set(g.w.split(/\s+/).filter(Boolean))].filter(w=>!have.has(norm(w)));L.forEach(w=>have.add(norm(w)));if(!L.length)return;n+=L.length;
+  const h=el("div","sgh",g.emo+" "+g.cat+" ("+L.length+")"),c=el("div","chps");L.forEach(w=>{const b=el("button","chp",w);b.onclick=()=>{$("sg").classList.add("hide");openEdit(null,g.cat,{th:w,emo:g.emo})};c.append(b)});box.append(h,c)});
+ if(!n)box.append(el("div","msg","เพิ่มครบทุกคำในรายการแล้ว 🎉"));$("sg").classList.remove("hide")}
+$("a-sug").onclick=openSug;$("sg-x").onclick=()=>{FROMSUG=false;$("sg").classList.add("hide")};
 /* ---------- เพิ่มหลายคำ ---------- */
 const bm=(t,err)=>{const m=$("b-m");m.textContent=t||"";m.className=t?"mm"+(err?" err":""):"mm hide"};
 $("a-bulk").onclick=()=>{fillCl();bm("");try{const h=decodeURIComponent(location.hash.slice(1));$("b-cat").value=h.indexOf("c/")===0?h.slice(2):""}catch(e){}$("bk").classList.remove("hide");$("b-t").focus()};
