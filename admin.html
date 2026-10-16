@@ -35,7 +35,7 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
 <details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
-<div id="app" class="wrap hide"><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button><button class="chip" id="t6">🏡 วิถีชีวิตกวย</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="app" class="wrap hide"><div class="msg hide" id="bk" role="status"></div><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button><button class="chip" id="t6">🏡 วิถีชีวิตกวย</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
 <div class="row"><div><label for="cx">หมดอายุ (ไม่บังคับ) ข่าวเตือนที่หมดเวลาแล้วจะขึ้นว่า “ข่าวเก่า” เอง</label><input id="cx" type="date"></div></div>
@@ -162,6 +162,19 @@ const $=i=>document.getElementById(i);
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 let S={api:sessionStorage.getItem("api")||API0||localStorage.getItem("api")||"",tk:sessionStorage.getItem("tk")||"",nm:localStorage.getItem("nm")||"",f:{}};
 const ACID=(()=>{try{let c=localStorage.getItem("kp_acid");if(!c){c=(window.crypto&&crypto.randomUUID?crypto.randomUUID().replace(/-/g,""):Math.random().toString(36).slice(2)+Date.now().toString(36));localStorage.setItem("kp_acid",c)}return c}catch(e){return"admin"}})(); // รหัสประจำเครื่องแอดมิน ใช้แยกตัวนับพิมพ์รหัสผิด
+/* แถบสถานะไฟล์สำรองของเว็บ (data/*.json ที่บอต build-share สร้างทุก 30 นาที): อ่านจาก data/_status.json
+   บอตบันทึกเวลาใหม่เมื่อสถานะเปลี่ยน หรืออย่างน้อยทุก 6 ชม. จึงเตือนเมื่อเก่าเกิน 8 ชม. */
+const BKN={content:"ข่าว/เนื้อหา",events:"งานประจำปี",products:"ของดีบ้านเรา",life:"วิถีชีวิตกวย",vocab:"คำศัพท์กวย"};
+async function showBackup(){const b=$("bk");if(!b)return;
+ try{const r=await fetch("data/_status.json?_="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json(),t=Date.parse(d.generatedAt);if(!t)throw 0;
+  const fmt=x=>new Date(x).toLocaleString("th-TH",{timeZone:"Asia/Bangkok",day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}),
+   hrs=(Date.now()-t)/36e5,ago=hrs<1?"ไม่ถึงชั่วโมงก่อน":hrs<24?"ประมาณ "+Math.round(hrs)+" ชั่วโมงก่อน":"ประมาณ "+Math.round(hrs/24)+" วันก่อน",
+   f=Array.isArray(d.failed)?d.failed:[];let txt,warn=false;
+  if(f.length){warn=true;txt="⚠️ ดึงข้อมูลสำรองไม่สำเร็จ: "+f.map(k=>(BKN[k]||k)+(d.failedSince&&d.failedSince[k]?" (ตั้งแต่ "+fmt(d.failedSince[k])+")":"")).join(", ")+" — หน้าเว็บยังใช้ได้ตามปกติ แต่ไฟล์สำรองของส่วนนี้อาจเก่า ดู GitHub → Actions → build-share และ RECOVERY.md"}
+  else if(hrs>8){warn=true;txt="⚠️ ไฟล์สำรองไม่มีการเช็กมาแล้ว "+ago+" ("+fmt(t)+") — ตรวจว่า GitHub → Actions → build-share ยังรันอยู่"}
+  else txt="💾 ไฟล์สำรองของเว็บเช็กล่าสุด "+fmt(t)+" ("+ago+") ปกติ";
+  b.textContent=txt;b.title="บอตเช็กทุก 30 นาที แต่บันทึกเวลาใหม่เมื่อสถานะเปลี่ยนหรืออย่างน้อยทุก 6 ชั่วโมง";b.className="msg"+(warn?" warn":"")}
+ catch(e){b.textContent="ℹ️ ยังไม่พบไฟล์สถานะสำรอง (data/_status.json) — จะมีหลังบอต build-share รันรอบถัดไป";b.className="msg"}}
 async function call(body){const r=await fetch(S.api,{method:"POST",body:JSON.stringify(Object.assign({token:S.tk,by:S.nm,cid:ACID},body))});const d=await r.json();if(d&&d.ok&&d.role)setRole(d.role);return d}
 /* รหัสผู้ตรวจ (rev): ดูรายการและเปลี่ยนสถานะเรื่องแจ้งได้เท่านั้น → ซ่อนแท็บและปุ่มที่ต้องใช้รหัสผู้เผยแพร่ (หลังบ้านปฏิเสธอยู่แล้ว นี่คือให้หน้าจอตรงกับสิทธิ์) */
 function setRole(r){const rev=r==="rev";document.body.classList.toggle("rev",rev);let n=document.getElementById("revnote");
@@ -189,9 +202,9 @@ let idleT=null,LOGGED=false;const IDLE=30*60*1000;
 const bump=()=>{if(!LOGGED)return;clearTimeout(idleT);idleT=setTimeout(()=>{try{localStorage.setItem("kp_idle","1")}catch(e){}sessionStorage.clear();location.reload()},IDLE)};
 ["click","keydown","touchstart","scroll"].forEach(t=>document.addEventListener(t,bump,{passive:true}));
 $("lo").onclick=()=>{sessionStorage.clear();location.reload()};$("rf").onclick=load;
-function start(d){document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d);hashTab()}
+function start(d){document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");draw(d);hashTab();showBackup()}
 async function load(){try{draw(await call({action:"adminList",filter:S.f}))}catch(x){alert("โหลดไม่ได้: "+x.message)}}
-if(S.api&&S.tk)load().then(()=>{document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");hashTab()});
+if(S.api&&S.tk)load().then(()=>{document.body.classList.add("in");LOGGED=true;bump();$("lg").classList.add("hide");$("app").classList.remove("hide");hashTab();showBackup()});
 function draw(d){if(!d.ok){alert(d.error);return}
  const st=$("st");st.replaceChildren(...d.statuses.concat(d.reviews).map((k,i)=>{const c=el("span","chip",k+" ");c.append(el("b","",String(d.stats[k]||0)));return c}));
  const F=[["ทั้งหมด",{}],["รอตรวจเนื้อหา",{review:"รอตรวจ"}],["รอรับเรื่อง",{status:"รอรับเรื่อง"}],["มีธงเตือน",{flagged:1}]];

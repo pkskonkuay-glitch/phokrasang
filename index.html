@@ -751,12 +751,18 @@ function applyContent(items){
  add.filter(f=>f.real&&!nh.includes(f)).forEach(f=>{if(nh.length<6)nh.push(f)});
  const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){const keep=nh;nh=[...pins];keep.forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
  clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rHome();
- if(/^#\/read\/(c|n\d|a\d)/.test(location.hash)&&$("v-read").classList.contains("hide"))readFrom(location.hash)}
+ if(/^#\/read\/(c|n\d|a\d|l-)/.test(location.hash)&&$("v-read").classList.contains("hide"))readFrom(location.hash)}
 async function getJ(act,name,nofb){const S=(window.KPSRC=window.KPSRC||{});try{const c=new AbortController(),t=setTimeout(()=>c.abort(),20000),r=await fetch(CFG.apiUrl+"?action="+act+"&_="+Date.now(),{signal:c.signal});clearTimeout(t);const d=await r.json();if(d&&d.ok){S[name]="api";return d}}catch(e){}
  if(nofb){S[name]="cache";return null} /* มีข้อมูลในเครื่องแล้ว: ไม่เอาไฟล์สำรอง (อาจเก่ากว่า) มาทับ */
  try{const r=await fetch("data/"+name+".json");const d=await r.json();if(d&&d.ok){S[name]="backup";return d}}catch(e){}S[name]="none";return null} // API ช้า/ล่ม → ใช้ไฟล์สำรอง data/*.json ที่ GitHub Action สร้างให้
-async function loadSeed(){try{const r=await fetch("legacy-content.json",{cache:"no-cache"}),L=await r.json();if(!Array.isArray(L))return;let ni=0,ai=0;
- SEED=L.map(x=>{const k=x.kind==="วิถีกวย"?"a"+ai++:"n"+ni++;KEYT[k]=x.title;return Object.assign({},x,{k:k})});applyContent(CUR)}catch(e){}}
+/* รหัสเรื่องเริ่มต้น (n0..n8, a0..a4): ล็อกด้วย legacyKey ใน legacy-content.json + แผนที่ถาวร data/legacy-keys.json (ตัด legacy-content.json แล้วลิงก์เก่ายังเปิดได้)
+   เรื่องที่ไม่มี legacyKey ใช้ "l-"+แฮชชื่อเรื่อง (ไม่ขึ้นกับลำดับในไฟล์) — H36 ต้องเหมือน hash36 ใน build-share.js */
+const H36=s=>{let h=5381;for(const ch of String(s))h=((h*33)^ch.codePointAt(0))>>>0;return h.toString(36)};
+async function loadSeed(){let any=false;
+ try{const K=await (await fetch("data/legacy-keys.json",{cache:"no-cache"})).json();if(K&&typeof K==="object")Object.keys(K).forEach(k=>{const v=K[k],t=typeof v==="string"?v:v&&v.title;if(t){KEYT[k]=t;any=true}})}catch(e){}
+ try{const r=await fetch("legacy-content.json",{cache:"no-cache"}),L=await r.json();if(Array.isArray(L)){
+  SEED=L.filter(x=>x&&x.title).map(x=>{const k=x.legacyKey||"l-"+H36(x.title);KEYT[k]=x.title;return Object.assign({},x,{k:k})});any=true}}catch(e){}
+ if(any)applyContent(CUR)}
 async function loadVideos(){try{const r=await fetch("data/videos.json",{cache:"no-cache"}),d=await r.json();if(!d||!Array.isArray(d.items))throw 0;
  if(Array.isArray(d.cats)&&d.cats.length)VC=d.cats;VID=d.items;VFEAT=d.feat||[];if(d.playlists)VPL=Object.assign(VPL,d.playlists);
  VFEED=(d.feed||[]).map(id=>VID.find(x=>x[0]===id)).filter(Boolean).map(v=>({key:"v:"+v[0],kind:"v",t:v[1],cat:"คลิป",s:"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+v[0]+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+v[0]+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+v[0]}));VST=1}catch(e){VST=2}
@@ -900,7 +906,21 @@ async function loadLife(){if(!CFG.apiUrl)return;
    if(d.items.length){if(use(d.items)){try{localStorage.setItem(LKEY,JSON.stringify(d.items))}catch(e){}}}
    else{LIFEOBJ=[];try{localStorage.removeItem(LKEY)}catch(e){}try{rCul()}catch(_){}}}}catch(e){}}
 rYear();
-rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadLife();loadSeed();loadVideos();loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()});
+/* ลิงก์ #/read/xxx ที่หาเรื่องไม่เจอหลังโหลดข้อมูลครบทุกแหล่ง (ลบแล้ว/หมดอายุ/พิมพ์ผิด) → กลับหน้าแรกพร้อมข้อความ ไม่ปล่อยให้เห็นหน้าว่าง */
+function readMiss(){
+ const hh=location.hash;if(!hh.startsWith("#/read/")||!$("v-read").classList.contains("hide"))return;
+ try{TRK.ev("read-miss/"+hh.slice(7,40))}catch(e){}
+ history.replaceState(null,"",location.pathname+location.search);go("home");
+ if($("nf"))return;
+ const n=el("div","","");n.id="nf";n.setAttribute("role","status");
+ n.style.cssText="margin:12px 0;padding:14px 16px;border-radius:14px;background:var(--soft);color:var(--ink);border:1px solid var(--line);font-size:18px;line-height:1.6";
+ const t=el("b","","ไม่พบเรื่องที่เปิดจากลิงก์นั้น");n.append(t,el("div","","เรื่องนี้อาจถูกย้ายหรือหมดอายุแล้ว ลองดูเรื่องล่าสุดด้านล่าง หรือถามทีมงานทาง LINE ได้ครับ"));
+ const bar=el("div","rbar"),a=ext(el("a","btn line","💬 ถามทีมงานทาง LINE"),lineMsg("หาเรื่องที่ลิงก์เปิดไม่ได้")),x=el("button","btn","ปิด");x.onclick=()=>n.remove();
+ bar.append(a,x);n.append(bar);$("v-home").prepend(n)}
+rHome();route();TRK.start();
+{const PS=[loadBoard(),loadProducts(),loadEvents(),loadLife(),loadSeed(),loadVideos(),loadContent().then(()=>{rHome();if(!$("v-board").classList.contains("hide"))rBoard()})],
+ settle=Promise.allSettled?x=>Promise.allSettled(x):x=>Promise.all(x.map(p=>p.catch(()=>0)));
+ settle(PS).then(readMiss)}
 
 
 /* ท้ายหน้า 3 บรรทัด: ชื่อเว็บ / คำเชิญ + กุญแจทีมงาน / ช่องทางติดตาม */
