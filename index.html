@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<!-- version 2569-10-12-f (นับสถิติ GoatCounter + หน้า "ของดีบ้านเรา") ; ก่อนหน้า 2569-10-12 (ตัดตัวชัด/ฟังเสียง ปุ่ม ก−ก+ ในหัวเว็บ รูปไร้กรอบ) ; ก่อนหน้า 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
+<!-- version 2569-10-16-g (นับสถิติ GoatCounter + หน้า "ของดีบ้านเรา") ; ก่อนหน้า 2569-10-12 (ตัดตัวชัด/ฟังเสียง ปุ่ม ก−ก+ ในหัวเว็บ รูปไร้กรอบ) ; ก่อนหน้า 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
 <meta charset="utf-8"><meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="ที่นี่โพธิ์กระสังข์ วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน แจ้งเหตุ ปักหมุด ติดตามเรื่อง ข่าวสาร คลิป และเรื่องเล่าของชาวกวยบ้านโพธิ์กระสังข์">
@@ -437,7 +437,8 @@ function rCul(){$("cintro").textContent=LINTRO[cf]||"";$("cchips").replaceChildr
 const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงกวย":"scarf","กัวออ":"silk","จาเอม":"plaid","ภาษากวย":"scarf"};
 /* หมวดฮีตคอง = ปฏิทินงานประจำปีจากชีต "งานประจำปี" ที่เดียว (เรียงลำดับตามที่แอดมินจัด) หมวดอื่นใช้การ์ดในโค้ด แต่ถ้ามีงานชื่อตรงกันในชีตจะเปิดหน้าเรื่องราวให้ */
 const hee=cf==="เซ (ฮีตคอง)";
-const L=hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+const lifeEv=EVTS.filter(o=>o.src.cal==="ตามเหตุการณ์ชีวิต");
+const L=(cf==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
 const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cf]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title),el("div","mute",x.sum));
   const ev0=x.ev;
   if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2)}
@@ -747,9 +748,13 @@ function applyContent(items){
  const mix=[];let vi=0;add.forEach((f,i)=>{mix.push(f);if(i%3===2&&ff[vi])mix.push(ff[vi++])});while(vi<ff.length)mix.push(ff[vi++]);   // คลิปแนะนำแทรกทุก 3 เรื่อง
  FEED.splice(0,FEED.length,...mix);
  const byT={};add.forEach(f=>byT[f.t]=f);
- let nh=["n8","a3","n0","a0","a1","a2"].map(k=>KEYT[k]&&byT[KEYT[k]]).filter(Boolean);   // ภาพเด่นหน้าแรกเดิม 6 เรื่อง (ถ้ามี)
- add.filter(f=>f.real&&!nh.includes(f)).forEach(f=>{if(nh.length<6)nh.push(f)});
- const pins=add.filter(f=>f.pin).slice(0,6);if(pins.length){const keep=nh;nh=[...pins];keep.forEach(f=>{if(nh.length<6&&!nh.includes(f))nh.push(f)})}
+/* ช่องที่ 6 ล็อกไว้ให้เรื่องใน CFG.heroLock (ค่าเริ่มต้น n0 = เรื่อง 250 ล้านบาท) เรื่องใหม่ที่ปักหมุดจะเข้าช่อง 1–5 ดันตัวท้ายของช่อง 1–5 ออก
+   ปิดการล็อกโดยตั้ง heroLock:"" ใน config.js */
+ const LOCK=CFG.heroLock===undefined?"n0":CFG.heroLock,lockF=LOCK&&KEYT[LOCK]&&byT[KEYT[LOCK]]||null,cap=lockF?5:6;
+ let nh=["n8","a0","a1","a2","a3"].map(k=>KEYT[k]&&byT[KEYT[k]]).filter(f=>f&&f!==lockF);   // ภาพเด่นหน้าแรกเดิม (สากกวย a3 อยู่ท้ายสุด จึงถูกตัดก่อนเมื่อมีเรื่องใหม่)
+ add.filter(f=>f.real&&f!==lockF&&!nh.includes(f)).forEach(f=>{if(nh.length<cap)nh.push(f)});
+ const pins=add.filter(f=>f.pin&&f!==lockF).slice(0,cap);if(pins.length){const keep=nh;nh=[...pins];keep.forEach(f=>{if(nh.length<cap&&!nh.includes(f))nh.push(f)})}
+ nh=nh.slice(0,cap);if(lockF)nh.push(lockF);
  clearTimeout(htm);HERO.splice(0,HERO.length,...nh);heroInit();rHome();
  if(/^#\/read\/(c|n\d|a\d|l-)/.test(location.hash)&&$("v-read").classList.contains("hide"))readFrom(location.hash)}
 async function getJ(act,name,nofb){const S=(window.KPSRC=window.KPSRC||{});try{const c=new AbortController(),t=setTimeout(()=>c.abort(),20000),r=await fetch(CFG.apiUrl+"?action="+act+"&_="+Date.now(),{signal:c.signal});clearTimeout(t);const d=await r.json();if(d&&d.ok){S[name]="api";return d}}catch(e){}
