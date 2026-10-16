@@ -72,7 +72,7 @@ textarea{min-height:110px}
 .ok{background:#dcf3e7;color:#14502f;border-radius:10px;padding:14px 16px;margin-top:16px}
 .art{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
 .art h3{font-size:19px}
-footer{margin-top:50px;background:#4f9d8f radial-gradient(rgba(255,255,255,.35) 1.5px,transparent 1.6px) 0 0/22px 22px;padding:22px 0 26px;font-size:16px}#foot{background:#fff;color:var(--ink);border-radius:16px;padding:16px 20px;line-height:1.7}#foot a{color:var(--link);font-weight:700}
+footer{margin-top:50px;background:#4f9d8f radial-gradient(rgba(255,255,255,.35) 1.5px,transparent 1.6px) 0 0/22px 22px;padding:22px 0 26px;font-size:16px}#foot{background:#fff;color:var(--ink);border-radius:16px;padding:16px 20px;line-height:1.7;text-align:center}#foot p{margin-left:auto;margin-right:auto}#foot a{color:var(--link);font-weight:700}
 .hide{display:none}
 @media(max-width:600px){.btn.alt{margin:8px 0 0}.row{flex-wrap:wrap}.st{margin-left:0}}
 @media(prefers-reduced-motion:no-preference){.panel{animation:in .25s ease}@keyframes in{from{opacity:.4;transform:translateY(6px)}}}
@@ -312,7 +312,7 @@ section>h2,.panel h2{color:var(--orange-ink)}
 <a class="rt" href="#/rights" onclick="go('home','rights');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.5 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M14.5 9.5h4M14.5 13h4"/></svg></i><span><b>สิทธิ์ที่ควรรู้</b><small>บัตรสวัสดิการ ไฟฟ้าการเกษตร ตรวจข้อมูลนาปี และเรื่องที่ไม่ควรพลาด</small></span></a>
 <a class="rt" href="#/products" style="background:#7a3f1d" onclick="go('home','products');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 10h18l-2 10H5L3 10z"/><path d="M7 10l2.2-5M17 10l-2.2-5M9 14v3M12 14v3M15 14v3"/></svg></i><span><b>ของดีบ้านเรา</b><small>ผ้าไหมลายลูกแก้ว จักสานไม้ไผ่ ฝีมือคนบ้านเรา</small></span></a>
 <a class="rt" href="vocab.html" style="background:#2f7d5b"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12.5h5"/></svg></i><span><b>คำศัพท์กวย</b><small>เรียนคำภาษากวยของบ้านเรา ช่วยกันเติมคำได้</small></span></a>
-<p class="mute" style="margin:10px 0 0">เหตุฉุกเฉินโทร <a href="tel:191">191</a> · <a href="tel:1669">1669</a> · <a href="tel:199">199</a> ก่อนเสมอ ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ <a href="privacy.html">พื้นที่ของเรา</a></p></section>
+</section>
 <section><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
 </div></div>
 
@@ -918,7 +918,7 @@ rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadLife();l
 
 {const pa=el("a","","พื้นที่ของเรา");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}
 {const k=el("a","adm","🔑");k.href="admin.html";k.rel="nofollow noopener";k.title="สำหรับทีมงาน";k.setAttribute("aria-label","สำหรับทีมงาน");$("foot").append(" ",k)}
-{const r=el("p","");r.style.cssText="display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center";r.append(el("b","","ติดตามเรา"));[["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);r.append(a)});$("foot").append(r)}
+{const r=el("p","");r.style.cssText="display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:center";r.append(el("b","","ติดตามเรา"));[["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);r.append(a)});$("foot").append(r)}
 {$("foot").append(el("p","mute","มูไฮ แปลว่า “พวกเรา” บ้านนี้เป็นของพวกเรา"))}
 {const e=el("p","mute","เหตุฉุกเฉิน โทรก่อนเสมอ: ");[["191","ตำรวจ"],["1669","แพทย์ฉุกเฉิน"],["199","ดับเพลิง"]].forEach((x,i)=>{const t=el("a","",x[0]+" "+x[1]);t.href="tel:"+x[0];t.style.cssText="color:#b3261e;font-weight:700;margin-right:12px";e.append(t)});$("foot").append(e)}
 </script>
