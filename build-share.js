@@ -133,8 +133,12 @@ function page(it) {
   const h = crypto.createHash("sha1");
   ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
   const ver = "kp-" + h.digest("hex").slice(0, 8);
-  let cf = fs.readFileSync(CONFIG_PATH, "utf8");
-  if (!cf.includes('version: "' + ver + '"')) { cf = cf.replace(/version:\s*"[^"]*"/, 'version: "' + ver + '"'); fs.writeFileSync(CONFIG_PATH, cf); console.log("เลื่อนเวอร์ชัน → " + ver); }
+  const VER_PATH = path.join(__dirname, "version.js");   // แยกจาก config.js เพื่อไม่ให้บอตกับคนแก้ไฟล์เดียวกันชนกัน
+  let curVer = ""; try { curVer = fs.readFileSync(VER_PATH, "utf8"); } catch (_) {}
+  if (!curVer.includes('"' + ver + '"')) {
+    fs.writeFileSync(VER_PATH, '/* version.js — เลขเวอร์ชันแคชของ service worker บอต build-share เขียนไฟล์นี้เองเมื่อไฟล์หลักเปลี่ยน ห้ามแก้เอง */\nself.KP_VERSION = "' + ver + '";\n');
+    console.log("เลื่อนเวอร์ชัน → " + ver);
+  }
   const dir = path.join(__dirname, "s"); fs.mkdirSync(dir, { recursive: true });
   const keep = new Set(items.map(i => i.k + ".html"));
   // ลบหน้าที่ไม่มีในข้อมูลแล้ว "เฉพาะกลุ่มที่ดึงข้อมูลสำเร็จรอบนี้" (กลุ่มไหนดึงไม่ได้ เก็บหน้าเก่าของกลุ่มนั้นไว้ ไม่ลบมั่ว)

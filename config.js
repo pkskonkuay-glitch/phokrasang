@@ -1,7 +1,7 @@
 /* config.js — ไฟล์ตั้งค่ากลางของ "ที่นี่โพธิ์กระสังข์"
    แก้ค่าที่นี่ที่เดียว index.html / admin.html / vocab.html / sw.js / build-share.js อ่านจากไฟล์นี้
    ห้ามใส่รหัสลับ (ADMIN_TOKEN, LINE_TOKEN) ในไฟล์นี้ เพราะทุกคนเปิดอ่านได้
-   บรรทัด version ถูกขยับอัตโนมัติโดย build-share.js เมื่อไฟล์หลักเปลี่ยน (ไม่ต้องแก้เอง) */
+   เลขเวอร์ชันของ service worker อยู่ที่ version.js (บอต build-share เขียนให้ ไม่ต้องแก้ และไม่อยู่ในไฟล์นี้แล้ว) */
 (function (g) {
   g.KP_CONFIG = {
     base: "https://pkskonkuay-glitch.github.io/phokrasang/",
@@ -12,7 +12,6 @@
     ytList: "https://www.youtube.com/playlist?list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
     ytFirst: "https://www.youtube.com/watch?v=ySVkiyR5XGM&list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
     email: "pkskonkuay@gmail.com",
-    gc: "kuayphokrasang",
-    version: "kp-148c33fd"
+    gc: "kuayphokrasang"
   };
 })(typeof self !== "undefined" ? self : this);

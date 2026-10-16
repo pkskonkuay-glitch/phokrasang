@@ -1,7 +1,8 @@
 /* ที่นี่โพธิ์กระสังข์ — ให้เว็บเปิดเร็วและเปิดได้แม้สัญญาณอ่อน
    เปลี่ยนเลขเวอร์ชันด้านล่างทุกครั้งที่อัปโหลดไฟล์ชุดใหม่ เพื่อให้เครื่องผู้ใช้ล้างของเก่า */
-try { importScripts("config.js"); } catch (e) {}                    // ค่ากลาง + เลขเวอร์ชัน (build-share.js เลื่อนให้เองเมื่อไฟล์หลักเปลี่ยน)
-const V = (self.KP_CONFIG && self.KP_CONFIG.version) || "kp-fallback";
+try { importScripts("config.js"); } catch (e) {}                    // ค่ากลาง
+try { importScripts("version.js"); } catch (e) {}                   // เลขเวอร์ชัน (build-share.js เลื่อนให้เองเมื่อไฟล์หลักเปลี่ยน)
+const V = self.KP_VERSION || (self.KP_CONFIG && self.KP_CONFIG.version) || "kp-fallback";
 const CORE = ["./", "index.html", "config.js", "vocab.html", "privacy.html", "manifest.webmanifest",
   "fonts/Boon-Regular.woff2", "fonts/Boon-Bold.woff2", "icons/icon-192.png"];
 const MAX = 60;   // เก็บไฟล์ในเครื่องไม่เกินกี่รายการ (กันแคชบวมเมื่อใช้ไปนาน ๆ)
@@ -19,7 +20,7 @@ self.addEventListener("fetch", e => {
   if (r.method !== "GET" || u.origin !== location.origin) return;   // ข้อมูลแจ้งเหตุ/แผนที่/YouTube ไปเครือข่ายตามปกติ
   if (u.pathname.indexOf("/s/") >= 0) return;                       // หน้าแชร์รายเรื่อง: ไปเครือข่ายเสมอ ไม่เก็บแคช
   if (/\/admin\.html$/.test(u.pathname)) return;
-  if (/\/(config\.js|data\/[^/]+\.json)$/.test(u.pathname)) {          // ค่ากลาง/ข้อมูล: ลองโหลดใหม่ก่อนเสมอ (แก้ลิงก์แล้วต้องเห็นผลทันที)
+  if (/\/(config\.js|version\.js|data\/[^/]+\.json)$/.test(u.pathname)) {          // ค่ากลาง/ข้อมูล: ลองโหลดใหม่ก่อนเสมอ (แก้ลิงก์แล้วต้องเห็นผลทันที)
     e.respondWith(fetch(r).then(x => { if (x.ok) { const c = x.clone(); caches.open(V).then(k => k.put(r, c)); } return x; }).catch(() => caches.match(r)));
     return;
   }                    // หน้าแอดมิน: ไม่เก็บแคช
