@@ -31,7 +31,7 @@ jobs:
       - run: |
           git config user.name "share-bot"
           git config user.email "share-bot@users.noreply.github.com"
-          git add s data sitemap.xml robots.txt config.js
+          git add s data sitemap.xml robots.txt version.js
           git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์รายเรื่อง" && git pull --rebase -X theirs origin main && git push)
       # ข้อมูลค้างนาน: บันทึกไฟล์ที่ดึงได้ไปแล้วข้างบน แล้วทำให้รอบนี้ขึ้นสีแดงเพื่อเปิด Issue แจ้งเตือน
       - name: แจ้งเตือนเมื่อข้อมูลค้างนาน
