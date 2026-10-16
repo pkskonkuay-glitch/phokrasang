@@ -2,7 +2,7 @@ name: build-share
 on:
   push:
     branches: [main]
-    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js", "legacy-content.json"]
+    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js", "legacy-content.json", "data/legacy-keys.json"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
@@ -20,12 +20,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node build-share.js
+      # รหัสออก 3 = ดึงข้อมูลบางกลุ่มไม่ได้ต่อเนื่องเกิน 6 ชม. (ไฟล์ที่ได้ยังต้อง commit) ส่วนรหัสอื่นที่ไม่ใช่ 0 = สคริปต์พัง (ไม่ commit)
+      - id: build
+        run: |
+          set +e
+          node build-share.js
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" != "0" ] && [ "$code" != "3" ]; then exit "$code"; fi
       - run: |
           git config user.name "share-bot"
           git config user.email "share-bot@users.noreply.github.com"
           git add s data sitemap.xml robots.txt config.js
           git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์รายเรื่อง" && git pull --rebase -X theirs origin main && git push)
+      # ข้อมูลค้างนาน: บันทึกไฟล์ที่ดึงได้ไปแล้วข้างบน แล้วทำให้รอบนี้ขึ้นสีแดงเพื่อเปิด Issue แจ้งเตือน
+      - name: แจ้งเตือนเมื่อข้อมูลค้างนาน
+        if: steps.build.outputs.code == '3'
+        run: |
+          echo "::error::ดึงข้อมูลบางกลุ่มจาก Apps Script ไม่ได้ต่อเนื่องเกิน 6 ชั่วโมง ดู data/_status.json และ RECOVERY.md"
+          exit 1
       # ---- แจ้งเตือน: ถ้า build ล้ม เปิด Issue 1 รายการ (GitHub ส่งอีเมลถึงผู้ดูแลที่ Watch repo) ถ้ากลับมาปกติ ปิดให้เอง ----
       - name: เปิด Issue เมื่อ build ล้ม
         if: failure()
@@ -36,7 +49,7 @@ jobs:
           n=$(gh issue list --state open --label build-failed --json number --jq length)
           if [ "$n" = "0" ]; then
             gh issue create --label build-failed --title "⚠️ build-share ล้มเหลว (หน้าแชร์/ไฟล์สำรองอาจไม่อัปเดต)" \
-              --body "รอบล่าสุดล้มเหลว ดูรายละเอียดที่ ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — ดูวิธีแก้ใน RECOVERY.md หัวข้อ 'หน้าเว็บค้าง/ข้อมูลไม่ขึ้น' (Issue นี้จะถูกปิดเองเมื่อรอบถัดไปสำเร็จ)"
+              --body "รอบล่าสุดล้มเหลว หรือดึงข้อมูลจาก Apps Script ไม่ได้ต่อเนื่องเกิน 6 ชั่วโมง ดูรายละเอียดที่ ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — ดูวิธีแก้ใน RECOVERY.md หัวข้อ 'หน้าเว็บค้าง/ข้อมูลไม่ขึ้น' (Issue นี้จะถูกปิดเองเมื่อรอบถัดไปสำเร็จ)"
           fi
       - name: ปิด Issue เมื่อกลับมาปกติ
         if: success()
