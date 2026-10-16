@@ -90,7 +90,6 @@ a{color:#b34700}
 <label for="e-note">อธิบายเพิ่ม (ถ้ามี)</label><input type="text" id="e-note" maxlength="300" autocomplete="off">
 <div class="r2"><div><label for="e-cat">หมวด *</label><input type="text" id="e-cat" list="cl" maxlength="40" autocomplete="off"></div><div><label for="e-emo">อีโมจิ</label><input type="text" id="e-emo" maxlength="8"></div></div><datalist id="cl"></datalist>
 <div id="e-imb"><label for="e-file">ภาพประกอบ (ถ้ามี ไม่ใส่ก็ได้)</label><input type="file" id="e-file" accept="image/*"><div id="pv"></div><button class="btn sm r hide" id="e-rm" type="button">เอาภาพออก</button></div>
-<div id="e-imn" class="hide"><label for="e-img">ชื่อไฟล์ภาพ (อยู่ในโฟลเดอร์ img/) ถ้ามี</label><input type="text" id="e-img" maxlength="120"></div>
 <label class="opt"><input type="checkbox" id="e-hide"> ซ่อนคำนี้จากหน้าเว็บ</label>
 <div id="e-m" class="mm hide"></div>
 <div class="bt"><button class="btn s" id="e-ok">💾 บันทึก</button><button class="btn" id="e-more">บันทึก + เพิ่มคำต่อ</button><button class="btn r hide" id="e-del">🗑 ลบคำนี้</button><button class="btn" id="e-x">ยกเลิก</button></div></div></div>
@@ -223,7 +222,7 @@ Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv)
 /* =====================  โหมดผู้ดูแล (แก้ไขที่หน้านี้เลย)  ===================== */
 const API=()=>sessionStorage.getItem("api")||API0;
 async function call(b){const r=await fetch(API(),{method:"POST",body:JSON.stringify(Object.assign({token:TK,by:NM()},b))});return r.json()}
-const op=b=>MODE==="local"?Promise.resolve(local(b)):call(b);
+const op=b=>call(b);
 $("al").onclick=e=>{e.preventDefault();openAdmin()};
 function showLogin(msg){$("l-m").className=msg?"mm err":"mm hide";$("l-m").textContent=msg||"";$("lg").classList.remove("hide");$("l-tk").focus()}
 $("l-sp").onchange=()=>{$("l-tk").type=$("l-sp").checked?"text":"password"};
@@ -237,32 +236,18 @@ async function openAdmin(){if(ADM)return;TK=sessionStorage.getItem("tk")||"";if(
 async function tryAdmin(){ /* คืนข้อความผิดพลาด หรือ null ถ้าเข้าได้ */
  try{const d=await call({action:"adminVocabList"});
   if(d&&d.ok){E=d.items;enter("api");return null}
-  if(/unknown admin action/i.test((d&&d.error)||"")){await enterLocal();return null}
+  if(/unknown admin action/i.test((d&&d.error)||""))return "หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ (ต้องวาง vocab.gs ตามคู่มือ)";
   return (d&&d.error)||"เข้าสู่ระบบไม่ได้"}
  catch(x){return "เชื่อมต่อหลังบ้านไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่"}}
-function enter(mode){ADM=true;MODE=mode;$("adm").classList.remove("hide");$("e-imb").classList.toggle("hide",mode==="local");$("e-imn").classList.toggle("hide",mode!=="local");
- $("a-csv").textContent=mode==="local"?"⬇ ดาวน์โหลด kuy-vocab.csv":"⬇ สำรองไฟล์";$("a-csv").className="btn sm"+(mode==="local"?" o":"");
- $("a-note").textContent=mode==="local"?"หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ จึงแก้ในเครื่องนี้ก่อน แล้วกด “ดาวน์โหลด kuy-vocab.csv” นำไปอัปโหลดทับบนเว็บ":"แก้ไข เพิ่ม ลบ แล้วหน้าเว็บเปลี่ยนทันที (คำที่ลบเก็บในแท็บถังขยะของชีต กู้คืนได้)";
+function enter(mode){ADM=true;MODE=mode;$("adm").classList.remove("hide");$("e-imb").classList.remove("hide");
+ $("a-csv").textContent="⬇ สำรองไฟล์";$("a-csv").className="btn sm";
+ $("a-note").textContent="แก้ไข เพิ่ม ลบ แล้วหน้าเว็บเปลี่ยนทันที (คำที่ลบเก็บในแท็บถังขยะของชีต กู้คืนได้)";
  fillCl();route();toast("เข้าโหมดผู้ดูแลแล้ว")}
-async function enterLocal(){let L=null;try{L=JSON.parse(localStorage.getItem("kp_vdraft")||"null")}catch(e){}
- if(!Array.isArray(L)){const r=await fetch(CSV+"?t="+Date.now());if(!r.ok)throw new Error("ไม่พบไฟล์ kuy-vocab.csv");L=csvItems(await r.text())}
- E=L;enter("local")}
 $("a-out").onclick=()=>{ADM=false;MODE="";TK="";sessionStorage.removeItem("tk");$("adm").classList.add("hide");
  Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv).then(L=>{E=L.filter(e=>!e.hide);route()}).catch(()=>route())};
 function fillCl(){$("cl").replaceChildren(...cats().map(c=>{const o=el("option");o.value=c.cat;return o}))}
 async function merge(u){if(MODE!=="api")return;if(u.item&&u.item.id){const k=E.findIndex(z=>z.id===u.item.id);if(k>=0)E[k]=Object.assign({},E[k],u.item);else E.push(u.item)}else await refetch()}
 async function refetch(){const d=await call({action:"adminVocabList"});if(d&&d.ok)E=d.items;fillCl();route()}
-/* โหมดในเครื่อง (ไม่ใช้หลังบ้าน) เก็บร่างใน localStorage คีย์เดียวกับ admin.html */
-function saveLocal(){try{localStorage.setItem("kp_vdraft",JSON.stringify(E))}catch(e){}}
-function local(b){const mk=x=>({cat:String(x.cat||"").trim(),emo:String(x.emo||"").trim(),th:String(x.th||"").trim(),kuy:String(x.kuy||"").trim(),ipa:String(x.ipa||"").trim(),note:String(x.note||"").trim(),img:String(x.img||"").trim(),aud:String(x.aud||"").trim(),st:String(x.st||"").trim(),src:String(x.src||"").trim()}),nid=()=>"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
- if(b.action==="adminVocabDelete"){E=E.filter(e=>e.id!==b.id);saveLocal();return{ok:true}}
- if(b.action!=="adminVocabSave")return{ok:false,error:"ไม่รองรับ"};
- if(Array.isArray(b.items)){let a=0,s=0;const have=new Set(E.map(e=>e.cat+"|"+e.th));b.items.forEach(x=>{const o=mk(x);if(!o.th||!o.cat||have.has(o.cat+"|"+o.th)){s++;return}have.add(o.cat+"|"+o.th);E.push(Object.assign({id:nid(),hide:false},o));a++});saveLocal();return{ok:true,added:a,skipped:s}}
- if(b.renameCat){let n=0;E.forEach(e=>{if(e.cat===b.renameCat.from){e.cat=b.renameCat.to;n++}});saveLocal();return{ok:true,n:n}}
- const it=b.item||{},o=mk(it);if(!o.th)return{ok:false,error:"กรุณาใส่ความหมายไทย"};if(!o.cat)return{ok:false,error:"กรุณาใส่หมวด"};
- const r=it.id?E.find(e=>e.id===it.id):null;if(it.id&&!r)return{ok:false,error:"ไม่พบคำที่จะแก้ไข (อาจถูกลบไปแล้ว)"};
- const dup=E.find(e=>e.th===o.th&&e.cat===o.cat&&(!r||e.id!==r.id));if(dup&&!it.force)return{ok:false,dup:true,error:"มีคำว่า “"+o.th+"” ในหมวด “"+o.cat+"” อยู่แล้ว"};
- const m=Object.assign(r||{id:nid()},o,{hide:!!it.hide});if(!r)E.push(m);saveLocal();return{ok:true,item:m}}
 /* ---------- ฟอร์มเพิ่ม/แก้ไข ---------- */
 const em=(t,err)=>{const m=$("e-m");m.textContent=t||"";m.className=t?"mm"+(err?" err":""):"mm hide"};
 function shrink(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.82))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
@@ -270,7 +255,7 @@ function pvShow(src){const p=$("pv");p.replaceChildren();if(src){const i=new Ima
 function openEdit(it,cat,pre){FROMSUG=!!pre;EDIT=it||null;VP="";RMI=false;em("");fillCl();
  const c=it?it.cat:(cat||"");const emo=it?it.emo:((cats().find(x=>x.cat===c)||{}).emo||"");
  $("e-h").textContent=it?"แก้ไข: "+it.th:"เพิ่มคำใหม่";$("e-th").value=it?it.th:"";$("e-kuy").value=it?it.kuy:"";$("e-note").value=it?it.note:"";$("e-cat").value=c;$("e-emo").value=emo||"";
- $("e-img").value=it?it.img:"";$("e-file").value="";$("e-hide").checked=!!(it&&it.hide);pvShow(it?imgSrc(it.img):"");
+ $("e-file").value="";$("e-hide").checked=!!(it&&it.hide);pvShow(it?imgSrc(it.img):"");
  $("e-del").classList.toggle("hide",!it);$("e-more").classList.toggle("hide",!!it||FROMSUG);
  if(pre){$("e-th").value=pre.th;if(!$("e-emo").value)$("e-emo").value=pre.emo||""}
  $("ed").classList.remove("hide");(pre?$("e-kuy"):$("e-th")).focus()}
@@ -283,7 +268,7 @@ $("e-rm").onclick=()=>{VP="";RMI=true;$("e-file").value="";pvShow("")};
 async function save(more){const b1=$("e-ok"),b2=$("e-more");
  const th=$("e-th").value.trim(),cat=$("e-cat").value.trim();if(!th){em("กรุณาใส่ความหมายไทย",1);$("e-th").focus();return}if(!cat){em("กรุณาใส่หมวด",1);$("e-cat").focus();return}
  const item=Object.assign({},EDIT||{},{id:EDIT?EDIT.id:undefined,cat:cat,emo:$("e-emo").value.trim(),th:th,kuy:$("e-kuy").value.trim(),note:$("e-note").value.trim(),hide:$("e-hide").checked});
- if(MODE==="local")item.img=$("e-img").value.trim();else if(RMI)item.img="";
+ if(RMI)item.img="";
  
  b1.disabled=b2.disabled=true;em(VP?"กำลังอัปโหลดภาพและบันทึก…":"กำลังบันทึก…");
  try{const send=()=>op({action:"adminVocabSave",item:item,photo:VP||undefined});let u=await send();
@@ -334,7 +319,7 @@ $("a-csv").onclick=()=>{if(!E.length){alert("ยังไม่มีข้อ�
  const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',H=["หมวด","อีโมจิ","ความหมายไทย","คำกวย (อักษรไทย)","คำอ่าน/IPA","อธิบาย","ภาพ (ชื่อไฟล์ใน img/)","เสียง (ลิงก์)","สถานะ","ที่มา"];
  const rows=E.filter(e=>!e.hide).map(e=>[e.cat,e.emo,e.th,e.kuy,e.ipa,e.note,e.img,e.aud,e.st,e.src].map(q).join(","));
  const blob=new Blob(["\uFEFF"+[H.map(q).join(","),...rows].join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kuy-vocab.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
- toast(MODE==="local"?"ดาวน์โหลดแล้ว นำไฟล์ kuy-vocab.csv ไปอัปโหลดทับบนเว็บ":"ดาวน์โหลดไฟล์สำรองแล้ว")};
+ toast("ดาวน์โหลดไฟล์สำรองแล้ว")};
 </script>
 <script>(function(){var c=(window.KP_CONFIG||{}).gc||"kuayphokrasang",s=document.createElement("script");s.async=true;s.src="https://gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://"+c+".goatcounter.com/count");s.setAttribute("data-goatcounter-settings","{\"path\":\"/vocab\"}");document.head.appendChild(s)})()</script>
 </body></html>

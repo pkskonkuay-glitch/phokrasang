@@ -26,25 +26,14 @@ async function api(q) {
 }
 const list = j => Array.isArray(j) ? j : (j && (j.items || j.rows || j.data || j.events || j.products)) || [];
 
-function staticItems() {
-  const src = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
-  const g = re => { const m = src.match(re); return m ? m[0] : ""; };
-  const code = [
-    "const CFG={fbUrl:'',ytList:''};",
-    g(/const F=CFG\.fbUrl,P=CFG\.ytList;/),
-    g(/const CC=\{.*?\};\n/s),
-    g(/const N=\(.*?\n/),
-    g(/const news=\[[\s\S]*?\)\];/),
-    g(/const A=\(.*?\n/),
-    g(/const arts=\[[\s\S]*?\)\];/),
-    g(/const FI=\{.*?\};/), g(/const PH=\{.*?\};/),
-    "({news,arts,FI,PH})"
-  ].join("\n");
-  const r = vm.runInNewContext(code, {});
-  const out = [];
-  r.news.forEach((o, i) => { const k = "n" + i; out.push({ k, title: o.title, sum: o.sum, img: r.PH[k] || r.FI[k] || o.img }); });
-  r.arts.forEach((o, i) => { const k = "a" + i; out.push({ k, title: o.title, sum: o.sum, img: r.PH[k] || r.FI[k] || o.img }); });
-  return out;
+// เรื่องเริ่มต้นอ่านจาก legacy-content.json (ไฟล์เดียวกับที่หน้าเว็บและ importLegacyContent ใช้) ไม่ดึงจาก index.html ด้วย regex แล้ว
+// รหัสเรื่องคงเดิม (n0..n8 = ข่าว, a0..a4 = วิถีกวย) เพื่อให้ลิงก์แชร์เก่า s/n0.html ใช้ได้ต่อ
+function seedItems() {
+  let L = [];
+  try { L = JSON.parse(fs.readFileSync(path.join(__dirname, "legacy-content.json"), "utf8")); }
+  catch (e) { console.warn("ไม่พบ/อ่าน legacy-content.json ไม่ได้ ข้ามเรื่องเริ่มต้น:", e.message); return []; }
+  let ni = 0, ai = 0;
+  return (Array.isArray(L) ? L : []).filter(x => x && x.title).map(x => ({ k: x.kind === "วิถีกวย" ? "a" + ai++ : "n" + ni++, title: x.title, sum: x.sum, img: x.img, at: x.at }));
 }
 
 function page(it) {
@@ -70,13 +59,7 @@ function page(it) {
 }
 
 (async () => {
-  const items = staticItems(), seen = new Set(items.map(i => i.k));
-  // กันกรณี regex ดึงข่าว/บทความจาก index.html พลาดหลังแก้โครงสร้าง: เทียบกับจำนวนครั้งก่อน
-  try {
-    const sf = path.join(__dirname, "data", "static-count.txt"), prev = parseInt(fs.readFileSync(sf, "utf8"), 10) || 0;
-    if (prev && items.length < prev * 0.7) { console.error("ERROR: staticItems ลดจาก " + prev + " เหลือ " + items.length + " — โครงสร้าง index.html อาจเปลี่ยน หยุดเพื่อไม่ให้ลบหน้าแชร์"); process.exit(1); }
-    fs.mkdirSync(path.dirname(sf), { recursive: true }); fs.writeFileSync(sf, String(items.length));
-  } catch (_) {}
+  const items = seedItems(), seen = new Set(items.map(i => i.k));
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
   const [c, e, p, lf] = await Promise.all([api("content"), api("events"), api("products"), api("life")]);
   list(c).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));

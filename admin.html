@@ -58,7 +58,6 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <p><button class="btn" id="csv">บันทึก</button> <button class="btn o" id="crs">ล้างฟอร์ม</button></p><div class="msg hide" id="cm"></div></div>
 <h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div><div id="p3" class="hide">
 <div class="c"><h3>🗣️ คำศัพท์กวย</h3><p class="mute">เพิ่ม แก้ไข ซ่อน หรือลบคำได้ที่นี่ หน้าเว็บ <a href="vocab.html" target="_blank" rel="noopener">vocab.html</a> จะอัปเดตตามทันที (ลบแล้วคำไปอยู่แท็บ “ถังขยะคำศัพท์” ในชีต กู้คืนได้)</p>
-<div class="msg warn hide" id="voff"><b>โหมดไม่ต้องใช้หลังบ้าน (ใช้งานได้ทันที)</b><br>แก้ เพิ่ม ลบคำได้ตามปกติ แล้วกด “⬇ ดาวน์โหลดไฟล์” นำไฟล์ <b>kuy-vocab.csv</b> ไปอัปโหลดทับบนเว็บ หน้า vocab.html จะอัปเดตตาม ที่แก้ไว้เก็บในเครื่องนี้ชั่วคราวจนกว่าจะอัปโหลด<br><span id="vdirty"></span> <button class="btn o" id="vreset" style="margin-top:6px">↺ โหลดใหม่จากไฟล์บนเว็บ (ทิ้งส่วนที่ยังไม่อัปโหลด)</button></div>
 <div class="stats" id="vst"></div>
 <div class="row"><div><input id="vq" placeholder="🔍 ค้นหา คำไทย / คำกวย" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
 <div class="stats" id="vft" style="margin-top:8px"></div>
@@ -287,11 +286,10 @@ let VL=[],VCATS=[],VE=null,VP="",VA="",VFl="empty",VN=60,VT=true,VSRC="";
 const g1=s=>{s=String(s||"");try{const x=[...new Intl.Segmenter().segment(s)];return x.length?x[0].segment:""}catch(e){return s.slice(0,4)}},hasK=e=>!!e.kuy,drvId=u=>{const m=/^https:\/\/drive\.google\.com\/file\/d\/([\w-]+)\//.exec(u||"");return m?m[1]:""};
 const imgSrc=u=>/^https:\/\//.test(u||"")?u:(u?"img/"+u:"");
 async function loadV(){const ls=$("vls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
- if(VOFF){VCATS=vcats();fillCats();fillRf();renderV();return}
  try{const d=await vcall({action:"adminVocabList"});
   if(!d.ok)throw new Error(/unknown admin action/.test(d.error||"")?"NOHOOK":(d.error||"โหลดไม่ได้"));
   VL=d.items;VCATS=d.cats||[];fillCats();fillRf();renderV()}
- catch(x){if(x.message==="NOHOOK"){await vinitOff();return}ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?"⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ (ต้องวางไฟล์ vocab.gs เพิ่มบรรทัดเชื่อมใน รหัส.gs แล้วทำให้ใช้งานได้เป็นเวอร์ชันใหม่ ตามคู่มือ)":"โหลดไม่ได้: "+x.message))}}
+ catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?"⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนคำศัพท์ (ต้องวางไฟล์ vocab.gs เพิ่มบรรทัดเชื่อมใน รหัส.gs แล้วทำให้ใช้งานได้เป็นเวอร์ชันใหม่ ตามคู่มือ)":"โหลดไม่ได้: "+x.message))}}
 function fillCats(){const v=$("vcat").value;$("vcat").replaceChildren(...[["","ทุกหมวด"],...VCATS.map(c=>[c.cat,(g1(c.emo)?g1(c.emo)+" ":"")+c.cat])].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));$("vcat").value=v;
  $("vcl").replaceChildren(...VCATS.map(c=>{const o=el("option","",c.cat);o.value=c.cat;return o}))}
 const vflt={all:["ทั้งหมด",()=>true],filled:["มีคำกวยแล้ว",hasK],empty:["ยังไม่มีคำกวย",e=>!hasK(e)],hid:["ซ่อนอยู่",e=>e.hide]};
@@ -299,7 +297,7 @@ function renderV(){const q=$("vq").value.trim().toLowerCase(),cat=$("vcat").valu
  const st=$("vst");st.replaceChildren(...[["คำทั้งหมด",VL.length],["มีคำกวยแล้ว",VL.filter(hasK).length],["ซ่อนอยู่",VL.filter(e=>e.hide).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
  $("vft").replaceChildren(...Object.keys(vflt).map(k=>{const b=el("button","chip"+(VFl===k?" on":""),vflt[k][0]+" ("+VL.filter(vflt[k][1]).length+")");b.onclick=()=>{VFl=k;VN=VT?60:40;renderV()};return b}));
  const L=VL.filter(e=>vflt[VFl][1](e)&&(!cat||e.cat===cat)&&(!q||(e.th+e.kuy+e.note).toLowerCase().includes(q)));
- if(!VL.length&&!VOFF){const b=el("div","c");b.append(el("p","","ยังไม่มีคำในระบบ ให้นำเข้าคำทั้งหมดจากไฟล์ kuy-vocab.csv ก่อน (ทำครั้งเดียว)"));const g=el("button","btn","📚 นำเข้าคำทั้งหมดจากไฟล์");g.onclick=()=>{$("vtools").open=true;$("igo").click()};b.append(g);$("vls").replaceChildren(b)}
+ if(!VL.length){const b=el("div","c");b.append(el("p","","ยังไม่มีคำในระบบ ให้นำเข้าคำทั้งหมดจากไฟล์ kuy-vocab.csv ก่อน (ทำครั้งเดียว)"));const g=el("button","btn","📚 นำเข้าคำทั้งหมดจากไฟล์");g.onclick=()=>{$("vtools").open=true;$("igo").click()};b.append(g);$("vls").replaceChildren(b)}
  else if(VT)vtable(L);else $("vls").replaceChildren(...(L.length?L.slice(0,VN).map(vcard):[el("p","mute","ไม่พบคำ")]));
  $("vmore").classList.toggle("hide",L.length<=VN);$("vmore").textContent="ดูเพิ่ม (เหลืออีก "+Math.max(0,L.length-VN)+" คำ)"}
 $("vq").oninput=()=>{VN=VT?60:40;renderV()};$("vcat").onchange=()=>{VN=VT?60:40;renderV()};$("vmore").onclick=()=>{VN+=40;renderV()};
@@ -382,34 +380,7 @@ $("igo").onclick=async()=>{try{tmsg("กำลังอ่านไฟล์ kuy
  if(!items.length){tmsg("✅ ในระบบมีครบทุกคำในไฟล์แล้ว");return}
  const[a,s]=await vbulk(items);tmsg("✅ เติมคำใหม่ "+a+" คำ"+(s?" (ข้ามที่ซ้ำ "+s+" คำ)":""));loadV()}catch(x){tmsg("⚠️ "+x.message,1)}};
 
-/* ===== โหมดไม่ต้องใช้หลังบ้าน: แก้ในเครื่อง แล้วดาวน์โหลด kuy-vocab.csv ไปอัปโหลดทับ ===== */
-let VOFF=false;
-const vcall=b=>VOFF?Promise.resolve(vlocal(b)):call(b);
-function vcats(){const s={},o=[];VL.forEach(e=>{if(e.cat&&!s[e.cat]){s[e.cat]=1;o.push({cat:e.cat,emo:e.emo})}});return o}
-function vsaveLocal(){try{localStorage.setItem("kp_vdraft",JSON.stringify(VL))}catch(e){}$("vdirty").textContent="⚠️ มีการแก้ไขที่ยังไม่ได้อัปโหลดขึ้นเว็บ ให้ดาวน์โหลดไฟล์แล้วอัปโหลดทับ"}
-async function vinitOff(){let L=null;try{L=JSON.parse(localStorage.getItem("kp_vdraft")||"null")}catch(e){}
- if(!Array.isArray(L)){const r=await fetch("kuy-vocab.csv?t="+Date.now());if(!r.ok){$("vls").replaceChildren(el("div","msg warn","ไม่พบไฟล์ kuy-vocab.csv บนเว็บ ต้องอัปโหลดไว้ข้างไฟล์ index.html"));return}
-  L=vcsv(await r.text()).slice(1).filter(x=>x[2]).map((x,i)=>({id:"c"+(i+1),cat:x[0],emo:x[1],th:x[2],kuy:x[3]||"",ipa:x[4]||"",note:x[5]||"",img:x[6]||"",aud:x[7]||"",st:x[8]||"",src:x[9]||"",hide:false}))}
- else $("vdirty").textContent="⚠️ มีการแก้ไขที่ยังไม่ได้อัปโหลดขึ้นเว็บ ให้ดาวน์โหลดไฟล์แล้วอัปโหลดทับ";
- VL=L;VOFF=true;$("voff").classList.remove("hide");$("vimgf").disabled=true;$("vaudf").disabled=true;
- $("vcsvb").textContent="⬇ ดาวน์โหลดไฟล์ kuy-vocab.csv (อัปโหลดทับบนเว็บ)";VCATS=vcats();fillCats();fillRf();renderV()}
-function vlocal(b){
- if(b.action==="adminVocabList")return{ok:true,items:VL,cats:vcats()};
- if(b.action==="adminVocabDelete"){VL=VL.filter(e=>e.id!==b.id);vsaveLocal();return{ok:true}}
- if(b.action!=="adminVocabSave")return{ok:false,error:"ไม่รองรับ"};
- const mk=x=>({cat:String(x.cat||"").trim(),emo:String(x.emo||"").trim(),th:String(x.th||"").trim(),kuy:String(x.kuy||"").trim(),ipa:String(x.ipa||"").trim(),note:String(x.note||"").trim(),img:String(x.img||"").trim(),aud:String(x.aud||"").trim(),st:String(x.st||"").trim(),src:String(x.src||"").trim()});
- if(Array.isArray(b.fill)){let n=0,k=0;const nf=[];b.fill.forEach(x=>{if(x.id){const e=VL.find(z=>z.id===x.id);if(!e){nf.push(String(x.id));return}e.kuy=String(x.kuy||"").trim();e.st="";if(x.src)e.src=String(x.src);n++;return}const th=String(x.th||"").trim(),cat=String(x.cat||"").trim(),kuy=String(x.kuy||"").trim();if(!th||!kuy)return;const h=VL.filter(e=>e.th===th&&(!cat||e.cat===cat));if(!h.length){nf.push(th);return}h.forEach(e=>{if(e.kuy){k++;return}e.kuy=kuy;e.st="";if(x.src)e.src=String(x.src);n++})});vsaveLocal();return{ok:true,filled:n,kept:k,notfound:nf}}
- if(Array.isArray(b.items)){let a=0,s=0;const have=new Set(VL.map(e=>e.cat+"|"+e.th));
-  b.items.forEach(x=>{const o=mk(x);if(!o.th||!o.cat||have.has(o.cat+"|"+o.th)){s++;return}have.add(o.cat+"|"+o.th);VL.push(Object.assign({id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),hide:false},o));a++});
-  vsaveLocal();return{ok:true,added:a,skipped:s}}
- if(b.renameCat){let n=0;VL.forEach(e=>{if(e.cat===b.renameCat.from){e.cat=b.renameCat.to;n++}});vsaveLocal();return{ok:true,n:n}}
- const it=b.item||{},o=mk(it);
- if(!o.th)return{ok:false,error:"ความหมายไทยต้องยาว 1–120 ตัวอักษร"};if(!o.cat)return{ok:false,error:"กรุณาใส่หมวด"};
- const r=it.id?VL.find(e=>e.id===it.id):null;if(it.id&&!r)return{ok:false,error:"ไม่พบคำที่จะแก้ไข (อาจถูกลบไปแล้ว)"};
- const dup=VL.find(e=>e.th===o.th&&e.cat===o.cat&&(!r||e.id!==r.id));if(dup&&!it.force)return{ok:false,dup:true,error:"มีคำว่า “"+o.th+"” ในหมวด “"+o.cat+"” อยู่แล้ว"};
- const m=Object.assign(r||{id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)},o,{hide:!!it.hide});
- if(!r)VL.push(m);vsaveLocal();return{ok:true,item:m}}
-$("vreset").onclick=()=>{if(!confirm("ทิ้งการแก้ไขที่ยังไม่ได้อัปโหลด แล้วโหลดใหม่จากไฟล์บนเว็บ?"))return;try{localStorage.removeItem("kp_vdraft")}catch(e){}VOFF=false;$("vdirty").textContent="";loadV()};
+const vcall=b=>call(b);   /* ตัดโหมดแก้คำศัพท์ในเครื่อง/ร่าง localStorage ออกแล้ว ใช้หลังบ้านอย่างเดียว */
 
 /* ===== เติมคำกวยให้คำที่มีอยู่แล้ว ===== */
 function fillFc(){const v=$("flc").value;$("flc").replaceChildren(...[["","ทุกหมวด"],...VCATS.map(c=>[c.cat,c.cat])].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));$("flc").value=v}
