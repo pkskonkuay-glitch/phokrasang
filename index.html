@@ -907,6 +907,7 @@ rHome();route();TRK.start();loadBoard();loadProducts();loadEvents();loadLife();l
 
 
 {const pa=el("a","","พื้นที่ของเรา");pa.href="privacy.html";pa.style.color="inherit";$("foot").append(" • ",pa)}
+{const k=el("a","adm","🔑");k.href="admin.html";k.rel="nofollow noopener";k.title="สำหรับทีมงาน";k.setAttribute("aria-label","สำหรับทีมงาน");$("foot").append(" ",k)}
 {const r=el("p","");r.style.cssText="display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center";r.append(el("b","","ติดตามเรา"));[["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);r.append(a)});$("foot").append(r)}
 {$("foot").append(el("p","mute","มูไฮ แปลว่า “พวกเรา” บ้านนี้เป็นของพวกเรา"))}
 {const e=el("p","mute","เหตุฉุกเฉิน โทรก่อนเสมอ: ");[["191","ตำรวจ"],["1669","แพทย์ฉุกเฉิน"],["199","ดับเพลิง"]].forEach((x,i)=>{const t=el("a","",x[0]+" "+x[1]);t.href="tel:"+x[0];t.style.cssText="color:#b3261e;font-weight:700;margin-right:12px";e.append(t)});$("foot").append(e)}
@@ -920,6 +921,8 @@ function bd(e,t){String(t).split(/\*\*(.+?)\*\*/).forEach(function(x,i){if(!x)re
 @font-face{font-family:"Boon";font-weight:700;font-style:normal;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}
 </style>
 <style id="ux">
+#foot a.adm{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;margin:-12px 0;font-weight:400;text-decoration:none;opacity:.35;vertical-align:middle}
+#foot a.adm:hover,#foot a.adm:focus-visible{opacity:1}
 main,footer{zoom:var(--z,1)}
 </style>
 <script>
