@@ -12,6 +12,7 @@
     ytList: "https://www.youtube.com/playlist?list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
     ytFirst: "https://www.youtube.com/watch?v=ySVkiyR5XGM&list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
     email: "pkskonkuay@gmail.com",
-    gc: "kuayphokrasang"
+    gc: "kuayphokrasang",
+    heroLock: "n0"   /* รหัสเรื่องที่ล็อกไว้ช่องที่ 6 ของหน้าแรก n0 = เรื่อง 250 ล้านบาท ตั้งเป็น "" เมื่อไม่ต้องการล็อก */
   };
 })(typeof self !== "undefined" ? self : this);
