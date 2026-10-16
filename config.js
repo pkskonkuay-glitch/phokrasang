@@ -13,6 +13,6 @@
     ytFirst: "https://www.youtube.com/watch?v=ySVkiyR5XGM&list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS",
     email: "pkskonkuay@gmail.com",
     gc: "kuayphokrasang",
-    version: "kp-7d86a058"
+    version: "kp-148c33fd"
   };
 })(typeof self !== "undefined" ? self : this);
