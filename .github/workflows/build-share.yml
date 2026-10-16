@@ -2,26 +2,47 @@ name: build-share
 on:
   push:
     branches: [main]
-    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js"]
+    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js", "legacy-content.json"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
+  issues: write            # ใช้เปิด/ปิด Issue แจ้งเตือนเมื่อ build ล้ม
 concurrency:
   group: build-share        # รันทีละรอบ ไม่ให้บอตสองรอบชนกันเอง
   cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
       - run: node build-share.js
       - run: |
           git config user.name "share-bot"
           git config user.email "share-bot@users.noreply.github.com"
           git add s data sitemap.xml robots.txt config.js
           git diff --cached --quiet || (git commit -m "อัปเดตหน้าแชร์รายเรื่อง" && git pull --rebase -X theirs origin main && git push)
+      # ---- แจ้งเตือน: ถ้า build ล้ม เปิด Issue 1 รายการ (GitHub ส่งอีเมลถึงผู้ดูแลที่ Watch repo) ถ้ากลับมาปกติ ปิดให้เอง ----
+      - name: เปิด Issue เมื่อ build ล้ม
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create build-failed --color B60205 --description "build-share ล้มเหลว" 2>/dev/null || true
+          n=$(gh issue list --state open --label build-failed --json number --jq length)
+          if [ "$n" = "0" ]; then
+            gh issue create --label build-failed --title "⚠️ build-share ล้มเหลว (หน้าแชร์/ไฟล์สำรองอาจไม่อัปเดต)" \
+              --body "รอบล่าสุดล้มเหลว ดูรายละเอียดที่ ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — ดูวิธีแก้ใน RECOVERY.md หัวข้อ 'หน้าเว็บค้าง/ข้อมูลไม่ขึ้น' (Issue นี้จะถูกปิดเองเมื่อรอบถัดไปสำเร็จ)"
+          fi
+      - name: ปิด Issue เมื่อกลับมาปกติ
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(gh issue list --state open --label build-failed --json number --jq '.[].number'); do
+            gh issue close "$i" --comment "รอบล่าสุดสำเร็จแล้ว ปิดอัตโนมัติ"
+          done
