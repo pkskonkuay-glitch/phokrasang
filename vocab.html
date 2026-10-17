@@ -15,7 +15,7 @@ h1{font:700 1.7em/1.3 Boon,system-ui,sans-serif;margin:2px 0}.hd .sub{margin:2px
 .note{margin-top:12px;background:#fff8ec;border-left:5px solid var(--gold);border-radius:10px;padding:8px 14px;font-size:.82em;line-height:1.6;color:#5a4320}.note b:first-child{display:block;color:#8a4a00}
 main{max-width:960px;margin:0 auto;padding:12px 14px 20px}
 .btn{min-height:44px;padding:4px 14px;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;font-weight:700;font-size:.9em;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-.btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#fff}.btn.o{background:var(--gold);border-color:var(--gold);color:#14332e}.btn.r{border-color:var(--red);color:var(--red)}.btn.sm{min-height:36px;padding:0 12px;font-size:.8em}
+.btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#0a2a14}.btn.o{background:var(--gold);border-color:var(--gold);color:#14332e}.btn.r{border-color:var(--red);color:var(--red)}.btn.sm{min-height:36px;padding:0 12px;font-size:.8em}
 .btn:disabled{opacity:.5}
 /* แถบค้นหา */
 .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
@@ -214,8 +214,9 @@ function parse(t){const r=[];let w=[],f="",q=false;t=t.replace(/^\uFEFF/,"");for
  if(f||w.length){w.push(f);r.push(w)}return r}
 const csvItems=t=>parse(t).slice(1).filter(r=>r[2]).map((r,i)=>({id:"c"+(i+1),cat:r[0],emo:r[1],th:r[2],kuy:r[3]||"",ipa:r[4]||"",note:r[5]||"",img:r[6]||"",aud:r[7]||"",st:r[8]||"",src:r[9]||"",hide:false}));
 const fromCsv=()=>fetch(CSV+"?t="+Date.now()).then(r=>{if(!r.ok)throw 0;return r.text()}).then(csvItems);
+const fromJson=()=>fetch("data/vocab.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{const L=d&&(d.items||d);if(!Array.isArray(L)||!L.length)throw 0;return L});
 const fromApi=()=>fetch(API0+"?action=vocab").then(r=>r.json()).then(d=>{if(!d||!d.ok||!Array.isArray(d.items)||!d.items.length)throw 0;return d.items});
-Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv)
+Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromJson).catch(fromCsv)
  .then(L=>{E=L.filter(e=>!e.hide);route();if(location.hash==="#admin"){history.replaceState(null,"",location.pathname);openAdmin()}})
  .catch(()=>{$("v").replaceChildren(el("div","msg","โหลดคำศัพท์ไม่ได้ ลองรีเฟรชหน้านี้ หรือตรวจว่าอัปโหลดไฟล์ kuy-vocab.csv ไว้ข้างไฟล์นี้แล้ว"))});
 
@@ -244,7 +245,7 @@ function enter(mode){ADM=true;MODE=mode;$("adm").classList.remove("hide");$("e-i
  $("a-note").textContent="แก้ไข เพิ่ม ลบ แล้วหน้าเว็บเปลี่ยนทันที (คำที่ลบเก็บในแท็บถังขยะของชีต กู้คืนได้)";
  fillCl();route();toast("เข้าโหมดผู้ดูแลแล้ว")}
 $("a-out").onclick=()=>{ADM=false;MODE="";TK="";sessionStorage.removeItem("tk");$("adm").classList.add("hide");
- Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromCsv).then(L=>{E=L.filter(e=>!e.hide);route()}).catch(()=>route())};
+ Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromJson).catch(fromCsv).then(L=>{E=L.filter(e=>!e.hide);route()}).catch(()=>route())};
 function fillCl(){$("cl").replaceChildren(...cats().map(c=>{const o=el("option");o.value=c.cat;return o}))}
 async function merge(u){if(MODE!=="api")return;if(u.item&&u.item.id){const k=E.findIndex(z=>z.id===u.item.id);if(k>=0)E[k]=Object.assign({},E[k],u.item);else E.push(u.item)}else await refetch()}
 async function refetch(){const d=await call({action:"adminVocabList"});if(d&&d.ok)E=d.items;fillCl();route()}

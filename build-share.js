@@ -113,13 +113,15 @@ function page(it) {
   }
   if (failed.length) console.warn("ดึงไม่ได้รอบนี้ (ใช้ไฟล์เดิมต่อ): " + failed.join(", "));
 
+  // กลุ่มที่ดึงไม่ได้รอบนี้ → ใช้ data/<กลุ่ม>.json เดิมสร้าง sitemap/หน้าแชร์ต่อ (ไม่ให้ URL หายจาก sitemap)
+  const c2 = c || readJson("data", "content.json"), e2 = e || readJson("data", "events.json"), p2 = p || readJson("data", "products.json"), lf2 = lf || readJson("data", "life.json");
   const items = seedItems(), seen = new Set(items.map(i => i.k));
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
-  keyedFromContent(seen, list(c)).forEach(add);   // รหัสเก่า (n0/a0…) ที่เรื่องย้ายไปอยู่หลังบ้านแล้ว
-  list(c).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));
-  list(e).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
-  list(p).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
-  list(lf).forEach(x => add({ k: "lf-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));   // วิถีชีวิตกวย (ดุงกวย/กัวออ/จาเอม)
+  keyedFromContent(seen, list(c2)).forEach(add);   // รหัสเก่า (n0/a0…) ที่เรื่องย้ายไปอยู่หลังบ้านแล้ว
+  list(c2).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));
+  list(e2).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
+  list(p2).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
+  list(lf2).forEach(x => add({ k: "lf-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));   // วิถีชีวิตกวย (ดุงกวย/กัวออ/จาเอม)
   // ===== ข้อ 14: ส่งออกข้อมูลเป็นไฟล์นิ่ง data/*.json (หน้าเว็บใช้สำรองเมื่อ Apps Script ช้า/ล่ม) =====
   const dump = (name, j) => { if (j) fs.writeFileSync(path.join(dd, name + ".json"), JSON.stringify(j)); };
   names.forEach(k => dump(k, got[k]));

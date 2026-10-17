@@ -252,6 +252,7 @@ $("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.classNam
   if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");m.textContent="✅ บันทึกแล้ว"+(u.item.pub?" และเผยแพร่บนเว็บ":" (ฉบับร่าง ยังไม่เผยแพร่)");m.className="msg";cclear();loadC()}
  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
 async function loadC(){try{const d=await call({action:"adminContentList"});if(!d.ok)throw new Error(d.error);
+ if(!Array.isArray(d.items))throw new Error("หลังบ้านไม่ได้ส่งรายการกลับมา — ให้วางไฟล์ main-รหัส.gs ชุดล่าสุดใน Apps Script แล้ว Deploy → Manage deployments → New version");
  CL=d.items;$("cl2").replaceChildren(...(d.items.filter(z=>z.cat!=="รูปแทรก").length?d.items.filter(z=>z.cat!=="รูปแทรก").map(it=>{const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title),el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
   c.append(t,el("div","mute",[it.at,it.cat,it.by].filter(Boolean).join(" • ")));if(it.sum)c.append(el("p","",it.sum));
   const e=el("button","btn o","แก้ไข"),h=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");
