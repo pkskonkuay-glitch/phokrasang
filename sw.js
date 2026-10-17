@@ -3,7 +3,7 @@
 try { importScripts("config.js"); } catch (e) {}                    // ค่ากลาง
 try { importScripts("version.js"); } catch (e) {}                   // เลขเวอร์ชัน (build-share.js เลื่อนให้เองเมื่อไฟล์หลักเปลี่ยน)
 const V = self.KP_VERSION || (self.KP_CONFIG && self.KP_CONFIG.version) || "kp-fallback";
-const CORE = ["./", "index.html", "config.js", "version.js", "vocab.html", "privacy.html", "manifest.webmanifest",
+const CORE = ["./", "index.html", "config.js", "version.js", "vocab.html", "kuy-vocab.csv", "privacy.html", "manifest.webmanifest",
   "fonts/Boon-Regular.woff2", "fonts/Boon-Bold.woff2", "icons/icon-192.png"];
 const MAX = 60;   // เก็บไฟล์ในเครื่องไม่เกินกี่รายการ (กันแคชบวมเมื่อใช้ไปนาน ๆ)
 const CORE_ABS = CORE.map(u => new URL(u, self.registration.scope).href);
