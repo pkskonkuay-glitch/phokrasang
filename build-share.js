@@ -63,9 +63,11 @@ function page(it) {
   const dest = BASE + "?s=\u0000#/read/" + encodeURIComponent(it.k);
   const date = (String(it.at || "").match(/^\d{4}-\d{2}-\d{2}/) || [])[0];
   // ข้อมูลโครงสร้างบทความ ให้ Google เข้าใจว่าหน้านี้คือเรื่องอะไร (หน้านี้ยังเด้งไปเว็บหลักสำหรับคนทั่วไป จึงไม่รับประกันอันดับ)
+  const org = { "@type": "Organization", name: SITE, url: BASE, logo: { "@type": "ImageObject", url: BASE + "icons/icon-512.png" } };
   const ld = { "@context": "https://schema.org", "@type": "Article", headline: clip(it.title, 110), description: desc, image: [img],
-    mainEntityOfPage: url, publisher: { "@type": "Organization", name: SITE, url: BASE } };
-  if (date) ld.datePublished = date;
+    inLanguage: "th", isAccessibleForFree: true, mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Organization", name: SITE, url: BASE }, publisher: org };
+  if (date) { ld.datePublished = date; ld.dateModified = date; }
   const ldJson = JSON.stringify(ld).replace(/</g, "\\u003c");
   return `<!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
