@@ -392,7 +392,7 @@ const F=CFG.fbUrl,P=CFG.ytList;
 const CC={"โครงการและบริการ":["#0e6b73","#2f9a8f","📣"],"เตือนภัย":["#b4531a","#7a2f12","⚠️"],"คนบ้านเรา":["#2f7d5b","#1d4f3a","🤝"],"สิทธิ์ที่ควรรู้":["#0e6b73","#0a4a52","🪪"]};
 /* ข่าว/บทความ ไม่ฝังในหน้านี้อีกแล้ว: มาจากหลังบ้าน (Sheet) / data/content.json และไฟล์เริ่มต้น legacy-content.json */
 const news=[],arts=[];
-let CUR=[],SEED=[],VFEED=[],DYNV=[];const KEYT={},KEYA={};   // KEYA = ชื่อสำรองของเรื่องเริ่มต้น (ชื่อเดิม/ชื่อใหม่ที่แก้ในหลังบ้าน) ให้ลิงก์เก่าและการกันซ้ำยังจับคู่ได้
+let CUR=[],SEED=[],VFEED=[],DYNV=[],FT={};const KEYT={},KEYA={};   // KEYA = ชื่อสำรองของเรื่องเริ่มต้น (ชื่อเดิม/ชื่อใหม่ที่แก้ในหลังบ้าน) ให้ลิงก์เก่าและการกันซ้ำยังจับคู่ได้
 const V=(cat,title,sum,link,c1,c2,date,img)=>({cat,title,sum,link,date:date||"YouTube",c1,c2,img});
 const clips=[
 V("เพลง","เพลง “โพธิ์กระสังข์ (ที่นี่บ้านเรา)” – ขวัญชิต โพธิ์กระสังข์","","https://www.youtube.com/watch?v=X920G3Y0E2A","#0e6b73","#7a3b9a"),
@@ -870,9 +870,10 @@ async function loadSeed(){let any=false;
  try{const r=await fetch("legacy-content.json",{cache:"no-cache"}),L=await r.json();if(Array.isArray(L)){
   SEED=L.filter(x=>x&&x.title).map(x=>{const k=x.legacyKey||"l-"+H36(x.title);KEYT[k]=x.title;return Object.assign({},x,{k:k})});any=true}}catch(e){}
  if(any)applyContent(CUR)}
-async function loadVideos(){try{const r=await fetch("data/videos.json",{cache:"no-cache"}),d=await r.json();if(!d||!Array.isArray(d.items))throw 0;
+async function loadVideos(){try{try{const r0=await fetch("data/feed-text.json",{cache:"no-cache"}),j0=await r0.json();if(j0&&typeof j0==="object")FT=j0}catch(e){}  /* v8: หัวข้อ/คำโปรยฉบับเต็มของคลิปและเรื่องประเพณี/วิถีชีวิต (data/feed-text.json) */
+const r=await fetch("data/videos.json",{cache:"no-cache"}),d=await r.json();if(!d||!Array.isArray(d.items))throw 0;
  if(Array.isArray(d.cats)&&d.cats.length)VC=d.cats;VID=d.items;VFEAT=d.feat||[];if(d.playlists)VPL=Object.assign(VPL,d.playlists);
- VFEED=(d.feed||[]).map(id=>VID.find(x=>x[0]===id)).filter(Boolean).map(v=>({key:"v:"+v[0],kind:"v",t:v[1],cat:"คลิป",s:"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+v[0]+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+v[0]+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+v[0]}));VST=1}catch(e){VST=2}
+ VFEED=(d.feed||[]).map(id=>VID.find(x=>x[0]===id)).filter(Boolean).map(v=>({key:"v:"+v[0],kind:"v",t:v[1],lt:(FT["v:"+v[0]]||[])[0]||"",ls:(FT["v:"+v[0]]||[])[1]||"",cat:"คลิป",s:"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+v[0]+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+v[0]+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+v[0]}));VST=1}catch(e){VST=2}
  applyContent(CUR)}
 async function loadContent(){if(!CFG.apiUrl)return;let hadC=false;
  try{const c=JSON.parse(localStorage.getItem(CKEY)||"null");if(c&&c.items&&c.items.length){hadC=true;LASTJ=JSON.stringify(c.items);applyContent(c.items);if(location.hash.startsWith("#/read/c"))readFrom(location.hash)}}catch(e){}
@@ -969,7 +970,7 @@ function homeFeed(){const out=[];
  [[LIFEOBJ,"เซกวย • "],[EVTS,"เซกวย • ฮีตคอง"]].forEach(([L,pre])=>(L||[]).forEach(o=>{const e=o.src;if(!e||(e.home!=="latest"&&e.home!=="hero"))return;
   const im=[e.img,e.img2,e.img3,e.img4,e.img5].find(x=>x&&evOk(evSrc(x))),src=im?evSrc(im):"",m=/^(\d{4})/.exec(e.at||""),yy=m?(+m[1]<2400?+m[1]+543:+m[1]):new Date().getFullYear()+543;
   const cc=CC["โครงการและบริการ"],ph="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sv0(cc[0],cc[1],'<text x="300" y="250" font-size="130" text-anchor="middle">🌾</text>')),hero=e.home==="hero"&&!!src;
-  out.push({key:o.k,kind:"a",t:e.title,lbl:"",cat:pre.endsWith("• ")?pre+e.cat:pre,s:e.sum||"",img:src||ph,o:o,y:String(yy),pin:hero,real:hero})}));
+  out.push({key:o.k,kind:"a",t:e.title,lt:e.ltitle||(FT[e.title]||[])[0]||"",ls:e.lsum||(FT[e.title]||[])[1]||"",lbl:"",cat:pre.endsWith("• ")?pre+e.cat:pre,s:e.sum||"",img:src||ph,o:o,y:String(yy),pin:hero,real:hero})}));
  return out}
 function homeRefresh(){const sig=homeFeed().map(f=>f.key+(f.pin?"*":"")).join();if(sig===HSIG)return;if(CUR&&CUR.length)applyContent(CUR)}
 const mkEvt=e=>{const b=[];
