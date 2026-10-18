@@ -149,37 +149,38 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label class="opt"><input type="checkbox" id="pzhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="pzsv">บันทึก</button> <button class="btn o" id="pzcx">ยกเลิก</button> <button class="btn o hide" id="pzdel" style="color:#c93b2f">🗑 ลบรายการนี้</button></p><div class="msg hide" id="pzmsg"></div></div>
 <div id="pzls"></div><p><button class="btn o hide" id="pzmore">ดูเพิ่ม</button></p></div>
-<div id="p7" class="hide"><div class="c"><h3>🌾 วิถีกวย — ที่เดียวจบ</h3>
-<p class="mute">จัดเป็นหมวดเหมือนหน้าเว็บ: <b>กัวออ</b> (เซกวย ฮีตคอง + ละวาย) → <b>จาเอม</b> → <b>ดุงเลิง</b> กด “➕ เพิ่มเรื่อง” ที่หมวดไหน ระบบเลือกหมวดให้เอง ทุกเรื่องกรอกที่เดียว: ชื่อ เล่าสั้น เรื่องราว รูป ลิงก์ คำศัพท์ — ระบบส่งคำเข้าคลังและเชื่อมลิงก์ไปทุกหน้าให้เอง ไม่ต้องกรอกซ้ำที่อื่น</p>
+<div id="p7" class="hide"><div class="c"><h3>🌾 วิถีกวย — กรอกที่เดียว ครบทุกหน้า</h3>
+<div class="hm"><b>วิธีใช้ 3 ขั้น</b><ol style="margin:6px 0 0 18px;padding:0"><li>หาหัวข้อที่จะใส่ในแผนผังด้านล่าง (กัวออ / จาเอม / ดุงเลิง แล้วต่อด้วยหัวข้อย่อย)</li><li>กด <b>➕ เพิ่มเรื่อง</b> ที่หัวข้อนั้น ระบบรู้ตำแหน่งให้เอง ไม่ต้องเลือกหมวดซ้ำ</li><li>ใส่ชื่อ เล่าสั้น เรื่องราว (เท่านี้พอ) รูป คำศัพท์ ลิงก์ ใส่ทีหลังได้ ระบบส่งคำเข้าคลังคำศัพท์ให้เอง</li></ol></div>
+<p class="mute">ผิดหัวข้อ? เปิด “✏️ แก้ไข” แล้วเปลี่ยนช่อง “ใส่ที่ไหน” ระบบย้ายให้ ไม่ต้องลบแล้วกรอกใหม่ • ไม่ต้องใช้แท็บ “เนื้อหาเว็บ” กับเรื่องวิถีกวย (ใช้แท็บนั้นเฉพาะข่าวและคลิป)</p>
 <div class="stats" id="kwst"></div>
 <input id="kwq" placeholder="🔍 ค้นหาเรื่อง (ชื่อ ชื่อกวย เล่าสั้น เรื่องราว คำศัพท์)" aria-label="ค้นหาเรื่อง">
 <div class="stats" id="kwft" style="margin-top:8px"></div></div>
 <div class="c hide" id="kwform"><h3 id="kwh">เพิ่มเรื่องใหม่</h3><p class="mute" id="kwcrumb"></p>
-<label for="kwd">1. ใส่ในหมวดไหน *</label><select id="kwd"><option value="">— เลือกหมวด —</option><option value="ev">🌾 กัวออ › เซกวย • ฮีตคอง (งานประเพณีตลอดปี)</option><option value="lf:กัวออ">🌾 กัวออ › ละวาย (ความเชื่อ ขวัญ สิ่งลี้ลับ)</option><option value="lf:จาเอม">🍲 จาเอม (กินอิ่ม: อาหาร หาอยู่หากิน)</option><option value="lf:ดุงเลิง">🏡 ดุงเลิง (บ้านกวย: บ้านเรือน ผู้คน สัตว์เลี้ยง)</option></select>
-<div class="row"><div><label for="kwt">2. ชื่อเรื่อง *</label><input id="kwt" maxlength="120" placeholder="เช่น สากกวย"></div><div><label for="kwk">ชื่อเรียกภาษากวย</label><input id="kwk" maxlength="120"></div></div>
+<label for="kwd">ใส่ที่ไหน * <span class="mute">(เปลี่ยนได้ถ้าจะย้ายหัวข้อ)</span></label><select id="kwd"></select>
+<div class="row"><div><label for="kwt">ชื่อเรื่อง *</label><input id="kwt" maxlength="120" placeholder="เช่น กะตาม (ปูนา)"></div><div><label for="kwk">ชื่อเรียกภาษากวย</label><input id="kwk" maxlength="120" placeholder="เช่น กะตาม"></div></div>
 <div class="msg warn hide" id="kwdup"></div>
-<div class="row kev hide"><div><label for="kww">ช่วงเวลา (แสดงบนการ์ด)</label><input id="kww" maxlength="60" placeholder="เช่น ขึ้น 15 ค่ำ เดือน 10"></div><div><label for="kwcal">นับตามปฏิทินไหน</label><select id="kwcal"><option value="">— เลือก —</option><option value="สุริยคติ">☀️ สุริยคติ (วันที่ตายตัว)</option><option value="จันทรคติ">🌙 จันทรคติ (ขึ้น/แรม ค่ำ เดือน … เปลี่ยนทุกปี)</option><option value="ตามเหตุการณ์ชีวิต">🧵 ตามเหตุการณ์ชีวิต</option></select></div></div>
-<label for="kws">3. เล่าสั้น ๆ บนการ์ด (1–2 ประโยค) <span class="mute">— ใช้เป็นคำโปรยใต้ชื่อเรื่องทุกหน้า</span></label><textarea id="kws" rows="2" maxlength="500"></textarea>
-<label for="kwso">4. เรื่องราว (เล่า 3–5 ประโยค ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่)</label><textarea id="kwso" rows="6" maxlength="3000"></textarea>
-<label>5. ภาพ (ภาพแรกเป็นปกการ์ด) <span class="mute">ใส่ได้สูงสุด 5 ภาพ ภาพแนวนอนสวยที่สุด</span></label><div id="kwph"></div>
-<label for="kwcl">6. ลิงก์คลิป บทความ หรือโพสต์ Facebook <span class="mute">(บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์ รูปแบบ ชื่อที่แสดง | ลิงก์ หรือวางลิงก์เปล่า ๆ ก็ได้)</span></label><textarea id="kwcl" rows="3" maxlength="2500" placeholder="คลิปบุญชัก | https://youtu.be/xxxxxxxxxxx"></textarea>
-<div class="hm"><b>7. 🗣️ คำศัพท์กวยของเรื่องนี้</b> — กรอกที่นี่ที่เดียว ระบบส่งเข้าคลังคำศัพท์และทำลิงก์ให้ผู้อ่านกดไปดูในหน้าคำศัพท์เอง
+<div class="row kev hide"><div><label for="kww">ช่วงเวลา (แสดงบนการ์ด)</label><input id="kww" maxlength="60" placeholder="เช่น ขึ้น 15 ค่ำ เดือน 10"></div><div><label for="kwcal">นับตามปฏิทินไหน</label><select id="kwcal"><option value="">— เลือก —</option><option value="สุริยคติ">☀️ สุริยคติ (วันที่ตายตัว)</option><option value="จันทรคติ">🌙 จันทรคติ (ขึ้น/แรม ค่ำ เดือน … เปลี่ยนทุกปี)</option><option value="ตามเหตุการณ์ชีวิต">🧵 ตามเหตุการณ์ชีวิต (แสดงในละวาย)</option></select></div></div>
+<label for="kws">เล่าสั้น ๆ (1–2 ประโยค) <span class="mute">— คำโปรยใต้ชื่อบนการ์ดทุกหน้า</span></label><textarea id="kws" rows="2" maxlength="500"></textarea>
+<label for="kwso">เรื่องราว <span class="mute">(3–5 ประโยค ขึ้นบรรทัดใหม่ = ย่อหน้าใหม่)</span></label><textarea id="kwso" rows="6" maxlength="3000"></textarea>
+<label>ภาพ <span class="mute">สูงสุด 5 ภาพ ภาพแรกเป็นปกการ์ด ภาพแนวนอนสวยที่สุด</span></label><div id="kwph"></div>
+<div class="hm"><b>🗣️ คำศัพท์กวยของเรื่องนี้</b> <span class="mute">— กรอกที่นี่ที่เดียว ไม่ต้องไปกรอกในแท็บคำศัพท์อีก</span>
 <div class="wadd"><input id="kwwt" maxlength="120" placeholder="คำไทย เช่น ปูนา" aria-label="คำไทย"><input id="kwwk" maxlength="120" placeholder="คำกวย เช่น กะตาม" aria-label="คำกวย"><select id="kwwc" aria-label="หมวดของคำนี้ในคลังคำศัพท์"></select><button type="button" class="btn o" id="kwwa">➕ เพิ่มคำนี้</button></div>
 <div class="wlist" id="kwwl" aria-live="polite"></div>
 <details><summary class="mute">แก้รายการคำเป็นข้อความ (ไทย = กวย | หมวด)</summary><textarea id="kwwd" rows="3" maxlength="1200" placeholder="ปูนา = กะตาม | สัตว์น้ำและปลา"></textarea></details>
 <label class="opt"><input type="checkbox" id="kwws" checked> ส่งคำเหล่านี้เข้า “คลังคำศัพท์” ตอนบันทึก (คำที่มีอยู่แล้วไม่ซ้ำ)</label></div>
-<div class="hm" id="kwrelb"><b>🔗 มีอยู่ในระบบแล้ว ที่เกี่ยวข้องกับเรื่องนี้</b> <span class="mute">— กดนำมาใส่ได้เลย ไม่ต้องพิมพ์ใหม่</span><div id="kwrel" class="mute" style="margin-top:6px">พิมพ์ชื่อเรื่องก่อน ระบบจะหาคำศัพท์ คลิป และข่าวที่เกี่ยวข้องมาให้</div></div>
-<details class="hm"><summary><b>➕ ข้อมูลเพิ่มเติม (ไม่บังคับ)</b></summary>
-<div class="klf hide"><label for="kwtag">ป้ายบนการ์ด (ฤดูกาล / หัวข้อย่อย)</label><input id="kwtag" maxlength="60" placeholder="เช่น หน้าฝน • ทำนา • บ้านเรือน"></div>
+<details class="hm"><summary><b>➕ ข้อมูลเพิ่มเติม (ไม่บังคับ — เติมทีหลังได้)</b></summary>
+<label for="kwcl">ลิงก์คลิป บทความ หรือโพสต์ Facebook <span class="mute">(บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์ รูปแบบ ชื่อที่แสดง | ลิงก์ หรือวางลิงก์เปล่า ๆ)</span></label><textarea id="kwcl" rows="3" maxlength="2500" placeholder="คลิปบุญชัก | https://youtu.be/xxxxxxxxxxx"></textarea>
+<div class="klf hide"><label for="kwtag">ป้ายบนการ์ด (เช่น ฤดูกาล) <span class="mute">— ไม่ต้องใส่ชื่อหัวข้อย่อย ระบบใส่ให้แล้ว</span></label><input id="kwtag" maxlength="60" placeholder="เช่น หน้าแล้ง • หลังเกี่ยวข้าว"></div>
 <label for="kwwho">ใครเกี่ยวข้อง / ที่ไหน</label><input id="kwwho" maxlength="300">
 <div class="kev hide"><label for="kwsc">📅 กำหนดการปีนี้ (บรรทัดละข้อ เปลี่ยนทุกปี ยังไม่ทราบให้เว้นว่าง)</label><textarea id="kwsc" rows="3" maxlength="800"></textarea></div>
 <label for="kwtip">สิ่งที่ควรรู้ (บรรทัดละข้อ)</label><textarea id="kwtip" rows="3" maxlength="1200"></textarea>
 <label for="kwel">คำบอกเล่าของผู้เฒ่า 1–2 ประโยค</label><textarea id="kwel" rows="2" maxlength="600"></textarea>
 <label for="kwby">ผู้เฒ่า / ผู้ให้ข้อมูล (ชื่อ หมู่บ้าน)</label><input id="kwby" maxlength="120">
-<label for="kwvc">หมวดในหน้าคำศัพท์ (ระบบใส่ให้เองจากคำศัพท์ที่เพิ่ม ไม่ต้องกรอก)</label><input id="kwvc" list="vcl" maxlength="60">
+<input id="kwvc" list="vcl" maxlength="60" type="hidden">
 <label for="kwnote">บันทึกภายในทีมงาน (ไม่แสดงบนเว็บ)</label><textarea id="kwnote" rows="2" maxlength="1000"></textarea></details>
+<details class="hm"><summary><b>🔗 ค้นของที่มีอยู่แล้วในระบบ (กันกรอกซ้ำ)</b></summary><div id="kwrel" class="mute" style="margin-top:6px">พิมพ์ชื่อเรื่องก่อน ระบบจะหาคำศัพท์ คลิป และข่าวที่เกี่ยวข้องมาให้</div></details>
 <details class="hm"><summary><b>🏠 ขึ้นหน้าแรกของเว็บ (ไม่บังคับ)</b></summary>
-<label class="opt"><input type="checkbox" id="kwhl"> ขึ้นในรายการ “ข่าว • คลิป ล่าสุดจากชุมชน” (ใช้ชื่อเรื่องและเล่าสั้นด้านบนเป็นหัวข้อและคำโปรย)</label>
+<label class="opt"><input type="checkbox" id="kwhl"> ขึ้นในรายการ “ข่าว • คลิป ล่าสุดจากชุมชน” (ใช้ชื่อเรื่องและเล่าสั้นเป็นหัวข้อและคำโปรย)</label>
 <label class="opt"><input type="checkbox" id="kwhh"> ปักเป็นภาพใหญ่ใน 6 ช่องแรก (ต้องมีรูป เลือกเฉพาะเรื่องเด่น)</label></details>
 <label class="opt"><input type="checkbox" id="kwhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="kwsv">บันทึก</button> <button class="btn o" id="kwcx">ยกเลิก</button> <button class="btn o hide" id="kwdel" style="color:#c93b2f">🗑 ลบเรื่องนี้</button></p><div class="msg hide" id="kwmsg"></div></div>
@@ -916,15 +917,20 @@ $("lfseed").onclick=async()=>{if(!confirm("เติมเนื้อหาเ�
   catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}};
 /* ===== วิถีกวย (รวมศูนย์): งานประจำปี + ดุงเลิง/กัวออ/จาเอม จัดการที่เดียว ใช้ API และชีตเดิม ===== */
 const KG=[
- {k:"ev",top:"กัวออ",ico:"📅",name:"เซกวย • ฮีตคอง",desc:"งานประเพณีตลอดปี เรียงตามปฏิทิน"},
- {k:"lf:กัวออ",top:"กัวออ",ico:"🎗️",name:"ละวาย",desc:"ความเชื่อ ขวัญ สิ่งลี้ลับ และเรื่องอื่นๆ ของความเป็นอยู่ดี"},
- {k:"lf:จาเอม",top:"จาเอม",ico:"🍲",name:"จาเอม (กินอิ่ม)",desc:"อาหาร หาอยู่หากินจากธรรมชาติ และรสมือที่ปรุงกินร่วมกัน"},
- {k:"lf:ดุงเลิง",top:"ดุงเลิง",ico:"🏡",name:"ดุงเลิง (บ้านกวย)",desc:"ชุมชน บ้านเรือน ผู้คน สัตว์เลี้ยง"}];
-const KTOP=[["กัวออ","🌾","กัวออ — อยู่ดี มีชีวิตที่ดีสมบูรณ์"],["จาเอม","🍲","จาเอม — การมีของกิน"],["ดุงเลิง","🏡","ดุงเลิง — บ้านกวย"]];
+ {k:"ev",top:"กัวออ",ico:"📅",name:"เซ (ฮีตคอง)",desc:"งานประเพณีตลอดปี เรียงตามปฏิทิน"},
+ {k:"lf:กัวออ:",top:"กัวออ",ico:"🎗️",name:"ละวาย",desc:"ความเชื่อ ขวัญ สิ่งลี้ลับ"},
+ {k:"lf:จาเอม:วิถีนา",top:"จาเอม",ico:"🌾",name:"วิถีนา",desc:"หาอยู่หากินตามหัวไร่ปลายนา เช่น ปูนา หนูนา ผัก มดแดง"},
+ {k:"lf:จาเอม:วิถีน้ำ",top:"จาเอม",ico:"💧",name:"วิถีน้ำ",desc:"สัตว์น้ำตามฤดูกาล เช่น ปลา ปลาไหล หอย"},
+ {k:"lf:จาเอม:อาหารว่าง",top:"จาเอม",ico:"🥢",name:"อาหารว่าง (จา เกลย์)",desc:"กินยามว่าง เช่น เมี่ยง ตำส้ม"},
+ {k:"lf:จาเอม:ไปรลอง",top:"จาเอม",ico:"🍈",name:"ไปรลอง (ผลไม้)",desc:"ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา"},
+ {k:"lf:จาเอม:",top:"จาเอม",ico:"🧺",name:"เรื่องอื่น ๆ ของจาเอม",desc:"ยังไม่ได้เลือกหัวข้อย่อย (เปิดแก้ไข แล้วเลือกตำแหน่งใหม่)",loose:true},
+ {k:"lf:ดุงเลิง:",top:"ดุงเลิง",ico:"🏡",name:"ดุงเลิง",desc:"ดุง โคะอ์โค ดุงเญือะ ศาลพระภูมิ อโลง แธร และอื่น ๆ"}];
+const KTOP=[["กัวออ","🙏","กัวออ — การมีชีวิตที่ดี ความเชื่อ ขวัญ"],["จาเอม","🍲","จาเอม — การมีของกิน หาอยู่หากิน"],["ดุงเลิง","🏡","ดุงเลิง — บ้านเรือน ที่อยู่ ที่พัก"]];
 const KMAP={title:"kwt",kuay:"kwk",when:"kww",sum:"kws",story:"kwso",who:"kwwho",tips:"kwtip",links:"kwcl",words:"kwwd",vcat:"kwvc",elder:"kwel",elderby:"kwby",note:"kwnote",cal:"kwcal",sched:"kwsc",tag:"kwtag"};
+(function(){const sel=$("kwd");sel.append(new Option("— เลือกตำแหน่ง —",""));KTOP.forEach(([top,ico])=>{const og=document.createElement("optgroup");og.label=ico+" "+top;KG.filter(g=>g.top===top).forEach(g=>og.append(new Option(g.ico+" "+g.name+(g.loose?"":""),g.k)));sel.append(og)})})();
 const KEVK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","cal","sched"],KLFK=["title","kuay","tag","sum","story","who","tips","links","words","vcat","elder","elderby","note"];
 let KI=[],KE=null,KU=["","","","",""],KP=["","","","",""],KC=["","","","",""],KFl="all",KIMP=null,KLOAD=false;
-const kkey=x=>x.store==="ev"?"ev":"lf:"+x.it.cat,kn=t=>String(t||"").split(/\n+/).filter(Boolean).length;
+const kkey=x=>x.store==="ev"?"ev":"lf:"+x.it.cat+":"+(x.it.sub||""),kn=t=>String(t||"").split(/\n+/).filter(Boolean).length;
 const kimgs=it=>[it.img,it.img2,it.img3,it.img4,it.img5].filter(Boolean);
 async function loadK(){const box=$("kwtree");if(!KI.length)box.replaceChildren(el("p","mute","กำลังโหลด…"));
  try{const [a,b]=await Promise.all([call({action:"adminEventList"}),call({action:"adminLifeList"})]);
@@ -942,9 +948,9 @@ function renderK(){if(!$("kwtree"))return;const q=$("kwq").value.trim().toLowerC
  $("kwft").replaceChildren(...Object.keys(kflt).map(k=>{const b=el("button","chip"+(KFl===k?" on":""),kflt[k][0]+" ("+KI.filter(kflt[k][1]).length+")");b.onclick=()=>{KFl=k;renderK()};return b}));
  const box=$("kwtree");box.replaceChildren();
  KTOP.forEach(([top,ico,tt])=>{const gs=KG.filter(g=>g.top===top),sec=el("div","kws"),h=el("div","kwtop");h.append(el("span","","" +ico+" "+tt));sec.append(h);
-  gs.forEach(g=>{const L=KI.filter(x=>kkey(x)===g.k).sort((a,b)=>(parseFloat(a.it.ord)||9999)-(parseFloat(b.it.ord)||9999)),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q));
+  gs.forEach(g=>{if(g.loose&&!KI.some(x=>kkey(x)===g.k))return;const L=KI.filter(x=>kkey(x)===g.k).sort((a,b)=>(parseFloat(a.it.ord)||9999)-(parseFloat(b.it.ord)||9999)),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q));
    const d=el("details","kwg");d.open=!!(q||KFl!=="all"||L.length<=12||g.k===(KOPEN||"")); 
-   const s=el("summary","kwsub");s.append(el("b","",g.ico+" "+(gs.length>1?g.name:"เรื่องในหมวดนี้")+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง) "+g.desc));
+   const s=el("summary","kwsub");s.append(el("b","",g.ico+" "+g.name+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง) "+g.desc));
    const add=el("button","btn o kwadd","➕ เพิ่มเรื่อง");add.type="button";add.onclick=e=>{e.preventDefault();e.stopPropagation();kopen(null,g.k)};s.append(" ",add);d.append(s);
    if(!F.length)d.append(el("p","mute kwemp",L.length?"ไม่พบเรื่องที่ตรงกับตัวกรอง":"ยังไม่มีเรื่องในหมวดนี้ กด “➕ เพิ่มเรื่อง” ได้เลย"));
    F.forEach(x=>d.append(krow(x)));sec.append(d)});box.append(sec)});
@@ -971,7 +977,7 @@ async function kdelete(x){const it=x.it;if(!confirm("ลบ “"+it.title+"” ?
 $("kwq").oninput=renderK;
 /* --- ฟอร์ม --- */
 function kdestUi(){const v=$("kwd").value,ev=v==="ev";document.querySelectorAll("#kwform .kev").forEach(e=>e.classList.toggle("hide",!ev));document.querySelectorAll("#kwform .klf").forEach(e=>e.classList.toggle("hide",ev||!v));
- const g=KG.find(g=>g.k===v);$("kwcrumb").textContent=g?"วิถีกวย › "+g.top+" › "+g.name:"เลือกหมวดด้านล่างก่อน";if(ev&&!$("kwvc").value.trim())$("kwvc").value="ประเพณีตลอดปี"}
+ const g=KG.find(g=>g.k===v);$("kwcrumb").textContent=g?"📍 วิถีกวย › "+g.top+" › "+g.name:"เลือกตำแหน่งด้านล่างก่อน";if(ev&&!$("kwvc").value.trim())$("kwvc").value="ประเพณีตลอดปี"}
 $("kwd").onchange=kdestUi;
 function kslots(){const box=$("kwph");box.replaceChildren();let last=-1;for(let i=0;i<5;i++)if(KP[i]||KU[i])last=i;
  for(let i=0;i<=Math.min(4,last+1);i++){const w=el("div","c");w.style.margin="6px 0";w.append(el("b","","ภาพที่ "+(i+1)));
@@ -1014,12 +1020,12 @@ const kbody=z=>String(z.body||"").split("\n").filter(l=>!/^@@/.test(l.trim())&&!
 $("kws").addEventListener("input",krelD);
 /* บันทึก */
 $("kwsv").onclick=async()=>{const b=$("kwsv"),m=$("kwmsg");b.disabled=true;m.className="msg hide";
- try{const dest=$("kwd").value;if(!dest)throw new Error("เลือกหมวดที่จะใส่เรื่องนี้ก่อน (ข้อ 1)");const ev=dest==="ev",store=ev?"ev":"lf";
+ try{const dest=$("kwd").value;if(!dest)throw new Error("เลือกตำแหน่งที่จะใส่เรื่องนี้ก่อน (ช่อง “ใส่ที่ไหน”)");const ev=dest==="ev",store=ev?"ev":"lf";
   const item={hide:$("kwhide").checked,home:homeVal("kw"),img:KU[0],img2:KU[1],img3:KU[2],img4:KU[3],img5:KU[4],cap:KC[0],cap2:KC[1],cap3:KC[2],cap4:KC[3],cap5:KC[4],after:""};
   (ev?KEVK:KLFK).forEach(k=>item[k]=$(KMAP[k]).value.trim());
-  if(!item.title)throw new Error("กรุณาใส่ชื่อเรื่อง (ข้อ 2)");
-  if(ev){item.allow=true;item.clip=""}else item.cat=dest.slice(3);
-  if(!item.vcat){const w=wbLines(item.words).find(x=>x.cat);item.vcat=w?w.cat:(ev?"ประเพณีตลอดปี":"")}
+  if(!item.title)throw new Error("กรุณาใส่ชื่อเรื่อง");
+  if(ev){item.allow=true;item.clip=""}else{const pp=dest.split(":");item.cat=pp[1];item.sub=pp[2]||""}
+  if(!item.vcat){const w=wbLines(item.words).find(x=>x.cat);item.vcat=w?w.cat:(ev?"ประเพณีตลอดปี":"")}   /* หมวดคำศัพท์ ระบบใส่เอง */
   const same=!!KE&&KE.store===store;if(same)item.id=KE.it.id;
   if(KE&&!same&&!confirm("จะย้ายเรื่องนี้ไปอีกหมวดใหญ่ (ที่เก็บในชีตต่างกัน)\n• เรื่องเดิมจะถูกลบ (ย้ายไปถังขยะ กู้คืนได้)\n• ช่องเฉพาะ เช่น ช่วงเวลา/ปฏิทิน/ป้ายบนการ์ด จะไม่ถูกย้ายตาม\nกด ตกลง เพื่อทำต่อ"))throw new Error("ยกเลิกการบันทึก");
   if(item.home==="hero"&&!KU.some(Boolean)&&!KP.some(Boolean)&&!confirm("เรื่องนี้ยังไม่มีรูป จึงปักเป็นภาพใหญ่ไม่ได้ (จะขึ้นในรายการล่าสุดอย่างเดียว)\nกด ตกลง เพื่อบันทึกต่อ"))throw new Error("ยกเลิกการบันทึก");
@@ -1034,7 +1040,7 @@ $("kwsv").onclick=async()=>{const b=$("kwsv"),m=$("kwmsg");b.disabled=true;m.cla
   if(note)alert("✅ บันทึกเรื่องแล้ว\n"+note);KOPEN=dest;kclear();$("kwform").classList.add("hide");await loadK()}
  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
 /* คำศัพท์ + เรื่องเก่า */
-function kvoc(){const box=$("kwvoc");if(!box)return;box.replaceChildren(el("h3","","🗣️ คำศัพท์กวย"),el("p","mute","ไม่ต้องกรอกแยก: คำศัพท์ของแต่ละเรื่องกรอกในฟอร์มเรื่อง (ข้อ 7) แล้วระบบส่งเข้าคลังและทำลิงก์ให้เอง ใช้แท็บคำศัพท์เมื่ออยากแก้หรือเพิ่มคำเดี่ยวๆ"+(VL&&VL.length?" • ตอนนี้ในคลังมี "+VL.length+" คำ":"")));
+function kvoc(){const box=$("kwvoc");if(!box)return;box.replaceChildren(el("h3","","🗣️ คำศัพท์กวย"),el("p","mute","ไม่ต้องกรอกแยก: คำศัพท์ของแต่ละเรื่องกรอกในฟอร์มเรื่อง (ช่อง “คำศัพท์กวยของเรื่องนี้”) แล้วระบบส่งเข้าคลังและทำลิงก์ให้เอง ใช้แท็บคำศัพท์เมื่ออยากแก้หรือเพิ่มคำเดี่ยวๆ"+(VL&&VL.length?" • ตอนนี้ในคลังมี "+VL.length+" คำ":"")));
  const b=el("button","btn o","เปิดคลังคำศัพท์");b.type="button";b.onclick=()=>tab(3);box.append(b)}
 function kimpL(){return(CL||[]).filter(z=>z.kind==="วิถีกวย"&&z.cat!=="รูปแทรก")}
 function kimpR(){const L=kimpL(),box=$("kwiml");if(!box)return;$("kwimpn").textContent=CL.length?"("+L.length+" เรื่อง)":"";box.replaceChildren();
