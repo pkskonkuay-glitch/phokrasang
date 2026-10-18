@@ -175,11 +175,11 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label class="opt"><input type="checkbox" id="evhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="evsv">บันทึก</button> <button class="btn o" id="evcx">ยกเลิก</button> <button class="btn o hide" id="evdel" style="color:#c93b2f">🗑 ลบงานนี้</button></p><div class="msg hide" id="evmsg"></div></div>
 <div id="evls"></div><p><button class="btn o hide" id="evmore">ดูเพิ่ม</button></p></div>
-<div id="p6" class="hide"><div class="c"><h3>🏡 วิถีชีวิตกวย — ดุงเลิง • กัวออ • จาเอม</h3><p class="mute">เรื่องราวที่ไม่ผูกกับวันที่ (แท็บ “วิถีชีวิตกวย” ในชีต) แบ่งเป็น 3 หมวด <b>ดุงกวย</b> = บ้านกวย (ชุมชน บ้านเรือน ผู้คน สัตว์เลี้ยง) • <b>กัวออ</b> = อยู่ดี (ความเป็นอยู่ ประเพณี ความเชื่อ) • <b>จาเอม</b> = กินอิ่ม (อาหารตามวิถีและฤดูกาล) เรียงลำดับ 1, 2, 3… แยกตามหมวด ใช้ปุ่ม ▲ ▼ ย้ายลำดับ เพิ่ม แก้ไข ซ่อน หรือลบได้เอง ช่องไหนเว้นว่างหน้าเว็บจะไม่แสดงช่องนั้น ลบแล้วไปอยู่แท็บ “ถังขยะวิถีชีวิตกวย” ในชีต (กู้คืนได้)</p>
+<div id="p6" class="hide"><div class="c"><h3>🏡 วิถีชีวิตกวย — ดุงเลิง • กัวออ • จาเอม</h3><p class="mute">เรื่องราวที่ไม่ผูกกับวันที่ (แท็บ “วิถีชีวิตกวย” ในชีต) แบ่งเป็น 3 หมวด <b>ดุงเลิง</b> = บ้านกวย (ชุมชน บ้านเรือน ผู้คน สัตว์เลี้ยง) • <b>กัวออ</b> = อยู่ดี (ความเป็นอยู่ ประเพณี ความเชื่อ) • <b>จาเอม</b> = กินอิ่ม (อาหารตามวิถีและฤดูกาล) เรียงลำดับ 1, 2, 3… แยกตามหมวด ใช้ปุ่ม ▲ ▼ ย้ายลำดับ เพิ่ม แก้ไข ซ่อน หรือลบได้เอง ช่องไหนเว้นว่างหน้าเว็บจะไม่แสดงช่องนั้น ลบแล้วไปอยู่แท็บ “ถังขยะวิถีชีวิตกวย” ในชีต (กู้คืนได้)</p>
 <div class="stats" id="lfst"></div><div class="row"><div><input id="lfq" placeholder="🔍 ค้นหาชื่อเรื่อง" aria-label="ค้นหาเรื่อง"></div></div>
 <div class="stats" id="lfft" style="margin-top:8px"></div><p><button class="btn" id="lfnew">➕ เพิ่มเรื่องใหม่</button> <button class="btn o" id="lfseed">📦 เติมเนื้อหาเริ่มต้น 14 เรื่อง (รันซ้ำได้ ไม่ทับที่คุณแก้เอง)</button></p></div>
 <div class="c hide" id="lfform"><h3 id="lfh">เพิ่มเรื่องใหม่</h3>
-<div class="row"><div><label for="lfc">หมวด *</label><select id="lfc"><option value="">— เลือก —</option><option value="ดุงกวย">🏡 ดุงเลิง (บ้านกวย)</option><option value="กัวออ">🌾 กัวออ (อยู่ดี)</option><option value="จาเอม">🍲 จาเอม (กินอิ่ม)</option></select></div><div><label for="lftag">ป้ายบนการ์ด (ฤดูกาล / หัวข้อย่อย)</label><input id="lftag" maxlength="60" placeholder="เช่น หน้าฝน • ทำนา • บ้านเรือน"></div></div>
+<div class="row"><div><label for="lfc">หมวด *</label><select id="lfc"><option value="">— เลือก —</option><option value="ดุงเลิง">🏡 ดุงเลิง (บ้านกวย)</option><option value="กัวออ">🌾 กัวออ (อยู่ดี)</option><option value="จาเอม">🍲 จาเอม (กินอิ่ม)</option></select></div><div><label for="lftag">ป้ายบนการ์ด (ฤดูกาล / หัวข้อย่อย)</label><input id="lftag" maxlength="60" placeholder="เช่น หน้าฝน • ทำนา • บ้านเรือน"></div></div>
 <div class="row"><div><label for="lft">ชื่อเรื่อง *</label><input id="lft" maxlength="120" placeholder="เช่น กะตาม"></div><div><label for="lfk">ชื่อเรียกภาษากวย</label><input id="lfk" maxlength="120"></div></div>
 <div class="row"><div><label for="lfaf">ตำแหน่งในหมวด</label><select id="lfaf"></select></div><div><p class="mute" style="margin:30px 0 0">ระบบเรียงเลข 1, 2, 3… ให้ต่อเนื่องเอง ไม่ต้องพิมพ์เลข เลือกว่าจะวางต่อจากเรื่องไหน (หรือกดปุ่ม ▲ ▼ ที่การ์ดภายหลัง)</p></div></div>
 <label for="lfs">เล่าสั้น ๆ บนการ์ด (1–2 ประโยค)</label><textarea id="lfs" rows="2" maxlength="500"></textarea>
@@ -804,17 +804,17 @@ $("evforce").onclick=async()=>{if(!confirm("ใช้เนื้อหาให
  try{const u=await call({action:"adminEventForceSeed"});if(!u.ok){alert("⚠️ "+u.error);return}
   alert("เรียบร้อย ✅\nทับด้วยเนื้อหาใหม่ "+(u.updated||[]).length+" งาน"+((u.updated||[]).length?":\n"+u.updated.join("\n"):"")+"\nเหมือนใหม่อยู่แล้ว "+(u.unchanged||0)+" งาน"+((u.missing||[]).length?"\n\nไม่พบงานชื่อนี้ (อาจถูกเปลี่ยนชื่อ) ข้ามไว้: "+u.missing.join(", "):""));loadE()}
  catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}};
-/* ===== วิถีชีวิตกวย: ดุงกวย / กัวออ / จาเอม ===== */
+/* ===== วิถีชีวิตกวย: ดุงเลิง / กัวออ / จาเอม ===== */
 let FL=[],FE=null,FU=["","","","",""],FP=["","","","",""],FC=["","","","",""],FFl="all",FN=40;
-const FCI={"ดุงกวย":"🏡","กัวออ":"🌾","จาเอม":"🍲"};
+const FCI={"ดุงเลิง":"🏡","กัวออ":"🌾","จาเอม":"🍲"};
 const NOHOOKF="⚠️ หลังบ้านยังไม่ได้ติดตั้งส่วนวิถีชีวิตกวย ต้องวางไฟล์ life.gs ในโปรเจกต์ KP-Backend แล้วเพิ่ม 2 บรรทัดใน รหัส.gs (action=life และ adminLife) และ Deploy เป็นเวอร์ชันใหม่";
 async function loadF(){const ls=$("lfls");ls.replaceChildren(el("p","mute","กำลังโหลด…"));
   try{const d=await call({action:"adminLifeList"});
    if(!d.ok)throw new Error(/unknown admin action/.test(d.error||"")?"NOHOOK":(d.error||"โหลดไม่ได้"));
-   FL=d.items;renderF()}
+   FL=d.items.map(x=>x&&x.cat==="ดุงกวย"?Object.assign({},x,{cat:"ดุงเลิง"}):x);renderF()}
   catch(x){ls.replaceChildren(el("div","msg warn",x.message==="NOHOOK"?NOHOOKF:"โหลดไม่ได้: "+x.message))}}
 const fclip=e=>String(e.links||"").split(/\n+/).filter(Boolean);
-const fflt={all:["ทั้งหมด",()=>true],c1:["🏡 ดุงเลิง",e=>e.cat==="ดุงกวย"],c2:["🌾 กัวออ",e=>e.cat==="กัวออ"],c3:["🍲 จาเอม",e=>e.cat==="จาเอม"],nostory:["ยังไม่มีเรื่องราว",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],hid:["ซ่อนอยู่",e=>e.hide]};
+const fflt={all:["ทั้งหมด",()=>true],c1:["🏡 ดุงเลิง",e=>e.cat==="ดุงเลิง"],c2:["🌾 กัวออ",e=>e.cat==="กัวออ"],c3:["🍲 จาเอม",e=>e.cat==="จาเอม"],nostory:["ยังไม่มีเรื่องราว",e=>!e.story],nopic:["ยังไม่มีรูป",e=>!e.img],noel:["ยังไม่มีคำผู้เฒ่า",e=>!e.elder],hid:["ซ่อนอยู่",e=>e.hide]};
 function renderF(){const q=$("lfq").value.trim().toLowerCase();
   $("lfst").replaceChildren(...[["ทั้งหมด",FL.length],["มีรูปแล้ว",FL.filter(e=>e.img).length],["มีเรื่องราวแล้ว",FL.filter(e=>e.story).length]].map(([k,n])=>{const c=el("span","chip",k+" ");c.append(el("b","",String(n)));return c}));
   $("lfft").replaceChildren(...Object.keys(fflt).map(k=>{const b=el("button","chip"+(FFl===k?" on":""),fflt[k][0]+" ("+FL.filter(fflt[k][1]).length+")");b.onclick=()=>{FFl=k;FN=40;renderF()};return b}));
@@ -853,11 +853,11 @@ function fclear(){FE=null;FU=["","","","",""];FP=["","","","",""];FC=["","","","
 function fopen(){wbOpen("lf");$("lfform").classList.remove("hide");$("lfform").scrollIntoView({behavior:"smooth"});$("lft").focus()}
 function fedit(it){fclear();FE=it;FF.forEach((id,j)=>$(id).value=it[FK[j]]||"");FU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];FC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
   $("lfhide").checked=!!it.hide;$("lfhh").checked=it.home==="hero";$("lfhl").checked=it.home==="hero"||it.home==="latest";$("lfh").textContent="แก้ไข: "+it.title;$("lfdel").classList.remove("hide");fslots();fafill(it);fopen()}
-$("lfnew").onclick=()=>{fclear();if(/^c[123]$/.test(FFl)){$("lfc").value=({c1:"ดุงกวย",c2:"กัวออ",c3:"จาเอม"})[FFl];fafill(null)}fopen()};
+$("lfnew").onclick=()=>{fclear();if(/^c[123]$/.test(FFl)){$("lfc").value=({c1:"ดุงเลิง",c2:"กัวออ",c3:"จาเอม"})[FFl];fafill(null)}fopen()};
 $("lfcx").onclick=()=>{fclear();$("lfform").classList.add("hide")};
 $("lfsv").onclick=async()=>{const b=$("lfsv"),m=$("lfmsg");b.disabled=true;m.className="msg hide";
   try{const item={id:FE?FE.id:undefined,hide:$("lfhide").checked,home:homeVal("lf"),img:FU[0],img2:FU[1],img3:FU[2],img4:FU[3],img5:FU[4],cap:FC[0],cap2:FC[1],cap3:FC[2],cap4:FC[3],cap5:FC[4]};FF.forEach((id,j)=>item[FK[j]]=$(id).value.trim());item.after=$("lfaf").value;
-   if(!item.cat)throw new Error("กรุณาเลือกหมวด ดุงกวย / กัวออ / จาเอม");
+   if(!item.cat)throw new Error("กรุณาเลือกหมวด ดุงเลิง / กัวออ / จาเอม");
    if(!item.title)throw new Error("กรุณาใส่ชื่อเรื่อง");
    if(item.home==="hero"&&!FU.some(Boolean)&&!FP.some(Boolean)&&!confirm("เรื่องนี้ยังไม่มีรูป จึงปักเป็นภาพใหญ่ไม่ได้ (จะขึ้นในรายการล่าสุดอย่างเดียว)\nกด ตกลง เพื่อบันทึกต่อ"))throw new Error("ยกเลิกการบันทึก");
    ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!FU[j]&&!FP[j])item[k]=""});
