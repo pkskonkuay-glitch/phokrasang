@@ -265,6 +265,20 @@ header{border-bottom:3px solid var(--orange)}
 a{color:var(--orange-ink)}
 section>h2,.panel h2{color:var(--orange-ink)}
 </style>
+<style id="bands">
+/* ===== แถบสีพื้นหลังรายหมวด (หน้าแรก): สีจางมาก ตัดเต็มความกว้างจอ แยกหมวดให้ตาพักได้ ===== */
+:root{--b-latest:#f1faf7;--b-yr:#fcf3e5;--b-svc:#d5ede7;--b-rec:#f3f8ee;--b-edge:rgba(14,80,70,.10)}
+main{overflow-x:clip}
+#v-home section{position:relative;padding-bottom:34px}
+#v-home section::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:var(--bnd,transparent);border-top:1px solid var(--b-edge)}
+#latest{--bnd:var(--b-latest)}
+#yr{--bnd:var(--b-yr)}
+#services{--bnd:var(--b-svc)}
+#recent{--bnd:var(--b-rec);padding-bottom:40px}
+#recent::before{bottom:-50px}              /* ต่อพื้นลงไปชนส่วนท้าย ไม่ให้มีช่องว่างสีเดิมคั่น */
+#v-home .sw{--bnd:var(--b-latest)}         /* หน้าย่อยที่เปิดเดี่ยว (#/rights, #/news ฯลฯ) ใช้โทนเดียวกับข่าว */
+#v-home #yr+.sw#products,#v-home #products{--bnd:var(--b-yr)}
+</style>
 </head>
 <body>
 <header><div class="bar">
@@ -322,7 +336,7 @@ section>h2,.panel h2{color:var(--orange-ink)}
 <a class="rt" href="#/products" style="background:#7a3f1d" onclick="go('home','products');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 10h18l-2 10H5L3 10z"/><path d="M7 10l2.2-5M17 10l-2.2-5M9 14v3M12 14v3M15 14v3"/></svg></i><span><b>ของดีบ้านเรา</b><small>ผ้าไหมลายลูกแก้ว จักสานไม้ไผ่ ฝีมือคนบ้านเรา</small></span></a>
 <a class="rt" href="vocab.html" style="background:#2f7d5b"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12.5h5"/></svg></i><span><b>คำศัพท์กวย</b><small>เรียนคำภาษากวยของบ้านเรา ช่วยกันเติมคำได้</small></span></a>
 </section>
-<section><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
+<section id="recent"><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
 </div></div>
 
 <div id="v-board" class="wrap hide"><section>
