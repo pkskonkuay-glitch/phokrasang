@@ -266,18 +266,17 @@ a{color:var(--orange-ink)}
 section>h2,.panel h2{color:var(--orange-ink)}
 </style>
 <style id="bands">
-/* ===== แถบสีพื้นหลังรายหมวด (หน้าแรก): สีจางมาก ตัดเต็มความกว้างจอ แยกหมวดให้ตาพักได้ ===== */
-:root{--b-latest:#f1faf7;--b-yr:#fcf3e5;--b-svc:#d5ede7;--b-rec:#f3f8ee;--b-edge:rgba(14,80,70,.10)}
+/* ===== แถบสีพื้นหลังรายหมวด (หน้าแรก): ใช้ 2 สีสลับกันเท่านั้น เพื่อคั่นหมวด ไม่ให้รกตา =====
+   สี A = เขียวมิ้นต์ (สีพื้นเดิมของเว็บ) : ข่าว • คลิป และ เมนูเดียวกับใน LINE
+   สี B = เขียวอ่อนอมครีมจาง ๆ           : เซกวย และ เรื่องที่ติดตามล่าสุด */
+:root{--b-a:#e3f4f0;--b-b:#f3f8ee;--b-edge:rgba(14,80,70,.10)}
 main{overflow-x:clip}
 #v-home section{position:relative;padding-bottom:34px}
 #v-home section::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:var(--bnd,transparent);border-top:1px solid var(--b-edge)}
-#latest{--bnd:var(--b-latest)}
-#yr{--bnd:var(--b-yr)}
-#services{--bnd:var(--b-svc)}
-#recent{--bnd:var(--b-rec);padding-bottom:40px}
-#recent::before{bottom:-50px}              /* ต่อพื้นลงไปชนส่วนท้าย ไม่ให้มีช่องว่างสีเดิมคั่น */
-#v-home .sw{--bnd:var(--b-latest)}         /* หน้าย่อยที่เปิดเดี่ยว (#/rights, #/news ฯลฯ) ใช้โทนเดียวกับข่าว */
-#v-home #yr+.sw#products,#v-home #products{--bnd:var(--b-yr)}
+#latest,#services,#v-home .sw{--bnd:var(--b-a)}
+#yr,#recent,#v-home #products{--bnd:var(--b-b)}
+#recent{padding-bottom:40px}
+#recent::before{bottom:-50px}   /* ต่อพื้นลงไปชนส่วนท้าย ไม่ให้มีช่องว่างคั่น */
 </style>
 </head>
 <body>
