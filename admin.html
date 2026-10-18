@@ -35,6 +35,12 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 .pvc{display:grid;grid-template-columns:repeat(2,minmax(0,150px));border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.pvchip{padding:10px 12px;font-size:13px;line-height:1.45;color:#444;border-left:1px solid var(--line)}.pvchip:first-child{border-left:0;background:#dbf1ec}.pvchip b{display:block;font-size:14px;color:#b34700}.pvchip span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .rcr{padding:5px 0;border-bottom:1px dashed var(--line);font-size:14px}#sxbar .row3{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}@media(max-width:700px){#sxbar .row3{grid-template-columns:1fr 1fr}}
 mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}details.qe summary{cursor:pointer;font-weight:700;color:var(--navy)}.pp{border-bottom:1px solid var(--line);padding:10px 0}
+.wadd{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}.wadd select,.wadd button{grid-column:1/-1}
+.wlist{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.wchip{display:inline-flex;align-items:center;gap:6px;background:#eef7f4;border:1px solid #bfdcd2;border-radius:99px;padding:4px 6px 4px 12px}
+.wchip b{color:#b34700}.wchip small{background:#fff;border:1px solid #bfdcd2;border-radius:99px;padding:0 8px;color:#1f5d44}.wchip small.nocat{color:#8a5200;border-color:#e3b25f}
+.wchip .wx{border:0;background:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;color:#c93b2f;font-weight:700}
+.hm{border:1px solid #bfdcd2;border-radius:12px;padding:8px 14px;margin:10px 0}.hm legend{font-weight:700;padding:0 6px}
 </style></head><body>
 <header><a href="index.html" style="color:inherit;text-decoration:none;font-size:.9em;opacity:.8;margin-right:8px" title="กลับหน้าเว็บ">← หน้าเว็บ</a><b>🛠️ หลังบ้าน ที่นี่โพธิ์กระสังข์</b><button class="btn o" id="rf">รีเฟรช</button><button class="btn o" id="lo">ออก</button></header>
 <div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัสผู้ดูแล (ADMIN_TOKEN) ที่ตั้งไว้ใน Apps Script</p>
@@ -153,11 +159,19 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label for="evtip">สิ่งที่ผู้มาร่วมงานควรรู้ (บรรทัดละข้อ)</label><textarea id="evtip" rows="3" maxlength="1200"></textarea>
 <label>ภาพ 3–5 ภาพ พร้อมคำบรรยาย (ระบบย่อให้เล็กพอเปิดเร็วเมื่อสัญญาณอ่อน) <span class="mute">ใส่ได้สูงสุด 5 ภาพ ภาพแรกเป็นปกการ์ดบนหน้าแรก</span></label><div id="evph"></div>
 <label for="evcl">ลิงก์คลิป บทความ หรือโพสต์ Facebook (บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์ ไม่ต้องอัปโหลดคลิปเอง) รูปแบบ: ชื่อที่จะแสดง | ลิงก์ — หรือวางลิงก์เปล่า ๆ ก็ได้ ลิงก์ YouTube จะกดเล่นในหน้าเว็บได้เลย</label><textarea id="evcl" rows="4" maxlength="2500" placeholder="คลิปสงกรานต์กวย | https://youtu.be/xxxxxxxxxxx&#10;บทความบุญเดือนสิบ | https://www.facebook.com/..."></textarea>
-<label for="evwd">คำศัพท์กวยที่ใช้ในงานนี้ (บรรทัดละคำ รูปแบบ ไทย = กวย)</label><textarea id="evwd" rows="3" maxlength="1200" placeholder="กลับบ้าน = ลบ ดุง"></textarea>
-<div class="row"><div><label for="evvc">หมวดในหน้าคำศัพท์ที่ให้ลิงก์ไป</label><input id="evvc" maxlength="60" placeholder="ประเพณีตลอดปี"></div><div></div></div>
+<div class="hm"><b>🗣️ คำศัพท์กวยที่ใช้ในงานนี้</b> — กรอกคำที่นี่ได้เลย ระบบจัดเข้าหมวดและให้ผู้อ่านกดไปดูคำนั้นในหน้าคำศัพท์ได้
+<div class="wadd"><input id="evwt" maxlength="120" placeholder="คำไทย เช่น กลับบ้าน" aria-label="คำไทย"><input id="evwk" maxlength="120" placeholder="คำกวย เช่น ลบ ดุง" aria-label="คำกวย"><select id="evwc" aria-label="หมวดของคำนี้ในคลังคำศัพท์"></select><button type="button" class="btn o" id="evwa">➕ เพิ่มคำนี้</button></div>
+<div class="wlist" id="evwl" aria-live="polite"></div>
+<label for="evwd">รายการคำ (แก้ตรงนี้ได้เลย บรรทัดละคำ รูปแบบ ไทย = กวย | หมวด)</label><textarea id="evwd" rows="3" maxlength="1200" placeholder="กลับบ้าน = ลบ ดุง | ประเพณีตลอดปี"></textarea>
+<label class="opt"><input type="checkbox" id="evws" checked> ส่งคำเหล่านี้เข้า “คลังคำศัพท์” ด้วยตอนบันทึก (คำที่มีอยู่แล้วในหมวดนั้นไม่ซ้ำ)</label></div>
+<div class="row"><div><label for="evvc">หมวดหลักของเรื่องนี้ (ปุ่ม “ดูหมวด …” ท้ายเรื่อง และหมวดสำรองของคำที่ไม่ได้เลือกหมวด)</label><input id="evvc" list="vcl" maxlength="60" placeholder="ประเพณีตลอดปี"></div><div></div></div>
 <label for="evel">คำบอกเล่าของผู้เฒ่า 1–2 ประโยค</label><textarea id="evel" rows="2" maxlength="600"></textarea>
 <label for="evby">ผู้เฒ่า / ผู้ให้ข้อมูล (ชื่อ หมู่บ้าน)</label><input id="evby" maxlength="120">
 <label for="evnote">บันทึกภายในทีมงาน (ไม่แสดงบนเว็บ เช่น สิ่งที่ต้องตรวจ ผู้ติดต่อ)</label><textarea id="evnote" rows="2" maxlength="1000"></textarea>
+
+<fieldset class="hm"><legend>🏠 ขึ้นหน้าหลักของเว็บ (งานประจำปี)</legend>
+<label class="opt"><input type="checkbox" id="evhl"> ขึ้นในรายการ “ข่าว • คลิป ล่าสุดจากชุมชน” (เหมาะกับสาระที่ไม่ใช่ข่าวหรือคลิป แต่อยากให้คนเห็นที่หน้าแรก)</label>
+<label class="opt"><input type="checkbox" id="evhh"> ปักเป็นภาพใหญ่ใน 6 ช่องแรกด้านบน (ต้องมีรูป เลือกเฉพาะเรื่องเด่น เพราะมีที่ 5 ช่อง ช่อง 6 ล็อกไว้)</label></fieldset>
 <label class="opt"><input type="checkbox" id="evhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="evsv">บันทึก</button> <button class="btn o" id="evcx">ยกเลิก</button> <button class="btn o hide" id="evdel" style="color:#c93b2f">🗑 ลบงานนี้</button></p><div class="msg hide" id="evmsg"></div></div>
 <div id="evls"></div><p><button class="btn o hide" id="evmore">ดูเพิ่ม</button></p></div>
@@ -174,11 +188,19 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label for="lftip">สิ่งที่ควรรู้ (บรรทัดละข้อ)</label><textarea id="lftip" rows="3" maxlength="1200"></textarea>
 <label>ภาพ 1–5 ภาพ พร้อมคำบรรยาย (ระบบย่อให้เล็กพอเปิดเร็วเมื่อสัญญาณอ่อน) <span class="mute">ภาพแรกเป็นปกการ์ด สัดส่วนปกประมาณ 1.6 : 1 ภาพแนวนอนจะสวยที่สุด</span></label><div id="lfph"></div>
 <label for="lfcl">ลิงก์คลิป บทความ หรือโพสต์ Facebook (บรรทัดละ 1 ลิงก์ สูงสุด 8 ลิงก์) รูปแบบ: ชื่อที่จะแสดง | ลิงก์ หรือวางลิงก์เปล่า ๆ ก็ได้</label><textarea id="lfcl" rows="3" maxlength="2500" placeholder="คลิปหาปลาหน้าแล้ง | https://youtu.be/xxxxxxxxxxx"></textarea>
-<label for="lfwd">คำศัพท์กวยที่เกี่ยวข้อง (บรรทัดละคำ รูปแบบ ไทย = กวย)</label><textarea id="lfwd" rows="3" maxlength="1200" placeholder="ปูนา = กะตาม"></textarea>
-<div class="row"><div><label for="lfvc">หมวดในหน้าคำศัพท์ที่ให้ลิงก์ไป</label><input id="lfvc" maxlength="60" placeholder="เช่น อาหาร"></div><div></div></div>
+<div class="hm"><b>🗣️ คำศัพท์กวยที่เกี่ยวข้อง</b> — กรอกคำที่นี่ได้เลย ระบบจัดเข้าหมวดและให้ผู้อ่านกดไปดูคำนั้นในหน้าคำศัพท์ได้
+<div class="wadd"><input id="lfwt" maxlength="120" placeholder="คำไทย เช่น ปูนา" aria-label="คำไทย"><input id="lfwk" maxlength="120" placeholder="คำกวย เช่น กะตาม" aria-label="คำกวย"><select id="lfwc" aria-label="หมวดของคำนี้ในคลังคำศัพท์"></select><button type="button" class="btn o" id="lfwa">➕ เพิ่มคำนี้</button></div>
+<div class="wlist" id="lfwl" aria-live="polite"></div>
+<label for="lfwd">รายการคำ (แก้ตรงนี้ได้เลย บรรทัดละคำ รูปแบบ ไทย = กวย | หมวด)</label><textarea id="lfwd" rows="3" maxlength="1200" placeholder="ปูนา = กะตาม | สัตว์น้ำและปลา"></textarea>
+<label class="opt"><input type="checkbox" id="lfws" checked> ส่งคำเหล่านี้เข้า “คลังคำศัพท์” ด้วยตอนบันทึก (คำที่มีอยู่แล้วในหมวดนั้นไม่ซ้ำ)</label></div>
+<div class="row"><div><label for="lfvc">หมวดหลักของเรื่องนี้ (ปุ่ม “ดูหมวด …” ท้ายเรื่อง และหมวดสำรองของคำที่ไม่ได้เลือกหมวด)</label><input id="lfvc" list="vcl" maxlength="60" placeholder="เช่น สัตว์น้ำและปลา"></div><div></div></div><datalist id="vcl"></datalist>
 <label for="lfel">คำบอกเล่าของผู้เฒ่า 1–2 ประโยค</label><textarea id="lfel" rows="2" maxlength="600"></textarea>
 <label for="lfby">ผู้เฒ่า / ผู้ให้ข้อมูล (ชื่อ หมู่บ้าน)</label><input id="lfby" maxlength="120">
 <label for="lfnote">บันทึกภายในทีมงาน (ไม่แสดงบนเว็บ เช่น สิ่งที่ต้องไปถามผู้เฒ่าเพิ่ม)</label><textarea id="lfnote" rows="2" maxlength="1000"></textarea>
+
+<fieldset class="hm"><legend>🏠 ขึ้นหน้าหลักของเว็บ (เรื่องวิถีชีวิต)</legend>
+<label class="opt"><input type="checkbox" id="lfhl"> ขึ้นในรายการ “ข่าว • คลิป ล่าสุดจากชุมชน” (เหมาะกับสาระที่ไม่ใช่ข่าวหรือคลิป แต่อยากให้คนเห็นที่หน้าแรก)</label>
+<label class="opt"><input type="checkbox" id="lfhh"> ปักเป็นภาพใหญ่ใน 6 ช่องแรกด้านบน (ต้องมีรูป เลือกเฉพาะเรื่องเด่น เพราะมีที่ 5 ช่อง ช่อง 6 ล็อกไว้)</label></fieldset>
 <label class="opt"><input type="checkbox" id="lfhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="lfsv">บันทึก</button> <button class="btn o" id="lfcx">ยกเลิก</button> <button class="btn o hide" id="lfdel" style="color:#c93b2f">🗑 ลบเรื่องนี้</button></p><div class="msg hide" id="lfmsg"></div></div>
 <div id="lfls"></div><p><button class="btn o hide" id="lfmore">ดูเพิ่ม</button></p></div>
@@ -714,20 +736,63 @@ function eslots(){const box=$("evph");box.replaceChildren();
   if(src){const rb=el("button","btn o","✕ เอาภาพนี้ออก");rb.type="button";rb.style.color="#c93b2f";rb.onclick=()=>{EP[i]="";EU[i]="";EC[i]="";eslots()};w.append(" ",rb);
    const ci=document.createElement("input");ci.maxLength=200;ci.value=EC[i]||"";ci.placeholder="คำบรรยาย • ผู้ถ่าย • ปี เช่น ขบวนแห่กฐิน ภาพโดย … ปี 2568";ci.setAttribute("aria-label","คำบรรยายภาพที่ "+(i+1));ci.oninput=()=>{EC[i]=ci.value};ci.style.marginTop="6px";w.append(ci)}
   box.append(w)}}
-function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evhide"].forEach(i=>$(i).checked=false);$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots();eafill(null)}
-function eopen(){$("evform").classList.remove("hide");$("evform").scrollIntoView({behavior:"smooth"});$("evt").focus()}
+function eclear(){EE=null;EU=["","","","",""];EP=["","","","",""];EC=["","","","",""];EF.forEach(i=>$(i).value="");["evhide","evhl","evhh"].forEach(i=>$(i).checked=false);$("evws").checked=true;$("evh").textContent="เพิ่มงานใหม่";$("evdel").classList.add("hide");$("evmsg").className="msg hide";eslots();eafill(null)}
+/* ===== ช่องคำศัพท์ในฟอร์มเรื่อง: กรอกคำ + เลือกหมวดจากคลังคำศัพท์ + ส่งเข้าคลังตอนบันทึก ===== */
+let WBC=null;
+async function wbCats(){if(WBC)return WBC;let L=[];
+ try{if(typeof VCATS!=="undefined"&&VCATS.length)L=VCATS.map(c=>c.cat||c);else{const d=await vcall({action:"adminVocabList"});if(d&&d.ok){VL=d.items;VCATS=d.cats||[];L=VCATS.map(c=>c.cat||c)}}}catch(e){}
+ L=[...new Set(L.filter(Boolean))];if(L.length)WBC=L;return L}
+const wbLines=t=>String(t||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split("|"),q=p[0].split(/\s*=\s*/);return{th:(q[0]||"").trim(),kuy:(q[1]||"").trim(),cat:(p[1]||"").trim(),raw:x}});
+function wbFill(p,L){L=L||WBC||[];const s=$(p+"wc"),v=s.value||$(p+"vc").value.trim();
+ s.replaceChildren(...[["","— เลือกหมวดของคำนี้ —"],...L.map(c=>[c,c]),["__new","➕ หมวดใหม่…"]].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));
+ if(v&&![...s.options].some(o=>o.value===v)){const o=el("option","",v);o.value=v;s.insertBefore(o,s.lastChild)}
+ s.value=v||"";const dl=$("vcl");if(dl)dl.replaceChildren(...L.map(c=>{const o=document.createElement("option");o.value=c;return o}))}
+function wbRender(p){const box=$(p+"wl");box.replaceChildren();
+ wbLines($(p+"wd").value).forEach(x=>{const row=el("span","wchip");row.append(el("b","",x.kuy||"?"),document.createTextNode(" "+x.th+" "),el("small",x.cat?"":"nocat",x.cat||"ไม่ระบุหมวด → ใช้หมวดหลัก"));
+  const d=el("button","wx","✕");d.type="button";d.title="เอาคำนี้ออก";d.setAttribute("aria-label","เอาคำ "+x.th+" ออก");
+  d.onclick=()=>{const ta=$(p+"wd");ta.value=wbLines(ta.value).filter(y=>y.raw!==x.raw).map(y=>y.raw).join("\n");wbRender(p)};row.append(d);box.append(row)})}
+function wbOpen(p){wbRender(p);wbCats().then(L=>{wbFill(p,L);wbRender(p)})}
+function wbInit(p){
+ $(p+"wc").onchange=()=>{const s=$(p+"wc");
+  if(s.value==="__new"){const n=(prompt("ชื่อหมวดใหม่ในหน้าคำศัพท์ (ไม่เกิน 40 ตัวอักษร)")||"").trim().slice(0,40);if(!n){s.value="";return}
+   if(![...s.options].some(o=>o.value===n)){const o=el("option","",n);o.value=n;s.insertBefore(o,s.lastChild)}s.value=n}
+  if(s.value&&!$(p+"vc").value.trim())$(p+"vc").value=s.value};
+ $(p+"wa").onclick=()=>{const t=$(p+"wt").value.trim(),k=$(p+"wk").value.trim(),c=$(p+"wc").value;
+  if(!t||!k){alert("กรอกทั้งคำไทยและคำกวย");(t?$(p+"wk"):$(p+"wt")).focus();return}
+  if(!c||c==="__new"){alert("เลือกหมวดของคำนี้ก่อน (หรือกด ➕ หมวดใหม่…)");$(p+"wc").focus();return}
+  if(/[=|\n]/.test(t+k)){alert("อย่าใส่เครื่องหมาย = หรือ | ในคำ");return}
+  const ta=$(p+"wd");if(wbLines(ta.value).some(x=>x.th===t&&x.kuy===k&&x.cat===c)){alert("มีคำนี้ในรายการแล้ว");return}
+  const line=t+" = "+k+" | "+c;if((ta.value+"\n"+line).length>1200){alert("รายการคำยาวเกินไป (สูงสุด 1,200 ตัวอักษร)");return}
+  ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+line;if(!$(p+"vc").value.trim())$(p+"vc").value=c;
+  $(p+"wt").value="";$(p+"wk").value="";wbRender(p);$(p+"wt").focus()};
+ $(p+"wd").oninput=()=>wbRender(p);
+ [$(p+"wt"),$(p+"wk")].forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$(p+"wa").click()}}));
+ $(p+"hh").onchange=()=>{if($(p+"hh").checked)$(p+"hl").checked=true};
+ $(p+"hl").onchange=()=>{if(!$(p+"hl").checked)$(p+"hh").checked=false}}
+const homeVal=p=>$(p+"hh").checked?"hero":$(p+"hl").checked?"latest":"";
+async function wbSync(p,item){if(!$(p+"ws").checked)return"";
+ const main=String(item.vcat||"").trim(),L=wbLines(item.words).filter(x=>x.th&&x.kuy).map(x=>({th:x.th,kuy:x.kuy,cat:x.cat||main,src:"จากเรื่อง: "+item.title}));
+ if(!L.length)return"";const ok=L.filter(x=>x.cat),no=L.length-ok.length;
+ if(!ok.length)return"⚠️ คำศัพท์ยังไม่ได้ส่งเข้าคลัง เพราะยังไม่ได้เลือกหมวด";
+ try{const a=await vcall({action:"adminVocabSave",items:ok.slice(0,100)});if(!a||!a.ok)throw new Error((a&&a.error)||"ไม่สำเร็จ");
+  let f=0;try{const b=await vcall({action:"adminVocabSave",fill:ok.slice(0,150)});if(b&&b.ok)f=b.filled||0}catch(e){}
+  return"🗣️ คลังคำศัพท์: เพิ่มคำใหม่ "+(a.added||0)+" คำ • มีอยู่แล้ว "+(a.skipped||0)+" คำ"+(f?" • เติมคำกวยให้ "+f+" คำ":"")+(no?" • ข้าม "+no+" คำที่ไม่ได้ระบุหมวด":"")}
+ catch(x){return"⚠️ บันทึกเรื่องแล้ว แต่ส่งคำเข้าคลังไม่สำเร็จ: "+x.message}}
+wbInit("lf");wbInit("ev");
+function eopen(){wbOpen("ev");$("evform").classList.remove("hide");$("evform").scrollIntoView({behavior:"smooth"});$("evt").focus()}
 function eedit(it){eclear();EE=it;EF.forEach((id,j)=>$(id).value=it[EK[j]]||"");EU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];EC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
- $("evhide").checked=!!it.hide;$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eafill(it);eopen()}
+ $("evhide").checked=!!it.hide;$("evhh").checked=it.home==="hero";$("evhl").checked=it.home==="hero"||it.home==="latest";$("evh").textContent="แก้ไข: "+it.title;$("evdel").classList.remove("hide");eslots();eafill(it);eopen()}
 $("evnew").onclick=()=>{eclear();$("evvc").value="ประเพณีตลอดปี";eafill(null);eopen()};
 $("evcx").onclick=()=>{eclear();$("evform").classList.add("hide")};
 $("evsv").onclick=async()=>{const b=$("evsv"),m=$("evmsg");b.disabled=true;m.className="msg hide";
- try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,allow:true,clip:"",img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());item.after=$("evaf").value;
+ try{const item={id:EE?EE.id:undefined,hide:$("evhide").checked,home:homeVal("ev"),allow:true,clip:"",img:EU[0],img2:EU[1],img3:EU[2],img4:EU[3],img5:EU[4],cap:EC[0],cap2:EC[1],cap3:EC[2],cap4:EC[3],cap5:EC[4]};EF.forEach((id,j)=>item[EK[j]]=$(id).value.trim());item.after=$("evaf").value;
   if(!item.title)throw new Error("กรุณาใส่ชื่องาน");
+   if(item.home==="hero"&&!EU.some(Boolean)&&!EP.some(Boolean)&&!confirm("งานนี้ยังไม่มีรูป จึงปักเป็นภาพใหญ่ไม่ได้ (จะขึ้นในรายการล่าสุดอย่างเดียว)\nกด ตกลง เพื่อบันทึกต่อ"))throw new Error("ยกเลิกการบันทึก");
   ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!EU[j]&&!EP[j])item[k]=""});
   const send=()=>esave(item,EP);m.textContent=EP.some(Boolean)?"กำลังอัปโหลดภาพ…":"กำลังบันทึก…";m.className="msg";
   let u=await send();if(!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
   if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");
-  m.textContent="✅ บันทึกแล้ว หน้าเว็บจะอัปเดตเมื่อเปิดใหม่";eclear();$("evform").classList.add("hide");await loadE()}
+  const wm=await wbSync("ev",item);m.textContent="✅ บันทึกแล้ว หน้าเว็บจะอัปเดตเมื่อเปิดใหม่";if(wm)alert("✅ บันทึกเรื่องแล้ว\n"+wm);eclear();$("evform").classList.add("hide");await loadE()}
  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
 async function edelete(it){if(!confirm("ลบ “"+it.title+"” ?\nรายการจะถูกย้ายไปแท็บ “ถังขยะงานประจำปี” ในชีต (กู้คืนได้) และหายจากหน้าเว็บ"))return;
  const u=await call({action:"adminEventDelete",id:it.id});if(!u.ok){alert("⚠️ "+u.error);return}
@@ -784,21 +849,22 @@ function fslots(){const box=$("lfph");box.replaceChildren();
    if(src){const rb=el("button","btn o","✕ เอาภาพนี้ออก");rb.type="button";rb.style.color="#c93b2f";rb.onclick=()=>{FP[i]="";FU[i]="";FC[i]="";fslots()};w.append(" ",rb);
     const ci=document.createElement("input");ci.maxLength=200;ci.value=FC[i]||"";ci.placeholder="คำบรรยาย • ผู้ถ่าย • ปี เช่น ปลูกข้าวร่วมแรง ภาพโดย … ปี 2568";ci.setAttribute("aria-label","คำบรรยายภาพที่ "+(i+1));ci.oninput=()=>{FC[i]=ci.value};ci.style.marginTop="6px";w.append(ci)}
    box.append(w)}}
-function fclear(){FE=null;FU=["","","","",""];FP=["","","","",""];FC=["","","","",""];FF.forEach(i=>$(i).value="");$("lfhide").checked=false;$("lfh").textContent="เพิ่มเรื่องใหม่";$("lfdel").classList.add("hide");$("lfmsg").className="msg hide";fslots();fafill(null)}
-function fopen(){$("lfform").classList.remove("hide");$("lfform").scrollIntoView({behavior:"smooth"});$("lft").focus()}
+function fclear(){FE=null;FU=["","","","",""];FP=["","","","",""];FC=["","","","",""];FF.forEach(i=>$(i).value="");$("lfhide").checked=false;$("lfhl").checked=false;$("lfhh").checked=false;$("lfws").checked=true;$("lfh").textContent="เพิ่มเรื่องใหม่";$("lfdel").classList.add("hide");$("lfmsg").className="msg hide";fslots();fafill(null)}
+function fopen(){wbOpen("lf");$("lfform").classList.remove("hide");$("lfform").scrollIntoView({behavior:"smooth"});$("lft").focus()}
 function fedit(it){fclear();FE=it;FF.forEach((id,j)=>$(id).value=it[FK[j]]||"");FU=[it.img||"",it.img2||"",it.img3||"",it.img4||"",it.img5||""];FC=[it.cap||"",it.cap2||"",it.cap3||"",it.cap4||"",it.cap5||""];
-  $("lfhide").checked=!!it.hide;$("lfh").textContent="แก้ไข: "+it.title;$("lfdel").classList.remove("hide");fslots();fafill(it);fopen()}
+  $("lfhide").checked=!!it.hide;$("lfhh").checked=it.home==="hero";$("lfhl").checked=it.home==="hero"||it.home==="latest";$("lfh").textContent="แก้ไข: "+it.title;$("lfdel").classList.remove("hide");fslots();fafill(it);fopen()}
 $("lfnew").onclick=()=>{fclear();if(/^c[123]$/.test(FFl)){$("lfc").value=({c1:"ดุงกวย",c2:"กัวออ",c3:"จาเอม"})[FFl];fafill(null)}fopen()};
 $("lfcx").onclick=()=>{fclear();$("lfform").classList.add("hide")};
 $("lfsv").onclick=async()=>{const b=$("lfsv"),m=$("lfmsg");b.disabled=true;m.className="msg hide";
-  try{const item={id:FE?FE.id:undefined,hide:$("lfhide").checked,img:FU[0],img2:FU[1],img3:FU[2],img4:FU[3],img5:FU[4],cap:FC[0],cap2:FC[1],cap3:FC[2],cap4:FC[3],cap5:FC[4]};FF.forEach((id,j)=>item[FK[j]]=$(id).value.trim());item.after=$("lfaf").value;
+  try{const item={id:FE?FE.id:undefined,hide:$("lfhide").checked,home:homeVal("lf"),img:FU[0],img2:FU[1],img3:FU[2],img4:FU[3],img5:FU[4],cap:FC[0],cap2:FC[1],cap3:FC[2],cap4:FC[3],cap5:FC[4]};FF.forEach((id,j)=>item[FK[j]]=$(id).value.trim());item.after=$("lfaf").value;
    if(!item.cat)throw new Error("กรุณาเลือกหมวด ดุงกวย / กัวออ / จาเอม");
    if(!item.title)throw new Error("กรุณาใส่ชื่อเรื่อง");
+   if(item.home==="hero"&&!FU.some(Boolean)&&!FP.some(Boolean)&&!confirm("เรื่องนี้ยังไม่มีรูป จึงปักเป็นภาพใหญ่ไม่ได้ (จะขึ้นในรายการล่าสุดอย่างเดียว)\nกด ตกลง เพื่อบันทึกต่อ"))throw new Error("ยกเลิกการบันทึก");
    ["cap","cap2","cap3","cap4","cap5"].forEach((k,j)=>{if(!FU[j]&&!FP[j])item[k]=""});
    const send=()=>fsave(item,FP);m.textContent=FP.some(Boolean)?"กำลังอัปโหลดภาพ…":"กำลังบันทึก…";m.className="msg";
    let u=await send();if(!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
    if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");
-   m.textContent="✅ บันทึกแล้ว หน้าเว็บจะอัปเดตเมื่อเปิดใหม่";fclear();$("lfform").classList.add("hide");await loadF()}
+   const wm=await wbSync("lf",item);m.textContent="✅ บันทึกแล้ว หน้าเว็บจะอัปเดตเมื่อเปิดใหม่";if(wm)alert("✅ บันทึกเรื่องแล้ว\n"+wm);fclear();$("lfform").classList.add("hide");await loadF()}
   catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
 async function fdelete(it){if(!confirm("ลบ “"+it.title+"” ?\nรายการจะถูกย้ายไปแท็บ “ถังขยะวิถีชีวิตกวย” ในชีต (กู้คืนได้) และหายจากหน้าเว็บ"))return;
   const u=await call({action:"adminLifeDelete",id:it.id});if(!u.ok){alert("⚠️ "+u.error);return}
