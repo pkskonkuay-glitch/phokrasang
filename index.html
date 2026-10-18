@@ -299,11 +299,13 @@ main{overflow-x:clip}
 <div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
 <div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2></div><div class="fb"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
 <div class="wrap">
-<section id="yr"><div class="sh"><h2>เซกวย</h2></div>
-<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน เลือกแท็บด้านล่างเพื่อดูเรื่องราว</p>
-<div class="ktabs" id="cchips" role="tablist" aria-label="หัวข้อเซกวย"></div>
+<section id="yr"><div class="sh"><h2>วิถีกวย</h2></div>
+<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน เลือกหมวดด้านล่างเพื่อดูเรื่องราว</p>
+<div class="ktabs" id="cchips" role="tablist" aria-label="หมวดวิถีกวย"></div>
 <div class="kpanel" id="kpanel" role="tabpanel">
 <p class="lead" id="cintro"></p>
+<div class="ksub" id="ksub" role="tablist" aria-label="หัวข้อย่อยของกัวออ" hidden></div>
+<p class="mute ssub" id="ssub" hidden></p>
 <p class="mute" id="ylg" style="margin:0 0 8px">☀️ สุริยคติ = วันที่ตายตัวตามปฏิทินสากล • 🌙 จันทรคติ = ตามข้างขึ้นข้างแรม วันที่เปลี่ยนทุกปี เลื่อนดูได้</p>
 <div class="yr" id="yrl"></div>
 <div class="grid" id="cgr"></div>
@@ -471,12 +473,15 @@ if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));
 let cf="เซ (ฮีตคอง)";
 /* วิถีชีวิตกวย 3 หมวด (ข้อมูลไม่ผูกวันที่ มาจากชีต "วิถีชีวิตกวย" ผ่าน action=life; ถ้ายังไม่มีข้อมูลในชีตจะใช้การ์ดในโค้ด K เดิม) */
 const LCATS=["ดุงกวย","กัวออ","จาเอม"];
-const LINTRO={"ดุงกวย":"ดุง (ดุงกวย) แปลว่า บ้านกวย คือความเป็นชุมชน ความเป็นอยู่ บ้านเรือน ผู้คน และสัตว์เลี้ยงต่าง ๆ","กัวออ":"กัวออ แปลว่า อยู่ดี คือความเป็นอยู่ภายใต้วิถีชีวิต วัฒนธรรมประเพณี และวิถีความเชื่อ","จาเอม":"จาเอม คือการมีของกินตามวิถีกวย การหาอยู่หากินจากธรรมชาติ และรสมือที่ปรุงขึ้นกินร่วมกัน เป็นพลังงานที่หล่อเลี้ยงทั้งดุงกวยและกัวออให้หมุนต่อไปได้ ทั้งผักหัวไร่ปลายนา อาหารจากธรรมชาติตามฤดูกาล อาหารว่างและอาหารสมุนไพรของชาวกวย"};
+const LINTRO={"ดุงกวย":"ดุงเลิง คือบ้านและชุมชนกวย ความเป็นชุมชน ความเป็นอยู่ บ้านเรือน ผู้คน และสัตว์เลี้ยงต่าง ๆ","กัวออ":"กัวออ คือการมีชีวิตที่ดี ความเป็นอยู่ที่ดีและสมบูรณ์ ภายใต้วิถีชีวิต วัฒนธรรมประเพณี และความเชื่อ รวมถึงให้ความสำคัญกับขวัญของผู้ที่ยังมีชีวิตอยู่ และสิ่งลี้ลับที่มองไม่เห็น","จาเอม":"จาเอม คือการมีของกินตามวิถีกวย การหาอยู่หากินจากธรรมชาติ และรสมือที่ปรุงขึ้นกินร่วมกัน เป็นพลังงานที่หล่อเลี้ยงทั้งดุงเลิงและกัวออให้หมุนต่อไปได้ ทั้งผักหัวไร่ปลายนา อาหารจากธรรมชาติตามฤดูกาล อาหารว่างและอาหารสมุนไพรของชาวกวย"};
 function covOf(x,band){if(!(x.img&&evOk(evSrc(x.img))))return band;const d=el("div","cov"),im=new Image();im.alt="";im.loading="lazy";im.src=evSrc(x.img);im.onerror=()=>{if(d.parentNode)d.replaceWith(band)};d.append(im);return d}
 var CALI={"สุริยคติ":"☀️","จันทรคติ":"🌙","ตามเหตุการณ์ชีวิต":"🧵"};
 function evFind(t){const k=String(t).split(" ")[0];try{return EVTS.find(o=>o.src.title===t)||EVTS.find(o=>String(o.src.title).split(" ")[0]===k)||null}catch(_){return null}}
 /* แท็บแถวเดียว เรียงตามลำดับที่แสดง: [รหัสในโค้ด, ไอคอน, ป้ายที่แสดง, สี] ("ดุงกวย" ในโค้ด/ชีตคงเดิม แสดงผลเป็น "ดุง") */
-const KTABS=[["เซ (ฮีตคอง)","🕯️","เซกวย (ฮีตคอง)","#0e6b73"],["ดุงกวย","🏡","ดุง","#9a5b12"],["กัวออ","🙏","กัวออ","#2f7d5b"],["จาเอม","🍲","จาเอม","#c9462e"],["ละวาย","🎗️","ละวาย","#5a2f7d"],["คำศัพท์","🗣️","คำศัพท์","#2f9a8f"]];
+const KTABS=[["กัวออ","🙏","กัวออ","#0e6b73"],["จาเอม","🍲","จาเอม","#c9462e"],["ดุงกวย","🏡","ดุงเลิง","#9a5b12"],["คำศัพท์","🗣️","คำศัพท์","#2f9a8f"]];
+/* หัวข้อย่อยใต้กัวออ: [รหัสเดิมในโค้ด/ชีต, ไอคอน, ป้าย, สี, คำอธิบาย] */
+const KSUBS=[["เซ (ฮีตคอง)","🕯️","เซกวย (ฮีตคอง)","#0e6b73","งานประเพณีตลอดปีของชาวกวยบ้านโพธิ์กระสังข์ เลื่อนดูและแตะการ์ดเพื่ออ่านเรื่องราวของแต่ละงาน"],["ละวาย","🎗️","ละวาย","#5a2f7d","พิธีเรียกขวัญและบอกกล่าวบรรพบุรุษ ทำเมื่อมีเหตุในชีวิต เช่น เด็กเกิดใหม่ เจ็บป่วย อุบัติเหตุ หรือสูญเสีย ไม่มีวันตายตัวเหมือนงานประจำปี"]];
+const KSM={};KSUBS.forEach(t=>KSM[t[0]]=t);
 const KTM={};KTABS.forEach(t=>KTM[t[0]]=t);
 function csvRows(t){const R=[];let r=[],c="",q=false;t=String(t).replace(/^\uFEFF/,"");for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);c="";if(r.length>1||r[0]!=="")R.push(r);r=[]}else c+=ch}
  if(c!==""||r.length){r.push(c);R.push(r)}return R}
@@ -485,29 +490,34 @@ function vocabCats(){if(VCATS)return Promise.resolve(VCATS);
  return fetch("kuy-vocab.csv").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const R=csvRows(t).slice(1),m=new Map();R.forEach(x=>{if(!x[0])return;if((x[8]||"").trim()==="ซ่อน")return;const o=m.get(x[0])||{cat:x[0],emo:x[1]||"🗣️",n:0};o.n++;m.set(x[0],o)});VCATS=[...m.values()];return VCATS}).catch(()=>[])}
 function rVocab(){const v=$("kv");v.style.setProperty("--b","#2f9a8f");v.replaceChildren();
  const a=el("a","kvb");a.href="vocab.html";a.append(el("span","ke","🗣️"),(()=>{const t=el("span","kx");t.append(el("b","","คลังคำศัพท์กวย"),el("small","","รวมคำภาษากวยพร้อมคำแปลและเสียง แยกเป็นหมวดอ่านง่าย"));return t})(),el("span","go","เปิดคำศัพท์ทั้งหมด →"));
- v.append(el("p","lead","ภาษากวยคือหัวใจของเซกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย"),a);
+ v.append(el("p","lead","ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย"),a);
  const W=(K["ภาษากวย"]||[]);if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำที่ควรรู้"),w)}
  const h=el("h3","","หมวดคำศัพท์ยอดนิยม"),g=el("div","vgrid");v.append(h,g);
  vocabCats().then(L=>{if(!L.length){h.remove();g.remove();return}L.sort((x,y)=>y.n-x.n).slice(0,12).forEach(c=>{const t=el("a","vt");t.href="vocab.html#c/"+encodeURIComponent(c.cat);const s=el("span");s.append(el("b","",c.cat),el("small","",c.n+" คำ"));t.append(el("i","",c.emo),s);g.append(t)});if(L.length>12){const m=el("a","btn solid","ดูครบทั้ง "+L.length+" หมวดในคลังคำศัพท์ →");m.href="vocab.html";m.style.margin="4px 0 0";v.append(m)}})}
 function rCul(){
- if(!KTM[cf])cf="เซ (ฮีตคอง)";
- const isV=cf==="คำศัพท์",isH=cf==="เซ (ฮีตคอง)",cur=KTM[cf];
- $("cchips").replaceChildren(...KTABS.map(t=>{const on=t[0]===cf,b=el("button","kt"+(on?" on":""));b.type="button";b.id="kt-"+KTABS.indexOf(t);b.style.setProperty("--b",t[3]);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");
+ if(cf==="กัวออ")cf="เซ (ฮีตคอง)";
+ if(!KTM[cf]&&!KSM[cf])cf="เซ (ฮีตคอง)";
+ const isSub=!!KSM[cf],top=isSub?"กัวออ":cf;
+ const isV=cf==="คำศัพท์",isH=cf==="เซ (ฮีตคอง)",cur=isSub?KSM[cf]:KTM[cf];
+ $("cchips").replaceChildren(...KTABS.map(t=>{const on=t[0]===top,b=el("button","kt"+(on?" on":""));b.type="button";b.id="kt-"+KTABS.indexOf(t);b.style.setProperty("--b",t[3]);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");
   b.append(el("span","ke",t[1]),el("b","",t[2]));
-  b.onclick=()=>{if(cf===t[0])return;cf=t[0];rCul();TRK.ev("ceh/"+t[0])};return b}));
+  b.onclick=()=>{if(top===t[0])return;cf=t[0]==="กัวออ"?"เซ (ฮีตคอง)":t[0];rCul();TRK.ev("ceh/"+t[0])};return b}));
  {const o=$("cchips").querySelector(".kt.on");if(o){try{o.scrollIntoView({block:"nearest",inline:"center"})}catch(_){}}}
  $("kpanel").hidden=isV;$("kv").hidden=!isV;
  $("kpanel").style.setProperty("--b",cur[3]);$("kv").style.setProperty("--b",cur[3]);
  if(isV){rVocab();return}
- $("cintro").textContent=LINTRO[cf]||(isH?"งานประเพณีตลอดปีของชาวกวยบ้านโพธิ์กระสังข์ เลื่อนดูและแตะการ์ดเพื่ออ่านเรื่องราวของแต่ละงาน":"");
+ $("cintro").textContent=LINTRO[top]||"";
  $("cintro").hidden=!$("cintro").textContent;
+ {const ks=$("ksub"),ss=$("ssub");ks.hidden=ss.hidden=!isSub;ks.replaceChildren();
+  if(isSub){KSUBS.forEach(t=>{const on=t[0]===cf,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",t[3]);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(cf===t[0])return;cf=t[0];rCul();TRK.ev("ceh/"+t[0])};ks.append(b)});ss.textContent=KSM[cf][4]}}
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg)lg.hidden=!isH}
  if(isH){try{rYear()}catch(_){}return}
 const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงกวย":"bead","กัวออ":"silk","จาเอม":"plaid"};
 /* หมวดฮีตคอง = ปฏิทินงานประจำปีจากชีต "งานประจำปี" ที่เดียว (เรียงลำดับตามที่แอดมินจัด) หมวดอื่นใช้การ์ดในโค้ด แต่ถ้ามีงานชื่อตรงกันในชีตจะเปิดหน้าเรื่องราวให้ */
 const hee=cf==="เซ (ฮีตคอง)";
 const lifeEv=EVTS.filter(o=>o.src.cal==="ตามเหตุการณ์ชีวิต");
-const L=(cf==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+let L=(cf==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+if(cf==="ละวาย"){const guL=LIFEOBJ.length?LIFEOBJ.filter(o=>o.src.cat==="กัวออ").map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(K["กัวออ"]||[]).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}));L=L.concat(guL)}
 const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cf]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title),el("div","mute",x.sum));
   const ev0=x.ev;
   if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2);{const vw=vwEl(ev0);if(vw){vw.classList.add("vwc");i.append(vw)}}}
@@ -752,7 +762,7 @@ const MN=[["🏠","หน้าแรก","",()=>go("home")],
 ["🔎","ติดตามเรื่อง","ดูความคืบหน้า",()=>go("board")],
 ["📣","ส่งข่าว","ฝากข่าวดีบ้านเรา",()=>{history.replaceState(null,"",location.pathname+"?c=news");go("submit")}],
 ["📰","ข่าว • คลิป","ล่าสุดจากชุมชน",()=>go("home","latest")],
-["📖","เซกวย (ฮีตคอง)","ฮีตคอง ดุง กัวออ จาเอม ละวาย",()=>{cf="เซ (ฮีตคอง)";rCul();go("home","yr")}],
+["📖","วิถีกวย","กัวออ (เซกวย ละวาย) จาเอม ดุงเลิง",()=>{cf="เซ (ฮีตคอง)";rCul();go("home","yr")}],
 ["💬","คุยกับทีมงาน","ถามได้ทุกเรื่อง ผ่าน LINE",()=>window.open(lineMsg("คุยกับทีมงาน"),"_blank","noopener")],
 ["g","รู้ไว้ใช้สิทธิ์"],
 ["🪪","สิทธิ์ที่ควรรู้","บัตรสวัสดิการ ไฟฟ้าการเกษตร ตรวจข้อมูลนาปี",()=>go("home","rights")],
@@ -989,7 +999,7 @@ async function loadEvents(){if(!CFG.apiUrl)return;
  try{const d=await getJ("events","events",hadE);
   if(/[?&]debug=1/.test(location.search)){const y=$("yr");if(y)y.prepend(el("p","mute","[debug] ข้อมูลปีกวยมาจาก: "+(window.KPSRC.events||"?")+" • "+((d&&d.items)||[]).length+" งาน"))}
   if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
-/* ===== วิถีชีวิตกวย: หน้าอ่านของแต่ละเรื่อง (ดุงกวย / กัวออ / จาเอม) ===== */
+/* ===== วิถีชีวิตกวย: หน้าอ่านของแต่ละเรื่อง (ดุงเลิง / กัวออ / จาเอม) ===== */
 const mkLife=e=>{const b=[];
  [[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].forEach(x=>{if(x[0]&&evOk(evSrc(x[0])))b.push("!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")")});
  const st=evLines(e.story);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));
@@ -1129,6 +1139,14 @@ ap();
 .vt i{font-style:normal;font-size:24px;flex:none}.vt span{display:flex;flex-direction:column;min-width:0}.vt b{font:700 15px/1.3 Boon,system-ui,sans-serif}.vt small{font-size:12.5px;color:var(--mute)}
 .vw{display:flex;flex-wrap:wrap;gap:8px}.vw span{background:color-mix(in srgb,#2f9a8f 10%,var(--card));border:1px solid color-mix(in srgb,#2f9a8f 30%,var(--line));border-radius:12px;padding:4px 12px;font-size:15px}.vw b{margin-right:6px}
 .sv2 .t.wide{grid-column:span 2}
+.ksub{display:flex;flex-wrap:wrap;gap:10px}
+.ks{--b:#0e6b73;display:flex;align-items:center;gap:8px;padding:9px 20px 9px 12px;border-radius:99px;border:2px solid color-mix(in srgb,var(--b) 35%,var(--line));background:var(--card);color:var(--ink);font-family:inherit;cursor:pointer;transition:background .15s}
+.ks .ke{font-size:19px;line-height:1}.ks b{font:700 15.5px/1.2 Boon,system-ui,sans-serif}
+.ks:hover{background:color-mix(in srgb,var(--b) 9%,var(--card))}
+.ks.on{background:var(--b);border-color:var(--b);color:#fff;box-shadow:0 3px 0 color-mix(in srgb,var(--b) 55%,#000)}
+.ks:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.ksub[hidden],.ssub[hidden]{display:none!important}
+.ssub{font-size:15px}
 </style>
 <style id="v13">
 /* ป้ายหมวดอยู่ใต้หัวข้อทันที (ไม่ลอยไปท้ายการ์ด) และเว้นระยะระหว่างแถวให้ชัดว่าเป็นของการ์ดไหน */
