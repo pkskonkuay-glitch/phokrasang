@@ -10,6 +10,7 @@ try { K = readJson("data/legacy-keys.json"); } catch (e) { /* ไม่มีไ
 const items = (C && C.items) || [];
 const norm = s => String(s || "").replace(/\s+/g, " ").trim();
 const titleOf = v => typeof v === "string" ? v : (v && v.title) || "";
+const altsOf = v => (v && Array.isArray(v.alt)) ? v.alt.filter(Boolean) : [];   // ชื่อสำรอง: ชื่อใหม่ที่แก้ในหน้า admin
 // จับคู่กับหลังบ้านแบบเดียวกับที่หน้าเว็บทำ: ชื่อตรงกัน → "ข่าวเก่า: " + ชื่อ → ชื่อเดียวกันหลังตัดช่องว่างซ้ำ
 const findInSheet = t => items.find(i => i.title === t) || items.find(i => i.title === "ข่าวเก่า: " + t) || items.find(i => norm(i.title) === norm(t) || norm(i.title) === "ข่าวเก่า: " + norm(t));
 let miss = 0, noimg = 0, noexp = 0, nokey = 0, keyprob = 0, nostub = 0;
@@ -25,7 +26,7 @@ L.forEach(x => {
     if (titleOf(K[k]) !== x.title) { flags.push("🔑 data/legacy-keys.json ไม่มีรหัส " + k + " หรือชื่อไม่ตรงกับไฟล์นี้"); keyprob++; }
     if (!fs.existsSync("s/" + k + ".html")) { flags.push("📄 ยังไม่มีหน้าแชร์ s/" + k + ".html (รอบอต build-share รอบถัดไป)"); nostub++; }
   }
-  const s = findInSheet(x.title);
+  const s = findInSheet(x.title) || altsOf(K[k]).map(findInSheet).find(Boolean);
   if (!s) { flags.push("❌ ยังไม่อยู่ใน Sheet"); miss++; }
   else {
     if (x.img && !s.img) { flags.push("⚠️ ไม่มีรูป (หน้าเว็บจะใช้รูปจากไฟล์เริ่มต้น ถ้าตัดไฟล์ รูปจะหาย)"); noimg++; }

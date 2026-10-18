@@ -368,7 +368,7 @@ const F=CFG.fbUrl,P=CFG.ytList;
 const CC={"โครงการและบริการ":["#0e6b73","#2f9a8f","📣"],"เตือนภัย":["#b4531a","#7a2f12","⚠️"],"คนบ้านเรา":["#2f7d5b","#1d4f3a","🤝"],"สิทธิ์ที่ควรรู้":["#0e6b73","#0a4a52","🪪"]};
 /* ข่าว/บทความ ไม่ฝังในหน้านี้อีกแล้ว: มาจากหลังบ้าน (Sheet) / data/content.json และไฟล์เริ่มต้น legacy-content.json */
 const news=[],arts=[];
-let CUR=[],SEED=[],VFEED=[],DYNV=[];const KEYT={};
+let CUR=[],SEED=[],VFEED=[],DYNV=[];const KEYT={},KEYA={};   // KEYA = ชื่อสำรองของเรื่องเริ่มต้น (ชื่อเดิม/ชื่อใหม่ที่แก้ในหลังบ้าน) ให้ลิงก์เก่าและการกันซ้ำยังจับคู่ได้
 const V=(cat,title,sum,link,c1,c2,date,img)=>({cat,title,sum,link,date:date||"YouTube",c1,c2,img});
 const clips=[
 V("เพลง","เพลง “โพธิ์กระสังข์ (ที่นี่บ้านเรา)” – ขวัญชิต โพธิ์กระสังข์","","https://www.youtube.com/watch?v=X920G3Y0E2A","#0e6b73","#7a3b9a"),
@@ -583,7 +583,7 @@ m.style.backgroundImage=f.big?"url("+f.big+"),url("+f.img+")":"url("+f.img+")";m
 $("hh").textContent=f.t;$("hc").textContent=f.cat;$("hq").textContent=f.s;m.onclick=()=>openF(f);
 $("hn").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));
 const p=$("hp");p.classList.remove("run");void p.offsetWidth;if(!htm)return;p.classList.add("run");clearTimeout(htm);htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000)}
-function heroInit(){if(!HERO.length){$("hn").replaceChildren();return}$("hn").replaceChildren(...HERO.map((f,i)=>{const b=el("button");const n=el("b","","0"+(i+1));b.append(n,el("span","",f.t));b.onclick=()=>{htm=htm||1;rHero(i)};return b}));
+function heroInit(){if(!HERO.length){$("hn").replaceChildren();return}$("hn").replaceChildren(...HERO.map((f,i)=>{const b=el("button");const n=el("b","","0"+(i+1));b.append(n,el("span","",f.lbl||f.t));/* ป้ายแถบรอง: ใช้ช่อง "ป้ายแถบรอง" จากหลังบ้านก่อน ไม่มีค่อยใช้ชื่อเรื่อง */b.onclick=()=>{htm=htm||1;rHero(i)};return b}));
 const rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;htm=rm?0:1;rHero(0);if(!rm){const hs=document.querySelector(".hs");hs.onmouseenter=()=>{clearTimeout(htm);$("hp").classList.remove("run")};hs.onmouseleave=()=>{htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000);$("hp").classList.add("run")}}}
 const _go=go;go=function(v,s){if(v==="home")document.querySelectorAll(".sw").forEach(x=>x.classList.toggle("hide",x.id!==s));_go(v,s)};
 let nf="ทั้งหมด";
@@ -784,14 +784,14 @@ fetch(CFG.apiUrl+"?action=item&id="+encodeURIComponent(o.dynId)).then(x=>x.json(
 _openRead(o,push)};
 const CKEY="kp_content_v1";let LASTJ="";
 /* รวมของจาก 3 แหล่งเข้าหน้าเว็บ: เนื้อหาหลังบ้าน (CUR) + เรื่องเริ่มต้นจาก legacy-content.json (SEED เฉพาะเรื่องที่หลังบ้านยังไม่มี) + คลิปแนะนำจาก data/videos.json (VFEED) */
-const legacyFind=k=>{const t=KEYT[k];return t?[...news,...arts].find(x=>x.title===t||x.title==="ข่าวเก่า: "+t):null};  // ลิงก์เก่า #/read/n0, a3 ... ยังเปิดได้แม้เรื่องย้ายไปอยู่หลังบ้านแล้ว
+const legacyFind=k=>{const ts=[KEYT[k],...(KEYA[k]||[])].filter(Boolean);return ts.length?[...news,...arts].find(x=>ts.some(t=>x.title===t||x.title==="ข่าวเก่า: "+t)):null};  // ลิงก์เก่า #/read/n0, a3 ... ยังเปิดได้แม้เรื่องย้ายไปอยู่หลังบ้านแล้ว
 function applyContent(items){
  CUR=items;
  const rm=it=>it.kind==="ข่าวสาร"&&/บัตรสวัสดิการ|ไฟฟ้าการเกษตร|ข้อมูลการทำนา|ทำนาปี|เบี้ยยังชีพ/.test(it.title||"")?Object.assign({},it,{cat:"สิทธิ์ที่ควรรู้"}):it;
  items=items.map(rm);
  const have0=new Set(items.map(i=>i.title));
- const all=items.concat(SEED.filter(x=>!have0.has(x.title)).map(rm));
- const SI={};SEED.forEach(o=>{if(o.img)SI[o.title]=o.img}); // รูปเดิมของเรื่องเริ่มต้น ใช้เมื่อหลังบ้านยังไม่ใส่รูป หรือรูปโหลดไม่ขึ้น
+ const all=items.concat(SEED.filter(x=>!have0.has(x.title)&&!(KEYA[x.k]||[]).some(t=>have0.has(t))).map(rm));   // เรื่องที่แก้ชื่อในหลังบ้านแล้ว (ชื่อเดิมหรือชื่อใหม่ก็ได้) ไม่ดึงจากไฟล์เริ่มต้นซ้ำ
+ const SI={},SL={};SEED.forEach(o=>{[o.title,...(KEYA[o.k]||[])].forEach(t=>{if(o.img)SI[t]=o.img;if(o.lbl)SL[t]=o.lbl})}); // รูปเดิมของเรื่องเริ่มต้น ใช้เมื่อหลังบ้านยังไม่ใส่รูป หรือรูปโหลดไม่ขึ้น
  const have=new Set(all.map(i=>i.title)),nn=[],aa=[],add=[],dv=[],ff=VFEED.filter(f=>!have.has(f.t));
  [...all].reverse().forEach(it=>{const y=it.at?String(+it.at.slice(0,4)+543):"";
   if(it.kind==="คลิป"&&it.video){add.unshift({key:"cv"+it.id,kind:"v",t:it.title,cat:it.cat||"คลิป",s:it.sum||"ดูบน YouTube",img:"https://i.ytimg.com/vi/"+it.video+"/mqdefault.jpg",big:"https://i.ytimg.com/vi/"+it.video+"/maxresdefault.jpg",url:"https://www.youtube.com/watch?v="+it.video,y:y,pin:!!it.pin});
@@ -801,7 +801,7 @@ function applyContent(items){
   const bdy=it.k?String(it.body||"").split(/\n+/).map(x=>x.trim()).filter(Boolean):[];
   const o={k:it.k||"c"+it.id,cat:it.cat||it.kind,title:(old?"ข่าวเก่า: ":"")+it.title,sum:it.sum,date:thD(it.at),img:it.img||SI[it.title]||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:bdy.length?bdy:[it.sum||it.title],lazy:it.k?undefined:it.lazy,dynId:it.k?undefined:it.id,v:+it.v||0};
   (it.kind==="วิถีกวย"?aa:nn).unshift(o);
-  const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y,pin:!!it.pin&&!old,real:!!(it.img||SI[it.title])&&!old};add.unshift(fe);
+  const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,lbl:String(it.lbl||SL[it.title]||"").trim(),cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y,pin:!!it.pin&&!old,real:!!(it.img||SI[it.title])&&!old};add.unshift(fe);
   if(SI[it.title]&&it.img&&it.img!==SI[it.title]){const t=new Image();t.onerror=()=>{o.img=SI[it.title];fe.img=o.img;rNews();rFeed()};t.src=it.img}});
  news.splice(0,news.length,...nn);arts.splice(0,arts.length,...aa);DYNV=dv;
  const mix=[];let vi=0;add.forEach((f,i)=>{mix.push(f);if(i%3===2&&ff[vi])mix.push(ff[vi++])});while(vi<ff.length)mix.push(ff[vi++]);   // คลิปแนะนำแทรกทุก 3 เรื่อง
@@ -809,8 +809,9 @@ function applyContent(items){
  const byT={};add.forEach(f=>byT[f.t]=f);
 /* ช่องที่ 6 ล็อกไว้ให้เรื่องใน CFG.heroLock (ค่าเริ่มต้น n0 = เรื่อง 250 ล้านบาท) เรื่องใหม่ที่ปักหมุดจะเข้าช่อง 1–5 ดันตัวท้ายของช่อง 1–5 ออก
    ปิดการล็อกโดยตั้ง heroLock:"" ใน config.js */
- const LOCK=CFG.heroLock===undefined?"n0":CFG.heroLock,lockF=LOCK&&KEYT[LOCK]&&byT[KEYT[LOCK]]||null,cap=lockF?5:6;
- let nh=["n8","a0","a1","a2","a3"].map(k=>KEYT[k]&&byT[KEYT[k]]).filter(f=>f&&f!==lockF);   // ภาพเด่นหน้าแรกเดิม (สากกวย a3 อยู่ท้ายสุด จึงถูกตัดก่อนเมื่อมีเรื่องใหม่)
+ const fk=k=>{for(const t of [KEYT[k],...(KEYA[k]||[])])if(t&&byT[t])return byT[t];return null};
+ const LOCK=CFG.heroLock===undefined?"n0":CFG.heroLock,lockF=LOCK&&fk(LOCK)||null,cap=lockF?5:6;
+ let nh=["n8","a0","a1","a2","a3"].map(k=>fk(k)).filter(f=>f&&f!==lockF);   // ภาพเด่นหน้าแรกเดิม (สากกวย a3 อยู่ท้ายสุด จึงถูกตัดก่อนเมื่อมีเรื่องใหม่)
  add.filter(f=>f.real&&f!==lockF&&!nh.includes(f)).forEach(f=>{if(nh.length<cap)nh.push(f)});
  const pins=add.filter(f=>f.pin&&f!==lockF).slice(0,cap);if(pins.length){const keep=nh;nh=[...pins];keep.forEach(f=>{if(nh.length<cap&&!nh.includes(f))nh.push(f)})}
  nh=nh.slice(0,cap);if(lockF)nh.push(lockF);
@@ -823,7 +824,7 @@ async function getJ(act,name,nofb){const S=(window.KPSRC=window.KPSRC||{});try{c
    เรื่องที่ไม่มี legacyKey ใช้ "l-"+แฮชชื่อเรื่อง (ไม่ขึ้นกับลำดับในไฟล์) — H36 ต้องเหมือน hash36 ใน build-share.js */
 const H36=s=>{let h=5381;for(const ch of String(s))h=((h*33)^ch.codePointAt(0))>>>0;return h.toString(36)};
 async function loadSeed(){let any=false;
- try{const K=await (await fetch("data/legacy-keys.json",{cache:"no-cache"})).json();if(K&&typeof K==="object")Object.keys(K).forEach(k=>{const v=K[k],t=typeof v==="string"?v:v&&v.title;if(t){KEYT[k]=t;any=true}})}catch(e){}
+ try{const K=await (await fetch("data/legacy-keys.json",{cache:"no-cache"})).json();if(K&&typeof K==="object")Object.keys(K).forEach(k=>{const v=K[k],t=typeof v==="string"?v:v&&v.title;if(t){KEYT[k]=t;if(v&&Array.isArray(v.alt))KEYA[k]=v.alt.filter(Boolean);any=true}})}catch(e){}
  try{const r=await fetch("legacy-content.json",{cache:"no-cache"}),L=await r.json();if(Array.isArray(L)){
   SEED=L.filter(x=>x&&x.title).map(x=>{const k=x.legacyKey||"l-"+H36(x.title);KEYT[k]=x.title;return Object.assign({},x,{k:k})});any=true}}catch(e){}
  if(any)applyContent(CUR)}

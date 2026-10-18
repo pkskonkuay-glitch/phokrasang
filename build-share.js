@@ -37,6 +37,8 @@ const list = j => Array.isArray(j) ? j : (j && (j.items || j.rows || j.data || j
 //   2) data/legacy-keys.json: แผนที่ รหัส → ชื่อเรื่อง ที่อยู่ถาวร แม้ตัด legacy-content.json ทิ้งแล้ว ลิงก์เก่ายังใช้ได้
 const readJson = (...p) => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, ...p), "utf8")); } catch (e) { return null; } };
 const titleOf = v => typeof v === "string" ? v : (v && v.title) || "";
+// ชื่อสำรอง (alt): ชื่อเรื่องที่แก้ในหน้า admin แล้ว ให้รหัสเก่า n0/a0… ยังหาเรื่องเจอทั้งชื่อเดิมและชื่อใหม่
+const altsOf = v => (v && Array.isArray(v.alt)) ? v.alt.filter(Boolean) : [];
 function seedItems() {
   const L = readJson("legacy-content.json");
   if (!Array.isArray(L)) { console.warn("ไม่พบ/อ่าน legacy-content.json ไม่ได้ ใช้เฉพาะแผนที่รหัสใน data/legacy-keys.json"); return []; }
@@ -48,7 +50,8 @@ function keyedFromContent(have, contentItems) {
   Object.keys(K).forEach(k => {
     if (have.has(k)) return;
     const t = titleOf(K[k]); if (!t) return;
-    const x = contentItems.find(i => i.title === t || i.title === "ข่าวเก่า: " + t);
+    const ts = [t, ...altsOf(K[k])];
+    const x = contentItems.find(i => ts.some(z => i.title === z || i.title === "ข่าวเก่า: " + z));
     if (x) out.push({ k, title: x.title, sum: x.sum, img: x.img, at: x.at });
   });
   return out;
@@ -118,6 +121,10 @@ function page(it) {
   // กลุ่มที่ดึงไม่ได้รอบนี้ → ใช้ data/<กลุ่ม>.json เดิมสร้าง sitemap/หน้าแชร์ต่อ (ไม่ให้ URL หายจาก sitemap)
   const c2 = c || readJson("data", "content.json"), e2 = e || readJson("data", "events.json"), p2 = p || readJson("data", "products.json"), lf2 = lf || readJson("data", "life.json");
   const items = seedItems(), seen = new Set(items.map(i => i.k));
+  { // เรื่องเริ่มต้นที่แก้ชื่อในหน้า admin แล้ว: หน้าแชร์ใช้ชื่อ/สรุป/รูปล่าสุดจากหลังบ้าน (จับคู่ด้วยชื่อเดิมหรือชื่อสำรอง)
+    const K0 = readJson("data", "legacy-keys.json") || {};
+    items.forEach(i => { const ts = [i.title, ...altsOf(K0[i.k])]; const x = list(c2).find(c => ts.some(z => c.title === z || c.title === "ข่าวเก่า: " + z)); if (x) { i.title = x.title; i.sum = x.sum || i.sum; i.img = x.img || i.img; } });
+  }
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
   keyedFromContent(seen, list(c2)).forEach(add);   // รหัสเก่า (n0/a0…) ที่เรื่องย้ายไปอยู่หลังบ้านแล้ว
   list(c2).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));

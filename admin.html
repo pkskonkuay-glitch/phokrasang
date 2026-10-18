@@ -26,6 +26,15 @@ label{display:block;font-weight:700;margin:12px 0 4px;font-size:14px}input,selec
 #big{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20}#big img{max-width:96vw;max-height:92vh}.hide{display:none!important}body.rev .pubonly,body.rev #t2,body.rev #t3,body.rev #t4,body.rev #t5,body.rev #t6{display:none!important}
 .opt{font-weight:400;display:flex;gap:8px;align-items:center;margin:8px 0;font-size:15px}.opt input{width:auto}.msg.warn{background:#fff3c4;color:#6b5000}#adv{margin:14px 0 4px;color:var(--mute);font-size:14px}#adv summary{cursor:pointer}
 body:not(.in) #rf,body:not(.in) #lo{display:none}
+.cnt{font-size:13px;color:var(--mute);margin:3px 0 0;min-height:19px}.cnt.ok{color:#14502f}.cnt.warn{color:#8a5a00}.cnt.bad{color:var(--red);font-weight:700}
+.lt{border-radius:8px;padding:6px 10px;margin:6px 0;font-size:14px;background:#eef6f4;color:var(--ink)}.lt.bad{background:#fde2e2;color:#8a1c1c}.lt.warn{background:#fff3c4;color:#6b5000}.lt.ok{background:#dcf3e7;color:#14502f}.lt .btn{padding:2px 10px;font-size:13px}
+.badge.lb.ok{background:#dcf3e7;color:#14502f}.badge.lb.warn{background:#fff3c4;color:#6b5000}.badge.lb.bad{background:#fde2e2;color:var(--red)}.badge.w{background:#fff3c4;color:#6b5000}
+.pvw{margin:8px 0}.pv{position:relative;border-radius:12px;padding:14px 16px;color:#fff;background:linear-gradient(90deg,rgba(8,30,28,.78) 0%,rgba(8,30,28,.35) 45%,rgba(8,30,28,0) 75%),linear-gradient(135deg,#2f7d5b,#0e4f49 60%,#b34700)}
+.pv h4{margin:0 0 6px;font-size:clamp(20px,3.4vw,30px);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pv p{margin:0;font-size:16px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}.pv.pvn h4{font-size:22px}.pv.pvn p{-webkit-line-clamp:2}
+.pvc{display:grid;grid-template-columns:repeat(2,minmax(0,150px));border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.pvchip{padding:10px 12px;font-size:13px;line-height:1.45;color:#444;border-left:1px solid var(--line)}.pvchip:first-child{border-left:0;background:#dbf1ec}.pvchip b{display:block;font-size:14px;color:#b34700}.pvchip span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rcr{padding:5px 0;border-bottom:1px dashed var(--line);font-size:14px}#sxbar .row3{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}@media(max-width:700px){#sxbar .row3{grid-template-columns:1fr 1fr}}
+mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}details.qe summary{cursor:pointer;font-weight:700;color:var(--navy)}.pp{border-bottom:1px solid var(--line);padding:10px 0}
 </style></head><body>
 <header><a href="index.html" style="color:inherit;text-decoration:none;font-size:.9em;opacity:.8;margin-right:8px" title="กลับหน้าเว็บ">← หน้าเว็บ</a><b>🛠️ หลังบ้าน ที่นี่โพธิ์กระสังข์</b><button class="btn o" id="rf">รีเฟรช</button><button class="btn o" id="lo">ออก</button></header>
 <div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัสผู้ดูแล (ADMIN_TOKEN) ที่ตั้งไว้ใน Apps Script</p>
@@ -35,13 +44,18 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
 <details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
-<div id="app" class="wrap hide"><div class="msg hide" id="bk" role="status"></div><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">โพสต์เนื้อหา (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button><button class="chip" id="t6">🏡 วิถีชีวิตกวย</button></div><div id="p1"><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
+<div id="app" class="wrap hide"><div class="msg hide" id="bk" role="status"></div><div class="stats"><button class="chip on" id="t1">เรื่องแจ้ง</button><button class="chip" id="t2">📰 เนื้อหาเว็บ (ข่าว • เรื่องเล่า • คลิป)</button><button class="chip" id="t3">🗣️ คำศัพท์กวย</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button><button class="chip" id="t5">📅 งานประจำปี</button><button class="chip" id="t6">🏡 วิถีชีวิตกวย</button></div><div id="p1"><p><input id="rq" placeholder="🔍 ค้นหาเรื่องแจ้ง: เลขเรื่อง หมวด รายละเอียด หน่วยงาน (เว้นวรรคเพื่อใส่หลายคำ)" aria-label="ค้นหาเรื่องแจ้ง"></p><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
 <div id="p2" class="hide"><div class="c" id="cform"><h3 id="cft">โพสต์เนื้อหาใหม่</h3>
 <div class="row"><div><label for="ck">ประเภท</label><select id="ck"><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select></div><div><label for="cd">วันที่</label><input id="cd" type="date"></div></div>
 <div class="row"><div><label for="cx">หมดอายุ (ไม่บังคับ) ข่าวเตือนที่หมดเวลาแล้วจะขึ้นว่า “ข่าวเก่า” เอง</label><input id="cx" type="date"></div></div>
 <label for="cc">หมวด (เช่น สิทธิ์ที่ควรรู้, โครงการและบริการ, เตือนภัย, คนบ้านเรา, ประเพณี, ความเชื่อ)</label><input id="cc" list="cl"><datalist id="cl"><option>สิทธิ์ที่ควรรู้</option><option>โครงการและบริการ</option><option>เตือนภัย</option><option>คนบ้านเรา</option><option>ประเพณี</option><option>ความเชื่อ</option><option>วัฒน์กวย</option><option>คลิป</option></datalist>
-<label for="ct">หัวข้อ</label><input id="ct" maxlength="150">
-<label for="cs">สรุปสั้น (ไม่เกิน 300 ตัวอักษร)</label><textarea id="cs" rows="2" maxlength="300"></textarea>
+<details class="c" id="crecw"><summary><b>✍️ สูตรเขียนหัวข้อ 4 แบบ และข้อควรระวังเวลาย่อ</b> <span class="mute" id="crech"></span></summary><div id="crecb"></div></details>
+<label for="ct">หัวข้อหลัก <span class="mute" style="font-weight:400">(เป้า 18–30 ตัวอักษร ≈ 4–6 คำ เพดาน 35 · ไม่เกิน 2 บรรทัด)</span></label><input id="ct" maxlength="150"><div class="cnt" id="ctn"></div>
+<label for="cs">คำขยาย (สรุปสั้น) <span class="mute" style="font-weight:400">(เป้า 30–50 ตัวอักษร ≈ 6–10 คำ เพดาน 60 · ต้องจบในตัวเอง)</span></label><textarea id="cs" rows="2" maxlength="300"></textarea><div class="cnt" id="csn"></div>
+<label for="clb">ป้ายแถบรอง <span class="mute" style="font-weight:400">(ข้อความสั้นในแถบ 01–06 ใต้ภาพใหญ่หน้าแรก 14–24 ตัวอักษร ≈ 2–4 คำ · เว้นว่างได้ ระบบใช้หัวข้อหลักแทน)</span></label><input id="clb" maxlength="40"><div class="cnt" id="clbn"></div>
+<div id="clint" class="hide" aria-live="polite"></div>
+<p class="hide" id="crsv"><button type="button" class="btn o">📌 เก็บชื่อเดิมไว้เป็นบรรทัดแรกของเนื้อหา (ให้ค้นหาเจอด้วยชื่อเก่า)</button></p>
+<details class="c" id="cprevw" open><summary><b>👁 ตัวอย่างที่ผู้อ่านจะเห็น (วัดการตัดข้อความจริง)</b></summary><div id="cprev"></div></details>
 <label for="cb">เนื้อหาเต็ม</label><textarea id="cb" rows="9"></textarea>
 <p class="mute">เว้นบรรทัดเพื่อขึ้นย่อหน้าใหม่ · ขึ้นต้นบรรทัดด้วย <code>## </code> เป็นหัวข้อย่อย · ขึ้นต้นด้วย <code>• </code> เป็นรายการ · ห้ามใส่ข้อมูลส่วนตัวของผู้อื่น</p>
 <p><button type="button" class="btn o" id="cimb">🖼 แทรกรูปในเนื้อหา</button> <button type="button" class="btn o" id="chb2">หัวข้อย่อย</button> <button type="button" class="btn o" id="cqb">❝ คำพูดเด่น</button> <button type="button" class="btn o" id="chb">⭐ กล่องเน้น</button><input type="file" id="cimf" accept="image/*" hidden></p>
@@ -61,7 +75,17 @@ body:not(.in) #rf,body:not(.in) #lo{display:none}
 <label style="font-weight:400"><input type="checkbox" id="cp2" checked style="width:auto"> เผยแพร่ทันที</label>
 <label style="font-weight:400"><input type="checkbox" id="cpn" style="width:auto"> ปักหน้าแรก (แสดงในสไลด์ใหญ่ด้านบนสุด สูงสุด 6 เรื่อง)</label>
 <p><button class="btn" id="csv">บันทึก</button> <button class="btn o" id="crs">ล้างฟอร์ม</button></p><div class="msg hide" id="cm"></div></div>
-<h3>รายการที่โพสต์ไว้</h3><div id="cl2"></div></div><div id="p3" class="hide">
+<h3 id="clh">รายการเนื้อหาทั้งหมด <span class="mute" id="sxn"></span></h3>
+<div class="c" id="sxbar"><label for="sxq" style="margin-top:0">🔍 ค้นหาเรื่องที่จะแก้ไข หรือลบ</label><input id="sxq" placeholder="พิมพ์คำในหัวข้อ คำขยาย หมวด หรือเนื้อหา (เว้นวรรคเพื่อใส่หลายคำ เช่น ไฟฟ้า เกษตร)" autocomplete="off">
+<div class="row3"><select id="sxk" aria-label="ประเภท"><option value="">ทุกประเภท</option><option>ข่าวสาร</option><option>วิถีกวย</option><option>คลิป</option></select><select id="sxc" aria-label="หมวด"></select>
+<select id="sxs" aria-label="สถานะ"><option value="">ทุกสถานะ</option><option value="pub">เผยแพร่แล้ว</option><option value="draft">ฉบับร่าง</option><option value="pin">ปักหน้าแรก</option><option value="long">ยาวเกินเพดาน</option><option value="warn">มีข้อควรตรวจ</option><option value="nolbl">ยังไม่มีป้ายแถบรอง</option></select>
+<select id="sxo" aria-label="เรียง"><option value="new">ใหม่ → เก่า</option><option value="old">เก่า → ใหม่</option><option value="az">ตามชื่อ ก–ฮ</option><option value="long">หัวข้อยาวสุดก่อน</option><option value="views">ยอดอ่านมากสุด</option></select></div>
+<p style="margin-bottom:0"><button type="button" class="btn o" id="sxr">ล้างตัวกรอง</button></p></div>
+<details class="c" id="ppw"><summary><b>📋 ชุดหัวข้อสั้นที่เสนอ 20 เรื่อง</b><span class="mute" id="ppsum"></span></summary>
+<p class="mute">จากเอกสาร “หัวข้อให้สั้น กระชับ ไม่ทับภาพ” ระบบจับคู่กับเรื่องในชีตด้วยชื่อเดิม แล้วกดใช้ทีละเรื่อง หรือทั้งหมดในครั้งเดียว (เนื้อหาเต็ม รูป ลิงก์ ไม่เปลี่ยน) เรื่องเริ่มต้น n0–a4 เก็บชื่อเดิมเป็นชื่อสำรองใน legacy-keys.json แล้ว ลิงก์เก่าไม่เสีย คำแนะนำ: ทำ 3–4 เรื่อง แล้วเปิดดูหน้าแรกบนมือถือก่อนทำต่อ</p>
+<label class="opt"><input type="checkbox" id="ppkeep"> เก็บชื่อเดิมไว้เป็นบรรทัดแรกของเนื้อหา (ให้ค้นหาเจอด้วยชื่อเก่า)</label>
+<p><button class="btn" id="ppall">✅ ใช้ทุกเรื่องที่พบ</button></p><div class="msg hide" id="ppmsg"></div><div id="ppl"></div></details>
+<div id="cl2"></div></div><div id="p3" class="hide">
 <div class="c"><h3>🗣️ คำศัพท์กวย</h3><p class="mute">เพิ่ม แก้ไข ซ่อน หรือลบคำได้ที่นี่ หน้าเว็บ <a href="vocab.html" target="_blank" rel="noopener">vocab.html</a> จะอัปเดตตามทันที (ลบแล้วคำไปอยู่แท็บ “ถังขยะคำศัพท์” ในชีต กู้คืนได้)</p>
 <div class="stats" id="vst"></div>
 <div class="row"><div><input id="vq" placeholder="🔍 ค้นหา คำไทย / คำกวย" aria-label="ค้นหาคำ"></div><div><select id="vcat" aria-label="กรองตามหมวด"></select></div></div>
@@ -214,7 +238,10 @@ function draw(d){if(!d.ok){alert(d.error);return}
  const st=$("st");st.replaceChildren(...d.statuses.concat(d.reviews).map((k,i)=>{const c=el("span","chip",k+" ");c.append(el("b","",String(d.stats[k]||0)));return c}));
  const F=[["ทั้งหมด",{}],["รอตรวจเนื้อหา",{review:"รอตรวจ"}],["รอรับเรื่อง",{status:"รอรับเรื่อง"}],["มีธงเตือน",{flagged:1}]];
  $("ft").replaceChildren(...F.map(([n,f])=>{const b=el("button","chip"+(JSON.stringify(S.f)===JSON.stringify(f)?" on":""),n);b.onclick=()=>{S.f=f;load()};return b}));
- $("ls").replaceChildren(...(d.items.length?d.items.map(card(d)):[el("p","mute","ไม่มีรายการ")]))}
+ RD=d;rl()}
+let RD=null;function rl(){if(!RD)return;const ts=($("rq").value||"").trim().split(/\s+/).map(z=>z.toLowerCase()).filter(Boolean),L=RD.items.filter(it=>!ts.length||ts.every(t=>[it.no,it.cat,it.what,it.want,it.spot,it.org,it.prog,it.status,it.review,it.at].join(" ").toLowerCase().includes(t)));
+ $("ls").replaceChildren(...(L.length?L.map(card(RD)):[el("p","mute",RD.items.length?"ไม่พบเรื่องที่ตรงกับคำค้นหา":"ไม่มีรายการ")]))}
+$("rq").addEventListener("input",rl);
 const okImg=u=>/^https:\/\/drive\.google\.com\//.test(u),okMap=u=>/^https:\/\/maps\.google\.com\//.test(u);
 function card(d){return it=>{const c=el("div","c"+(it.flags?" flag":"")),t=el("div","top");
  t.append(el("h3","",it.no+" • "+it.cat),el("span","badge",it.status),el("span","badge"+(it.review==="ผ่าน"?" g":it.review==="รอตรวจ"?"":" r"),"ตรวจ: "+it.review));if(it.pub)t.append(el("span","badge g","เผยแพร่แล้ว"));c.append(t);
@@ -246,28 +273,166 @@ let CE=null,CP="";
 const tab=n=>{[1,2,3,4,5,6].forEach(i=>{$("p"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});if(n===2)loadC();if(n===3)loadV();if(n===4)loadP();if(n===5)loadE();if(n===6)loadF()};
 $("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);$("t3").onclick=()=>tab(3);$("t4").onclick=()=>tab(4);$("t5").onclick=()=>tab(5);$("t6").onclick=()=>tab(6);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
-function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cx").value="";$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear();lkClear()}
+function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc","clb"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cx").value="";$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear();lkClear();if(window.__cnr)updCnt()   /* เรียกได้หลังตั้งค่าตัวนับเสร็จ (ดูท้ายส่วนเนื้อหาเว็บ) */}
 $("crs").onclick=cclear;cclear();
 $("cf").onchange=e=>{const f=e.target.files[0];if(!f){CP="";$("cpv").replaceChildren();return}
  const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);CP=c.toDataURL("image/jpeg",.82);const p=new Image();p.src=CP;p.alt="ตัวอย่างรูป";$("cpv").replaceChildren(p);URL.revokeObjectURL(u)};im.onerror=()=>{CP="";alert("เปิดไฟล์รูปนี้ไม่ได้")};im.src=u};
 $("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.className="msg hide";
- try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:bodyWithLoc(),video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked,exp:$("cx").value};
+ try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:bodyWithLoc(),video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked,exp:$("cx").value,lbl:$("clb").value.trim()};
+  { const bad=lint(item).filter(z=>z.lv==="bad"); if(bad.length&&!confirm("ยังมีข้อที่ควรแก้ก่อนเผยแพร่:\n• "+bad.map(z=>z.m).join("\n• ")+"\n\nบันทึกต่อไปเลยไหม? (กด ยกเลิก เพื่อกลับไปแก้)")){b.disabled=false;return} }
   if(lkBad)throw new Error("ลิงก์ที่ "+lkBad+" ต้องขึ้นต้นด้วย https:// (ตรวจช่องลิงก์เพิ่มเติม)");
   const dup=CL.find(z=>z.title===item.title&&z.cat!=="รูปแทรก"&&(!CE||z.id!==CE.id));if(dup&&!confirm("มีเรื่องชื่อ “"+item.title+"” อยู่แล้ว\nถ้าจะแก้เรื่องเดิม ให้กด ยกเลิก แล้วใช้ปุ่ม แก้ไข ในรายการด้านล่าง\nถ้าตั้งใจโพสต์ซ้ำ กด ตกลง")){b.disabled=false;return}
   const u=await call({action:"adminContentSave",item:item,photo:CP||undefined});
   if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");m.textContent="✅ บันทึกแล้ว"+(u.item.pub?" และเผยแพร่บนเว็บ":" (ฉบับร่าง ยังไม่เผยแพร่)");m.className="msg";cclear();loadC()}
  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}b.disabled=false};
+/* ===== เนื้อหาเว็บ: ค้นหา/กรอง • ตัวนับความยาว • ตัวอย่างหน้าแรก • ตัวตรวจข้อควรระวัง • ชุดหัวข้อสั้นที่เสนอ ===== */
+/* เกณฑ์ความยาว (นับตัวอักษรรวมสระ วรรณยุกต์ ช่องว่าง) ตามเอกสาร “หัวข้อให้สั้น กระชับ ไม่ทับภาพ”
+   เป้า = ช่วงที่แนะนำ, cap = เพดาน (เกินแล้วหน้าแรกมีโอกาสถูกตัดด้วย …) แก้ตัวเลขได้ที่นี่ที่เดียว */
+const LIM={t:{min:18,goal:30,cap:35,n:"หัวข้อหลัก"},s:{min:30,goal:50,cap:60,n:"คำขยาย"},l:{min:14,goal:24,cap:26,n:"ป้ายแถบรอง"}};
+const len=s=>[...String(s||"").trim()].length;
+const approxWords=n=>Math.max(1,Math.round(n/5));
+const SENS=/เตือนภัย|สิทธิ์|สิทธิ|สุขภาพ|สาธารณสุข/,HEALTH=/กินยา|แบ่งยา|ยาฆ่าเชื้อ|ยารักษา|เชื้อดื้อยา|โรค|หมอ|รพ\.|โรงพยาบาล|วัคซีน|ไข้|สุขภาพ|เชื้อโรค/,
+ HASFACT=/[0-9๐-๙]|หมู่|ถนน|ตำบล|ต\.|อำเภอ|อ\.|จังหวัด|จ\.|บ้าน|วัด|โรงเรียน|รพ\.|ศรีสะเกษ|ที่ทำการ|เทศบาล|ธนาคาร|น้ำตก|โรงพยาบาล|ม\.ค\.|ก\.พ\.|มี\.ค\.|เม\.ย\.|พ\.ค\.|มิ\.ย\.|ก\.ค\.|ส\.ค\.|ก\.ย\.|ต\.ค\.|พ\.ย\.|ธ\.ค\.|วันนี้|พรุ่งนี้/,
+ DIVIDE=/ล้านบาท|งบประมาณ|งบ\s?\d|ค้าน|เห็นด้วย|ไม่เห็นด้วย|เลือกตั้ง|ทุจริต|ประชามติ|ผู้สมัคร|นักการเมือง/,
+ JUDGE=/โกง|ทุจริต|ฉาว|เละเทะ|เลว|ชั่ว|น่าอาย|ไร้ยางอาย|สุดยอด|ดีที่สุด|แย่ที่สุด|ห้ามผ่าน|ต้องค้าน|ต้องช่วยกันค้าน/,
+ URGE=/[!！]|ด่วน|ห้ามพลาด/,SUFFIX=/\s*[|｜]\s*ที่นี่โพธิ์กระสังข์\s*$/;
+const RECIPES=[
+ {n:"ข่าวที่ต้องทำอะไร",f:"สิ่งที่ต้องทำ + ใคร",e:["เกิดปี 2509 อย่าลืมขึ้นทะเบียน","ชวนไปขึ้นทะเบียนรับเบี้ยผู้สูงอายุ"],c:/สิทธิ์|โครงการ|บริการ|ประกาศ/},
+ {n:"ข่าวเตือนภัย",f:"ที่ไหน + อันตรายอะไร",e:["ถนนโนนคูณ–ซำน้อย ร่องน้ำอันตราย","ฝนตกน้ำท่วมมองไม่เห็นร่อง วอนติดป้ายเตือน"],c:/เตือนภัย|ความปลอดภัย|สุขภาพ/},
+ {n:"เรื่องวัฒนธรรม",f:"ชื่อกวย + ไทยสั้น ๆ",e:["กะเยือละวาย พิธีเรียกขวัญ","ช้อนขวัญผู้บาดเจ็บ ผูกแขนด้วยฝ้ายขาว"],c:/ประเพณี|ความเชื่อ|วัฒน์|วัฒนธรรม|ฮีตคอง/},
+ {n:"เรื่องเล่า / ท่องเที่ยว",f:"คำชวน + สถานที่",e:["เลาะน้ำตกห้วยจันทร์","สุขสันต์วันสากดับ ริมชายแดนบ้านเรา"],c:/คนบ้านเรา|ท่องเที่ยว|คลิป|เรื่องเล่า/}];
+function lint(it){const o=[],cat=String(it.cat||""),T=String(it.title||""),S=String(it.sum||""),B=String(it.lbl||""),all=T+" "+S+" "+B,
+  risk=SENS.test(cat)||HEALTH.test(T+" "+S);
+ const add=(lv,m,fix)=>o.push({lv:lv,m:m,fix:fix});
+ const lt=len(T),ls=len(S),ll=len(B);
+ if(lt>LIM.t.cap)add("bad","หัวข้อหลักยาว "+lt+" ตัวอักษร เกินเพดาน "+LIM.t.cap+" — หน้าแรกบนมือถือจะเกิน 2 บรรทัดและถูกตัด");
+ if(ls>LIM.s.cap)add("bad","คำขยายยาว "+ls+" ตัวอักษร เกินเพดาน "+LIM.s.cap+" — จะถูกตัดด้วย … กลางประโยค");
+ if(ll>LIM.l.cap)add("bad","ป้ายแถบรองยาว "+ll+" ตัวอักษร เกินเพดาน "+LIM.l.cap+" — จะถูกตัดในช่องแถบรอง");
+ if(SUFFIX.test(T))add("bad","มีชื่อเพจ “| ที่นี่โพธิ์กระสังข์” ท้ายหัวข้อ ซ้ำกับชื่อเว็บ",{label:"ตัดออก",do:()=>{$("ct").value=T.replace(SUFFIX,"").trim();updCnt()}});
+ if(URGE.test(all)){if(SENS.test(cat))add("info","มีเครื่องหมายตกใจ/คำเร่ง — ใช้ได้เฉพาะเรื่องที่เสี่ยงเสียสิทธิ์หรือปลอดภัยจริง");else add("warn","มีเครื่องหมายตกใจหรือคำเร่ง (“ด่วน!” “ห้ามพลาด!”) — ใช้เฉพาะเรื่องเสี่ยงเสียสิทธิ์หรือความปลอดภัยจริง ไม่ใช้กับทุกเรื่อง",{label:"ตัด ! ออก",do:()=>{["ct","cs","clb"].forEach(i=>$(i).value=$(i).value.replace(/[!！]/g,"").replace(/\s{2,}/g," "));updCnt()}})}
+ if(risk&&!HASFACT.test(T+" "+S))add("bad","เรื่องเตือนภัย/สุขภาพ/สิทธิ์ ควรมีตัวเลข วันที่ หรือสถานที่สำคัญ ในหัวข้อหรือคำขยายอย่างน้อยหนึ่งแห่ง (เช่น ปี 2569, หมู่ 2, ชื่อถนน) และต้องไม่สั้นจนความหมายเปลี่ยน");
+ if(DIVIDE.test(all)||/โครงการและบริการ/.test(cat)){if(JUDGE.test(all))add("bad","เรื่องที่คนในชุมชนเห็นต่างได้ ควรใช้คำกลาง — พบคำตัดสิน/ชี้นำ: “"+(JUDGE.exec(all)||[""])[0]+"”");else if(DIVIDE.test(all))add("info","เรื่องที่คนเห็นต่างได้ (เช่น งบ/ผลประโยชน์) ใช้คำกลาง ไม่ใส่คำตัดสินหรือคำชี้นำ")}
+ else if(JUDGE.test(all))add("warn","พบคำที่ตัดสินหรือชี้นำ: “"+(JUDGE.exec(all)||[""])[0]+"” ลองใช้คำกลาง");
+ if(/[,，/／;、]/.test(cat)||/\sและ\s/.test(cat))add("warn","ป้ายหมวดควรมี 1 หมวดต่อการ์ด (1–2 คำ) ตอนนี้ดูเหมือนใส่หลายหมวด");
+ if(T&&S&&len(T)>=10&&(S.indexOf(T.slice(0,Math.min(14,T.length)))>=0||T.indexOf(S.slice(0,Math.min(14,S.length)))>=0))add("info","คำขยายซ้ำกับหัวข้อ — ตัดคำบรรยายที่ซ้ำ เหลือเฉพาะข้อมูลที่หัวข้อยังไม่บอก");
+ return o}
+const cls=(n,l)=>n>l.cap?"bad":n>l.goal?"warn":n?"ok":"";
+const cmsg=(n,l)=>!n?"":n>l.cap?"เกินเพดาน "+l.cap+" ตัดให้สั้นลง":n>l.goal?"เกินเป้า "+l.goal+" (ยังไม่เกินเพดาน "+l.cap+")":n<l.min?"สั้นกว่าเป้า ไม่เป็นไรถ้าความหมายครบ":"พอดี";
+function cnt(id,n,l){const e=$(id);if(!e)return;e.className="cnt "+cls(n,l);e.textContent=n?n+" / "+l.goal+" ตัวอักษร (≈ "+approxWords(n)+" คำ) · "+cmsg(n,l):"เป้า "+l.min+"–"+l.goal+" ตัวอักษร เพดาน "+l.cap}
+const trunc=e=>e.scrollHeight>e.clientHeight+1;
+function pvBox(w,narrow,t,s){const b=el("div","pv"+(narrow?" pvn":"")),h=el("h4","",t||"หัวข้อจะแสดงตรงนี้"),p=el("p","",s||"คำขยายจะแสดงตรงนี้");b.style.maxWidth=w;b.append(h,p);return{b:b,h:h,p:p}}
+function renderPrev(){const T=$("ct").value.trim(),S=$("cs").value.trim(),B=$("clb").value.trim(),box=$("cprev");box.replaceChildren();
+ const a=pvBox("100%",false,T,S),m=pvBox("320px",true,T,S),d1=el("div","pvw"),d2=el("div","pvw");d1.append(el("div","mute","ตัวอย่างบนจอคอม (หัวข้อ ≤ 2 บรรทัด คำขยาย 1 บรรทัด)"),a.b);d2.append(el("div","mute","ตัวอย่างบนมือถือ (กว้าง 320px)"),m.b);
+ const chips=el("div","pvc"),mk=(i,t)=>{const c=el("div","pvchip"),n=el("b","","0"+i),sp=el("span","",t);c.append(n,sp);return{c:c,sp:sp}},c1=mk(1,B||T||"ป้ายแถบรอง");chips.append(c1.c,mk(2,"ตัวอย่างช่องอื่น").c);
+ const d3=el("div","pvw");d3.append(el("div","mute","ป้ายในแถบรองใต้ภาพ (2 บรรทัด)"),chips);box.append(d1,d2,d3);
+ requestAnimationFrame(()=>{const bad=[];if(T){if(trunc(a.h))bad.push("หัวข้อเกิน 2 บรรทัดบนจอคอม");if(trunc(m.h))bad.push("หัวข้อเกิน 2 บรรทัดบนมือถือ")}
+  if(S){if(trunc(a.p))bad.push("คำขยายเกิน 1 บรรทัดบนจอคอม (ตัดด้วย …)");if(trunc(m.p))bad.push("คำขยายเกิน 2 บรรทัดบนมือถือ (ตัดด้วย …)")}
+  if(B&&trunc(c1.sp))bad.push("ป้ายแถบรองเกิน 2 บรรทัด (ตัดด้วย …)");
+  const n=el("div","cnt "+(bad.length?"bad":T?"ok":""));n.textContent=!T&&!S?"":bad.length?"⚠️ หน้าแรกจะถูกตัด: "+bad.join(" • "):"✅ แสดงครบ ไม่ถูกตัดในตัวอย่างนี้";box.append(n)})}
+function recipeHint(){const cat=$("cc").value,r=RECIPES.find(x=>x.c.test(cat)),h=$("crech");h.textContent=r?"· หมวดนี้แนะนำ: “"+r.n+"” = "+r.f:"· ดูสูตรทั้ง 4 แบบ"}
+function recipeTable(){const w=$("crecb");if(w.firstChild)return;RECIPES.forEach(r=>{const d=el("div","rcr"),b=el("b","",r.n+" — "+r.f),m=el("div","mute","หัวข้อ: "+r.e[0]+"  /  คำขยาย: "+r.e[1]);d.append(b,m);w.append(d)});
+ [["ห้ามตกใจทุกเรื่อง","ไม่ใช้ “ด่วน!” “ห้ามพลาด!” กับทุกเรื่อง ใช้เฉพาะเรื่องที่เสี่ยงเสียสิทธิ์หรือปลอดภัยจริง"],["เรื่องที่เห็นต่าง","เช่น งบ 250 ล้านบาท ใช้คำกลาง ไม่ตัดสิน ไม่ชี้นำ"],["เตือนภัย สุขภาพ สิทธิ์","ต้องมีตัวเลข วันที่ หรือสถานที่ อย่างน้อยหนึ่งแห่ง และไม่สั้นจนความหมายเปลี่ยน"],["ชื่อกวย","ชื่อที่เป็นหัวใจของเรื่องให้คงไว้ในหัวข้อ ตัดเฉพาะคำบรรยายที่ซ้ำกับคำขยาย"],["ชื่อเพจ","ตัด “| ที่นี่โพธิ์กระสังข์” ท้ายชื่อคลิปออก"]].forEach(([a,b])=>{const d=el("div","rcr");d.append(el("b","","⚠️ "+a+": "),document.createTextNode(b));w.append(d)})}
+function updCnt(){const T=$("ct").value,S=$("cs").value,B=$("clb").value;cnt("ctn",len(T),LIM.t);cnt("csn",len(S),LIM.s);cnt("clbn",len(B),LIM.l);
+ const it={kind:$("ck").value,cat:$("cc").value.trim(),title:T.trim(),sum:S.trim(),lbl:B.trim()},L=lint(it),box=$("clint");box.replaceChildren();
+ if(!T&&!S&&!B){box.className="hide";}else{box.className="";
+  if(!L.length)box.append(Object.assign(el("div","lt ok","✅ ผ่านข้อควรระวังที่ตรวจได้อัตโนมัติ (ยังควรอ่านทวนอีกรอบ)")));
+  L.forEach(x=>{const d=el("div","lt "+x.lv,(x.lv==="bad"?"⚠️ ":x.lv==="warn"?"💡 ":"ℹ️ ")+x.m);if(x.fix){const b=el("button","btn o",x.fix.label);b.type="button";b.onclick=x.fix.do;d.append(" ",b)}box.append(d)})}
+ const k=$("crsv");k.classList.toggle("hide",!(CE&&CE.title&&T.trim()&&T.trim()!==CE.title&&!String($("cb").value).includes(CE.title)));
+ recipeHint();renderPrev()}
+function keepOld(){if(!CE)return;const cur=$("cb").value;$("cb").value="ชื่อเรื่องเดิม: "+CE.title+(cur?"\n\n"+cur:"");updCnt()}
+
+/* ===== ค้นหา/กรอง/เรียง รายการเนื้อหา ===== */
+const nz=s=>String(s||"").toLowerCase().replace(/[\s\u200b]+/g,"");
+function matchItem(it,terms){const hay=nz([it.title,it.sum,it.cat,it.kind,it.lbl,it.body,it.by,it.id,it.at].join(" "));return terms.every(t=>hay.includes(t))}
+function renderC(){const box=$("cl2"),all=CL.filter(z=>z.cat!=="รูปแทรก"),q=$("sxq").value.trim(),terms=q.split(/\s+/).map(nz).filter(Boolean),k=$("sxk").value,st=$("sxs").value,cat=$("sxc").value,so=$("sxo").value;
+ let L=all.filter(it=>(!terms.length||matchItem(it,terms))&&(!k||it.kind===k)&&(!cat||it.cat===cat)&&(st===""||(st==="pub"?it.pub:st==="draft"?!it.pub:st==="pin"?it.pin:st==="long"?(len(it.title)>LIM.t.cap||len(it.sum)>LIM.s.cap||(it.lbl&&len(it.lbl)>LIM.l.cap)):st==="warn"?lint(it).some(x=>x.lv==="bad"||x.lv==="warn"):st==="nolbl"?!it.lbl:true)));
+ L=L.slice();if(so==="old")L.reverse();else if(so==="az")L.sort((a,b)=>String(a.title).localeCompare(String(b.title),"th"));else if(so==="long")L.sort((a,b)=>len(b.title)-len(a.title));else if(so==="views")L.sort((a,b)=>(+b.v||0)-(+a.v||0));
+ $("sxn").textContent=all.length?(L.length===all.length?"ทั้งหมด "+all.length+" เรื่อง":"พบ "+L.length+" จาก "+all.length+" เรื่อง")+(CL.length>=800?" (แสดง 800 รายการล่าสุด)":""):"";
+ if(!all.length){box.replaceChildren(el("p","mute","ยังไม่มีเนื้อหาที่โพสต์ผ่านหน้านี้"));return}
+ if(!L.length){const p=el("div","c"),b=el("button","btn o","ล้างตัวกรอง");b.onclick=()=>{["sxq","sxk","sxs","sxc"].forEach(i=>$(i).value="");renderC()};p.append(el("p","","ไม่พบเรื่องที่ตรงกับ “"+q+"”"+(k||st||cat?" ตามตัวกรองที่เลือก":"")),b);box.replaceChildren(p);return}
+ box.replaceChildren(...L.slice(0,120).map(ccard));if(L.length>120)box.append(el("p","mute","แสดง 120 เรื่องแรก — พิมพ์คำค้นหาให้เจาะจงขึ้นเพื่อดูเรื่องที่เหลือ ("+(L.length-120)+" เรื่อง)"))}
+function fillSxc(){const v=$("sxc").value,cs=[...new Set(CL.filter(z=>z.cat!=="รูปแทรก").map(z=>z.cat).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"th"));
+ $("sxc").replaceChildren(...[["","ทุกหมวด"],...cs.map(c=>[c,c])].map(([a,b])=>{const o=el("option","",b);o.value=a;return o}));$("sxc").value=cs.includes(v)?v:""}
+const mark=(t,terms)=>{const f=document.createDocumentFragment();if(!terms.length){f.append(t);return f}const low=String(t).toLowerCase();let i=0;const spans=[];terms.forEach(w=>{if(!w)return;let p=0;while((p=low.indexOf(w,p))>=0){spans.push([p,p+w.length]);p+=w.length}});spans.sort((a,b)=>a[0]-b[0]);
+ const m=[];spans.forEach(s=>{if(m.length&&s[0]<=m[m.length-1][1])m[m.length-1][1]=Math.max(m[m.length-1][1],s[1]);else m.push(s.slice())});m.forEach(([a,b])=>{if(a>i)f.append(String(t).slice(i,a));const k=el("mark","",String(t).slice(a,b));f.append(k);i=b});if(i<String(t).length)f.append(String(t).slice(i));return f};
+function lenBadge(n,l,nm){if(!n)return null;const b=el("span","badge lb "+cls(n,l),nm+" "+n);b.title=nm+" "+n+" ตัวอักษร (เป้า "+l.min+"–"+l.goal+" เพดาน "+l.cap+")";return b}
+function fullItem(it,patch){return Object.assign({id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:it.pin,pub:it.pub,lbl:it.lbl||""},patch||{})}
+function cedit(it){CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";$("clb").value=it.lbl||"";setBodyLoc(it.body||"");$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cx").value=it.exp||"";$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;updCnt();$("cform").scrollIntoView({behavior:"smooth"})}
+function ccard(it){const terms=$("sxq").value.trim().split(/\s+/).map(s=>s.toLowerCase()).filter(Boolean),c=el("div","c"),t=el("div","top"),L=lint(it),bads=L.filter(x=>x.lv==="bad").length,ws=L.filter(x=>x.lv==="warn").length;
+ const h=el("h3");h.append(mark(it.title,terms));t.append(h,el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
+ [lenBadge(len(it.title),LIM.t,"หัวข้อ"),lenBadge(len(it.sum),LIM.s,"ขยาย"),lenBadge(len(it.lbl),LIM.l,"ป้าย")].forEach(b=>b&&t.append(b));
+ if(bads||ws){const b=el("span","badge "+(bads?"r":"w"),(bads?"⚠️ ควรแก้ "+bads:"💡 ตรวจ "+ws)+" ข้อ");b.title=L.filter(x=>x.lv!=="info").map(x=>x.m).join("\n");t.append(b)}
+ c.append(t,el("div","mute",[it.at,it.cat,it.by,it.v?"อ่าน "+it.v:""].filter(Boolean).join(" • ")));if(it.sum){const p=el("p");p.append(mark(it.sum,terms));c.append(p)}
+ if(it.lbl)c.append(el("div","mute","ป้ายแถบรอง: "+it.lbl));
+ if(terms.length&&it.body){const bl=String(it.body),k=terms.map(w=>nz(w)).find(w=>w&&nz(bl).includes(w)&&!nz(it.title+it.sum).includes(w));if(k){const i=bl.toLowerCase().indexOf(k);if(i>=0){const sn=bl.slice(Math.max(0,i-30),i+60).replace(/\n+/g," ");c.append(el("div","mute","พบในเนื้อหา: …"+sn+"…"))}}}
+ const e=el("button","btn o","แก้ไขเต็มรูปแบบ"),h2=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");e.onclick=()=>cedit(it);
+ h2.onclick=async()=>{h2.disabled=true;const u=await call({action:"adminContentSave",item:fullItem(it,{pub:!it.pub})});if(!u.ok)alert(u.error);loadC()};
+ const x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";x.onclick=async()=>{if(!confirm("ลบเรื่อง “"+it.title+"” ?\nเรื่องจะถูกย้ายไปแท็บ “ถังขยะ” ในชีต (กู้คืนได้โดยคัดลอกแถวกลับ) และหายจากหน้าเว็บ"))return;x.disabled=true;let u;try{u=await call({action:"adminContentDelete",id:it.id})}catch(er){u={ok:false}}
+  if(u&&u.ok){loadC();return}
+  if(confirm("ระบบหลังบ้านยังไม่รองรับการลบถาวร\nซ่อนเรื่องนี้จากเว็บแทนไหม? (ผู้อ่านจะไม่เห็นอีก ไม่กระทบเรื่องอื่น)")){const w=await call({action:"adminContentSave",item:fullItem(it,{pin:false,pub:false})});if(!w.ok)alert(w.error)}loadC()};
+ /* แก้คำด่วน: หัวข้อ/คำขยาย/ป้ายแถบรอง ในการ์ดเลย ไม่ต้องเปิดฟอร์มเต็ม */
+ const d=el("details","qe"),sm=el("summary","","✏️ แก้คำด่วน (หัวข้อ • คำขยาย • ป้ายแถบรอง)"),qt=el("input"),qs=el("textarea"),ql=el("input"),n1=el("div","cnt"),n2=el("div","cnt"),n3=el("div","cnt"),ln=el("div"),qm=el("div","msg hide"),sv=el("button","btn","บันทึกคำ");
+ qt.value=it.title;qs.value=it.sum||"";ql.value=it.lbl||"";qs.rows=2;qt.maxLength=150;qs.maxLength=300;ql.maxLength=40;qt.setAttribute("aria-label","หัวข้อหลัก");qs.setAttribute("aria-label","คำขยาย");ql.setAttribute("aria-label","ป้ายแถบรอง");
+ const upd=()=>{cnt1(n1,len(qt.value),LIM.t);cnt1(n2,len(qs.value),LIM.s);cnt1(n3,len(ql.value),LIM.l);ln.replaceChildren(...lint(Object.assign({},it,{title:qt.value.trim(),sum:qs.value.trim(),lbl:ql.value.trim()})).filter(z=>z.lv!=="info").map(z=>el("div","lt "+z.lv,(z.lv==="bad"?"⚠️ ":"💡 ")+z.m)))};
+ [qt,qs,ql].forEach(i=>i.addEventListener("input",upd));d.addEventListener("toggle",()=>{if(d.open)upd()});
+ sv.onclick=async()=>{const T=qt.value.trim();if(T.length<3){qm.textContent="⚠️ หัวข้อสั้นเกินไป";qm.className="msg err";return}
+  const bad=lint(Object.assign({},it,{title:T,sum:qs.value.trim(),lbl:ql.value.trim()})).filter(z=>z.lv==="bad");if(bad.length&&!confirm("ยังมีข้อที่ควรแก้:\n• "+bad.map(z=>z.m).join("\n• ")+"\n\nบันทึกต่อไปเลยไหม?"))return;
+  sv.disabled=true;try{const u=await call({action:"adminContentSave",item:fullItem(it,{title:T,sum:qs.value.trim(),lbl:ql.value.trim()})});if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");qm.textContent="✅ บันทึกแล้ว";qm.className="msg";await loadC()}catch(er){qm.textContent="⚠️ "+er.message;qm.className="msg err"}sv.disabled=false};
+ d.append(sm,el("label","","หัวข้อหลัก"),qt,n1,el("label","","คำขยาย"),qs,n2,el("label","","ป้ายแถบรอง (เว้นว่าง = ใช้หัวข้อหลัก)"),ql,n3,ln,el("p"),sv,qm);
+ c.append(el("p"),e," ",h2," ",x,d);return c}
+function cnt1(e,n,l){e.className="cnt "+cls(n,l);e.textContent=n?n+" / "+l.goal+" ตัวอักษร · "+cmsg(n,l):"เป้า "+l.min+"–"+l.goal+" เพดาน "+l.cap}
 async function loadC(){try{const d=await call({action:"adminContentList"});if(!d.ok)throw new Error(d.error);
  if(!Array.isArray(d.items))throw new Error("หลังบ้านไม่ได้ส่งรายการกลับมา — ให้วางไฟล์ main-รหัส.gs ชุดล่าสุดใน Apps Script แล้ว Deploy → Manage deployments → New version");
- CL=d.items;$("cl2").replaceChildren(...(d.items.filter(z=>z.cat!=="รูปแทรก").length?d.items.filter(z=>z.cat!=="รูปแทรก").map(it=>{const c=el("div","c"),t=el("div","top");t.append(el("h3","",it.title),el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
-  c.append(t,el("div","mute",[it.at,it.cat,it.by].filter(Boolean).join(" • ")));if(it.sum)c.append(el("p","",it.sum));
-  const e=el("button","btn o","แก้ไข"),h=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");
-  e.onclick=()=>{CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";setBodyLoc(it.body||"");$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cx").value=it.exp||"";$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;$("cform").scrollIntoView({behavior:"smooth"})};
-  h.onclick=async()=>{h.disabled=true;const u=await call({action:"adminContentSave",item:{id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:it.pin,pub:!it.pub}});if(!u.ok)alert(u.error);loadC()};
-  const x=el("button","btn o","🗑 ลบ");x.style.color="#c93b2f";x.onclick=async()=>{if(!confirm("ลบเรื่อง “"+it.title+"” ?\nลบแล้วกู้คืนไม่ได้ (ไม่กระทบเรื่องอื่น)"))return;x.disabled=true;let u;try{u=await call({action:"adminContentDelete",id:it.id})}catch(er){u={ok:false}}
- if(u&&u.ok){loadC();return}
- if(confirm("ระบบหลังบ้านยังไม่รองรับการลบถาวร\nซ่อนเรื่องนี้จากเว็บแทนไหม? (ผู้อ่านจะไม่เห็นอีก ไม่กระทบเรื่องอื่น)")){const w=await call({action:"adminContentSave",item:{id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:false,pub:false}});if(!w.ok)alert(w.error)}loadC()};
-  c.append(e," ",h," ",x);return c}):[el("p","mute","ยังไม่มีเนื้อหาที่โพสต์ผ่านหน้านี้")]))}catch(x){$("cl2").replaceChildren(el("p","mute","โหลดไม่ได้: "+x.message))}}
+ CL=d.items;fillSxc();renderC();renderProp()}catch(x){$("cl2").replaceChildren(el("p","mute","โหลดไม่ได้: "+x.message))}}
+
+/* ===== ชุดหัวข้อสั้นที่เสนอ 20 เรื่อง (จากเอกสาร) — จับคู่กับเรื่องในชีตด้วยชื่อเดิม แล้วกดใช้ทีละเรื่องหรือทั้งหมด ===== */
+const PROP=[
+ {o:["250 ล้านบาทกับอนาคตบ้านเรา รู้ไว้ เข้าใจตรงกัน และร่วมตั้งคำถามอย่างสร้างสรรค์"],t:"250 ล้านบาท กับอนาคตบ้านเรา",s:"รู้ไว้ เข้าใจตรงกัน ร่วมตั้งคำถามอย่างสร้างสรรค์",l:"250 ล้านกับบ้านเรา",k:"n0"},
+ {o:["เตรียมขยายเขตไฟฟ้าการเกษตร เส้นบ้านแต้ – หนองตะดอก – โคกพยอม"],t:"ขยายเขตไฟฟ้าการเกษตร",s:"เส้นบ้านแต้–หนองตะดอก–โคกพยอม เตรียมโฉนดและบัตร",l:"ขยายไฟฟ้าเกษตร",k:"n1"},
+ {o:["ตรวจสอบข้อมูลการทำนาปี ที่ทำการผู้ใหญ่บ้าน"],t:"ตรวจข้อมูลทำนาปี",s:"ไปตรวจความถูกต้องที่ทำการผู้ใหญ่บ้าน",l:"ตรวจข้อมูลทำนาปี",k:"n2"},
+ {o:["ลงทะเบียนบัตรสวัสดิการแห่งรัฐ ปี 2569"],t:"บัตรสวัสดิการแห่งรัฐ 2569",s:"ตรวจสิทธิ์ทางแอป “ทางรัฐ” หรือติดต่อธนาคารรัฐ",l:"บัตรสวัสดิการรัฐ",k:"n3"},
+ {o:["กินยาฆ่าเชื้อให้ครบตามหมอสั่ง ห้ามแบ่งยาผู้อื่น"],t:"กินยาฆ่าเชื้อให้ครบตามหมอสั่ง",s:"ห้ามแบ่งยาผู้อื่น คำแนะนำ รพ.สต.โพธิ์กระสังข์",l:"กินยาฆ่าเชื้อให้ครบ",k:"n4",note:"ปรับจากเอกสาร: คงคำว่า “ตามหมอสั่ง” และใส่ชื่อ รพ.สต. เพราะเป็นเรื่องสุขภาพ ต้องมีสถานที่/ที่มา และห้ามตัดจนความหมายเปลี่ยน"},
+ {o:["กรมอุตุนิยมวิทยาเตือนฝนตกหนักถึงหนักมาก พื้นที่ศรีสะเกษ"],t:"ฝนตกหนัก ศรีสะเกษ",s:"กรมอุตุฯ เตือนหนักถึงหนักมาก เตรียมรับมือ",l:"เตือนฝนหนัก",k:"n5"},
+ {o:["แจ้งเตือนเครื่องพ่นปุ๋ยหาย หมู่ 2 และอัปเดตว่าได้คืนแล้ว"],t:"เครื่องพ่นปุ๋ยหาย ได้คืนแล้ว",s:"หมู่ 2 ได้ของคืน 1 ต.ค. หยิบไปโดยไม่ได้บอกกัน",l:"เครื่องพ่นปุ๋ยคืนแล้ว",k:"n6",note:"ปรับจากเอกสาร: ใช้ข้อเท็จจริงตามเนื้อหา (หยิบไปโดยไม่ได้บอกกัน) แทนคำว่า “ยืม” และใส่วันที่"},
+ {o:["ร่วมส่งใจเชียร์ ส.อ.สรศักดิ์ เทาศิริ ทีมชาติไทย เทคบอลชายคู่ เอเชียนเกมส์ 2026"],t:"เชียร์ ส.อ.สรศักดิ์ ทีมชาติไทย",s:"เทคบอลชายคู่ เอเชียนเกมส์ 2026 ศิษย์เก่าบ้านสาด",l:"เชียร์เทคบอลไทย",k:"n7"},
+ {o:["ร่วมทำบุญเตะฟุตบอลการกุศลในนามทีมคนชายแดน"],t:"ฟุตบอลการกุศล คนชายแดน",s:"ทีมไปร่วมทำบุญในพื้นที่อื่น",l:"ฟุตบอลการกุศล",k:"n8"},
+ {o:["กะเยือละวาย พิธีช้อนเรียกขวัญ วิถีความเชื่อของชาวกวยบ้านโพธิ์กระสังข์"],t:"กะเยือละวาย พิธีเรียกขวัญ",s:"ช้อนขวัญผู้บาดเจ็บ ผูกแขนด้วยฝ้ายขาว",l:"กะเยือละวาย",k:"a0"},
+ {o:["จวยใบตอง และเปียลย์ประ"],t:"จวยใบตอง และเปียลย์ประ",s:"พับกรวยใบตอง ประดับดอกเงิน เตรียมเข้าพรรษา",l:"จวยใบตอง",k:"a1"},
+ {o:["บุญชัก ส่งบุญถึงบรรพบุรุษ"],t:"บุญชัก ส่งบุญถึงบรรพบุรุษ",s:"พิธีก่อนบุญใหญ่สากกวย หมู่ 2",l:"บุญชัก",k:"a2"},
+ {o:["สากกวย วันแห่งความกตัญญู"],t:"สากกวย วันแห่งความกตัญญู",s:"ขึ้น 15 ค่ำ เดือน 10 ลูกหลานกลับบ้านทำบุญใหญ่",l:"สากกวย",k:"a3"},
+ {o:["พิธีเซน ส่งญาติไปทำงานต่างประเทศ"],t:"พิธีเซน ส่งญาติไปต่างแดน",s:"บอกกล่าวบรรพบุรุษ ผูกข้อไม้ผูกมืออวยพร",l:"พิธีเซน",k:"a4"},
+ {o:["เตือนภัย! ถนนโนนคูณ–ซำน้อย ขุดร่องน้ำข้างทาง ฝนตกท่วมมองไม่เห็น ตกร่องซ้ำ วอนผู้เกี่ยวข้องติดตั้งป้าย-สัญญาณเตือน"],t:"ถนนโนนคูณ–ซำน้อย ร่องน้ำอันตราย",s:"ฝนตกน้ำท่วมมองไม่เห็นร่อง วอนติดป้ายเตือน",l:"ถนนโนนคูณ ร่องอันตราย"},
+ {o:["เตือนกันไว้ไม่เสียสิทธิ! ชวนผู้เกิดปี 2509 ไปขึ้นทะเบียนรับเบี้ยผู้สูงอายุกันครับ"],t:"เกิดปี 2509 อย่าลืมขึ้นทะเบียน",s:"ชวนไปขึ้นทะเบียนรับเบี้ยผู้สูงอายุ",l:"เกิด 2509 ขึ้นทะเบียน"},
+ {o:["โพธิ์กระสังข์ หมู่ 2 ยกมือเอกฉันท์ เปลี่ยนผ่านสู่ \"ประปาภูมิภาค\" ฟรีค่ามิเตอร์แรกเข้า"],t:"หมู่ 2 ยกมือสู่ประปาภูมิภาค",s:"มติเอกฉันท์ ฟรีค่ามิเตอร์แรกเข้า",l:"หมู่ 2 สู่ประปาภูมิภาค"},
+ {o:["เลาะน้ำตก ชายแดนบ้านเรา: สุขสันต์วันสากดับ ณ น้ำตกห้วยจันทร์"],t:"เลาะน้ำตกห้วยจันทร์",s:"สุขสันต์วันสากดับ ริมชายแดนบ้านเรา",l:"เลาะน้ำตกห้วยจันทร์"},
+ {o:["สารคดีกวยชายแดน ตอน บุญชัก สายใยแห่งศรัทธากวยโพธิ์กระสังข์ | ที่นี่โพธิ์กระสังข์","สารคดีกวยชายแดน ตอน บุญชัก สายใยแห่งศรัทธากวยโพธิ์กระสังข์"],t:"สารคดี บุญชัก สายใยศรัทธา",s:"กวยชายแดน วัดโพธิ์กระสังข์",l:"สารคดี บุญชัก"},
+ {o:["สากดับ แรม 15 ค่ำ เดือน 10 ที่วัดโพธิ์กระสังข์"],t:"สากดับ แรม 15 ค่ำ เดือน 10",s:"ทำบุญใหญ่ที่วัดโพธิ์กระสังข์",l:"สากดับ แรม 15 ค่ำ"}];
+const pn=s=>String(s||"").replace(/[“”"'‘’]/g,"").replace(/[–—-]/g,"").replace(/[\s\u200b]+/g,"").toLowerCase();
+function ppFind(r){const n=r.o.map(pn),nt=pn(r.t);let it=CL.find(z=>n.includes(pn(z.title))||pn(z.title)===nt);
+ if(!it){const pre=n[0].slice(0,14);it=CL.find(z=>pn(z.title).startsWith(pre))}
+ if(!it)return null;const same=pn(it.title)===nt&&pn(it.sum)===pn(r.s)&&pn(it.lbl)===pn(r.l);return{it:it,st:same?"done":"old"}}
+function renderProp(){const box=$("ppl");if(!box)return;box.replaceChildren();let found=0,done=0;
+ PROP.forEach((r,i)=>{const m=ppFind(r),row=el("div","pp"),h=el("div","top");h.append(el("b","",(i+1)+"."),el("span","badge "+(m?(m.st==="done"?"g":""):"r"),m?(m.st==="done"?"ใช้แล้ว":"พบในระบบ"):"ไม่พบในแท็บเนื้อหา"));if(r.k)h.append(el("span","badge","รหัสลิงก์เก่า "+r.k));
+  row.append(h);const old=m?m.it.title:r.o[0];row.append(el("div","mute","เดิม: "+old),el("div","","หัวข้อใหม่: "+r.t+"  ("+len(r.t)+")"),el("div","","คำขยายใหม่: "+r.s+"  ("+len(r.s)+")"),el("div","mute","ป้ายแถบรอง: "+r.l+"  ("+len(r.l)+")"));
+  if(r.note)row.append(el("div","lt info","ℹ️ "+r.note));
+  const bd=lint({kind:"ข่าวสาร",cat:m?m.it.cat:"",title:r.t,sum:r.s,lbl:r.l}).filter(z=>z.lv==="bad");bd.forEach(z=>row.append(el("div","lt bad","⚠️ "+z.m)));
+  if(m){if(m.st==="done"){done++}else{found++;const b=el("button","btn","ใช้หัวข้อนี้"),ms=el("span","mute");b.onclick=async()=>{b.disabled=true;try{const u=await call({action:"adminContentSave",item:fullItem(m.it,{title:r.t,sum:r.s,lbl:r.l,body:$("ppkeep").checked&&!String(m.it.body||"").includes(m.it.title)?"ชื่อเรื่องเดิม: "+m.it.title+(m.it.body?"\n\n"+m.it.body:""):m.it.body})});if(!u.ok)throw new Error(u.error||"บันทึกไม่ได้");await loadC()}catch(er){ms.textContent="⚠️ "+er.message;b.disabled=false}};row.append(el("p"),b," ",ms)}}
+  else{const b=el("button","btn o","🔍 ค้นหาเอง");b.onclick=()=>{$("sxq").value=r.o[0].replace(/^[^ ]+! /,"").split(" ").slice(0,2).join(" ");renderC();$("sxq").scrollIntoView({behavior:"smooth"});$("sxq").focus()};row.append(el("p"),b," ",el("span","mute","อาจเป็นคลิปในไฟล์ data/videos.json หรือพิมพ์ชื่อไม่ตรงกับในชีต — ค้นหาแล้วใช้ “แก้คำด่วน” ได้"))}
+  box.append(row)});
+ $("ppsum").textContent=" — พบรอใช้ "+found+" • ใช้แล้ว "+done+" • ไม่พบ "+(PROP.length-found-done);$("ppall").disabled=!found}
+async function ppAll(){const todo=PROP.map(r=>({r:r,m:ppFind(r)})).filter(x=>x.m&&x.m.st==="old");if(!todo.length)return;
+ if(!confirm("ใช้หัวข้อ/คำขยาย/ป้ายแถบรองใหม่กับ "+todo.length+" เรื่อง?\n\nระบบจะดาวน์โหลดไฟล์สำรองชื่อเดิมให้ก่อน (เปิดดูย้อนหลังได้) แล้วบันทึกทีละเรื่อง เนื้อหาเต็ม รูป และลิงก์ไม่เปลี่ยน"))return;
+ const rows=[["รหัส","หัวข้อเดิม","คำขยายเดิม","ป้ายเดิม"]].concat(todo.map(x=>[x.m.it.id,x.m.it.title,x.m.it.sum||"",x.m.it.lbl||""])),csv="\ufeff"+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n"),a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="ชื่อเดิมก่อนใช้หัวข้อสั้น-"+today()+".csv";document.body.append(a);a.click();a.remove();
+ const m=$("ppmsg");let ok=0,bad=[];$("ppall").disabled=true;
+ for(const x of todo){m.className="msg";m.textContent="กำลังบันทึก "+(ok+bad.length+1)+" / "+todo.length+" …";try{const u=await call({action:"adminContentSave",item:fullItem(x.m.it,{title:x.r.t,sum:x.r.s,lbl:x.r.l,body:$("ppkeep").checked&&!String(x.m.it.body||"").includes(x.m.it.title)?"ชื่อเรื่องเดิม: "+x.m.it.title+(x.m.it.body?"\n\n"+x.m.it.body:""):x.m.it.body})});if(u.ok)ok++;else bad.push(x.r.t+" ("+(u.error||"ผิดพลาด")+")")}catch(er){bad.push(x.r.t+" ("+er.message+")")}}
+ m.textContent="✅ ใช้แล้ว "+ok+" เรื่อง"+(bad.length?" • ไม่สำเร็จ "+bad.length+": "+bad.join(", "):"");m.className="msg"+(bad.length?" warn":"");await loadC()}
+$("ppall").onclick=ppAll;
+["ct","cs","clb","cc","cb"].forEach(i=>$(i).addEventListener("input",updCnt));$("ck").addEventListener("change",updCnt);$("crsv").querySelector("button").onclick=keepOld;
+$("crecw").addEventListener("toggle",()=>{if($("crecw").open)recipeTable()});
+["sxq"].forEach(i=>$(i).addEventListener("input",renderC));["sxk","sxs","sxc","sxo"].forEach(i=>$(i).addEventListener("change",renderC));
+$("sxr").onclick=()=>{["sxq","sxk","sxs","sxc"].forEach(i=>$(i).value="");$("sxo").value="new";renderC()};
+window.__cnr=1;updCnt();
 
 /* ===== ตำแหน่งบนแผนที่ + แทรกรูป + ปุ่มช่วยพิมพ์ ===== */
 function plSet(la,lo,name,zoom){PL={lat:la,lng:lo};if(name)$("plname").value=name;$("plc").textContent="พิกัด "+la.toFixed(5)+", "+lo.toFixed(5);
