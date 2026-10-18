@@ -517,11 +517,15 @@ const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุ
 const hee=cf==="เซ (ฮีตคอง)";
 const lifeEv=EVTS.filter(o=>o.src.cal==="ตามเหตุการณ์ชีวิต");
 let L=(cf==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cf)>=0)?LIFEOBJ.filter(o=>o.src.cat===cf).map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cf].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+const JG=[["วิถีนา","🌾","การหาอยู่หากินในนาข้าว ทำนา ปูนา หนูนา","#2f7d5b"],["วิถีน้ำ","💧","หอย ปลา และสายน้ำ งมหอย สูบน้ำจับปลา วางเบ็ด","#1c4f7d"],["รสมือกวย","🍲","อาหารที่ปรุงและกินร่วมกัน เมี่ยงและตำส้ม","#c9462e"],["เรื่องอื่น ๆ ของจาเอม","🧺","","#9a5b12"]];
+const jgi=t=>{t=String(t||"");return /วิถีนา|ทำนา|ปูนา/.test(t)?0:/วิถีน้ำ|หาปลา/.test(t)?1:/รสมือ|อาหาร/.test(t)?2:3};
+if(cf==="จาเอม"){const nw=L.some(x=>x.title==="กลอ (งมหอย)"||x.title==="สูบธระ (สูบน้ำจับปลา)"||x.title==="ตอกา (วางเบ็ด)");if(nw)L=L.filter(x=>x.title!=="กลอ สูบธระ ตอกา");L=L.map((x,i)=>({x:x,i:i,g:jgi(x.tag)})).sort((a,b)=>a.g-b.g||a.i-b.i).map(o=>o.x)}
 if(cf==="ละวาย"){const guL=LIFEOBJ.length?LIFEOBJ.filter(o=>o.src.cat==="กัวออ").map(o=>({tag:o.src.tag||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(K["กัวออ"]||[]).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}));L=L.concat(guL)}
 const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cf]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title),el("div","mute",x.sum));
   const ev0=x.ev;
   if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2);{const vw=vwEl(ev0);if(vw){vw.classList.add("vwc");i.append(vw)}}}
   c.append(i);return c});
+if(cf==="จาเอม"&&out.length){const o2=[];let last=-1;L.forEach((x,i)=>{const g=jgi(x.tag);if(g!==last){last=g;const G=JG[g],h=el("div","ghd");h.style.setProperty("--g",G[3]);const t=el("span","gt");t.append(el("b","",G[1]+" "+G[0]));if(G[2])t.append(el("small","",G[2]));h.append(t);o2.push(h)}o2.push(out[i])});out.length=0;o2.forEach(x=>out.push(x))}
 if(hee){const lg=el("p","mute","☀️ สุริยคติ = วันที่ตายตัวตามปฏิทินสากล • 🌙 จันทรคติ = ตามข้างขึ้นข้างแรม วันที่เปลี่ยนทุกปี เรียงตามลำดับของปี");lg.style.gridColumn="1/-1";lg.style.margin="0";out.unshift(lg);
  const lf=el("div","card"),li=el("div","in");li.append(el("div","tag","🧵 ตามเหตุการณ์ชีวิต"),el("h3","","พิธีที่ไม่มีวันตายตัว"),el("div","mute","เรียกขวัญ เด็กเกิดใหม่ เจ็บป่วย หรือสูญเสีย ทำเมื่อมีเหตุในครอบครัว ไม่ใช่งานประจำปี"));const lm=el("div","mute","ดูหมวดละวาย →");lm.style.fontWeight="700";li.append(lm);lf.style.cursor="pointer";lf.tabIndex=0;lf.setAttribute("role","link");lf.onclick=()=>{cf="ละวาย";rCul()};lf.onkeydown=ke=>{if(ke.key==="Enter")lf.onclick()};lf.append(li);out.push(lf)}
 if(!out.length&&!hee){const e0=el("p","mute","เรื่องในหมวดนี้กำลังรวบรวม ส่งเรื่องเล่าหรือภาพเก่ามาทาง LINE "+CFG.lineId+" ได้เลย");e0.style.gridColumn="1/-1";out.push(e0)}
@@ -1147,6 +1151,9 @@ ap();
 .ks:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 .ksub[hidden],.ssub[hidden]{display:none!important}
 .ssub{font-size:15px}
+.ghd{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:6px 0 0;padding:10px 16px;border-left:6px solid var(--g);border-radius:12px;background:color-mix(in srgb,var(--g) 9%,var(--card))}
+.ghd .gt{display:flex;flex-direction:column;gap:2px}.ghd b{font:700 18px/1.3 Boon,system-ui,sans-serif;color:var(--g)}.ghd small{font-size:14px;color:var(--mute)}
+.ghd:first-child{margin-top:0}
 </style>
 <style id="v13">
 /* ป้ายหมวดอยู่ใต้หัวข้อทันที (ไม่ลอยไปท้ายการ์ด) และเว้นระยะระหว่างแถวให้ชัดว่าเป็นของการ์ดไหน */
