@@ -59,6 +59,9 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label for="ct">หัวข้อหลัก <span class="mute" style="font-weight:400">(เป้า 18–30 ตัวอักษร ≈ 4–6 คำ เพดาน 35 · ไม่เกิน 2 บรรทัด)</span></label><input id="ct" maxlength="150"><div class="cnt" id="ctn"></div>
 <label for="cs">คำขยาย (สรุปสั้น) <span class="mute" style="font-weight:400">(เป้า 30–50 ตัวอักษร ≈ 6–10 คำ เพดาน 60 · ต้องจบในตัวเอง)</span></label><textarea id="cs" rows="2" maxlength="300"></textarea><div class="cnt" id="csn"></div>
 <label for="clb">ป้ายแถบรอง <span class="mute" style="font-weight:400">(ข้อความสั้นในแถบ 01–06 ใต้ภาพใหญ่หน้าแรก 14–24 ตัวอักษร ≈ 2–4 คำ · เว้นว่างได้ ระบบใช้หัวข้อหลักแทน)</span></label><input id="clb" maxlength="40"><div class="cnt" id="clbn"></div>
+<div class="c" style="margin-top:10px"><b>📰 ข้อความฉบับเต็ม สำหรับรายการข่าวและหน้าอ่าน (ไม่บังคับ)</b><p class="mute" style="margin:4px 0 8px">3 ช่องด้านบน (หัวข้อหลัก • คำขยาย • ป้ายแถบรอง) ใช้ในภาพใหญ่หมุน 6 ช่องหน้าแรก จึงต้องสั้น ส่วน 2 ช่องนี้ใช้ในการ์ดรายการ “ข่าว • คลิป ล่าสุดจากชุมชน” การ์ดข่าว และหัวเรื่องหน้าอ่าน ยาวกว่าได้ เว้นว่าง = ใช้ข้อความสั้นด้านบนแทน</p>
+<label for="cltx">หัวข้อฉบับเต็ม</label><input id="cltx" maxlength="150"><div class="cnt" id="cltxn"></div>
+<label for="clsx">คำอธิบายฉบับเต็ม <span class="mute" style="font-weight:400">(แสดงใต้หัวข้อในการ์ดรายการ ไม่เกิน 3 บรรทัด)</span></label><textarea id="clsx" rows="3" maxlength="300"></textarea><div class="cnt" id="clsxn"></div></div>
 <div id="clint" class="hide" aria-live="polite"></div>
 <p class="hide" id="crsv"><button type="button" class="btn o">📌 เก็บชื่อเดิมไว้เป็นบรรทัดแรกของเนื้อหา (ให้ค้นหาเจอด้วยชื่อเก่า)</button></p>
 <details class="c" id="cprevw" open><summary><b>👁 ตัวอย่างที่ผู้อ่านจะเห็น (วัดการตัดข้อความจริง)</b></summary><div id="cprev"></div></details>
@@ -295,12 +298,12 @@ let CE=null,CP="";
 const tab=n=>{[1,2,3,4,5,6].forEach(i=>{$("p"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});if(n===2)loadC();if(n===3)loadV();if(n===4)loadP();if(n===5)loadE();if(n===6)loadF()};
 $("t1").onclick=()=>tab(1);$("t2").onclick=()=>tab(2);$("t3").onclick=()=>tab(3);$("t4").onclick=()=>tab(4);$("t5").onclick=()=>tab(5);$("t6").onclick=()=>tab(6);
 const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())};
-function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc","clb"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cx").value="";$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear();lkClear();if(window.__cnr)updCnt()   /* เรียกได้หลังตั้งค่าตัวนับเสร็จ (ดูท้ายส่วนเนื้อหาเว็บ) */}
+function cclear(){CE=null;CP="";["ct","cs","cb","cv","ci","cc","clb","cltx","clsx"].forEach(i=>$(i).value="");$("cf").value="";$("cpv").replaceChildren();$("ck").value="ข่าวสาร";$("cd").value=today();$("cx").value="";$("cp2").checked=true;$("cpn").checked=false;$("cft").textContent="โพสต์เนื้อหาใหม่";$("cm").className="msg hide";plClear();lkClear();if(window.__cnr)updCnt()   /* เรียกได้หลังตั้งค่าตัวนับเสร็จ (ดูท้ายส่วนเนื้อหาเว็บ) */}
 $("crs").onclick=cclear;cclear();
 $("cf").onchange=e=>{const f=e.target.files[0];if(!f){CP="";$("cpv").replaceChildren();return}
  const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);CP=c.toDataURL("image/jpeg",.82);const p=new Image();p.src=CP;p.alt="ตัวอย่างรูป";$("cpv").replaceChildren(p);URL.revokeObjectURL(u)};im.onerror=()=>{CP="";alert("เปิดไฟล์รูปนี้ไม่ได้")};im.src=u};
 $("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.className="msg hide";
- try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:bodyWithLoc(),video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked,exp:$("cx").value,lbl:$("clb").value.trim()};
+ try{const item={id:CE?CE.id:undefined,kind:$("ck").value,at:$("cd").value,cat:$("cc").value.trim(),title:$("ct").value.trim(),sum:$("cs").value.trim(),body:bodyWithLoc(),video:$("cv").value.trim(),img:$("ci").value.trim(),pub:$("cp2").checked,pin:$("cpn").checked,exp:$("cx").value,lbl:$("clb").value.trim(),ltitle:$("cltx").value.trim(),lsum:$("clsx").value.trim()};
   { const bad=lint(item).filter(z=>z.lv==="bad"); if(bad.length&&!confirm("ยังมีข้อที่ควรแก้ก่อนเผยแพร่:\n• "+bad.map(z=>z.m).join("\n• ")+"\n\nบันทึกต่อไปเลยไหม? (กด ยกเลิก เพื่อกลับไปแก้)")){b.disabled=false;return} }
   if(lkBad)throw new Error("ลิงก์ที่ "+lkBad+" ต้องขึ้นต้นด้วย https:// (ตรวจช่องลิงก์เพิ่มเติม)");
   const dup=CL.find(z=>z.title===item.title&&z.cat!=="รูปแทรก"&&(!CE||z.id!==CE.id));if(dup&&!confirm("มีเรื่องชื่อ “"+item.title+"” อยู่แล้ว\nถ้าจะแก้เรื่องเดิม ให้กด ยกเลิก แล้วใช้ปุ่ม แก้ไข ในรายการด้านล่าง\nถ้าตั้งใจโพสต์ซ้ำ กด ตกลง")){b.disabled=false;return}
@@ -310,7 +313,7 @@ $("csv").onclick=async()=>{const b=$("csv"),m=$("cm");b.disabled=true;m.classNam
 /* ===== เนื้อหาเว็บ: ค้นหา/กรอง • ตัวนับความยาว • ตัวอย่างหน้าแรก • ตัวตรวจข้อควรระวัง • ชุดหัวข้อสั้นที่เสนอ ===== */
 /* เกณฑ์ความยาว (นับตัวอักษรรวมสระ วรรณยุกต์ ช่องว่าง) ตามเอกสาร “หัวข้อให้สั้น กระชับ ไม่ทับภาพ”
    เป้า = ช่วงที่แนะนำ, cap = เพดาน (เกินแล้วหน้าแรกมีโอกาสถูกตัดด้วย …) แก้ตัวเลขได้ที่นี่ที่เดียว */
-const LIM={t:{min:18,goal:30,cap:35,n:"หัวข้อหลัก"},s:{min:30,goal:50,cap:60,n:"คำขยาย"},l:{min:14,goal:24,cap:26,n:"ป้ายแถบรอง"}};
+const LIM={t:{min:18,goal:30,cap:35,n:"หัวข้อหลัก"},s:{min:30,goal:50,cap:60,n:"คำขยาย"},l:{min:14,goal:24,cap:26,n:"ป้ายแถบรอง"},ft:{min:30,goal:55,cap:80,n:"หัวข้อฉบับเต็ม"},fs:{min:60,goal:120,cap:180,n:"คำอธิบายฉบับเต็ม"}};
 const len=s=>[...String(s||"").trim()].length;
 const approxWords=n=>Math.max(1,Math.round(n/5));
 const SENS=/เตือนภัย|สิทธิ์|สิทธิ|สุขภาพ|สาธารณสุข/,HEALTH=/กินยา|แบ่งยา|ยาฆ่าเชื้อ|ยารักษา|เชื้อดื้อยา|โรค|หมอ|รพ\.|โรงพยาบาล|วัคซีน|ไข้|สุขภาพ|เชื้อโรค/,
@@ -354,7 +357,7 @@ function renderPrev(){const T=$("ct").value.trim(),S=$("cs").value.trim(),B=$("c
 function recipeHint(){const cat=$("cc").value,r=RECIPES.find(x=>x.c.test(cat)),h=$("crech");h.textContent=r?"· หมวดนี้แนะนำ: “"+r.n+"” = "+r.f:"· ดูสูตรทั้ง 4 แบบ"}
 function recipeTable(){const w=$("crecb");if(w.firstChild)return;RECIPES.forEach(r=>{const d=el("div","rcr"),b=el("b","",r.n+" — "+r.f),m=el("div","mute","หัวข้อ: "+r.e[0]+"  /  คำขยาย: "+r.e[1]);d.append(b,m);w.append(d)});
  [["ห้ามตกใจทุกเรื่อง","ไม่ใช้ “ด่วน!” “ห้ามพลาด!” กับทุกเรื่อง ใช้เฉพาะเรื่องที่เสี่ยงเสียสิทธิ์หรือปลอดภัยจริง"],["เรื่องที่เห็นต่าง","เช่น งบ 250 ล้านบาท ใช้คำกลาง ไม่ตัดสิน ไม่ชี้นำ"],["เตือนภัย สุขภาพ สิทธิ์","ต้องมีตัวเลข วันที่ หรือสถานที่ อย่างน้อยหนึ่งแห่ง และไม่สั้นจนความหมายเปลี่ยน"],["ชื่อกวย","ชื่อที่เป็นหัวใจของเรื่องให้คงไว้ในหัวข้อ ตัดเฉพาะคำบรรยายที่ซ้ำกับคำขยาย"],["ชื่อเพจ","ตัด “| ที่นี่โพธิ์กระสังข์” ท้ายชื่อคลิปออก"]].forEach(([a,b])=>{const d=el("div","rcr");d.append(el("b","","⚠️ "+a+": "),document.createTextNode(b));w.append(d)})}
-function updCnt(){const T=$("ct").value,S=$("cs").value,B=$("clb").value;cnt("ctn",len(T),LIM.t);cnt("csn",len(S),LIM.s);cnt("clbn",len(B),LIM.l);
+function updCnt(){const T=$("ct").value,S=$("cs").value,B=$("clb").value;cnt("ctn",len(T),LIM.t);cnt("csn",len(S),LIM.s);cnt("clbn",len(B),LIM.l);cnt("cltxn",len($("cltx").value),LIM.ft);cnt("clsxn",len($("clsx").value),LIM.fs);
  const it={kind:$("ck").value,cat:$("cc").value.trim(),title:T.trim(),sum:S.trim(),lbl:B.trim()},L=lint(it),box=$("clint");box.replaceChildren();
  if(!T&&!S&&!B){box.className="hide";}else{box.className="";
   if(!L.length)box.append(Object.assign(el("div","lt ok","✅ ผ่านข้อควรระวังที่ตรวจได้อัตโนมัติ (ยังควรอ่านทวนอีกรอบ)")));
@@ -365,7 +368,7 @@ function keepOld(){if(!CE)return;const cur=$("cb").value;$("cb").value="ชื�
 
 /* ===== ค้นหา/กรอง/เรียง รายการเนื้อหา ===== */
 const nz=s=>String(s||"").toLowerCase().replace(/[\s\u200b]+/g,"");
-function matchItem(it,terms){const hay=nz([it.title,it.sum,it.cat,it.kind,it.lbl,it.body,it.by,it.id,it.at].join(" "));return terms.every(t=>hay.includes(t))}
+function matchItem(it,terms){const hay=nz([it.title,it.sum,it.cat,it.kind,it.lbl,it.ltitle,it.lsum,it.body,it.by,it.id,it.at].join(" "));return terms.every(t=>hay.includes(t))}
 function renderC(){const box=$("cl2"),all=CL.filter(z=>z.cat!=="รูปแทรก"),q=$("sxq").value.trim(),terms=q.split(/\s+/).map(nz).filter(Boolean),k=$("sxk").value,st=$("sxs").value,cat=$("sxc").value,so=$("sxo").value;
  let L=all.filter(it=>(!terms.length||matchItem(it,terms))&&(!k||it.kind===k)&&(!cat||it.cat===cat)&&(st===""||(st==="pub"?it.pub:st==="draft"?!it.pub:st==="pin"?it.pin:st==="long"?(len(it.title)>LIM.t.cap||len(it.sum)>LIM.s.cap||(it.lbl&&len(it.lbl)>LIM.l.cap)):st==="warn"?lint(it).some(x=>x.lv==="bad"||x.lv==="warn"):st==="nolbl"?!it.lbl:true)));
  L=L.slice();if(so==="old")L.reverse();else if(so==="az")L.sort((a,b)=>String(a.title).localeCompare(String(b.title),"th"));else if(so==="long")L.sort((a,b)=>len(b.title)-len(a.title));else if(so==="views")L.sort((a,b)=>(+b.v||0)-(+a.v||0));
@@ -379,13 +382,13 @@ const mark=(t,terms)=>{const f=document.createDocumentFragment();if(!terms.lengt
  const m=[];spans.forEach(s=>{if(m.length&&s[0]<=m[m.length-1][1])m[m.length-1][1]=Math.max(m[m.length-1][1],s[1]);else m.push(s.slice())});m.forEach(([a,b])=>{if(a>i)f.append(String(t).slice(i,a));const k=el("mark","",String(t).slice(a,b));f.append(k);i=b});if(i<String(t).length)f.append(String(t).slice(i));return f};
 function lenBadge(n,l,nm){if(!n)return null;const b=el("span","badge lb "+cls(n,l),nm+" "+n);b.title=nm+" "+n+" ตัวอักษร (เป้า "+l.min+"–"+l.goal+" เพดาน "+l.cap+")";return b}
 function fullItem(it,patch){return Object.assign({id:it.id,kind:it.kind,at:it.at,cat:it.cat,title:it.title,sum:it.sum,body:it.body,video:it.video,img:it.img,pin:it.pin,pub:it.pub,lbl:it.lbl||""},patch||{})}
-function cedit(it){CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";$("clb").value=it.lbl||"";setBodyLoc(it.body||"");$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cx").value=it.exp||"";$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;updCnt();$("cform").scrollIntoView({behavior:"smooth"})}
+function cedit(it){CE=it;CP="";$("ck").value=it.kind;$("cd").value=it.at||today();$("cc").value=it.cat||"";$("ct").value=it.title;$("cs").value=it.sum||"";$("clb").value=it.lbl||"";$("cltx").value=it.ltitle||"";$("clsx").value=it.lsum||"";setBodyLoc(it.body||"");$("cv").value=it.video?"https://youtu.be/"+it.video:"";$("ci").value=it.img||"";$("cp2").checked=!!it.pub;$("cx").value=it.exp||"";$("cpn").checked=!!it.pin;$("cf").value="";$("cpv").replaceChildren();$("cft").textContent="แก้ไข: "+it.title;updCnt();$("cform").scrollIntoView({behavior:"smooth"})}
 function ccard(it){const terms=$("sxq").value.trim().split(/\s+/).map(s=>s.toLowerCase()).filter(Boolean),c=el("div","c"),t=el("div","top"),L=lint(it),bads=L.filter(x=>x.lv==="bad").length,ws=L.filter(x=>x.lv==="warn").length;
  const h=el("h3");h.append(mark(it.title,terms));t.append(h,el("span","badge",it.kind),el("span","badge"+(it.pub?" g":""),it.pub?"เผยแพร่แล้ว":"ฉบับร่าง"));if(it.pin)t.append(el("span","badge g","📌 ปักหน้าแรก"));
  [lenBadge(len(it.title),LIM.t,"หัวข้อ"),lenBadge(len(it.sum),LIM.s,"ขยาย"),lenBadge(len(it.lbl),LIM.l,"ป้าย")].forEach(b=>b&&t.append(b));
  if(bads||ws){const b=el("span","badge "+(bads?"r":"w"),(bads?"⚠️ ควรแก้ "+bads:"💡 ตรวจ "+ws)+" ข้อ");b.title=L.filter(x=>x.lv!=="info").map(x=>x.m).join("\n");t.append(b)}
  c.append(t,el("div","mute",[it.at,it.cat,it.by,it.v?"อ่าน "+it.v:""].filter(Boolean).join(" • ")));if(it.sum){const p=el("p");p.append(mark(it.sum,terms));c.append(p)}
- if(it.lbl)c.append(el("div","mute","ป้ายแถบรอง: "+it.lbl));
+ if(it.lbl)c.append(el("div","mute","ป้ายแถบรอง: "+it.lbl));if(it.ltitle)c.append(el("div","mute","หัวข้อฉบับเต็ม: "+it.ltitle));if(it.lsum)c.append(el("div","mute","คำอธิบายฉบับเต็ม: "+it.lsum));
  if(terms.length&&it.body){const bl=String(it.body),k=terms.map(w=>nz(w)).find(w=>w&&nz(bl).includes(w)&&!nz(it.title+it.sum).includes(w));if(k){const i=bl.toLowerCase().indexOf(k);if(i>=0){const sn=bl.slice(Math.max(0,i-30),i+60).replace(/\n+/g," ");c.append(el("div","mute","พบในเนื้อหา: …"+sn+"…"))}}}
  const e=el("button","btn o","แก้ไขเต็มรูปแบบ"),h2=el("button","btn",it.pub?"ซ่อนจากเว็บ":"เผยแพร่");e.onclick=()=>cedit(it);
  h2.onclick=async()=>{h2.disabled=true;const u=await call({action:"adminContentSave",item:fullItem(it,{pub:!it.pub})});if(!u.ok)alert(u.error);loadC()};
@@ -450,7 +453,7 @@ async function ppAll(){const todo=PROP.map(r=>({r:r,m:ppFind(r)})).filter(x=>x.m
  for(const x of todo){m.className="msg";m.textContent="กำลังบันทึก "+(ok+bad.length+1)+" / "+todo.length+" …";try{const u=await call({action:"adminContentSave",item:fullItem(x.m.it,{title:x.r.t,sum:x.r.s,lbl:x.r.l,body:$("ppkeep").checked&&!String(x.m.it.body||"").includes(x.m.it.title)?"ชื่อเรื่องเดิม: "+x.m.it.title+(x.m.it.body?"\n\n"+x.m.it.body:""):x.m.it.body})});if(u.ok)ok++;else bad.push(x.r.t+" ("+(u.error||"ผิดพลาด")+")")}catch(er){bad.push(x.r.t+" ("+er.message+")")}}
  m.textContent="✅ ใช้แล้ว "+ok+" เรื่อง"+(bad.length?" • ไม่สำเร็จ "+bad.length+": "+bad.join(", "):"");m.className="msg"+(bad.length?" warn":"");await loadC()}
 $("ppall").onclick=ppAll;
-["ct","cs","clb","cc","cb"].forEach(i=>$(i).addEventListener("input",updCnt));$("ck").addEventListener("change",updCnt);$("crsv").querySelector("button").onclick=keepOld;
+["ct","cs","clb","cltx","clsx","cc","cb"].forEach(i=>$(i).addEventListener("input",updCnt));$("ck").addEventListener("change",updCnt);$("crsv").querySelector("button").onclick=keepOld;
 $("crecw").addEventListener("toggle",()=>{if($("crecw").open)recipeTable()});
 ["sxq"].forEach(i=>$(i).addEventListener("input",renderC));["sxk","sxs","sxc","sxo"].forEach(i=>$(i).addEventListener("change",renderC));
 $("sxr").onclick=()=>{["sxq","sxk","sxs","sxc"].forEach(i=>$(i).value="");$("sxo").value="new";renderC()};

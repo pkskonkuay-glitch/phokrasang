@@ -127,7 +127,7 @@ function page(it) {
   }
   const add = it => { if (it.k && !seen.has(it.k) && it.title) { seen.add(it.k); items.push(it); } };
   keyedFromContent(seen, list(c2)).forEach(add);   // รหัสเก่า (n0/a0…) ที่เรื่องย้ายไปอยู่หลังบ้านแล้ว
-  list(c2).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.title, sum: x.sum, img: x.img, at: x.at }));
+  list(c2).filter(x => x.kind !== "คลิป").forEach(x => add({ k: "c" + x.id, title: x.lt || x.title, sum: x.ls || x.sum, img: x.img, at: x.at }));
   list(e2).forEach(x => add({ k: "ev-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));
   list(p2).forEach(x => add({ k: "p-" + x.id, title: x.title, sum: x.desc || x.story, img: x.img }));
   list(lf2).forEach(x => add({ k: "lf-" + x.id, title: x.title, sum: x.sum || x.story, img: x.img }));   // วิถีชีวิตกวย (ดุงเลิง/กัวออ/จาเอม)

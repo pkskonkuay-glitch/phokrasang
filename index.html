@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+<!-- v7 2569-10-18: ช่องหมุน 6 ช่องใช้ หัวข้อ/คำขยาย/ป้ายแถบรอง แบบสั้นเหมือนเดิม ; การ์ดในรายการ ข่าว • คลิป ล่าสุด, การ์ดข่าว และหน้าอ่าน ใช้ "หัวข้อฉบับเต็ม/คำอธิบายฉบับเต็ม" ถ้ามี (ไม่มี = ใช้แบบสั้น) -->
 <!-- v6 2569-10-18: สโลแกนเต็ม "วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน" ทุกจุด ; ชื่อหมวดเป็น "ดุงเลิง" ในโค้ด (รับข้อมูลเก่า "ดุงกวย" แปลงให้อัตโนมัติ) ; หัวข้อหน้าแจ้งเรื่องสีขาวบนเขียวเข้ม -->
 <!-- version 2569-10-16-g (นับสถิติ GoatCounter + หน้า "ของดีบ้านเรา") ; ก่อนหน้า 2569-10-12 (ตัดตัวชัด/ฟังเสียง ปุ่ม ก−ก+ ในหัวเว็บ รูปไร้กรอบ) ; ก่อนหน้า 2569-10-05 : เมนูสามขีด + กรองหมวดหมู่ + แจ้งเรื่องปักหมุดผ่าน LINE -->
 <meta charset="utf-8"><meta name="color-scheme" content="light">
@@ -546,8 +547,8 @@ function card(o,play){const c=el(o.link||o.body?"a":"div","card");if(o.body){c.h
 const t=el("div","thumb"+(o.t?" t-"+o.t:""),play||o.t?"":(o.icon||""));if(o.t&&o.px!=null)t.style.backgroundPosition=o.px+"% "+o.py+"%";t.style.setProperty("--c1",o.c1||"#0e6b73");t.style.setProperty("--c2",o.c2||"#2f9a8f");
 if(o.img){t.classList.add("ph1");const im=new Image();im.alt="";im.loading="lazy";im.className="cover";im.onerror=()=>im.remove();im.src=o.img;t.append(im)}
 if(o.date)t.append(el("div","dbadge",o.date));if(play)t.append(el("div","play","▶"));
-const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.title),el("div","mute",o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);}{const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}c.append(t,i);return c}
-function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.title);const m=el("div","mute",(o.date||"")+(o.meta!=null?o.meta:o.prod?"ผลิตภัณฑ์ชุมชนบ้านโพธิ์กระสังข์":o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);{const vw=vwEl(o);if(vw){vw.classList.add("vwr");r.append(vw)}}
+const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.ltitle||o.title),el("div","mute",o.lsum||o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);}{const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}c.append(t,i);return c}
+function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.ltitle||o.title);const m=el("div","mute",(o.date||"")+(o.meta!=null?o.meta:o.prod?"ผลิตภัณฑ์ชุมชนบ้านโพธิ์กระสังข์":o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);{const vw=vwEl(o);if(vw){vw.classList.add("vwr");r.append(vw)}}
 if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
 let ul=null;o.body.forEach(x=>{if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null;
 const ml=/^@@\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);
@@ -603,7 +604,7 @@ function openF(f){f.kind==="v"?window.open(f.url,"_blank","noopener"):openRead(f
 function fcard(f){const a=el("a","fc");if(f.kind==="v")ext(a,f.url);else{a.href="#/read/"+f.o.k;a.onclick=e=>{e.preventDefault();openRead(f.o)}}
 const t=el("div","fi"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>im.remove();im.src=f.img;if(CPOS[f.key])im.style.objectPosition=CPOS[f.key];t.append(im);
 if(f.kind==="v"){const y=el("span","yb");y.innerHTML=YT;t.append(y)}
-const m=el("div","fm");m.innerHTML=FOLD;{const cs=el("span","fmc",f.cat);cs.title=f.cat;m.append(cs)}const vw=vwEl(f.o);if(vw)m.append(vw);a.append(t,el("h3","",f.t),m);return a}
+const m=el("div","fm");m.innerHTML=FOLD;{const cs=el("span","fmc",f.cat);cs.title=f.cat;m.append(cs)}const vw=vwEl(f.o);if(vw)m.append(vw);a.append(t,el("h3","",f.lt||f.t));if(f.ls)a.append(el("p","fd",f.ls));a.append(m);return a}
 let ff="ทั้งหมด",fn=6;const FC={"ข่าวสาร":"n","วิถีกวย":"a","คลิป":"v","สิทธิ์ที่ควรรู้":"r"};
 let fy="ทั้งหมด",fq="";
 function rRights(){var l=FEED.filter(function(f){return f.cat==="สิทธิ์ที่ควรรู้"});$("rgrid").replaceChildren.apply($("rgrid"),l.length?l.map(fcard):[el("p","mute","ยังไม่มีรายการในหมวดนี้ ติดตามได้ทาง LINE")])}
@@ -613,7 +614,7 @@ $("ddl").replaceChildren(...["ทั้งหมด",...Object.keys(FC)].map(k=>
 const ys=[...new Set(FEED.map(f=>f.y).filter(Boolean))].sort().reverse();
 $("ydl").replaceChildren(...["ทั้งหมด",...ys].map(k=>{const b=el("button","",k==="ทั้งหมด"?"ทุกปี":"ปี "+k);b.onclick=()=>{fy=k;fn=6;$("ydl").classList.add("hide");rFeed()};return b}));
 const q=fq.trim().toLowerCase();
-const l=FEED.filter(f=>(ff==="ทั้งหมด"||(FC[ff]==="r"?f.cat==="สิทธิ์ที่ควรรู้":f.kind===FC[ff]))&&(fy==="ทั้งหมด"||f.y===fy)&&(!q||(f.t+" "+f.cat+" "+f.s).toLowerCase().includes(q)));
+const l=FEED.filter(f=>(ff==="ทั้งหมด"||(FC[ff]==="r"?f.cat==="สิทธิ์ที่ควรรู้":f.kind===FC[ff]))&&(fy==="ทั้งหมด"||f.y===fy)&&(!q||(f.t+" "+(f.lt||"")+" "+f.cat+" "+f.s+" "+(f.ls||"")).toLowerCase().includes(q)));
 $("fg").replaceChildren(...l.slice(0,fn).map(fcard));
 const m=$("fmore");m.replaceChildren();if(!l.length)m.append(el("p","mute","ไม่พบรายการที่ตรงกับที่ค้นหา"));
 if(l.length>fn){const b=el("button","btn solid","ดูเพิ่ม ("+(l.length-fn)+" รายการ)");b.onclick=()=>{fn+=6;rFeed()};m.append(b)}}
@@ -839,9 +840,9 @@ function applyContent(items){
   const cc=CC[it.cat]||CC["โครงการและบริการ"],ph="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sv0(cc[0],cc[1],'<text x="300" y="250" font-size="130" text-anchor="middle">'+cc[2]+'</text>'));
   const old=!!(it.exp&&it.exp<new Date(Date.now()+252e5).toISOString().slice(0,10));
   const bdy=it.k?String(it.body||"").split(/\n+/).map(x=>x.trim()).filter(Boolean):[];
-  const o={k:it.k||"c"+it.id,cat:it.cat||it.kind,title:(old?"ข่าวเก่า: ":"")+it.title,sum:it.sum,date:thD(it.at),img:it.img||SI[it.title]||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:bdy.length?bdy:[it.sum||it.title],lazy:it.k?undefined:it.lazy,dynId:it.k?undefined:it.id,v:+it.v||0};
+  const o={k:it.k||"c"+it.id,cat:it.cat||it.kind,title:(old?"ข่าวเก่า: ":"")+it.title,ltitle:it.lt?(old?"ข่าวเก่า: ":"")+String(it.lt).trim():"",lsum:String(it.ls||"").trim(),sum:it.sum,date:thD(it.at),img:it.img||SI[it.title]||ph,link:null,c1:cc[0],c2:cc[1],icon:cc[2],body:bdy.length?bdy:[it.ls||it.sum||it.title],lazy:it.k?undefined:it.lazy,dynId:it.k?undefined:it.id,v:+it.v||0};
   (it.kind==="วิถีกวย"?aa:nn).unshift(o);
-  const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,lbl:String(it.lbl||SL[it.title]||"").trim(),cat:o.cat,s:o.sum||"",img:o.img,o:o,y:y,pin:!!it.pin&&!old,real:!!(it.img||SI[it.title])&&!old};add.unshift(fe);
+  const fe={key:o.k,kind:it.kind==="วิถีกวย"?"a":"n",t:o.title,lbl:String(it.lbl||SL[it.title]||"").trim(),cat:o.cat,s:o.sum||"",lt:o.ltitle,ls:o.lsum,img:o.img,o:o,y:y,pin:!!it.pin&&!old,real:!!(it.img||SI[it.title])&&!old};add.unshift(fe);
   if(SI[it.title]&&it.img&&it.img!==SI[it.title]){const t=new Image();t.onerror=()=>{o.img=SI[it.title];fe.img=o.img;rNews();rFeed()};t.src=it.img}});
  const hf=homeFeed();HSIG=hf.map(f=>f.key+(f.pin?"*":"")).join();[...hf].reverse().forEach(f=>add.unshift(f));   /* เรื่องวิถีชีวิต/ปีกวยที่ติ๊กขึ้นหน้าหลัก */
  news.splice(0,news.length,...nn);arts.splice(0,arts.length,...aa);DYNV=dv;
@@ -1214,6 +1215,9 @@ a.card:hover{border-color:transparent}
 .card .vwc{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--fr);justify-content:flex-end}
 @media(max-width:480px){.fc,.card{border-radius:18px;padding:7px}.fc .fm{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.fc,.card{transition:none}.fc:hover,a.card:hover,.card[role=link]:hover{transform:none}}
+/* v7: คำอธิบายฉบับเต็มใต้หัวข้อในการ์ดรายการ (แสดงเฉพาะเรื่องที่ใส่คำอธิบายฉบับเต็ม) */
+.fc .fd{margin:0;padding:0 8px 10px;font-size:14px;line-height:1.6;color:var(--mute,#4a6b65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fc .fd+.fm{margin-top:auto}
 </style>
 <script>
 /* ===== ส่วนเสริม: ติดตั้งไอคอน • ออฟไลน์ ===== */
