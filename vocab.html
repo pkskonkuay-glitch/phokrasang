@@ -5,7 +5,7 @@
 <link rel="canonical" href="https://pkskonkuay-glitch.github.io/phokrasang/vocab.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"คำศัพท์กวย | ที่นี่โพธิ์กระสังข์","url":"https://pkskonkuay-glitch.github.io/phokrasang/vocab.html","inLanguage":"th","isPartOf":{"@type":"WebSite","name":"ที่นี่โพธิ์กระสังข์","url":"https://pkskonkuay-glitch.github.io/phokrasang/"}}</script>
 <meta property="og:type" content="website"><meta property="og:locale" content="th_TH"><meta property="og:site_name" content="ที่นี่โพธิ์กระสังข์"><meta property="og:title" content="คำศัพท์กวย | ที่นี่โพธิ์กระสังข์"><meta property="og:description" content="คำศัพท์ภาษากวยของบ้านโพธิ์กระสังข์ พร้อมคำแปล แยกเป็นหมวดอ่านง่าย"><meta property="og:url" content="https://pkskonkuay-glitch.github.io/phokrasang/vocab.html"><meta property="og:image" content="https://pkskonkuay-glitch.github.io/phokrasang/share.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://pkskonkuay-glitch.github.io/phokrasang/share.png">
-<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}</style>
+<style>@font-face{font-family:"Boon";font-weight:400;font-display:swap;src:url("fonts/Boon-Regular.woff2") format("woff2")}@font-face{font-family:"Boon";font-weight:700;font-display:swap;src:url("fonts/Boon-Bold.woff2") format("woff2")}.sgb{margin-top:6px;font-size:14px}</style>
 <style>
 :root{--ink:#14332e;--mute:#4a6b65;--line:#c4e0da;--navy:#b34700;--gold:#fc8c2c;--green:#2f7d5b;--red:#c93b2f;--fs:18px}*{box-sizing:border-box}
 body{margin:0;background:#e3f4f0;color:var(--ink);font:400 var(--fs)/1.65 Boon,system-ui,sans-serif}
@@ -86,6 +86,17 @@ a{color:#b34700}
 <p style="margin:10px 0 0"><a class="btn g" id="ln" href="#" target="_blank" rel="noopener">✉️ ส่งคำเสนอแนะทาง LINE</a> <button class="btn" id="ls">📋 คัดลอก LINE ID</button></p></div>
 </main>
 <footer>ที่นี่โพธิ์กระสังข์ • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน • <a href="privacy.html">ความเป็นส่วนตัว</a> • <a href="#admin" id="al">ผู้ดูแล</a></footer>
+
+<!-- เสนอแก้คำ (ผู้อ่านทั่วไป) -->
+<div id="sg" class="ov hide"><div class="md"><h2>✏️ เสนอแก้คำนี้</h2>
+<div id="sg-w" class="hint" style="font-size:16px;font-weight:700"></div>
+<label for="sg-k">คำกวยที่ถูกต้อง (พิมพ์เป็นอักษรไทยตามที่พูดในบ้านเรา)</label><input type="text" id="sg-k" maxlength="120" autocomplete="off">
+<label for="sg-t">ความหมายไทยที่ควรเป็น (ถ้าต้องแก้)</label><input type="text" id="sg-t" maxlength="120" autocomplete="off">
+<label for="sg-n">บอกเหตุผลหรือคำอธิบายเพิ่ม (ถ้ามี)</label><textarea id="sg-n" rows="3" maxlength="400"></textarea>
+<label for="sg-by">ชื่อผู้บอก / หมู่บ้าน (ถ้าอยากให้ระบุ ไม่ใส่ก็ได้)</label><input type="text" id="sg-by" maxlength="60" autocomplete="off">
+<input type="text" id="sg-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+<div id="sg-m" class="mm hide"></div>
+<div class="bt"><button class="btn s" id="sg-ok">📨 ส่งคำแก้</button><a class="btn g" id="sg-ln" href="#" target="_blank" rel="noopener">✉️ ส่งทาง LINE แทน</a><button class="btn" id="sg-x">ยกเลิก</button></div></div></div>
 
 <!-- แก้ไข / เพิ่มคำ -->
 <div id="ed" class="ov hide"><div class="md"><h2 id="e-h">เพิ่มคำใหม่</h2>
@@ -173,6 +184,7 @@ function row(e,showCat){const w=el("div","w"+(e.hide?" dim":"")),im=imgSrc(e.img
  if(showCat)t.append(el("span","tag",e.cat));t.append(document.createTextNode(e.th));b.append(k,t);if(e.note)b.append(el("div","wn",e.note));if(e.kuy&&e.src)b.append(el("div","wn","ที่มา: "+e.src));
   if(e.kuy){const au=audEl(e.aud);if(au)b.append(au)}
  if(ADM){const a=el("div","wa"),x=el("button","btn sm","✏️ แก้ไข"),d=el("button","btn sm r","🗑");x.onclick=()=>openEdit(e);d.title="ลบคำนี้";d.setAttribute("aria-label","ลบคำนี้");d.onclick=()=>del(e);a.append(x,d);w.append(b,a);return w}
+ if(e.kuy||e.th){const sb=el("button","btn sm sgb","✏️ เสนอแก้คำนี้");sb.type="button";sb.setAttribute("aria-label","เสนอแก้คำ "+(e.kuy||e.th));sb.onclick=()=>sugOpen(e);b.append(sb)}
  w.append(b);return w}
 function listEl(L,showCat,cap){const f=document.createDocumentFragment();L.slice(0,cap).forEach(e=>f.append(row(e,showCat)));
  if(L.length>cap){const m=el("button","btn more","ดูเพิ่มอีก "+(L.length-cap)+" คำ");m.onclick=()=>{m.replaceWith(listEl(L.slice(cap),showCat,200))};f.append(m)}return f}
@@ -233,6 +245,17 @@ Promise.race([fromApi(),new Promise((_,j)=>setTimeout(j,4000))]).catch(fromJson)
 const API=()=>sessionStorage.getItem("api")||API0;
 async function call(b){const r=await fetch(API(),{method:"POST",body:JSON.stringify(Object.assign({token:TK,by:NM()},b))});return r.json()}
 const op=b=>call(b);
+/* ---------- เสนอแก้คำนี้ (ผู้อ่านทั่วไปส่งได้ ไม่ต้องล็อกอิน) ---------- */
+let SGE=null;const sgCid=()=>{try{let c=localStorage.getItem("kpcid");if(!c){c="v"+Math.random().toString(36).slice(2,12);localStorage.setItem("kpcid",c)}return c}catch(x){return"anon"}};
+function sugOpen(e){SGE=e;$("sg-w").textContent=(e.kuy||"ยังไม่มีคำกวย")+" = "+e.th;$("sg-k").value=e.kuy||"";$("sg-t").value="";$("sg-n").value="";$("sg-m").className="mm hide";$("sg-ok").disabled=false;
+ $("sg-ln").href="https://line.me/R/oaMessage/"+encodeURIComponent(LINE)+"/?"+encodeURIComponent("เสนอแก้คำ\nคำเดิม: "+(e.kuy||"-")+" = "+e.th+"\nคำกวยที่ถูก: \nเหตุผล: ");$("sg").classList.remove("hide");$("sg-k").focus()}
+$("sg-x").onclick=()=>$("sg").classList.add("hide");
+$("sg-ok").onclick=async()=>{const m=$("sg-m"),k=$("sg-k").value.trim(),t=$("sg-t").value.trim(),n=$("sg-n").value.trim();
+ if(!k&&!t&&!n){m.className="mm err";m.textContent="กรุณาพิมพ์คำที่ถูกต้องหรือเหตุผลอย่างน้อย 1 ช่อง";return}
+ $("sg-ok").disabled=true;m.className="mm";m.textContent="กำลังส่ง …";
+ try{const r=await fetch(API0,{method:"POST",body:JSON.stringify({action:"vocabSuggest",cid:sgCid(),hp:$("sg-hp").value,id:SGE.id||"",th:SGE.th||"",kuy:SGE.kuy||"",cat:SGE.cat||"",newKuy:k,newTh:t,note:n,by:$("sg-by").value.trim()})}),u=await r.json();
+  if(!u.ok)throw new Error(u.error||"ส่งไม่สำเร็จ");m.className="mm";m.textContent="✅ ส่งแล้ว ขอบคุณที่ช่วยบอก ทีมงานจะตรวจก่อนแก้บนเว็บ";setTimeout(()=>$("sg").classList.add("hide"),1800)}
+ catch(x){m.className="mm err";m.textContent="⚠️ "+x.message+" (ลองกด “ส่งทาง LINE แทน”)";$("sg-ok").disabled=false}};
 $("al").onclick=e=>{e.preventDefault();openAdmin()};
 function showLogin(msg){$("l-m").className=msg?"mm err":"mm hide";$("l-m").textContent=msg||"";$("lg").classList.remove("hide");$("l-tk").focus()}
 $("l-sp").onchange=()=>{$("l-tk").type=$("l-sp").checked?"text":"password"};

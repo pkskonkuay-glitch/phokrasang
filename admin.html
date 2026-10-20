@@ -785,13 +785,13 @@ let WBC=null;
 async function wbCats(){if(WBC)return WBC;let L=[];
  try{if(typeof VCATS!=="undefined"&&VCATS.length)L=VCATS.map(c=>c.cat||c);else{const d=await vcall({action:"adminVocabList"});if(d&&d.ok){VL=d.items;VCATS=d.cats||[];L=VCATS.map(c=>c.cat||c)}}}catch(e){}
  L=[...new Set(L.filter(Boolean))];if(L.length)WBC=L;return L}
-const wbLines=t=>String(t||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split("|"),q=p[0].split(/\s*=\s*/);return{th:(q[0]||"").trim(),kuy:(q[1]||"").trim(),cat:(p[1]||"").trim(),raw:x}});
+const wbLines=t=>String(t||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split("|"),q=p[0].split(/\s*=\s*/);return{th:(q[0]||"").trim(),kuy:(q[1]||"").trim(),cat:(p[1]||"").trim(),note:p.slice(2).join("/").trim(),raw:x}});
 function wbFill(p,L){L=L||WBC||[];const s=$(p+"wc"),v=s.value||$(p+"vc").value.trim();
  s.replaceChildren(...[["","— เลือกหมวดของคำนี้ —"],...L.map(c=>[c,c]),["__new","➕ หมวดใหม่…"]].map(([k,t])=>{const o=el("option","",t);o.value=k;return o}));
  if(v&&![...s.options].some(o=>o.value===v)){const o=el("option","",v);o.value=v;s.insertBefore(o,s.lastChild)}
  s.value=v||"";const dl=$("vcl");if(dl)dl.replaceChildren(...L.map(c=>{const o=document.createElement("option");o.value=c;return o}))}
 function wbRender(p){const box=$(p+"wl");box.replaceChildren();
- wbLines($(p+"wd").value).forEach(x=>{const row=el("span","wchip");row.append(el("b","",x.kuy||"?"),document.createTextNode(" "+x.th+" "),el("small",x.cat?"":"nocat",x.cat||"ไม่ระบุหมวด → ใช้หมวดหลัก"));
+ wbLines($(p+"wd").value).forEach(x=>{const row=el("span","wchip");row.append(el("b","",x.kuy||"?"),document.createTextNode(" "+x.th+" "),el("small",x.cat?"":"nocat",x.cat||"ไม่ระบุหมวด → ใช้หมวดหลัก"));if(x.note){const nn=el("span","mute"," 📝 "+x.note.slice(0,60)+(x.note.length>60?"…":""));row.append(nn)}
   const d=el("button","wx","✕");d.type="button";d.title="เอาคำนี้ออก";d.setAttribute("aria-label","เอาคำ "+x.th+" ออก");
   d.onclick=()=>{const ta=$(p+"wd");ta.value=wbLines(ta.value).filter(y=>y.raw!==x.raw).map(y=>y.raw).join("\n");wbRender(p)};row.append(d);box.append(row)})}
 function wbOpen(p){wbRender(p);wbCats().then(L=>{wbFill(p,L);wbRender(p)})}
@@ -814,7 +814,7 @@ function wbInit(p){
  $(p+"hl").onchange=()=>{if(!$(p+"hl").checked)$(p+"hh").checked=false}}
 const homeVal=p=>$(p+"hh").checked?"hero":$(p+"hl").checked?"latest":"";
 async function wbSync(p,item){if(!$(p+"ws").checked)return"";
- const main=String(item.vcat||"").trim(),L=wbLines(item.words).filter(x=>x.th&&x.kuy).map(x=>({th:x.th,kuy:x.kuy,cat:x.cat||main,src:"จากเรื่อง: "+item.title}));
+ const main=String(item.vcat||"").trim(),L=wbLines(item.words).filter(x=>x.th&&x.kuy).map(x=>({th:x.th,kuy:x.kuy,cat:x.cat||main,note:x.note||"",src:"จากเรื่อง: "+item.title}));
  if(!L.length)return"";const ok=L.filter(x=>x.cat),no=L.length-ok.length;
  if(!ok.length)return"⚠️ คำศัพท์ยังไม่ได้ส่งเข้าคลัง เพราะยังไม่ได้เลือกหมวด";
  try{const a=await vcall({action:"adminVocabSave",items:ok.slice(0,100)});if(!a||!a.ok)throw new Error((a&&a.error)||"ไม่สำเร็จ");
@@ -1103,10 +1103,10 @@ window.kpLkBad=id=>{const t=$(id);return t&&t.__bad?t.__bad():""};
 /* ---------- ช่องคำศัพท์ช่องเดียว ---------- */
 const ORD=()=>ls.get("kp_wo")==="tk"?"tk":"kt";   /* kt = กวย = ไทย (ค่าเริ่มต้น), tk = ไทย = กวย */
 function parseW(txt,ord,def){const it=[],wn=[];String(txt||"").split(/\n+/).forEach(line=>{line=line.trim();if(!line)return;let cat="";const bi=line.lastIndexOf("|");if(bi>=0){cat=line.slice(bi+1).trim();line=line.slice(0,bi).trim()}
-  let prev=null;line.split(/[;,，；]/).forEach(seg=>{seg=seg.trim();if(!seg)return;const e=seg.indexOf("=");
+  let prev=null;(line.indexOf("~")>=0?[line]:line.split(/[;,，；]/)).forEach(seg=>{seg=seg.trim();if(!seg)return;let nt="";const ti=seg.indexOf("~");if(ti>=0){nt=seg.slice(ti+1).replace(/[|=\n]/g," ").trim();seg=seg.slice(0,ti).trim()}const e=seg.indexOf("=");
    if(e<0){if(prev){prev.b+=", "+seg;return}wn.push("ไม่มีเครื่องหมาย = : "+seg.slice(0,40));return}
    const a=seg.slice(0,e).trim(),b=seg.slice(e+1).replace(/=/g,"-").trim();if(!a||!b){wn.push("ขาดคำหน้าหรือหลัง = : "+seg.slice(0,40));return}
-   prev={a:a,b:b,cat:cat||def};it.push(prev)})});
+   prev={a:a,b:b,note:nt.slice(0,600),cat:cat||def};it.push(prev)})});
  const seen=new Set(),res=[];it.forEach(x=>{if(ord==="kt"){x.kuy=x.a;x.th=x.b}else{x.th=x.a;x.kuy=x.b}const k=x.th+"|"+x.kuy+"|"+x.cat;if(seen.has(k)){wn.push("คำซ้ำ (ตัดให้เหลือคำเดียว): "+x.kuy+" = "+x.th);return}seen.add(k);res.push(x)});return{it:res,wn:wn}}
 function wvInit(p){const wd=$(p+"wd"),wl=$(p+"wl");if(!wd||!wl||wd.dataset.wv)return;wd.dataset.wv="1";
  const root=wl.parentNode,wadd=root.querySelector(".wadd"),sel=$(p+"wc"),det=wd.closest("details"),wdl=document.querySelector('label[for="'+p+'wd"]');
@@ -1115,23 +1115,23 @@ function wvInit(p){const wd=$(p+"wd"),wl=$(p+"wl");if(!wd||!wl||wd.dataset.wv)re
  [["kt","กวย = ไทย (เช่น ทร้าอ์ = พิธีกรรมเซ่นไหว้เรียกขวัญให้กับทารก)"],["tk","ไทย = กวย (เช่น ทารก = กอนงา)"]].forEach(([v,t])=>{const o=el("option","",t);o.value=v;os.append(o)});os.value=ORD();os.setAttribute("aria-label","เลือกลำดับการพิมพ์คำ");
  const sl=el("label","","หมวดในคลังคำศัพท์");sl.style.margin="0";sl.setAttribute("for",p+"wc");
  sel.parentNode.removeChild(sel);opt.append(el("span","mute","พิมพ์แบบ:"),os,sl,sel);
- paste.id=p+"wpaste";paste.className="wpaste";paste.rows=5;paste.maxLength=3500;paste.setAttribute("aria-label","คำศัพท์ของเรื่องนี้ พิมพ์หรือวางทั้งก้อน");paste.placeholder="ทร้าอ์ = พิธีกรรมเซ่นไหว้เรียกขวัญให้กับทารก\nกอนงา = ทารก\n\nบรรทัดละ 1 คำ หรือคั่นด้วย , หรือ ; ก็ได้ • ใส่หมวดเฉพาะคำต่อท้ายด้วย | ชื่อหมวด";
- ex.textContent="วางทั้งก้อนได้ทีเดียว ไม่ต้องกรอกทีละช่อง คำที่ไม่ได้ใส่ | หมวด จะใช้หมวดที่เลือกด้านบน ความยาวรวมไม่เกิน 3,000 ตัวอักษร";
+ paste.id=p+"wpaste";paste.className="wpaste";paste.rows=5;paste.maxLength=3500;paste.setAttribute("aria-label","คำศัพท์ของเรื่องนี้ พิมพ์หรือวางทั้งก้อน");paste.placeholder="ทร้าอ์ = พิธีกรรมเซ่นไหว้เรียกขวัญให้กับทารก\nกอนงา = ทารก\n\nบรรทัดละ 1 คำ หรือคั่นด้วย , หรือ ; ก็ได้ • ใส่หมวดเฉพาะคำต่อท้ายด้วย | ชื่อหมวด • คำอธิบายเพิ่มใส่หลัง ~";
+ ex.textContent="คำอธิบายยาว (ไม่ใช่ความหมายสั้น) ใส่หลังเครื่องหมาย ~ ได้ เช่น  ทร้าอ์ = พิธีเรียกขวัญ ~ ทำให้เด็กเกิดใหม่ ญาติพี่น้องมารวมกัน…  คำอธิบายจะแยกเก็บในช่อง “อธิบาย” ของคลังคำศัพท์ (ไม่เกิน 600 ตัวอักษรต่อคำ) • วางทั้งก้อนได้ทีเดียว ไม่ต้องกรอกทีละช่อง คำที่ไม่ได้ใส่ | หมวด จะใช้หมวดที่เลือกด้านบน ความยาวรวมไม่เกิน 3,000 ตัวอักษร";
  wl.before(opt,paste,ex,wn);
  const def=()=>sel.value&&sel.value!=="__new"?sel.value:"";
  const pv=()=>{const r=parseW(getRaw(paste),os.value,def());return r};
- const toWd=r=>setRaw(wd,r.it.map(x=>x.th+" = "+x.kuy+(x.cat?" | "+x.cat:"")).join("\n"));
- const line=(x,d)=>(os.value==="kt"?x.kuy+" = "+x.th:x.th+" = "+x.kuy)+(x.cat&&x.cat!==d?" | "+x.cat:"");
+ const toWd=r=>setRaw(wd,r.it.map(x=>x.th+" = "+x.kuy+(x.cat||x.note?" | "+(x.cat||""):"")+(x.note?" | "+x.note:"")).join("\n"));
+ const line=(x,d)=>(os.value==="kt"?x.kuy+" = "+x.th:x.th+" = "+x.kuy)+(x.note?" ~ "+x.note:"")+(x.cat&&x.cat!==d?" | "+x.cat:"");
  function chips(r){wl.replaceChildren();wn.replaceChildren();const d=def();
   r.it.forEach((x,i)=>{const row=el("span","wchip");row.append(el("b","",x.kuy||"?"),document.createTextNode(" "+x.th+" "),el("small",x.cat?"":"nocat",x.cat||"ไม่ระบุหมวด → ใช้หมวดหลัก"));
    const ed=el("button","wed","✎");ed.type="button";ed.title="แก้คำนี้";ed.setAttribute("aria-label","แก้คำ "+x.th);
    ed.onclick=()=>{const v=prompt("แก้คำ (รูปแบบเดียวกับที่พิมพ์ เช่น "+line(x,d)+")",line(x,d));if(v==null)return;const q=parseW(v,os.value,d);if(q.it.length!==1){alert("ใส่ได้ครั้งละ 1 คำ รูปแบบ  คำ = ความหมาย");return}r.it.splice(i,1,q.it[0]);back(r)};
    const rm=el("button","wx","✕");rm.type="button";rm.title="เอาคำนี้ออก";rm.setAttribute("aria-label","เอาคำ "+x.th+" ออก");rm.onclick=()=>{r.it.splice(i,1);back(r)};
    row.append(ed,rm);wl.append(row)});
-  const tot=r.it.map(x=>x.th+" = "+x.kuy+" | "+x.cat).join("\n").length,w=r.wn.slice();if(tot>3000)w.push("รายการยาวเกิน 3,000 ตัวอักษร ตัดบางคำออกหรือแยกเป็นอีกเรื่อง");
+  const tot=r.it.map(x=>x.th+" = "+x.kuy+" | "+x.cat+(x.note?" | "+x.note:"")).join("\n").length,w=r.wn.slice();if(tot>3000)w.push("รายการยาวเกิน 3,000 ตัวอักษร ตัดบางคำออกหรือแยกเป็นอีกเรื่อง");
   w.forEach(t=>wn.append(el("div","","⚠ "+t)))}
  function back(r){setRaw(paste,r.it.map(x=>line(x,def())).join("\n"));toWd(r);chips(r)}
- function fill(){const d=def(),L=wbLines(getRaw(wd)).filter(x=>x.th||x.kuy).map(x=>({th:x.th,kuy:x.kuy,cat:x.cat}));setRaw(paste,L.map(x=>line(x,d)).join("\n"));chips({it:L,wn:[]})}
+ function fill(){const d=def(),L=wbLines(getRaw(wd)).filter(x=>x.th||x.kuy).map(x=>({th:x.th,kuy:x.kuy,cat:x.cat,note:x.note}));setRaw(paste,L.map(x=>line(x,d)).join("\n"));chips({it:L,wn:[]})}
  paste.oninput=()=>{const r=pv();toWd(r);chips(r)};
  os.onchange=()=>{ls.set("kp_wo",os.value);fill()};
  sel.addEventListener("change",()=>{if(sel.value==="__new")return;const r=pv();toWd(r);chips(r);fill()});
@@ -1139,6 +1139,36 @@ function wvInit(p){const wd=$(p+"wd"),wl=$(p+"wl");if(!wd||!wl||wd.dataset.wv)re
 const oRender=window.wbRender;window.wbRender=function(p){if(p==="kw"||p==="ev"){const f=window["__wvFill_"+p];if(f)return f()}return oRender(p)};
 const oSync=window.wbSync;
 ["kw","ev"].forEach(p=>{try{wvInit(p)}catch(e){console.error("wvInit",p,e)}});["kwcl","evcl","lfcl"].forEach(id=>{try{lkInit(id)}catch(e){console.error("lkInit",id,e)}});
+})();
+
+/* ===== v11: ปุ่ม “ดูตัวอย่างหน้าอ่าน” • คำเสนอแก้จากผู้อ่าน • ผลตรวจลิงก์เสีย ===== */
+(function(){
+const b0=$("kwsv");if(b0){const pv=el("button","btn o","👁 ดูตัวอย่างหน้าอ่าน");pv.type="button";pv.id="kwpv";b0.after(pv);b0.after(" ");
+ pv.onclick=()=>{const m=$("kwmsg");try{const dest=$("kwd").value||"lf:ดุงเลิง",ev=dest==="ev",item={cap:KC[0],cap2:KC[1],cap3:KC[2],cap4:KC[3],cap5:KC[4]};
+  [0,1,2,3,4].forEach(j=>{item[j?"img"+(j+1):"img"]=KP[j]||KU[j]||""});(ev?KEVK:KLFK).forEach(k=>item[k]=$(KMAP[k]).value.trim());
+  if(!item.title)throw new Error("พิมพ์ชื่อเรื่องก่อน แล้วค่อยดูตัวอย่าง");if(!ev){const pp=dest.split(":");item.cat=pp[1]||"ดุงเลิง";item.sub=pp[2]||""}
+  const w=window.open("index.html#/preview","kp_preview");if(!w)throw new Error("เบราว์เซอร์บล็อกหน้าต่างใหม่ กรุณาอนุญาต pop-up แล้วกดอีกครั้ง");
+  let n=0;const t=setInterval(()=>{n++;try{w.postMessage({kp:"preview",ev:ev,item:item},location.origin)}catch(e){}if(n>30)clearInterval(t)},400);
+  const on=e=>{if(e.origin===location.origin&&e.data&&e.data.kp==="ack"){clearInterval(t);removeEventListener("message",on)}};addEventListener("message",on);
+  m.textContent="เปิดตัวอย่างในหน้าต่างใหม่แล้ว (ยังไม่ได้บันทึก) แก้แล้วกดปุ่มอีกครั้งเพื่อดูใหม่";m.className="msg"}
+  catch(x){m.textContent="⚠️ "+x.message;m.className="msg err"}}}
+const host=[...document.querySelectorAll("div.c>h3")].find(h=>/คำศัพท์กวย/.test(h.textContent)&&!h.closest("#kwvoc")),card=el("div","c");
+card.append(el("h3","","📨 คำเสนอแก้ • 🔗 ตรวจลิงก์เสีย"));
+const d1=el("details","hm"),s1=el("summary","","📨 คำที่ผู้อ่านเสนอแก้ (กดเพื่อดู)"),b1=el("div","mute","");d1.append(s1,b1);
+async function ld1(){b1.textContent="กำลังโหลด …";try{const u=await call({action:"adminVocabSuggestList"});if(!u.ok)throw new Error(u.error||"โหลดไม่ได้");
+ b1.replaceChildren();if(!u.items.length){b1.textContent="ไม่มีคำเสนอแก้ที่รอตรวจ";return}
+ u.items.forEach(x=>{const r=el("div","hm"),t=el("div","",(x.kuy||"-")+" = "+x.th+"  →  "+(x.nk||"(ไม่แก้คำกวย)")+(x.nt?" = "+x.nt:""));t.style.fontWeight="700";
+  r.append(t,el("div","mute",(x.note?"เหตุผล: "+x.note+" • ":"")+"โดย "+x.by+" • "+x.at));
+  const ok=el("button","btn s","✔ ใช้คำแก้นี้"),no=el("button","btn o","✕ ไม่ใช้"),go=a=>async()=>{ok.disabled=no.disabled=true;try{const q=await call({action:"adminVocabSuggestDone",row:x.row,apply:a});if(!q.ok)throw new Error(q.error);r.remove()}catch(e){alert("⚠️ "+e.message);ok.disabled=no.disabled=false}};
+  ok.type=no.type="button";ok.onclick=go(true);no.onclick=go(false);if(!x.id)ok.disabled=true,ok.title="คำนี้ไม่มีรหัสในคลัง แก้เองที่หน้าคำศัพท์";r.append(ok," ",no);b1.append(r)})}catch(e){b1.textContent="⚠️ "+(e.message==="NOHOOK"?"หลังบ้านยังเป็นเวอร์ชันเก่า วาง vocab.gs ตัวใหม่แล้ว Deploy":e.message)}}
+d1.addEventListener("toggle",()=>{if(d1.open)ld1()});
+const d2=el("details","hm"),s2=el("summary","","🔗 ผลตรวจลิงก์ล่าสุด (กดเพื่อดู)"),b2=el("div","mute","");d2.append(s2,b2);
+function show2(u){b2.replaceChildren();const s=u.sum;b2.append(el("p","",s?"ตรวจล่าสุด "+s.at+" • ทั้งหมด "+s.total+" ลิงก์ • เสีย "+s.bad+" • ตรวจไม่ได้ "+s.skip+(s.cut?" • (ตรวจไม่ครบ หมดเวลา)":""):"ยังไม่เคยตรวจ (ตั้งเวลาอัตโนมัติด้วย linkCheckInstall ใน Apps Script หรือกดตรวจเดี๋ยวนี้)"));
+ (u.bad||[]).forEach(x=>b2.append(el("div","msg err",x.u+" — "+x.why+" (อยู่ที่ "+x.at+")")));
+ const go=el("button","btn o","🔄 ตรวจเดี๋ยวนี้ (ใช้เวลาหลายนาที)");go.type="button";go.onclick=async()=>{go.disabled=true;go.textContent="กำลังตรวจ …";try{const q=await call({action:"adminLinkRun"});if(!q.ok)throw new Error(q.error);show2(q)}catch(e){alert("⚠️ "+e.message);go.disabled=false;go.textContent="🔄 ตรวจเดี๋ยวนี้"}};b2.append(go)}
+async function ld2(){b2.textContent="กำลังโหลด …";try{const u=await call({action:"adminLinkReport"});if(!u.ok)throw new Error(u.error);show2(u)}catch(e){b2.textContent="⚠️ "+(e.message==="NOHOOK"?"หลังบ้านยังไม่มี linkcheck.gs":e.message)}}
+d2.addEventListener("toggle",()=>{if(d2.open)ld2()});
+card.append(d1,d2);if(host)host.parentNode.before(card);else $("app").append(card);
 })();
 
 </script></body></html>

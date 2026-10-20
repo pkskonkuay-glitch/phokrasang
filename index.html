@@ -947,8 +947,8 @@ function rProd(){const cats=["ทั้งหมด",...new Set(PRODUCTS.map(o=>
    ข้อมูลอยู่ในชีตแท็บ "งานประจำปี" แก้ผ่านหน้า admin.html > 📅 งานประจำปี ถ้าดึงไม่ได้หรือชีตว่าง ใช้การ์ดจาก K["เซ (ฮีตคอง)"] แทน
    ช่องที่เว้นว่างจะไม่แสดงอะไรเลย (ไม่มีข้อความ "ยังไม่มี") */
 const EKEY="kp_evt",LKEY="kp_life";let LIFEOBJ=[];
-const evOk=u=>/^(https:\/\/|img\/)/.test(u||"");
-const evSrc=u=>/^https:/.test(u)||/^img\//.test(u)?u:"img/"+u;
+const evOk=u=>/^(https:\/\/|img\/|data:image\/(png|jpe?g|webp|gif);base64,)/.test(u||"");
+const evSrc=u=>/^https:/.test(u)||/^img\//.test(u)||/^data:image\//.test(u)?u:"img/"+u;
 const evLines=s=>String(s||"").split(/\n+/).map(x=>x.trim()).filter(Boolean);
 const ytId=u=>{const m=String(u).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/);return m?m[1]:""};
 const evLinks=e=>{const o=[];evLines(e.links).forEach(x=>{const p=x.split(/\s*\|\s*/),u=p.pop(),t=p.join(" | ");if(/^https:\/\/[^\s]+$/.test(u))o.push([t,u])});
@@ -957,13 +957,14 @@ const evLinks=e=>{const o=[];evLines(e.links).forEach(x=>{const p=x.split(/\s*\|
    รูปแบบบรรทัดในช่อง words:  ไทย = กวย   หรือ   ไทย = กวย | ชื่อหมวด   (ไม่ระบุหมวด ระบบหาจาก kuy-vocab.csv แล้วค่อยใช้หมวดหลักของเรื่อง) */
 let VIXP=null;
 function vocabIdx(){return VIXP||(VIXP=fetch("kuy-vocab.csv").then(x=>x.ok?x.text():Promise.reject()).then(t=>{const m=new Map();csvRows(t).slice(1).forEach(x=>{if(!x[0]||!x[2]||(x[8]||"").trim()==="ซ่อน")return;if(!m.has(x[2]))m.set(x[2],x[0]);if(x[3]&&!m.has(x[3]))m.set(x[3],x[0])});return m}).catch(()=>new Map()))}
-const wordLines=s=>String(s||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split("|"),q=p[0].split(/\s*=\s*/);return{th:(q[0]||"").trim(),kuy:(q[1]||"").trim(),cat:(p[1]||"").trim()}}).filter(x=>x.th&&x.kuy);
+const wordLines=s=>String(s||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split("|"),q=p[0].split(/\s*=\s*/);return{th:(q[0]||"").trim(),kuy:(q[1]||"").trim(),cat:(p[1]||"").trim(),note:p.slice(2).join("/").trim()}}).filter(x=>x.th&&x.kuy);
 const vHref=(cat,w)=>"vocab.html"+(cat?"#c/"+encodeURIComponent(cat)+(w?"~"+encodeURIComponent(w):""):"");
 function kwChips(r,e,title){const ws=wordLines(e.words);if(!ws.length)return;
  r.append(el("h2","",title));const w=el("div","wch"),refs=[];
  const apply=(a,sm,x,cat)=>{a.href=vHref(cat,x.kuy);if(cat){sm.textContent=cat;sm.hidden=false;a.title="ดูคำ “"+x.kuy+"” ในหมวด “"+cat+"” ของหน้าคำศัพท์"}else{sm.hidden=true;a.title="ดูคำศัพท์กวยทั้งหมด"}};
  ws.forEach(x=>{const a=el("a"),sm=el("small");a.append(el("b","",x.kuy),document.createTextNode(x.th),sm);apply(a,sm,x,x.cat);refs.push([a,sm,x]);w.append(a)});
  r.append(w);
+ ws.filter(x=>x.note).forEach(x=>{const q=el("p","mute"),b=el("b","",x.kuy);q.append(b,document.createTextNode(" — "+x.note));r.append(q)});
  vocabIdx().then(m=>refs.forEach(([a,sm,x])=>{if(x.cat)return;apply(a,sm,x,m.get(x.th)||m.get(x.kuy)||e.vcat||"")}))}
 /* ===== เรื่องที่ติ๊ก “ขึ้นหน้าหลัก” ในหลังบ้าน (วิถีชีวิต/ปีกวย) → รายการ “ข่าว • คลิป ล่าสุด” และภาพใหญ่ 6 ช่องแรก ===== */
 let HSIG="";
@@ -1027,6 +1028,11 @@ const mkLife=e=>{const b=[];
   if(e.elder){const q=el("blockquote","pq");bd(q,e.elder);q.append(el("cite","",e.elderby||"ผู้เฒ่าในชุมชน"));r.append(q)}
   r.append(el("p","mute","※ เรื่องเล่านี้รวบรวมจากคำบอกเล่าของผู้เฒ่าและคนในชุมชน แต่ละหมู่บ้านอาจต่างกันเล็กน้อย ถ้าอยากเพิ่มเติมหรือแก้ไข ส่งมาทาง LINE "+CFG.lineId)) };
  return{k:"lf-"+e.id,life:1,src:e,cat:e.cat,title:e.title,date:"",meta:[e.tag,e.kuay].filter(Boolean).join(" • "),body:b,extra:extra}};
+/* ตัวอย่างหน้าอ่านจากหน้า admin (#/preview) — รับร่างเรื่องทาง postMessage จากหน้าเดียวกันเท่านั้น ไม่บันทึก ไม่นับยอดอ่าน */
+window.addEventListener("message",ev=>{if(ev.origin!==location.origin)return;const d=ev.data;if(!d||d.kp!=="preview"||!d.item)return;
+ try{TRK.pv=TRK.ev=()=>{};const it=Object.assign({id:"preview",cat:"ดุงเลิง"},d.item,{id:"preview"});openRead(d.ev?mkEvt(it):mkLife(it),false);
+  const r=$("rd");if(r){const bn=el("div","msg","👁 นี่คือตัวอย่าง ยังไม่ได้บันทึก (ปิดหน้าต่างนี้แล้วกลับไปกดบันทึกที่หน้า admin)");bn.style.position="sticky";bn.style.top="0";bn.style.zIndex="5";r.prepend(bn)}
+  window.scrollTo(0,0);if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin)}catch(x){if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin);alert("ตัวอย่างแสดงไม่ได้: "+x.message)}});
 async function loadLife(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;L=L.map(x=>x&&x.cat==="ดุงกวย"?Object.assign({},x,{cat:"ดุงเลิง"}):x);LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let had=false;try{had=use(JSON.parse(localStorage.getItem(LKEY)||"null"))}catch(e){}
