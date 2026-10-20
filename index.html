@@ -499,7 +499,7 @@ b.append(el("span","tag",m[4]+" • หน้า "+m[3]),el("h3","",m[2]),el("di
 if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl);$("hubQ").src=CFG.hubQr}
 let cf="เซ (ฮีตคอง)",sf="";
 /* วิถีชีวิตกวย 3 หมวด (ข้อมูลไม่ผูกวันที่ มาจากชีต "วิถีชีวิตกวย" ผ่าน action=life; ถ้ายังไม่มีข้อมูลในชีตจะใช้การ์ดในโค้ด K เดิม) */
-const LCATS=["ดุงเลิง","กัวออ","จาเอม"];
+const LCATS=["กอนกวย","ดุงเลิง","กัวออ","วอนึงเต","จาเอม","ปะนาย"];
 const LINTRO={};
 function covOf(x,band){if(!(x.img&&evOk(evSrc(x.img))))return band;const d=el("div","cov"),im=new Image();im.alt="";im.loading="lazy";im.src=evSrc(x.img);im.onerror=()=>{if(d.parentNode)d.replaceWith(band)};d.append(im);return d}
 var CALI={"สุริยคติ":"☀️","จันทรคติ":"🌙","ตามเหตุการณ์ชีวิต":"🧵"};
@@ -511,10 +511,12 @@ const ALLS=(d)=>["ทั้งหมด","✨","ทั้งหมด",d,null,nu
 const PIL=[
 {k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน",
  voc:["ครอบครัว","คนและสรรพนาม","ชาติพันธุ์และกลุ่มคนใกล้เคียง","อาชีพและงานชุมชน"],
- subs:[["ผู้เฒ่าและปราชญ์ชาวบ้าน","🧓","ผู้เฒ่าและปราชญ์","ประวัติสั้น ความรู้ที่ท่านถนัด คำพูด และเสียงเล่าของผู้เฒ่า ผู้นำพิธี หมอยา ช่างทอ",null,["คนและสรรพนาม"]],
- ["ตระกูลและเครือญาติ","🌳","ตระกูลและเครือญาติ","ตระกูลหลักของแต่ละหมู่บ้าน คำเรียกญาติ และการสืบสายตระกูล",null,["ครอบครัว"]],
- ["ผู้นำและผู้มีคุณูปการ","🏅","ผู้นำและผู้มีคุณูปการ","ผู้ก่อตั้งหมู่บ้าน ผู้นำในอดีตและปัจจุบัน ครู พระ และผู้ทำคุณประโยชน์ให้ชุมชน",null,["อาชีพและงานชุมชน"]],
+ subs:[["ประวัติและที่มา","📜","ประวัติและที่มา","ประวัติศาสตร์ของชุมชนกวยโพธิ์กระสังข์ ที่มา ที่เป็น และที่ไปของผู้คน",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
+ ["ชุมชนและคนหลากหลาย","🤝","ชุมชนและคนหลากหลาย","ชุมชนใหญ่ที่มีชาวกวยเป็นหลัก มีภาษา มีวัด และมีลูกเขย สะใภ้ ชาวจีน และผู้คนหลายกลุ่มอยู่ร่วมกัน",null,["ครอบครัว"]],
  ["หมู่บ้านและประชากร","🏘️","หมู่บ้านและประชากร","แต่ละหมู่บ้านของชุมชนกวย ลักษณะเด่น และข้อมูลโดยสังเขป",null,[]],
+ ["ผู้รู้และปราชญ์","🧓","ผู้รู้ / ปราชญ์","ประวัติสั้น ความรู้ที่ท่านถนัด คำพูด และเสียงเล่าของผู้เฒ่า ผู้นำพิธี หมอยา ช่างทอ",null,["คนและสรรพนาม"]],
+ ["ตระกูลและเครือญาติ","🌳","ตระกูล","ตระกูลหลักของแต่ละหมู่บ้าน คำเรียกญาติ และการสืบสายตระกูล",null,["ครอบครัว"]],
+ ["ผู้นำและผู้มีคุณูปการ","🏅","ผู้นำ","ผู้ก่อตั้งหมู่บ้าน ผู้นำในอดีตและปัจจุบัน ครู พระ และผู้ทำคุณประโยชน์ให้ชุมชน",null,["อาชีพและงานชุมชน"]],
  ["ลูกหลานกวยและคนรุ่นใหม่","🌱","ลูกหลานและคนรุ่นใหม่","คนบ้านเราที่ไปทำงานต่างถิ่น และเยาวชนที่สืบสานวัฒนธรรม",null,[]],
  ["พี่น้องข้างเคียง","🤝","พี่น้องข้างเคียง","ความสัมพันธ์กับลาว เขมร และกลุ่มอื่นในพื้นที่ ภาษาที่ใช้ร่วมกัน",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง"]]]},
 {k:"ดุงเลิง",ic:"🏡",col:"#9a5b12",mean:"บ้านเรือน อาคาร สถานที่",intro:"ดุงเลิง คือบ้านเรือนและที่อยู่อาศัยของชาวกวย ไม่ได้หมายถึงแค่ตัวบ้าน แต่รวมทุกอย่างที่เป็นอาคาร บ้านเรือน ศาลา และที่พัก",
@@ -547,13 +549,13 @@ const PIL=[
  ["วิถีน้ำ","💧","วิถีน้ำ","ปลา ปลาไหล หอย และสิ่งที่อยู่ในน้ำตามฤดูกาล",null,["สัตว์น้ำและปลา"]],
  ["ของกินเล่น","🥢","ของกินเล่น","จา เกลย์ อาหารกินยามว่าง เมี่ยงและตำส้ม กินร่วมกันหลายคน",null,["อาหารและการกิน"]],
  ["ไปรลอง","🍈","ไปรลอง (ผลไม้)","ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา",null,["พืช ผัก ผลไม้"]],
- ["วิถีป่าและอาหารพิธี","🌳","วิถีป่าและอาหารพิธี","อาหารป่า ของป่า อาหารที่ใช้ในพิธี ข้าวและข้าวพื้นถิ่น",null,["ป่าและอาหารป่า","ข้าวและอาหารพื้นถิ่นเพิ่มเติม"]]]},
+ ["วิถีป่าและอาหารพื้นถิ่น","🌳","วิถีป่าและอาหารพื้นถิ่น","อาหารป่า ของป่า อาหารพื้นถิ่น ข้าวและข้าวพื้นถิ่น เช่น ข้าวสัมพันธ์ (ข้าวเม็ดสั้น)",null,["ป่าและอาหารป่า","ข้าวและอาหารพื้นถิ่นเพิ่มเติม"]]]},
 {k:"ปะนาย",ic:"🗣️",col:"#1c4f7d",mean:"ภาษา",intro:"ปะนาย คือภาษา กวยพูด เล่า ร้อง และสื่อสารกันอย่างไร ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว",
  voc:["ทักทายและมารยาท","ประโยคที่ใช้บ่อย","คำกริยาที่ใช้บ่อย","คำบอกลักษณะ","ร่างกาย","เวลาและวัน","ทิศทางและสถานที่","คำถามและคำชี้","ปริมาณและหน่วยวัด","กิจวัตรประจำวัน","ตำแหน่งและบุพบท","ตัวเลขและการนับ","คำเชื่อมและคำช่วย","การสื่อสารและเสียง","โรงเรียนและการเรียนรู้","เงินและการค้า","สี","อารมณ์และความรู้สึก","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน","เทคโนโลยีและของสมัยใหม่"],
  subs:[["คลังคำศัพท์","📚","คลังคำศัพท์","คำกวย อักษรไทย คำอ่าน เสียง และภาพ รวมไว้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย",null,null],
  ["ประโยคและบทสนทนา","💬","ประโยคและบทสนทนา","ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ และประโยคที่ใช้บ่อย",null,["ประโยคที่ใช้บ่อย","ทักทายและมารยาท","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน"]],
  ["ภาษิต นิทาน และบทกลอน","📜","ภาษิต นิทาน บทกลอน","คำพูดสอนใจ นิทานที่ผู้เฒ่าเล่า และปริศนาคำทาย",null,[]],
- ["เพลงและบทสวด","🎵","เพลงและบทสวด","เพลงกวย เนื้อเพลง ความหมาย และผู้แต่ง",null,[]],
+ ["เพลง","🎵","เพลง","เพลงกวย เนื้อเพลง ความหมาย และผู้แต่ง",null,[]],
  ["คำเซ่นและคำเรียกขวัญ","🕯️","คำเซ่นและคำเรียกขวัญ","ถ้อยคำในพิธีและความหมายทีละบท",null,[]],
  ["วิธีอ่านและวิธีเขียน","✍️","วิธีอ่านและวิธีเขียน","หลักการถอดเสียงด้วยอักษรไทย เสียงที่ไม่มีในภาษาไทย และวิธีใช้คลัง",null,[]]]}];
 const PM={};PIL.forEach(t=>PM[t.k]=t);
@@ -586,7 +588,8 @@ function rCul(){
  {const c=$("cintro");c.replaceChildren(el("b","",P.k+" • "+P.mean),document.createElement("br"),P.intro);c.hidden=false}
  {const ks=$("ksub"),ss=$("ssub");ks.hidden=ss.hidden=false;ks.setAttribute("aria-label","หัวข้อย่อยของ"+P.k);ks.replaceChildren();
   P.subs.forEach(t=>{const on=t[0]===S,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",P.col);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(on)return;sf=t[0];rCul();TRK.ev("ceh/"+P.k+"/"+t[0])};ks.append(b)});ss.textContent=sb[3]}
- const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
+ const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx0=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
+ const cx=(isH||cx0==="ละวาย"||cx0==="จาเอม")?cx0:((LIFEOBJ.length&&S!=="ผลิตภัณฑ์ชุมชน"&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์"))?"ชีต":cx0);
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg)lg.hidden=!isH}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
@@ -594,18 +597,18 @@ function rCul(){
  if(isH){$("cgr").replaceChildren();try{rYear()}catch(_){}relVocab(P,sb,kvr);return}
  if(!cx){$("cgr").replaceChildren(...(S==="ผลิตภัณฑ์ชุมชน"||(P.k==="ปะนาย"&&S==="คลังคำศัพท์")?[]:[waitCard(P,sb)]));relVocab(P,sb,kvr);return}
 {
-const BT={"เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงเลิง":"bead","กัวออ":"silk","จาเอม":"plaid"};
+const BT={"ชีต":"silk","เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงเลิง":"bead","กัวออ":"silk","จาเอม":"plaid"};
 /* หมวดฮีตคอง = ปฏิทินงานประจำปีจากชีต "งานประจำปี" ที่เดียว (เรียงลำดับตามที่แอดมินจัด) หมวดอื่นใช้การ์ดในโค้ด แต่ถ้ามีงานชื่อตรงกันในชีตจะเปิดหน้าเรื่องราวให้ */
 const hee=cx==="เซ (ฮีตคอง)";
 const lifeEv=EVTS.filter(o=>o.src.cal==="ตามเหตุการณ์ชีวิต");
-let L=(cx==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):(LIFEOBJ.length&&LCATS.indexOf(cx)>=0)?LIFEOBJ.filter(o=>o.src.cat===cx).map(o=>({tag:o.src.tag||"",sub:o.src.sub||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cx].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
-const JG=[["วิถีนา","🌾","หาอยู่หากินตามหัวไร่ปลายนา ปูนา หนูนา ผัก มดแดง","#2f7d5b"],["วิถีน้ำ","💧","ปลา ปลาไหล หอย และสิ่งที่อยู่ในน้ำตามฤดูกาล","#1c4f7d"],["อาหารว่าง","🥢","จา เกลย์ อาหารกินยามว่าง เมี่ยงและตำส้ม กินร่วมกันหลายคน","#c9462e"],["ไปรลอง","🍈","ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา","#b8860b"],["เรื่องอื่น ๆ ของจาเอม","🧺","","#9a5b12"]];
-const jgi=t=>{t=String(t||"");return /วิถีนา|ทำนา|ปูนา/.test(t)?0:/วิถีน้ำ|หาปลา/.test(t)?1:/รสมือ|อาหาร/.test(t)?2:/ไปรลอง|ผลไม้/.test(t)?3:4};
-const jgx=x=>{const i=["วิถีนา","วิถีน้ำ","อาหารว่าง","ไปรลอง"].indexOf(x.sub);return i>=0?i:jgi(x.tag)};
+let L=(cx==="ละวาย"&&lifeEv.length)?lifeEv.map(o=>({tag:o.src.when||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})).concat(K["ละวาย"].filter(x=>!lifeEv.some(o=>o.src.title===x[1]||String(o.src.title).split(" ")[0]===String(x[1]).split(" ")[0])).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}))):hee?EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>({tag:(CALI[o.src.cal]?CALI[o.src.cal]+" ":"")+(o.src.when||""),title:o.src.title,sum:o.src.sum,ev:o})):cx==="ชีต"?LIFEOBJ.filter(o=>o.src.cat===P.k&&(S==="ทั้งหมด"||o.src.sub===S)).map(o=>({tag:o.src.tag||"",sub:o.src.sub||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(LIFEOBJ.length&&LCATS.indexOf(cx)>=0)?LIFEOBJ.filter(o=>o.src.cat===cx).map(o=>({tag:o.src.tag||"",sub:o.src.sub||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):K[cx].map(x=>({tag:x[0],title:x[1],sum:x[2],ev:evFind(x[1])}));
+const JG=[["วิถีนา","🌾","หาอยู่หากินตามหัวไร่ปลายนา ปูนา หนูนา ผัก มดแดง","#2f7d5b"],["วิถีน้ำ","💧","ปลา ปลาไหล หอย และสิ่งที่อยู่ในน้ำตามฤดูกาล","#1c4f7d"],["อาหารว่าง","🥢","จา เกลย์ อาหารกินยามว่าง เมี่ยงและตำส้ม กินร่วมกันหลายคน","#c9462e"],["ไปรลอง","🍈","ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา","#b8860b"],["วิถีป่าและอาหารพื้นถิ่น","🌳","อาหารป่า ของป่า อาหารพื้นถิ่น ข้าวพื้นถิ่น","#5b7a2a"],["เรื่องอื่น ๆ ของจาเอม","🧺","","#9a5b12"]];
+const jgi=t=>{t=String(t||"");return /วิถีนา|ทำนา|ปูนา/.test(t)?0:/วิถีน้ำ|หาปลา/.test(t)?1:/รสมือ|อาหาร/.test(t)?2:/ไปรลอง|ผลไม้/.test(t)?3:/ป่า|ข้าว|พื้นถิ่น/.test(t)?4:5};
+const jgx=x=>{const i=["วิถีนา","วิถีน้ำ","อาหารว่าง","ไปรลอง","วิถีป่าและอาหารพื้นถิ่น"].indexOf(x.sub);return i>=0?i:jgi(x.tag)};
 if(cx==="จาเอม"){const nw=L.some(x=>x.title==="กลอ (งมหอย)"||x.title==="สูบธระ (สูบน้ำจับปลา)"||x.title==="ตอกา (วางเบ็ด)");if(nw)L=L.filter(x=>x.title!=="กลอ สูบธระ ตอกา");L=L.map((x,i)=>({x:x,i:i,g:jgx(x)})).sort((a,b)=>a.g-b.g||a.i-b.i).map(o=>o.x)}
-if(P.k==="ดุงเลิง"||P.k==="วอนึงเต"){const tx=x=>[x.title,x.tag,x.sub,x.kuay].join(" ");L=L.filter(x=>CRAFT.test(tx(x))===(P.k==="วอนึงเต"));if(S!=="ทั้งหมด"){const so=x=>{const t=tx(x),f=P.subs.find(z=>z[4]&&z[4].test(t));return f?f[0]:(P.k==="ดุงเลิง"?"บ้านและเรือน":"")};L=L.filter(x=>so(x)===S)}}
-if(P.k==="จาเอม"&&S!=="ทั้งหมด"){const gi=["วิถีนา","วิถีน้ำ","ของกินเล่น","ไปรลอง"].indexOf(S);L=L.filter(x=>jgx(x)===gi)}
-if(cx==="ละวาย"){const guL=LIFEOBJ.length?LIFEOBJ.filter(o=>o.src.cat==="กัวออ").map(o=>({tag:o.src.tag||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(K["กัวออ"]||[]).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}));/* เรื่องใหม่ที่กรอกในหลังบ้าน (วิถีกวย) ชื่อตรงกับเรื่องเก่าจากชีตงานประจำปี → แสดงเฉพาะเรื่องใหม่ ไม่ให้ซ้ำ */const k1=t=>String(t||"").trim().split(/[\s(（]/)[0];L=L.filter(x=>!guL.some(g=>k1(g.title)===k1(x.title)||(g.kuay&&k1(g.kuay)===k1(x.title)))).concat(guL)}
+if(cx==="ดุงเลิง"){const tx=x=>[x.title,x.tag,x.sub,x.kuay].join(" ");L=L.filter(x=>CRAFT.test(tx(x))===(P.k==="วอนึงเต"));if(S!=="ทั้งหมด"){const so=x=>{const t=tx(x),f=P.subs.find(z=>z[4]&&z[4].test(t));return f?f[0]:(P.k==="ดุงเลิง"?"บ้านและเรือน":"")};L=L.filter(x=>so(x)===S)}}
+if(P.k==="จาเอม"&&S!=="ทั้งหมด"){const gi=["วิถีนา","วิถีน้ำ","ของกินเล่น","ไปรลอง","วิถีป่าและอาหารพื้นถิ่น"].indexOf(S);L=L.filter(x=>jgx(x)===gi)}
+if(cx==="ละวาย"){const guL=LIFEOBJ.length?LIFEOBJ.filter(o=>o.src.cat==="กัวออ"&&(!o.src.sub||o.src.sub==="ละวาย")).map(o=>({tag:o.src.tag||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(K["กัวออ"]||[]).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}));/* เรื่องใหม่ที่กรอกในหลังบ้าน (วิถีกวย) ชื่อตรงกับเรื่องเก่าจากชีตงานประจำปี → แสดงเฉพาะเรื่องใหม่ ไม่ให้ซ้ำ */const k1=t=>String(t||"").trim().split(/[\s(（]/)[0];L=L.filter(x=>!guL.some(g=>k1(g.title)===k1(x.title)||(g.kuay&&k1(g.kuay)===k1(x.title)))).concat(guL)}
 const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cx]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title));if(x.kuay&&String(x.title).indexOf(String(x.kuay).split(" • ")[0])<0){const kz=el("div","mute","ภาษากวย: "+x.kuay);kz.style.fontWeight="700";i.append(kz)}i.append(el("div","mute",x.sum));
   const ev0=x.ev;
   if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2);{const vw=vwEl(ev0);if(vw){vw.classList.add("vwc");i.append(vw)}}}
@@ -1117,8 +1120,13 @@ window.addEventListener("message",ev=>{if(ev.origin!==location.origin)return;con
  try{TRK.pv=TRK.ev=()=>{};const it=Object.assign({id:"preview",cat:"ดุงเลิง"},d.item,{id:"preview"});openRead(d.ev?mkEvt(it):mkLife(it),false);
   const r=$("rd");if(r){const bn=el("div","msg","👁 นี่คือตัวอย่าง ยังไม่ได้บันทึก (ปิดหน้าต่างนี้แล้วกลับไปกดบันทึกที่หน้า admin)");bn.style.position="sticky";bn.style.top="0";bn.style.zIndex="5";r.prepend(bn)}
   window.scrollTo(0,0);if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin)}catch(x){if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin);alert("ตัวอย่างแสดงไม่ได้: "+x.message)}});
+function lnorm(x){if(!x)return x;let c=x.cat==="ดุงกวย"?"ดุงเลิง":x.cat,sb=x.sub||"";const t=[x.title,x.tag,x.kuay].join(" ");
+ if(c==="ดุงเลิง"){if(CRAFT.test(t))c="วอนึงเต";else if(/ชุมชน|หมู่บ้าน/.test(t)&&!/ศาล|เญือะ/.test(t))c="กอนกวย"}
+ const P=PM[c];if(P&&c!=="จาเอม"&&!P.subs.some(z=>z[0]===sb))sb="";
+ if(!sb&&P){const f=P.subs.find(z=>z[4]&&z[4].test(t));sb=f?f[0]:(c==="ดุงเลิง"?"บ้านและเรือน":c==="กัวออ"?"ละวาย":"")}
+ return Object.assign({},x,{cat:c,sub:sb})}
 async function loadLife(){if(!CFG.apiUrl)return;
- const use=L=>{if(!Array.isArray(L)||!L.length)return false;L=L.map(x=>x&&x.cat==="ดุงกวย"?Object.assign({},x,{cat:"ดุงเลิง"}):x);LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
+ const use=L=>{if(!Array.isArray(L)||!L.length)return false;L=L.map(lnorm);LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let had=false;try{had=use(JSON.parse(localStorage.getItem(LKEY)||"null"))}catch(e){}
  if(had&&FRESH("life",30000))return;
  try{const d=await getJ("life","life",had);

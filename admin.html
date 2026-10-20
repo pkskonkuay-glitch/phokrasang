@@ -41,7 +41,7 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 .wchip b{color:#b34700}.wchip small{background:#fff;border:1px solid #bfdcd2;border-radius:99px;padding:0 8px;color:#1f5d44}.wchip small.nocat{color:#8a5200;border-color:#e3b25f}
 .wchip .wx{border:0;background:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;color:#c93b2f;font-weight:700}
 .hm{border:1px solid #bfdcd2;border-radius:12px;padding:8px 14px;margin:10px 0}.hm legend{font-weight:700;padding:0 6px}
-</style><style>.kws{margin:14px 0}.kwtop{background:#fbeee6;border-left:5px solid var(--navy);border-radius:10px;padding:8px 12px;font-weight:700;font-size:17px;margin:0 0 6px}.kwg{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 8px 8px;padding:0 10px}.kwsub{cursor:pointer;padding:10px 2px;font-size:15px}.kwadd{padding:3px 12px;font-size:13px;margin-left:6px}.kwr{border-top:1px dashed var(--line);padding:8px 2px}.kwrh{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}.kwsum,.kwm{font-size:13px}.kwb{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}.kwb .btn{padding:5px 12px;font-size:14px}.kwemp{padding:4px 2px 10px}.kwrel{margin:4px 0}.kwrel .btn{padding:2px 10px;font-size:13px}#kwq{margin:4px 0}details.hm summary{cursor:pointer}</style>
+</style><style>.kws{margin:14px 0}.kwtop{background:#fbeee6;border-left:5px solid var(--navy);border-radius:10px;padding:8px 12px;font-weight:700;font-size:17px;margin:0 0 6px}.kwg{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 8px 8px;padding:0 10px}.kwsub{cursor:pointer;padding:10px 2px;font-size:15px}.kwadd{padding:3px 12px;font-size:13px;margin-left:6px}.kwr{border-top:1px dashed var(--line);padding:8px 2px}.kwrh{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}.kwsum,.kwm{font-size:13px}.kwb{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}.kwb .btn{padding:5px 12px;font-size:14px}.kwemp{padding:4px 2px 10px}.kwrel{margin:4px 0}.kwrel .btn{padding:2px 10px;font-size:13px}#kwq{margin:4px 0}.kwpil{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin:10px 0}.kwpc{border:2px solid var(--pc,#999);background:#fff;border-radius:14px;padding:9px 11px;text-align:left;cursor:pointer;font:inherit;color:inherit;line-height:1.3}.kwpc b{display:block;font-size:17px}.kwpc small{display:block;font-size:12.5px;opacity:.85}.kwpc .kwn{margin-top:3px;font-weight:700}.kwpc .kwpi,.kwtop2 .kwpi{font-size:22px;display:block}.kwpc.on{background:var(--pc);color:#fff}.kwpc.on small{opacity:.95}.kwtop2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:color-mix(in srgb,var(--pc) 12%,#fff);border-left:6px solid var(--pc);border-radius:10px;padding:8px 12px;font-size:18px;margin:0 0 6px}.kwtop2 .kwpi{display:inline}.kwtop2 b{color:var(--pc)}.kwint{margin:2px 4px 8px}.kws .kwg{border-left:4px solid var(--pc,#ccc)}.kwlink{margin:0 0 8px 8px;padding:8px 12px;border:1px dashed var(--line);border-radius:12px;background:#fffaf4}.kwlink .btn{padding:3px 12px;font-size:13px}details.kwguide{margin:0 0 6px;background:#fff8e6;border:1px solid #f0d9a0;border-radius:10px;padding:4px 10px;font-size:14px}details.kwguide summary{cursor:pointer;font-weight:700}details.kwguide ul{margin:4px 0 6px 18px;padding:0}details.hm summary{cursor:pointer}</style>
 </head><body>
 <header><a href="index.html" style="color:inherit;text-decoration:none;font-size:.9em;opacity:.8;margin-right:8px" title="กลับหน้าเว็บ">← หน้าเว็บ</a><b>🛠️ หลังบ้าน ที่นี่โพธิ์กระสังข์</b><button class="btn o" id="rf">รีเฟรช</button><button class="btn o" id="lo">ออก</button></header>
 <div id="lg" class="login"><h2 style="margin:0 0 6px">เข้าสู่ระบบผู้ดูแล</h2><p class="mute">ใช้รหัสผู้ดูแล (ADMIN_TOKEN) ที่ตั้งไว้ใน Apps Script</p>
@@ -149,13 +149,15 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label class="opt"><input type="checkbox" id="pzhide"> ซ่อนจากหน้าเว็บ (ยังเก็บไว้ในระบบ)</label>
 <p><button class="btn" id="pzsv">บันทึก</button> <button class="btn o" id="pzcx">ยกเลิก</button> <button class="btn o hide" id="pzdel" style="color:#c93b2f">🗑 ลบรายการนี้</button></p><div class="msg hide" id="pzmsg"></div></div>
 <div id="pzls"></div><p><button class="btn o hide" id="pzmore">ดูเพิ่ม</button></p></div>
-<div id="p7" class="hide"><div class="c"><h3>🌾 วิถีกวย — กรอกที่เดียว ครบทุกหน้า</h3>
-<div class="hm"><b>วิธีใช้ 3 ขั้น</b><ol style="margin:6px 0 0 18px;padding:0"><li>หาหัวข้อที่จะใส่ในแผนผังด้านล่าง (กัวออ / จาเอม / ดุงเลิง แล้วต่อด้วยหัวข้อย่อย)</li><li>กด <b>➕ เพิ่มเรื่อง</b> ที่หัวข้อนั้น ระบบรู้ตำแหน่งให้เอง ไม่ต้องเลือกหมวดซ้ำ</li><li>ใส่ชื่อ เล่าสั้น เรื่องราว (เท่านี้พอ) รูป คำศัพท์ ลิงก์ ใส่ทีหลังได้ ระบบส่งคำเข้าคลังคำศัพท์ให้เอง</li></ol></div>
+<div id="p7" class="hide"><div class="c"><h3>🌾 วิถีกวย — 6 เสา กรอกที่เดียว ครบทุกหน้า</h3>
+<div class="hm"><b>วิธีใช้ 3 ขั้น</b><ol style="margin:6px 0 0 18px;padding:0"><li>เลือกเสาด้านล่าง (<b>กอนกวย • ดุงเลิง • กัวออ • วอนึงเต • จาเอม • ปะนาย</b>) แล้วหาหัวข้อย่อย กดเปิด 💡 เพื่อดูว่าหัวข้อนั้นควรมีอะไร</li><li>กด <b>➕ เพิ่มเรื่อง</b> ที่หัวข้อนั้น ระบบรู้ตำแหน่งให้เอง ไม่ต้องเลือกหมวดซ้ำ</li><li>ใส่ชื่อ เล่าสั้น เรื่องราว (เท่านี้พอ) รูป คำศัพท์ ลิงก์ ใส่ทีหลังได้ ระบบส่งคำเข้าคลังคำศัพท์ให้เอง</li></ol></div>
+<details class="hm"><summary><b>✅ ทุกเรื่องควรมีอะไร</b> (เช็กลิสต์สั้น)</summary><ul style="margin:6px 0 0 18px;padding:0"><li><b>ชื่อเรื่อง</b> และ <b>ชื่อเรียกภาษากวย</b></li><li><b>เล่าสั้น 1–2 ประโยค</b> (ขึ้นบนการ์ด) และ <b>เรื่องราว 3–5 ประโยค</b></li><li><b>ภาพ 1–5 ภาพ</b> พร้อมคำบรรยาย ผู้ถ่าย ปี</li><li><b>ผู้เฒ่า/ผู้ให้ข้อมูล</b> (ชื่อ หมู่บ้าน) — ขออนุญาตก่อนลงชื่อและรูปทุกครั้ง</li><li><b>คำศัพท์กวย</b> ของเรื่องนั้น และลิงก์คลิป/บทความ ถ้ามี</li><li>เรื่องที่ยังไม่พร้อม ติ๊ก “ซ่อนจากเว็บ” ไว้ก่อนได้ รายการที่มีป้าย <b>รอเติมเรื่อง</b> คือหัวข้อที่ระบบเสนอไว้ให้ไล่เติม (ซ่อนอยู่จนกว่าจะกด 👁 แสดง)</li></ul></details>
 <p class="mute">ผิดหัวข้อ? เปิด “✏️ แก้ไข” แล้วเปลี่ยนช่อง “ใส่ที่ไหน” ระบบย้ายให้ ไม่ต้องลบแล้วกรอกใหม่ • ไม่ต้องใช้แท็บ “เนื้อหาเว็บ” กับเรื่องวิถีกวย (ใช้แท็บนั้นเฉพาะข่าวและคลิป)</p>
 <div class="stats" id="kwst"></div>
 <input id="kwq" placeholder="🔍 ค้นหาเรื่อง (ชื่อ ชื่อกวย เล่าสั้น เรื่องราว คำศัพท์)" aria-label="ค้นหาเรื่อง">
 <div class="stats" id="kwft" style="margin-top:8px"></div></div>
 <div class="c hide" id="kwform"><h3 id="kwh">เพิ่มเรื่องใหม่</h3><p class="mute" id="kwcrumb"></p>
+<details class="hm hide" id="kwguide" open><summary>💡 หัวข้อนี้ควรมีอะไร (ไม่ต้องครบทุกข้อ เริ่มจากชื่อ + เล่าสั้นก็พอ)</summary><ul id="kwgl" style="margin:6px 0 0 18px;padding:0"></ul></details>
 <label for="kwd">ใส่ที่ไหน * <span class="mute">(เปลี่ยนได้ถ้าจะย้ายหัวข้อ)</span></label><select id="kwd"></select>
 <div class="row"><div><label for="kwt">ชื่อเรื่อง *</label><input id="kwt" maxlength="120" placeholder="เช่น กะตาม (ปูนา)"></div><div><label for="kwk">ชื่อเรียกภาษากวย</label><input id="kwk" maxlength="120" placeholder="เช่น กะตาม"></div></div>
 <div class="msg warn hide" id="kwdup"></div>
@@ -917,18 +919,53 @@ $("lfseed").onclick=async()=>{if(!confirm("เติมเนื้อหาเ�
   try{const u=await call({action:"adminLifeSeed"});if(!u.ok){alert("⚠️ "+u.error);return}alert("เรียบร้อย ✅\nเพิ่ม "+(u.added||0)+" เรื่อง • ข้าม (มีอยู่แล้ว) "+(u.skipped||0)+" เรื่อง");loadF()}
   catch(x){alert("⚠️ "+x.message)}finally{b.disabled=false}};
 /* ===== วิถีกวย (รวมศูนย์): งานประจำปี + ดุงเลิง/กัวออ/จาเอม จัดการที่เดียว ใช้ API และชีตเดิม ===== */
-const KG=[
- {k:"ev",top:"กัวออ",ico:"📅",name:"เซ (ฮีตคอง)",desc:"งานประเพณีตลอดปี เรียงตามปฏิทิน"},
- {k:"lf:กัวออ:",top:"กัวออ",ico:"🎗️",name:"ละวาย",desc:"ความเชื่อ ขวัญ สิ่งลี้ลับ"},
- {k:"lf:จาเอม:วิถีนา",top:"จาเอม",ico:"🌾",name:"วิถีนา",desc:"หาอยู่หากินตามหัวไร่ปลายนา เช่น ปูนา หนูนา ผัก มดแดง"},
- {k:"lf:จาเอม:วิถีน้ำ",top:"จาเอม",ico:"💧",name:"วิถีน้ำ",desc:"สัตว์น้ำตามฤดูกาล เช่น ปลา ปลาไหล หอย"},
- {k:"lf:จาเอม:อาหารว่าง",top:"จาเอม",ico:"🥢",name:"อาหารว่าง (จา เกลย์)",desc:"กินยามว่าง เช่น เมี่ยง ตำส้ม"},
- {k:"lf:จาเอม:ไปรลอง",top:"จาเอม",ico:"🍈",name:"ไปรลอง (ผลไม้)",desc:"ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา"},
- {k:"lf:จาเอม:",top:"จาเอม",ico:"🧺",name:"เรื่องอื่น ๆ ของจาเอม",desc:"ยังไม่ได้เลือกหัวข้อย่อย (เปิดแก้ไข แล้วเลือกตำแหน่งใหม่)",loose:true},
- {k:"lf:ดุงเลิง:",top:"ดุงเลิง",ico:"🏡",name:"ดุงเลิง",desc:"ดุง โคะอ์โค ดุงเญือะ ศาลพระภูมิ อโลง แธร และอื่น ๆ"}];
-const KTOP=[["กัวออ","🙏","กัวออ — การมีชีวิตที่ดี ความเชื่อ ขวัญ"],["จาเอม","🍲","จาเอม — การมีของกิน หาอยู่หากิน"],["ดุงเลิง","🏡","ดุงเลิง — บ้านเรือน ที่อยู่ ที่พัก"]];
+/* 6 เสาของวิถีกวย — ชื่อหัวข้อย่อย (s) ต้องตรงกับ LSUBS ใน life.gs และ PIL ใน index.html; guide = คำแนะนำว่าแต่ละหัวข้อควรมีอะไร */
+const KP6=[
+{k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"เราคือใคร ใครสืบทอดและรักษาเรื่องราวของชาวกวย — เริ่มจากประวัติและที่มา ความหลากหลายของชุมชน แล้วต่อด้วยผู้รู้ ผู้นำ และตระกูล",subs:[
+ {s:"ประวัติและที่มา",ico:"📜",name:"ประวัติและที่มา",desc:"ประวัติศาสตร์ของชุมชนกวยโพธิ์กระสังข์ ที่มา ที่เป็น ที่ไป",guide:["บรรพบุรุษมาจากไหน ย้ายมาเมื่อไร เพราะอะไร","ใครตั้งหมู่บ้าน และชื่อ “โพธิ์กระสังข์” มาจากไหน","เหตุการณ์สำคัญเรียงตามเวลา (ภาพเก่า เอกสารเก่า)","ทุกเรื่องใส่ชื่อผู้เฒ่าผู้เล่าที่ช่อง “ผู้เฒ่า/ผู้ให้ข้อมูล”","ถ้ายังไม่แน่ใจปีหรือข้อมูล เขียนว่า “ตามคำบอกเล่า” อย่าเดา"]},
+ {s:"ชุมชนและคนหลากหลาย",ico:"🤝",name:"ชุมชนและคนหลากหลาย",desc:"ความหลากหลายชาติพันธุ์ ภาษา วัด ลูกเขย สะใภ้ และชาวจีนที่ย้ายมาอยู่",guide:["กลุ่มคนในชุมชน: กวย ลูกเขย สะใภ้ ชาวจีน และกลุ่มอื่น (ใช้ชื่อที่เจ้าตัวอยากให้เรียก)","ภาษาที่ใช้ในบ้านและในชุมชน","วัดและงานบุญที่ทุกกลุ่มมาร่วมกัน","เรื่องเล่าการอยู่ร่วมกัน เช่น แต่งงานข้ามกลุ่ม ค้าขาย","1 เรื่อง = 1 กลุ่มหรือ 1 ประเด็น ขออนุญาตก่อนลงชื่อและรูป"]},
+ {s:"หมู่บ้านและประชากร",ico:"🏘️",name:"หมู่บ้านและประชากร",desc:"แต่ละหมู่บ้านของชุมชนกวย ลักษณะเด่น ข้อมูลโดยสังเขป",guide:["หมู่บ้านละ 1 เรื่อง: ชื่อ ผู้ใหญ่บ้าน ลักษณะเด่น","จำนวนครัวเรือน/ประชากรโดยสังเขป (ระบุปีของข้อมูล)","แผนที่/พิกัด วัดและสถานที่สำคัญในหมู่บ้าน","ลิงก์ไปตระกูลและผู้รู้ของหมู่บ้านนั้น"]},
+ {s:"ผู้รู้และปราชญ์",ico:"🧓",name:"ผู้รู้ / ปราชญ์",desc:"ประวัติสั้น ความรู้ที่ท่านถนัด คำพูด และเสียงเล่าของผู้เฒ่า ผู้นำพิธี หมอยา ช่างทอ",guide:["1 ท่าน = 1 เรื่อง ตั้งชื่อเรื่องเป็นชื่อท่าน","ประวัติสั้น หมู่บ้าน ความรู้ที่ถนัด (พิธี หมอยา ทอผ้า เล่าเรื่อง ดนตรี)","คำสอนหรือคำพูดของท่าน ใส่ช่อง “คำบอกเล่าของผู้เฒ่า”","รูปถ่าย และคลิปเสียง/วิดีโอท่านเล่า (ช่องลิงก์)","ขออนุญาตท่านหรือครอบครัวก่อนลงชื่อ รูป และข้อมูล"]},
+ {s:"ผู้นำและผู้มีคุณูปการ",ico:"🏅",name:"ผู้นำ",desc:"ผู้ก่อตั้งหมู่บ้าน ผู้นำในอดีตและปัจจุบัน ครู พระ และผู้ทำคุณประโยชน์ให้ชุมชน",guide:["ผู้ก่อตั้งหมู่บ้าน ผู้นำในอดีตและปัจจุบัน ครู พระ ผู้ทำประโยชน์ให้ชุมชน","ช่วงเวลาที่ท่านทำงาน สิ่งที่ท่านทำให้ชุมชน","คนที่ยังจำท่านได้ เล่าเหตุการณ์จริง","เขียนเฉพาะสิ่งที่ยืนยันได้ ไม่เขียนยกย่องเกินจริง"]},
+ {s:"ตระกูลและเครือญาติ",ico:"🌳",name:"ตระกูล",desc:"ตระกูลหลักของแต่ละหมู่บ้าน คำเรียกญาติ และการสืบสายตระกูล",guide:["ตระกูลหลักของแต่ละหมู่บ้าน","สายตระกูลสั้น ๆ และเครือญาติหลัก","คำเรียกญาติภาษากวย (ลิงก์ไปคำศัพท์หมวดครอบครัว)","ธรรมเนียมของตระกูล เช่น ผีบรรพบุรุษประจำตระกูล งานรวมญาติ","ขออนุญาตตระกูลก่อนลงชื่อและข้อมูลครอบครัว"]},
+ {s:"ลูกหลานและคนรุ่นใหม่",ico:"🌱",name:"ลูกหลานและคนรุ่นใหม่",desc:"คนบ้านเราที่ไปทำงานต่างถิ่น และเยาวชนที่สืบสานวัฒนธรรม",guide:["คนบ้านเราที่ไปทำงานต่างถิ่น: ไปไหน ทำอะไร กลับบ้านตอนไหน","เยาวชนที่เรียนภาษากวย ร่วมกิจกรรม สืบสานวัฒนธรรม","คำพูดของคนรุ่นใหม่ว่าความเป็นกวยสำคัญกับเขาอย่างไร","ถ้าเป็นเด็กเล็ก ขออนุญาตผู้ปกครองก่อนลงชื่อและรูป"]},
+ {s:"พี่น้องข้างเคียง",ico:"🫱🏽‍🫲🏼",name:"พี่น้องข้างเคียง",desc:"ความสัมพันธ์กับลาว เขมร และกลุ่มอื่นในพื้นที่ ภาษาที่ใช้ร่วมกัน",guide:["ความสัมพันธ์กับลาว เขมร และกลุ่มอื่นในพื้นที่","คำและภาษาที่ใช้ร่วมกัน","การแต่งงาน การค้าขาย งานบุญร่วมกัน","ใช้คำเรียกที่แต่ละกลุ่มยอมรับ ไม่เขียนเชิงเหมารวม"]}]},
+{k:"ดุงเลิง",ic:"🏡",col:"#9a5b12",mean:"บ้านเรือน อาคาร สถานที่",intro:"บ้านเรือนและที่อยู่อาศัยของชาวกวย รวมทุกอย่างที่เป็นอาคาร บ้านเรือน ศาลา และที่พัก",subs:[
+ {s:"บ้านและเรือน",ico:"🏡",name:"บ้านและเรือน",desc:"ลักษณะบ้านกวย การวางผัง ห้องและหน้าที่ วัสดุ ข้อห้ามเรื่องบ้าน",guide:["ลักษณะบ้านกวย: ชั้นบน ชั้นล่าง วัสดุ ทิศหันหน้า","ผังบ้านและหน้าที่ของห้อง/ที่นั่ง","ข้อห้ามและความเชื่อเรื่องบ้าน (ขึ้นเสาเอก เข้าบ้านใหม่)","ภาพบ้านเก่า-ใหม่เปรียบเทียบ","คำศัพท์ ดุง และส่วนต่าง ๆ ของบ้าน (ช่องคำศัพท์)"]},
+ {s:"ที่ของสัตว์และที่ทำกิน",ico:"🐂",name:"ที่ของสัตว์และที่ทำกิน",desc:"เล้า คอกวัวควาย เถียงนา ยุ้งข้าว",guide:["คอกวัวควาย (โคะอ์โค) เล้า ยุ้งข้าว เถียงนา (อโลง แธร)","ใครดูแล ใช้ทำอะไร อยู่ตรงไหนของบ้าน/ที่นา","ความผูกพันกับวัวควาย","พิธีหรือข้อห้ามที่เกี่ยวข้อง"]},
+ {s:"ที่ศักดิ์สิทธิ์และของส่วนรวม",ico:"🛕",name:"ที่ศักดิ์สิทธิ์และของส่วนรวม",desc:"ศาลปู่ตา ศาลพระภูมิ ศาลา วัด โรงเรียน บ่อน้ำ",guide:["ศาลปู่ตา (ดุงเญือะ) ศาลพระภูมิ วัด ศาลา โรงเรียน บ่อน้ำ","ใครดูแล พิธีที่ทำ ข้อห้ามเข้าใกล้","แผนที่/พิกัด และรูป (ขออนุญาตก่อนถ่ายในที่ศักดิ์สิทธิ์)"]}]},
+{k:"กัวออ",ic:"🙏",col:"#0e6b73",mean:"อยู่ดีสมบูรณ์",intro:"การมีชีวิตที่ดีภายใต้วิถีชีวิต วัฒนธรรมประเพณี และความเชื่อ รวมถึงขวัญของผู้ที่ยังมีชีวิต และสิ่งลี้ลับที่มองไม่เห็น",subs:[
+ {s:"",kind:"ev",ico:"🕯️",name:"เซ (ฮีตคอง)",desc:"งานประเพณีตลอดปี เรียงตามปฏิทิน (เก็บในชีต “งานประจำปี”)",guide:["งานประเพณีตลอดปีเรียงตามปฏิทิน (กด ➕ ด้านขวา)","ช่วงเวลา และนับตามปฏิทินสุริยคติ/จันทรคติ","ขั้นตอนงาน ของที่ใช้ ใครทำ ความหมาย","รูปงานปีล่าสุด และคำศัพท์ในงาน"]},
+ {s:"ละวาย",ico:"🎗️",name:"ละวาย",desc:"พิธีเรียกขวัญและบอกกล่าวบรรพบุรุษ ทำเมื่อมีเหตุในชีวิต",guide:["พิธีที่ไม่มีวันตายตัว: เรียกขวัญ เด็กเกิดใหม่ เจ็บป่วย อุบัติเหตุ สูญเสีย","เมื่อไหร่ต้องทำ ใครเป็นผู้ทำ ของที่ใช้ ขั้นตอน","ความหมายของแต่ละขั้น (เช่น ผูกข้อไม้ผูกมือ)","ขออนุญาตผู้นำพิธีก่อนเผยแพร่ถ้อยคำ"]},
+ {s:"ความเชื่อ ผีบรรพบุรุษ และข้อห้าม",ico:"🪔",name:"ความเชื่อ ผีบรรพบุรุษ ข้อห้าม",desc:"ระบบผีบรรพบุรุษ ผีปู่ตา ข้อห้ามข้อปฏิบัติ ที่มาของความเชื่อ",guide:["ขวัญของคนที่ยังมีชีวิต","ผีบรรพบุรุษ ผีปู่ตา ผีนาผีไร่","ข้อห้ามข้อปฏิบัติ พร้อม “ห้ามเพราะอะไร”","เรื่องเล่าที่มาของความเชื่อ ใส่ชื่อผู้เล่า","เขียนเชิงบันทึกความเชื่อ ไม่ตัดสินถูกผิด"]},
+ {s:"วัดและศาสนา",ico:"☸️",name:"วัดและศาสนา",desc:"วัดในชุมชน การทำบุญตามแบบกวย ความผสมผสานพุทธกับผี",guide:["วัดในชุมชน ประวัติโดยย่อ","การทำบุญตามแบบกวย งานบุญใหญ่ การสลับกันเป็นเจ้าภาพ","ความผสมผสานพุทธกับผี ยกตัวอย่างพิธี"]}]},
+{k:"วอนึงเต",ic:"🧵",col:"#b5530f",mean:"งานฝีมือและภูมิปัญญา",intro:"สิ่งที่ทำกับมือตามวิถีกวย และความรู้ในการทำ รักษา หรือแสดง ตั้งแต่ผ้าไหม จักสาน ตีเหล็ก ไปจนถึงยาสมุนไพรและดนตรี",subs:[
+ {s:"ผ้าไหมและการทอ",ico:"🧵",name:"ผ้าไหมและการทอ",desc:"การเลี้ยงไหม สาวไหม ทอ ลวดลาย ผ้าในพิธี และช่างทอ",guide:["การเลี้ยงไหม สาวไหม ทอ — ขั้นตอนตามฤดู","ลายผ้าและความหมาย (ชื่อลาย ใช้กับผ้าชนิดไหน)","ผ้าในพิธีและผ้าของครอบครัว","ช่างทอ: ชื่อ ทอมากี่ปี สิ่งที่ถนัด ช่องทางติดต่อ (ขออนุญาตก่อน)","ภาพรายละเอียดลาย/กี่ และคลิปขั้นตอน"]},
+ {s:"ย้อมสีธรรมชาติ",ico:"🎨",name:"ย้อมสีธรรมชาติ",desc:"วัตถุดิบ ขั้นตอน สีที่ได้ และความหมาย",guide:["วัตถุดิบ (พืช ครั่ง โคลน) และสีที่ได้","ขั้นตอนและเวลา การตรึงสี","ฤดูที่เก็บวัตถุดิบ ความเชื่อที่เกี่ยวข้อง","ภาพวัตถุดิบ ผ้าก่อน-หลังย้อม"]},
+ {s:"จักสานและเครื่องมือ",ico:"🧺",name:"จักสานและเครื่องมือ",desc:"เครื่องจักสาน เครื่องมือจับสัตว์น้ำ เครื่องมือเกษตร และวิธีทำ",guide:["เครื่องจักสานในบ้าน เครื่องมือจับสัตว์น้ำ เครื่องมือเกษตร","ชื่อกวย/ชื่อไทย ใช้ทำอะไร ทำจากอะไร","วิธีทำทีละขั้น ใครยังทำเป็น","ภาพ/คลิปการสาน"]},
+ {s:"ตีเหล็ก",ico:"⚒️",name:"ตีเหล็ก",desc:"การตีเหล็ก เครื่องมือ ช่างตีเหล็ก และความสำคัญในประวัติกวย",guide:["ช่างตีเหล็กในชุมชน เครื่องมือที่ตี","วิธีตี เตา เครื่องมือของช่าง","ความสำคัญของเหล็กในประวัติและวิถีกวย","ภาพ/คลิปการตี"]},
+ {s:"ยาสมุนไพรและหมอพื้นบ้าน",ico:"🌿",name:"ยาสมุนไพรและหมอพื้นบ้าน",desc:"พืชยา วิธีรักษา หมอยา และการรักษาควบพิธีกรรม",guide:["พืชยาใกล้บ้าน: ชื่อกวย/ไทย ส่วนที่ใช้ วิธีใช้","หมอยาพื้นบ้าน: ชื่อ เรียนจากใคร รักษาอะไร","การรักษาควบคู่พิธีกรรม","เขียนเป็นภูมิปัญญาพื้นบ้าน ไม่ใช่คำแนะนำทางการแพทย์ ไม่เขียนว่าใช้แล้ว “หายขาด” แบบรับรองผล"]},
+ {s:"ดนตรี การแสดง และการละเล่น",ico:"🎶",name:"ดนตรี การแสดง การละเล่น",desc:"เครื่องดนตรี การเล่นประกอบพิธี และการละเล่นของเด็ก",guide:["เครื่องดนตรี ชื่อ ใครเล่น เล่นตอนไหน","การแสดง/การเล่นประกอบพิธี","การละเล่นของเด็ก วิธีเล่น คำร้อง","คลิปเสียง/วิดีโอ (ลิงก์ YouTube/Facebook)","เพลงกวยให้ลงที่ ปะนาย › เพลง"]},
+ {s:"เครื่องแต่งกายและของใช้",ico:"👘",name:"เครื่องแต่งกายและของใช้",desc:"การแต่งกายในพิธี ผ้านุ่ง เครื่องประดับ ของใช้ประจำตัว",guide:["การแต่งกายในพิธีของผู้หญิง/ผู้ชาย","ผ้านุ่ง สไบ เครื่องประดับ ของใช้ประจำตัว","แต่ละโอกาสแต่งต่างกันอย่างไร","ภาพประกอบพร้อมคำบรรยาย"]},
+ {s:"",kind:"link",tab:4,btn:"เปิดแท็บของดี",ico:"🛍️",name:"ผลิตภัณฑ์ชุมชน",desc:"ของฝากและของดีที่ทำในชุมชน — จัดการที่แท็บ “ของดี” (มีราคา ช่องทางติดต่อ)"}]},
+{k:"จาเอม",ic:"🍲",col:"#c9462e",mean:"อาหารการกิน",intro:"การมีของกินตามวิถีกวย หาอยู่หากินจากธรรมชาติ และรสมือที่ปรุงกินร่วมกัน",subs:[
+ {s:"วิถีนา",ico:"🌾",name:"วิถีนา",desc:"หาอยู่หากินตามหัวไร่ปลายนา เช่น ปูนา หนูนา ผัก มดแดง",guide:["ปูนา หนูนา ผัก มดแดง และของหากินตามหัวไร่ปลายนา","ฤดูที่หา วิธีหา วิธีปรุง ใครไปหา","ชื่อและคำศัพท์กวยของแต่ละอย่าง","ภาพและคลิปตอนหา"]},
+ {s:"วิถีน้ำ",ico:"💧",name:"วิถีน้ำ",desc:"สัตว์น้ำตามฤดูกาล เช่น ปลา ปลาไหล หอย",guide:["ปลา ปลาไหล หอย และสัตว์น้ำตามฤดู","วิธีจับ (งมหอย วางเบ็ด สูบน้ำ) และเครื่องมือ","ปรุงอย่างไร กินร่วมกันอย่างไร","เชื่อมไปวอนึงเต › จักสานและเครื่องมือ"]},
+ {s:"อาหารว่าง",ico:"🥢",name:"อาหารว่าง (จา เกลย์)",desc:"กินยามว่าง เช่น เมี่ยง ตำส้ม",guide:["อาหารกินยามว่าง เช่น เมี่ยง ตำส้ม","วิธีทำ วัตถุดิบ ใครทำอร่อย","ธรรมเนียมกินร่วมกันหลายคน"]},
+ {s:"ไปรลอง",ico:"🍈",name:"ไปรลอง (ผลไม้)",desc:"ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา",guide:["ผลไม้ตามฤดู: ชื่อกวย/ไทย","ฤดูออกผล วิธีกิน ใครปลูก","ภาพผลไม้และต้น"]},
+ {s:"วิถีป่าและอาหารพื้นถิ่น",ico:"🌳",name:"วิถีป่าและอาหารพื้นถิ่น",desc:"อาหารป่า ของป่า อาหารพื้นถิ่น ข้าวและข้าวพื้นถิ่น",guide:["อาหารป่า ของป่าตามฤดู","อาหารพื้นถิ่นประจำบ้าน: ชื่อกวย วัตถุดิบ วิธีทำ โอกาสที่กิน","ข้าวพื้นถิ่น เช่น ข้าวสัมพันธ์ (ข้าวเม็ดสั้น): ลักษณะเมล็ด ฤดูปลูก วิธีหุง ใครยังปลูกอยู่","การถนอมอาหารและเครื่องปรุง","ของป่าที่กินได้ ระบุข้อควรระวัง ถ้าไม่มั่นใจให้ผู้เฒ่าตรวจก่อน"]}]},
+{k:"ปะนาย",ic:"🗣️",col:"#1c4f7d",mean:"ภาษา",intro:"ภาษากวย พูด เล่า ร้อง และสื่อสารกันอย่างไร — หัวใจของวิถีกวย",subs:[
+ {s:"",kind:"link",tab:3,btn:"เปิดคลังคำศัพท์",ico:"📚",name:"คลังคำศัพท์",desc:"คำกวย อักษรไทย คำอ่าน เสียง และภาพ — จัดการที่แท็บ “คำศัพท์” (คำในแต่ละเรื่องส่งเข้าคลังให้เอง)"},
+ {s:"ประโยคและบทสนทนา",ico:"💬",name:"ประโยคและบทสนทนา",desc:"ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ และประโยคที่ใช้บ่อย",guide:["ประโยคกวย + คำอ่านไทย + คำแปล","ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ","ไฟล์เสียงจากผู้เฒ่า (ช่องลิงก์)","เชื่อมไปคลังคำศัพท์"]},
+ {s:"ภาษิต นิทาน และบทกลอน",ico:"📜",name:"ภาษิต นิทาน บทกลอน",desc:"คำพูดสอนใจ นิทานที่ผู้เฒ่าเล่า และปริศนาคำทาย",guide:["ภาษิต คำสอน พร้อมคำแปลและความหมาย","นิทานที่ผู้เฒ่าเล่า ใส่ชื่อผู้เล่าและหมู่บ้าน","ปริศนาคำทาย โจทย์-คำตอบ","คลิปเสียงเล่า"]},
+ {s:"เพลง",ico:"🎵",name:"เพลง",desc:"เพลงกวย เนื้อเพลง ความหมาย และผู้แต่ง",guide:["เนื้อเพลง (กวย/ไทย) และความหมาย","ผู้แต่ง ผู้ร้อง ปีที่แต่ง","ลิงก์เสียง/คลิป","ขออนุญาตเจ้าของผลงานก่อนลงเนื้อเพลง"]},
+ {s:"คำเซ่นและคำเรียกขวัญ",ico:"🕯️",name:"คำเซ่นและคำเรียกขวัญ",desc:"ถ้อยคำในพิธีและความหมายทีละบท",guide:["ถ้อยคำในพิธีและความหมายทีละบท","ใช้ในพิธีไหน ใครเป็นผู้กล่าว","ขออนุญาตผู้นำพิธีก่อนเผยแพร่"]},
+ {s:"วิธีอ่านและวิธีเขียน",ico:"✍️",name:"วิธีอ่านและวิธีเขียน",desc:"หลักการถอดเสียงด้วยอักษรไทย เสียงที่ไม่มีในภาษาไทย",guide:["หลักการถอดเสียงกวยด้วยอักษรไทย","เสียงที่ไม่มีในภาษาไทยและวิธีเขียนแทน","ตัวอย่างคำ + ลิงก์คลังคำศัพท์"]}]}];
+const KG=[];KP6.forEach(P=>{P.subs.forEach(z=>KG.push({k:z.kind==="ev"?"ev":z.kind==="link"?"link:"+P.k+":"+z.name:"lf:"+P.k+":"+z.s,top:P.k,ico:z.ico,name:z.name,desc:z.desc,guide:z.guide||[],kind:z.kind||"lf",tab:z.tab,btn:z.btn}));
+ KG.push({k:"lf:"+P.k+":",top:P.k,ico:"🧺",name:"เรื่องอื่น ๆ ของ"+P.k,desc:"ยังไม่ได้เลือกหัวข้อย่อย (เปิดแก้ไข แล้วเลือกตำแหน่งใหม่)",loose:true,kind:"lf",guide:[]})});
+const KTOP=KP6.map(P=>[P.k,P.ic,P.k+" — "+P.mean]);
 const KMAP={title:"kwt",kuay:"kwk",when:"kww",sum:"kws",story:"kwso",who:"kwwho",tips:"kwtip",links:"kwcl",words:"kwwd",vcat:"kwvc",elder:"kwel",elderby:"kwby",note:"kwnote",cal:"kwcal",sched:"kwsc",tag:"kwtag"};
-(function(){const sel=$("kwd");sel.append(new Option("— เลือกตำแหน่ง —",""));KTOP.forEach(([top,ico])=>{const og=document.createElement("optgroup");og.label=ico+" "+top;KG.filter(g=>g.top===top).forEach(g=>og.append(new Option(g.ico+" "+g.name+(g.loose?"":""),g.k)));sel.append(og)})})();
+(function(){const sel=$("kwd");sel.append(new Option("— เลือกตำแหน่ง —",""));KTOP.forEach(([top,ico])=>{const og=document.createElement("optgroup");og.label=ico+" "+top;KG.filter(g=>g.top===top&&g.kind!=="link").forEach(g=>og.append(new Option(g.ico+" "+g.name,g.k)));sel.append(og)})})();
 const KEVK=["title","kuay","when","sum","story","who","tips","links","words","vcat","elder","elderby","note","cal","sched"],KLFK=["title","kuay","tag","sum","story","who","tips","links","words","vcat","elder","elderby","note"];
 let KI=[],KE=null,KU=["","","","",""],KP=["","","","",""],KC=["","","","",""],KFl="all",KIMP=null,KLOAD=false;
 const kkey=x=>x.store==="ev"?"ev":"lf:"+x.it.cat+":"+(x.it.sub||""),kn=t=>String(t||"").split(/\n+/).filter(Boolean).length;
@@ -944,23 +981,39 @@ async function loadK(){const box=$("kwtree");if(!KI.length)box.replaceChildren(e
  catch(x){box.replaceChildren(el("div","msg warn","โหลดไม่ได้: "+x.message))}}
 const kflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องราว",x=>!x.it.story],nopic:["ยังไม่มีรูป",x=>!x.it.img],nolink:["ยังไม่มีลิงก์/คลิป",x=>!kn(x.it.links)],hid:["ซ่อนอยู่",x=>x.it.hide]};
 function kmatch(x,q){if(!q)return true;const it=x.it;return q.split(/\s+/).filter(Boolean).every(t=>[it.title,it.kuay,it.sum,it.story,it.tag,it.when,it.words].join(" ").toLowerCase().includes(t))}
+let KPIL="all";
+const kdone=x=>!x.it.hide&&!!x.it.story,kwaitI=x=>!x.it.story;
 function renderK(){if(!$("kwtree"))return;const q=$("kwq").value.trim().toLowerCase();
- $("kwst").replaceChildren(...KG.map(g=>{const c=el("span","chip",g.ico+" "+g.name.replace(/ \(.*/,"")+" ");c.append(el("b","",String(KI.filter(x=>kkey(x)===g.k).length)));return c}));
+ /* ปุ่มเลือกเสา: การ์ด 6 ใบ + ทั้งหมด */
+ const st=$("kwst");st.className="kwpil";st.replaceChildren();
+ {const b=el("button","kwpc"+(KPIL==="all"?" on":""));b.type="button";b.style.setProperty("--pc","#5a4a3a");b.append(el("span","kwpi","🌾"),el("b","","ทั้งหมด"),el("small","","ภาพรวม 6 เสา"));b.onclick=()=>{KPIL="all";renderK()};st.append(b)}
+ KP6.forEach(P=>{const ks=KG.filter(g=>g.top===P.k).map(g=>g.k),L=KI.filter(x=>ks.includes(kkey(x))),ok=L.filter(kdone).length,w=L.filter(kwaitI).length;
+  const b=el("button","kwpc"+(KPIL===P.k?" on":""));b.type="button";b.style.setProperty("--pc",P.col);
+  b.append(el("span","kwpi",P.ic),el("b","",P.k),el("small","",P.mean),el("small","kwn","แสดงแล้ว "+ok+(w?" • รอเติม "+w:"")));b.onclick=()=>{KPIL=P.k;renderK()};st.append(b)});
  $("kwft").replaceChildren(...Object.keys(kflt).map(k=>{const b=el("button","chip"+(KFl===k?" on":""),kflt[k][0]+" ("+KI.filter(kflt[k][1]).length+")");b.onclick=()=>{KFl=k;renderK()};return b}));
- const box=$("kwtree");box.replaceChildren();
- KTOP.forEach(([top,ico,tt])=>{const gs=KG.filter(g=>g.top===top),sec=el("div","kws"),h=el("div","kwtop");h.append(el("span","","" +ico+" "+tt));sec.append(h);
-  gs.forEach(g=>{if(g.loose&&!KI.some(x=>kkey(x)===g.k))return;const L=KI.filter(x=>kkey(x)===g.k).sort((a,b)=>(parseFloat(a.it.ord)||9999)-(parseFloat(b.it.ord)||9999)),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q));
-   const d=el("details","kwg");d.open=!!(q||KFl!=="all"||L.length<=12||g.k===(KOPEN||"")); 
-   const s=el("summary","kwsub");s.append(el("b","",g.ico+" "+g.name+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง) "+g.desc));
+ const box=$("kwtree");box.replaceChildren();const single=KPIL!=="all"&&!q;
+ KP6.filter(P=>!single||P.k===KPIL).forEach(P=>{const sec=el("div","kws"),h=el("div","kwtop2");h.style.setProperty("--pc",P.col);
+  h.append(el("span","kwpi",P.ic),el("b","",P.k),el("span","mute"," — "+P.mean));sec.append(h);
+  if(single)sec.append(el("p","mute kwint",P.intro));
+  KG.filter(g=>g.top===P.k).forEach(g=>{
+   if(g.kind==="link"){const r=el("div","kwlink"),bt=el("button","btn o",g.btn+" →");bt.type="button";bt.onclick=()=>tab(g.tab);r.append(el("b","",g.ico+" "+g.name+" "),el("span","mute",g.desc+" "),bt);sec.append(r);return}
+   if(g.loose&&!KI.some(x=>kkey(x)===g.k))return;
+   const L=KI.filter(x=>kkey(x)===g.k).sort((a,b)=>(parseFloat(a.it.ord)||9999)-(parseFloat(b.it.ord)||9999)),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q));
+   if(q&&!F.length)return;
+   const d=el("details","kwg");d.style.setProperty("--pc",P.col);d.open=!!(q||KFl!=="all"||single||g.k===(KOPEN||""));
+   const w=L.filter(kwaitI).length,s=el("summary","kwsub");
+   s.append(el("b","",g.ico+" "+g.name+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง"+(w?" • รอเติม "+w:"")+") "+g.desc));
    const add=el("button","btn o kwadd","➕ เพิ่มเรื่อง");add.type="button";add.onclick=e=>{e.preventDefault();e.stopPropagation();kopen(null,g.k)};s.append(" ",add);d.append(s);
-   if(!F.length)d.append(el("p","mute kwemp",L.length?"ไม่พบเรื่องที่ตรงกับตัวกรอง":"ยังไม่มีเรื่องในหมวดนี้ กด “➕ เพิ่มเรื่อง” ได้เลย"));
+   if(g.guide&&g.guide.length){const gd=el("details","kwguide"),gs=el("summary","","💡 หัวข้อนี้ควรมีอะไร"),ul=el("ul");g.guide.forEach(t=>ul.append(el("li","",t)));gd.append(gs,ul);d.append(gd)}
+   if(!F.length)d.append(el("p","mute kwemp",L.length?"ไม่พบเรื่องที่ตรงกับตัวกรอง":"ยังไม่มีเรื่องในหัวข้อนี้ กด “➕ เพิ่มเรื่อง” ได้เลย"));
    F.forEach(x=>d.append(krow(x)));sec.append(d)});box.append(sec)});
+ if(q&&!box.children.length)box.append(el("p","mute","ไม่พบเรื่องที่ตรงกับคำค้น"));
  kvoc();kimpR()}
 let KOPEN="";
 function krow(x){const it=x.it,r=el("div","kwr"),h=el("div","kwrh");h.append(el("b","",(it.ord?it.ord+". ":"")+it.title));
  if(it.kuay)h.append(el("span","mute"," · "+it.kuay));
  if(x.store==="ev"){if(it.cal)h.append(el("span","badge",(it.cal==="สุริยคติ"?"☀️ ":it.cal==="จันทรคติ"?"🌙 ":"🧵 ")+it.cal));if(it.when)h.append(el("span","badge",it.when))}else if(it.tag)h.append(el("span","badge",it.tag));
- if(it.hide)h.append(el("span","badge r","ซ่อนอยู่"));
+ if(it.hide)h.append(el("span","badge r","ซ่อนอยู่"));if(!it.story)h.append(el("span","badge","รอเติมเรื่อง"));
  if(it.home==="hero"||it.home==="latest")h.append(el("span","badge g","🏠 หน้าแรก"));
  r.append(h);if(it.sum)r.append(el("div","mute kwsum",it.sum.slice(0,120)));
  const miss=[];if(!it.story)miss.push("เรื่องราว");if(!it.img)miss.push("รูป");
@@ -978,7 +1031,7 @@ async function kdelete(x){const it=x.it;if(!confirm("ลบ “"+it.title+"” ?
 $("kwq").oninput=renderK;
 /* --- ฟอร์ม --- */
 function kdestUi(){const v=$("kwd").value,ev=v==="ev";document.querySelectorAll("#kwform .kev").forEach(e=>e.classList.toggle("hide",!ev));document.querySelectorAll("#kwform .klf").forEach(e=>e.classList.toggle("hide",ev||!v));
- const g=KG.find(g=>g.k===v);$("kwcrumb").textContent=g?"📍 วิถีกวย › "+g.top+" › "+g.name:"เลือกตำแหน่งด้านล่างก่อน";if(ev&&!$("kwvc").value.trim())$("kwvc").value="ประเพณีตลอดปี"}
+ const g=KG.find(g=>g.k===v);$("kwcrumb").textContent=g?"📍 วิถีกวย › "+g.top+" › "+g.name:"เลือกตำแหน่งด้านล่างก่อน";{const gb=$("kwguide"),gl=$("kwgl");if(gb&&gl){gl.replaceChildren();const L=g&&g.guide||[];L.forEach(t=>gl.append(el("li","",t)));gb.classList.toggle("hide",!L.length)}}if(ev&&!$("kwvc").value.trim())$("kwvc").value="ประเพณีตลอดปี"}
 $("kwd").onchange=kdestUi;
 function kslots(){const box=$("kwph");box.replaceChildren();let last=-1;for(let i=0;i<5;i++)if(KP[i]||KU[i])last=i;
  for(let i=0;i<=Math.min(4,last+1);i++){const w=el("div","c");w.style.margin="6px 0";w.append(el("b","","ภาพที่ "+(i+1)));
