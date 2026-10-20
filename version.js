@@ -1,2 +1,2 @@
 /* version.js — เลขเวอร์ชันแคชของ service worker บอต build-share เขียนไฟล์นี้เองเมื่อไฟล์หลักเปลี่ยน ห้ามแก้เอง */
-self.KP_VERSION = "kp-dce42e2c";
+self.KP_VERSION = "kp-34648017";
