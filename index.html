@@ -287,6 +287,19 @@ main{overflow-x:clip}
 #recent{padding-bottom:40px}
 #recent::before{bottom:-50px}   /* ต่อพื้นลงไปชนส่วนท้าย ไม่ให้มีช่องว่างคั่น */
 </style>
+<style id="alignfix">
+/* v12: การ์ดเรื่องในแท็บเซกวย — รูป หัวข้อ และแถวรูปตา/ยอดอ่านอยู่ระดับเดียวกันทุกใบในแถวเดียวกัน */
+.grid>.card{display:flex;flex-direction:column}
+.grid>.card .cov,.grid>.card .band,.grid>.card .thumb{flex:none}
+.grid>.card .in{flex:1 1 auto;display:flex;flex-direction:column;padding-top:10px}
+.card .tag:empty{display:none}
+.card .tag{margin-bottom:2px}
+.card .in>h3{margin:0 0 4px;line-height:1.35}
+.card .in>.mute{line-height:1.55}
+.card .in>.vwc{margin-top:auto}
+.card .in>.mute:nth-last-child(2){padding-bottom:10px}
+.card .in>.vwc{min-height:36px;align-items:center}
+</style>
 </head>
 <body>
 <header><div class="bar">
@@ -448,7 +461,7 @@ const K={
 ["เด็กๆ","เกลย์ การละเล่น","กระโดดยาง ลูกแก้วลงหลุม ว่าวหน้าหนาว ตะกร้อ บ้านน้อย และอีกหลายเกม"],
 ["ตลาด","ตลาดนัดโพธิ์กระสังข์","แลกเปลี่ยนผลผลิตของชุมชน เกษตรกรรุ่นใหม่ปรับตัวด้วยสวนผสมผสานและน้ำหยด"]],
 "ภาษากวย":[
-["คำ","ธรอ / ซะธูง","ข้าว / ปักดำ"],["คำ","ชิโซด / ชิเก็บ","ผ้าไหม / ลายลูกแก้ว"],["คำ","เท๊ะ / ตะแวลย์","พริก / ตะไคร้"],["คำ","กะตาม","ปูนา"],["คำ","เกลย์","การละเล่น"],["คำ","โคะอ์โค","โรงเรือนเลี้ยงสัตว์"],["คำ","เซน","เซ่นไหว้ / ประเพณี"],["คำ","สากกวย","บุญอุทิศบรรพบุรุษ เดือน 10"],["คำ","สากเพ็ง / สากอะรับ","สากกวยใหญ่ ขึ้น 15 ค่ำ เดือน 10 (วันเดียวกัน)"],["คำ","สากดับ / สากปัด / สากชูน","สากเล็ก แรม 15 ค่ำ เดือน 10 (วันเดียวกัน)"]]};
+["คำ","ซะออบ-ปอ","สวัสดี (แปลว่า สบายดี) คำทักทายโบราณ"],["คำ","ธรอ / ซะธูง","ข้าว / ปักดำ"],["คำ","ชิโซด / ชิเก็บ","ผ้าไหม / ลายลูกแก้ว"],["คำ","เท๊ะ / ตะแวลย์","พริก / ตะไคร้"],["คำ","กะตาม","ปูนา"],["คำ","เกลย์","การละเล่น"],["คำ","โคะอ์โค","โรงเรือนเลี้ยงสัตว์"],["คำ","เซน","เซ่นไหว้ / ประเพณี"],["คำ","สากกวย","บุญอุทิศบรรพบุรุษ เดือน 10"],["คำ","สากเพ็ง / สากอะรับ","สากกวยใหญ่ ขึ้น 15 ค่ำ เดือน 10 (วันเดียวกัน)"],["คำ","สากดับ / สากปัด / สากชูน","สากเล็ก แรม 15 ค่ำ เดือน 10 (วันเดียวกัน)"]]};
 
 CFG.hubUrl="https://sites.google.com/view/borderlands-narrative1/Home/Phokrasang";CFG.hubQr="img/emb-9d79cf49.png";
 /* ===== ผลงานในทางอีศาน: [ฉบับ,เดือนปี,ชื่อบทความ,หน้า,หมวด,สรุปสั้น,ลิงก์ฉบับเต็ม(ใส่เมื่อมี)] ===== */
@@ -492,7 +505,7 @@ function vocabCats(){if(VCATS)return Promise.resolve(VCATS);
  return fetch("kuy-vocab.csv").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const R=csvRows(t).slice(1),m=new Map();R.forEach(x=>{if(!x[0])return;if((x[8]||"").trim()==="ซ่อน")return;const o=m.get(x[0])||{cat:x[0],emo:x[1]||"🗣️",n:0};o.n++;m.set(x[0],o)});VCATS=[...m.values()];return VCATS}).catch(()=>[])}
 function rVocab(){const v=$("kv");v.style.setProperty("--b","#2f9a8f");v.replaceChildren();
  const a=el("a","kvb");a.href="vocab.html";a.append(el("span","ke","🗣️"),(()=>{const t=el("span","kx");t.append(el("b","","คลังคำศัพท์กวย"),el("small","","รวมคำภาษากวยพร้อมคำแปลและเสียง แยกเป็นหมวดอ่านง่าย"));return t})(),el("span","go","เปิดคำศัพท์ทั้งหมด →"));
- v.append(el("p","lead","ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย"),a);
+ v.append(el("p","mute","ℹ️ คำใหม่อย่าง ขอบคุณ ธนาคาร โทรทัศน์ ชาวกวยใช้ทับศัพท์กับภาษาไทย จึงไม่มีคำกวยเฉพาะตัว คลังนี้ลงเฉพาะคำที่มีคำกวย"));v.append(el("p","lead","ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย"),a);
  const W=(K["ภาษากวย"]||[]);if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำที่ควรรู้"),w)}
  const h=el("h3","","หมวดคำศัพท์ยอดนิยม"),g=el("div","vgrid");v.append(h,g);
  vocabCats().then(L=>{if(!L.length){h.remove();g.remove();return}L.sort((x,y)=>y.n-x.n).slice(0,12).forEach(c=>{const t=el("a","vt");t.href="vocab.html#c/"+encodeURIComponent(c.cat);const s=el("span");s.append(el("b","",c.cat),el("small","",c.n+" คำ"));t.append(el("i","",c.emo),s);g.append(t)});if(L.length>12){const m=el("a","btn solid","ดูครบทั้ง "+L.length+" หมวดในคลังคำศัพท์ →");m.href="vocab.html";m.style.margin="4px 0 0";v.append(m)}})}
