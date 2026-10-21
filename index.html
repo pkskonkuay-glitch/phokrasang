@@ -1175,11 +1175,11 @@ rHome();try{route()}catch(e){try{console.error(e)}catch(_){}}TRK.start();
 {const f=$("foot"),l1=el("div","fl1"),l2=el("div","fl2"),l3=el("div","fl3");
  const k=el("a","adm","🔑");k.href="admin.html";k.rel="nofollow noopener";k.title="สำหรับทีมงาน";k.setAttribute("aria-label","สำหรับทีมงาน");k.style.marginLeft="4px";
  l1.append(el("b","","ที่นี่โพธิ์กระสังข์")," • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน");
- l2.append("ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ");
+ l2.append("ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ");  const lc=el("div","fl2"),ca=el("a","","ขวัญชิต โพธิ์กระสังข์");ca.href="#/about";ca.onclick=function(e){e.preventDefault();go("home","about")};lc.append("เรียบเรียงโดย ",ca);
  l3.append(el("b","","ติดตามเรา"));
  [["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);l3.append(a)});
  l3.append(k);
- f.replaceChildren(l1,l2,l3)}
+ f.replaceChildren(l1,l2,lc,l3)}
 </script>
 <script>document.getElementById("lnT").href=lineMsg("คุยกับทีมงาน");document.getElementById("lnT").target="_blank";document.getElementById("lnT").rel="noopener"</script>
 
