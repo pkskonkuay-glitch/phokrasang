@@ -330,6 +330,7 @@ main{overflow-x:clip}
 <div class="yr" id="yrl"></div>
 <div class="grid" id="cgr"></div>
 <div class="kvr" id="kvr"></div>
+<p class="mute kcol" id="kwl" hidden></p>
 </div>
 <div id="kv" class="kpanel kpv" role="tabpanel" hidden></div>
 </section>
@@ -505,58 +506,56 @@ function covOf(x,band){if(!(x.img&&evOk(evSrc(x.img))))return band;const d=el("d
 var CALI={"สุริยคติ":"☀️","จันทรคติ":"🌙","ตามเหตุการณ์ชีวิต":"🧵"};
 function evFind(t){const k=String(t).split(" ")[0];try{return EVTS.find(o=>o.src.title===t)||EVTS.find(o=>String(o.src.title).split(" ")[0]===k)||null}catch(_){return null}}
 /* แท็บแถวเดียว เรียงตามลำดับที่แสดง: [รหัสในโค้ด, ไอคอน, ป้ายที่แสดง, สี] (รหัสหมวดในโค้ด/ชีต = "ดุงเลิง" เหมือนที่แสดง; ข้อมูลเก่าที่ยังเป็น "ดุงกวย" ถูกแปลงอัตโนมัติ) */
-const CRAFT={test:s=>/ผ้า|ไหม|ตานชิ|ย้อม|จักสาน|ตีเหล็ก|สมุนไพร|หมอยา|ดนตรี|แคน/.test(String(s).replace(/หนองแคน/g,""))};/* ตัด "หนองแคน" ก่อนตรวจ เพื่อไม่ให้เรื่องหนองน้ำถูกจัดเป็นแคนดนตรี */
+const CRAFT={test:s=>/ผ้า|ไหม|ตานชิ|ย้อม|จักสาน|สมุนไพร|หมอยา|ดนตรี|แคน/.test(String(s).replace(/หนองแคน/g,""))};/* ตัด "หนองแคน" ก่อนตรวจ เพื่อไม่ให้เรื่องหนองน้ำถูกจัดเป็นแคนดนตรี */
 /* 6 เสาหลักของวิถีกวย (ลำดับตามเอกสาร "โครงสร้างหมวดหมู่ วิถีกวย"): หัวข้อย่อย = [รหัส, ไอคอน, ป้าย, คำอธิบาย, regex จัดเรื่องเข้าหัวข้อ, หมวดคำศัพท์ที่เกี่ยวข้อง (null = ใช้ของเสา)] */
-const ALLS=(d)=>["ทั้งหมด","✨","ทั้งหมด",d,null,null];
+/* v15: เสา → หัวข้อ (ไม่เกิน 5) → หน้าเดียวอ่านจบ  (ชื่อหัวข้อย่อย [0] ต้องตรงกับ LSUBS ใน life.gs และ KG ใน admin.html) */
 const PIL=[
 {k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน. เริ่มเล่าจากบ้านโพธิ์กระสังข์ หมู่ 2 ซึ่งเป็นหมู่บ้านเก่าแก่ ที่มาของชื่อตำบล ชื่อวัด และนามสกุลของผู้คน บางเรื่องเป็นของ 4 หมู่บ้านที่ใช้วัดโพธิ์กระสังข์ร่วมกัน (หมู่ 2 • หมู่ 9 โนนคูณ • หมู่ 11 แต้ • หมู่ 12 โพธิ์กระสังข์เหนือ) และในอนาคตจะขยายถึงทั้งตำบล 14 หมู่บ้าน",
  voc:["ครอบครัว","คนและสรรพนาม","ชาติพันธุ์และกลุ่มคนใกล้เคียง","อาชีพและงานชุมชน"],
  subs:[["ประวัติและที่มา","📜","ประวัติและที่มา","ที่มาของชื่อ ชื่อเก่าของชุมชน (ลพังคีลย์) การตั้งและย้ายหมู่บ้าน และเรื่องที่เกิดขึ้นตามลำดับเวลา",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
-  ["หมู่บ้านและผู้คน","🏘️","หมู่บ้านและผู้คน","4 หมู่บ้านที่ใช้วัดเดียวกัน ชาวกวย ชาวจีน ลูกเขย สะใภ้ และพี่น้องข้างเคียง อยู่ร่วมกันอย่างไร",null,["ครอบครัว","ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
+  ["หมู่บ้านและผู้คน","🏘️","หมู่บ้านและผู้คน","4 หมู่บ้านที่ใช้วัดเดียวกัน ชาวกวย ชาวจีน ลูกเขย สะใภ้ อยู่ร่วมกันอย่างไร",null,["ครอบครัว","ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
   ["ตระกูลและเครือญาติ","🌳","ตระกูล","ตระกูลหลักของแต่ละหมู่บ้าน สกุลโพธิ์กระสังข์ คำเรียกญาติ และการสืบสายตระกูล",null,["ครอบครัว"]],
   ["ผู้รู้ ผู้นำ และผู้มีคุณูปการ","🧓","ผู้รู้ ผู้นำ","พระสงฆ์ ผู้นำพิธี ผู้เฒ่า ปราชญ์ ครู และผู้ทำคุณประโยชน์ให้ชุมชน คนละ 1 เรื่อง",null,["คนและสรรพนาม","อาชีพและงานชุมชน","วัดและพุทธศาสนา"]],
   ["คนรุ่นใหม่และผู้บันทึก","🌱","คนรุ่นใหม่ ผู้บันทึก","ลูกหลานที่ไปทำงานต่างถิ่น เยาวชนที่สืบสานวัฒนธรรม และคนที่ช่วยกันบันทึกเรื่องราวชุมชน",null,[]]]},
 {k:"ดุงเลิง",ic:"🏡",col:"#9a5b12",mean:"บ้านเรือน อาคาร สถานที่",intro:"ดุงเลิง คือบ้านเรือนและที่อยู่อาศัยของชาวกวย ไม่ได้หมายถึงแค่ตัวบ้าน แต่รวมทุกอย่างที่เป็นอาคาร บ้านเรือน ศาลา และที่พัก",
  voc:["บ้านและเรือน","สถานที่ในชุมชน","สัตว์เลี้ยง","ครัวและภาชนะ"],
- subs:[ALLS("บ้านเรือน อาคาร และสถานที่ของชุมชนกวย"),
- ["บ้านและเรือน","🏡","บ้านและเรือน","ลักษณะบ้านกวย การวางผัง ห้องและหน้าที่ วัสดุ และข้อห้ามเรื่องบ้าน",/(^|\s)ดุง(\s|$)|บ้านเรือน|ห้อง/,["บ้านและเรือน","ครัวและภาชนะ"]],
- ["ที่ของสัตว์และที่ทำกิน","🐂","ที่ของสัตว์และที่ทำกิน","เล้า คอกวัวควาย เถียงนา ยุ้งข้าว ที่ผูกกับสัตว์เลี้ยงและวิถีนา",/โคะอ์โค|อโลง|แธร|เถียง|เล้า|คอก|ยุ้ง|โรงเก็บ|สัตว์/,["สัตว์เลี้ยง"]],
- ["ที่ศักดิ์สิทธิ์และของส่วนรวม","🛕","ที่ศักดิ์สิทธิ์และของส่วนรวม","ศาลปู่ตา ศาลพระภูมิ ศาลาประชาคม วัด โรงเรียน รพ.สต. บ่อน้ำ หนองน้ำสำคัญ (ลพังคีลย์ หรือหนองแคน และทนับพืด หรือหนองซำ) และที่ใช้ประกอบพิธี",/ศาล|เญือะ|วัด|ป่าช้า|บ่อน้ำ|หอประชุม|หนอง|ลพัง|ทนับพืด|โรงเรียน|รพ\.สต/,["สถานที่ในชุมชน"]]]},
+ subs:[["บ้านและเรือน","🏡","บ้านและเรือน","ลักษณะบ้านกวย การวางผัง ห้องและหน้าที่ วัสดุ และข้อห้ามเรื่องบ้าน",/(^|\s)ดุง(\s|$)|บ้านเรือน|ห้อง/,["บ้านและเรือน","ครัวและภาชนะ"]],
+  ["ที่ของสัตว์และที่ทำกิน","🐂","ที่ของสัตว์และที่ทำกิน","เล้า คอกวัวควาย เถียงนา ยุ้งข้าว ที่ผูกกับสัตว์เลี้ยงและวิถีนา",/โคะอ์โค|อโลง|แธร|เถียง|เล้า|คอก|ยุ้ง|โรงเก็บ|สัตว์/,["สัตว์เลี้ยง"]],
+  ["สถานที่ส่วนรวม","🏛️","สถานที่ส่วนรวม","ศาลาประชาคม โรงเรียน รพ.สต. วัด และที่ที่คนในชุมชนใช้ร่วมกัน เล่าในมุมของคนบ้านเรา",/ศาลาประชาคม|โรงเรียน|รพ\.สต|สุขภาพตำบล|หอกระจายข่าว|ประปา|วัดโพธิ์/,["สถานที่ในชุมชน"]],
+  ["ที่ศักดิ์สิทธิ์และธรรมชาติ","🛕","ที่ศักดิ์สิทธิ์และธรรมชาติ","ศาลปู่ตา ศาลพระภูมิ หนองน้ำสำคัญ (ลพังคีลย์ หนองแคน • ทนับพืด หนองซำ) ป่าชุมชน และที่ที่ใช้ประกอบพิธี",/ศาล|เญือะ|ป่าช้า|บ่อน้ำ|หนอง|ลพัง|ทนับพืด|โนน|ป่า/,[]]]},
 {k:"กัวออ",ic:"🙏",col:"#0e6b73",mean:"อยู่ดีสมบูรณ์",intro:"กัวออ คือการมีชีวิตที่ดี ความเป็นอยู่ที่ดีและสมบูรณ์ ภายใต้วิถีชีวิต วัฒนธรรมประเพณี และความเชื่อ รวมถึงให้ความสำคัญกับขวัญของผู้ที่ยังมีชีวิตอยู่ และสิ่งลี้ลับที่มองไม่เห็น",
  voc:["ความเชื่อและพิธีกรรม","ประเพณีตลอดปี","เหตุการณ์สำคัญในชีวิต","วัดและพุทธศาสนา","วันและเดือน"],
  subs:[["เซ (ฮีตคอง)","🕯️","เซ (ฮีตคอง) ตลอดปี","งานประเพณีตลอดปีของชาวกวยบ้านโพธิ์กระสังข์ เลื่อนดูและแตะการ์ดเพื่ออ่านเรื่องราวของแต่ละงาน",null,["ประเพณีตลอดปี","วันและเดือน"]],
- ["ละวาย","🎗️","ละวาย (ขวัญและวงจรชีวิต)","พิธีเรียกขวัญและบอกกล่าวบรรพบุรุษ ทำเมื่อมีเหตุในชีวิต เช่น เด็กเกิดใหม่ เจ็บป่วย อุบัติเหตุ หรือสูญเสีย ไม่มีวันตายตัวเหมือนงานประจำปี",null,["เหตุการณ์สำคัญในชีวิต"]],
- ["ความเชื่อ ผีบรรพบุรุษ และข้อห้าม","🪔","ความเชื่อ ผีบรรพบุรุษ ข้อห้าม","ระบบผีบรรพบุรุษ ผีปู่ตา ข้อห้ามข้อปฏิบัติ และเรื่องเล่าที่มาของความเชื่อ",null,["ความเชื่อและพิธีกรรม"]],
- ["วัดและศาสนา","☸️","วัดและศาสนา","วัดในชุมชน การทำบุญตามแบบกวย และความผสมผสานระหว่างพุทธกับผี",null,["วัดและพุทธศาสนา"]]]},
+  ["ละวาย","🎗️","ละวาย (ขวัญและวงจรชีวิต)","พิธีเรียกขวัญและบอกกล่าวบรรพบุรุษ ทำเมื่อมีเหตุในชีวิต เช่น เด็กเกิดใหม่ เจ็บป่วย อุบัติเหตุ หรือสูญเสีย ไม่มีวันตายตัวเหมือนงานประจำปี",null,["เหตุการณ์สำคัญในชีวิต"]],
+  ["ความเชื่อ ผีบรรพบุรุษ และข้อห้าม","🪔","ความเชื่อ ผีบรรพบุรุษ ข้อห้าม","ระบบผีบรรพบุรุษ ผีปู่ตา ข้อห้ามข้อปฏิบัติ และเรื่องเล่าที่มาของความเชื่อ",null,["ความเชื่อและพิธีกรรม"]],
+  ["วัดและศาสนา","☸️","วัดและศาสนา","วัดในชุมชน การทำบุญตามแบบกวย และความผสมผสานระหว่างพุทธกับผี",null,["วัดและพุทธศาสนา"]]]},
 {k:"วอนึงเต",ic:"🧵",col:"#b5530f",mean:"งานฝีมือและภูมิปัญญา",intro:"วอนึงเต คือสิ่งที่ทำกับมือตามวิถีกวย กวยทำอะไรด้วยมือ และมีความรู้ในการทำ รักษา หรือแสดงอะไร ตั้งแต่ผ้าไหม จักสาน ไปจนถึงยาสมุนไพรและดนตรี",
  voc:["ผ้าไหมและการทอ","ย้อมสีธรรมชาติ","จักสานและเครื่องมือจับสัตว์น้ำ","เครื่องมือและของใช้","เสื้อผ้าและเครื่องแต่งกาย","ของใช้ส่วนตัว","สุขภาพและสมุนไพร","อวัยวะและอาการเจ็บป่วย","ดนตรีและการละเล่น","วัสดุและสิ่งของ"],
- subs:[ALLS("งานฝีมือ ความรู้ และสิ่งที่ชาวกวยทำด้วยมือ"),
- ["ผ้าไหมและการทอ","🧵","ผ้าไหมและการทอ","การเลี้ยงไหม สาวไหม ทอ ลวดลาย ผ้าในพิธี และช่างทอ",/ผ้า|ไหม|ตานชิ|ลายชิเก็บ/,["ผ้าไหมและการทอ"]],
- ["ย้อมสีธรรมชาติ","🎨","ย้อมสีธรรมชาติ","วัตถุดิบ ขั้นตอน สีที่ได้ และความหมาย",/ย้อม/,["ย้อมสีธรรมชาติ"]],
- ["จักสานและเครื่องมือ","🧺","จักสานและเครื่องมือ","เครื่องจักสาน เครื่องมือจับสัตว์น้ำ เครื่องมือเกษตร และวิธีทำ",/จักสาน|ไม้ไผ่/,["จักสานและเครื่องมือจับสัตว์น้ำ","เครื่องมือและของใช้"]],
- ["ยาสมุนไพรและหมอพื้นบ้าน","🌿","ยาสมุนไพรและหมอพื้นบ้าน","พืชยา วิธีรักษา หมอยา และการรักษาควบพิธีกรรม บันทึกไว้เป็นภูมิปัญญาพื้นบ้าน ไม่ใช่คำแนะนำทางการแพทย์",/สมุนไพร|หมอ/,["สุขภาพและสมุนไพร","อวัยวะและอาการเจ็บป่วย"]],
- ["ดนตรี การแสดง และการละเล่น","🎶","ดนตรี การแสดง การละเล่น","เครื่องดนตรี เพลงพื้นบ้าน การเล่นประกอบพิธี และการละเล่นของเด็ก",/ดนตรี|แคน/,["ดนตรีและการละเล่น"]],
- ["เครื่องแต่งกายและของใช้","👘","เครื่องแต่งกายและของใช้","การแต่งกายในพิธี ผ้านุ่ง เครื่องประดับ และของใช้ประจำตัว",/แต่งกาย|ผ้านุ่ง|เครื่องประดับ/,["เสื้อผ้าและเครื่องแต่งกาย","ของใช้ส่วนตัว"]],]},
+ subs:[["ผ้าไหมและการแต่งกาย","🧵","ผ้าไหมและการแต่งกาย","การเลี้ยงไหม ทอ ย้อมสี ลวดลาย ผ้าในพิธี เครื่องแต่งกาย และช่างทอ",/ผ้า|ไหม|ตานชิ|ลายชิเก็บ|ย้อม|แต่งกาย|ผ้านุ่ง|เครื่องประดับ/,["ผ้าไหมและการทอ","ย้อมสีธรรมชาติ","เสื้อผ้าและเครื่องแต่งกาย","ของใช้ส่วนตัว"]],
+  ["จักสานและเครื่องมือ","🧺","จักสานและเครื่องมือ","เครื่องจักสาน เครื่องมือจับสัตว์น้ำ เครื่องมือเกษตร และวิธีทำ",/จักสาน|ไม้ไผ่/,["จักสานและเครื่องมือจับสัตว์น้ำ","เครื่องมือและของใช้"]],
+  ["ยาสมุนไพรและหมอพื้นบ้าน","🌿","ยาสมุนไพรและหมอพื้นบ้าน","พืชยา วิธีรักษา หมอยา และการรักษาควบพิธีกรรม บันทึกไว้เป็นภูมิปัญญาพื้นบ้าน ไม่ใช่คำแนะนำทางการแพทย์",/สมุนไพร|หมอ/,["สุขภาพและสมุนไพร","อวัยวะและอาการเจ็บป่วย"]],
+  ["ดนตรีและการละเล่น","🎶","ดนตรีและการละเล่น","เครื่องดนตรี เพลงพื้นบ้าน การเล่นประกอบพิธี และการละเล่นของเด็ก",/ดนตรี|แคน|ละเล่น|เกลย์/,["ดนตรีและการละเล่น"]]]},
 {k:"จาเอม",ic:"🍲",col:"#c9462e",mean:"อาหารการกิน",intro:"จาเอม คือการมีของกินตามวิถีกวย การหาอยู่หากินจากธรรมชาติ และรสมือที่ปรุงขึ้นกินร่วมกัน เป็นพลังงานที่หล่อเลี้ยงทั้งดุงเลิงและกัวออให้หมุนต่อไปได้ ทั้งผักหัวไร่ปลายนา อาหารจากธรรมชาติตามฤดูกาล อาหารว่างและอาหารสมุนไพรของชาวกวย",
  voc:["อาหารและการกิน","พืช ผัก ผลไม้","ข้าวและอาหารพื้นถิ่นเพิ่มเติม","สัตว์น้ำและปลา","สัตว์ป่าและแมลง","ป่าและอาหารป่า","เกษตรและการทำนา","ชีวิตชาวนาและการลงแขก"],
- subs:[ALLS("อาหารการกินของชาวกวย ตามฤดูและตามที่"),
- ["วิถีนา","🌾","วิถีนา","หาอยู่หากินตามหัวไร่ปลายนา ปูนา หนูนา ผัก มดแดง",null,["เกษตรและการทำนา","สัตว์ป่าและแมลง"]],
- ["วิถีน้ำ","💧","วิถีน้ำ","ปลา ปลาไหล หอย และสิ่งที่อยู่ในน้ำตามฤดูกาล",null,["สัตว์น้ำและปลา"]],
- ["ของกินเล่น","🥢","ของกินเล่น","จา เกลย์ อาหารกินยามว่าง เมี่ยงและตำส้ม กินร่วมกันหลายคน",null,["อาหารและการกิน"]],
- ["ไปรลอง","🍈","ไปรลอง (ผลไม้)","ผลไม้ตามฤดูกาลและตามหัวไร่ปลายนา",null,["พืช ผัก ผลไม้"]],
- ["วิถีป่าและอาหารพื้นถิ่น","🌳","วิถีป่าและอาหารพื้นถิ่น","อาหารป่า ของป่า อาหารพื้นถิ่น ข้าวและข้าวพื้นถิ่น เช่น ข้าวสัมพันธ์ (ข้าวเม็ดสั้น)",null,["ป่าและอาหารป่า","ข้าวและอาหารพื้นถิ่นเพิ่มเติม"]]]},
+ subs:[["วิถีนา","🌾","วิถีนา","หาอยู่หากินตามหัวไร่ปลายนา ปูนา หนูนา ผัก มดแดง เกษตรอินทรีย์และโคกหนองนา",/วิถีนา|ทำนา|ปูนา|หนูนา|ผัก|มดแดง|เกษตร|โคกหนองนา/,["เกษตรและการทำนา","สัตว์ป่าและแมลง"]],
+  ["วิถีน้ำ","💧","วิถีน้ำ","ปลา ปลาไหล หอย และสิ่งที่อยู่ในน้ำตามฤดูกาล",/วิถีน้ำ|หาปลา|หอย|ปลาไหล/,["สัตว์น้ำและปลา"]],
+  ["ของกินเล่นและไปรลอง","🥢","ของกินเล่นและไปรลอง","จา เกลย์ อาหารกินยามว่าง เมี่ยงและตำส้ม กินร่วมกันหลายคน และไปรลอง ผลไม้ตามฤดูกาล",/รสมือ|อาหารว่าง|เมี่ยง|ตำส้ม|ไปรลอง|ผลไม้/,["อาหารและการกิน","พืช ผัก ผลไม้"]],
+  ["ป่าและอาหารพื้นถิ่น","🌳","ป่าและอาหารพื้นถิ่น","อาหารป่า ของป่า อาหารพื้นถิ่น ข้าวและข้าวพื้นถิ่น เช่น ข้าวสัมพันธ์ (ข้าวเม็ดสั้น)",/ป่า|ข้าว|พื้นถิ่น/,["ป่าและอาหารป่า","ข้าวและอาหารพื้นถิ่นเพิ่มเติม"]]]},
 {k:"ปะนาย",ic:"🗣️",col:"#1c4f7d",mean:"ภาษา",intro:"ปะนาย คือภาษา กวยพูด เล่า ร้อง และสื่อสารกันอย่างไร ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว",
  voc:["ทักทายและมารยาท","ประโยคที่ใช้บ่อย","คำกริยาที่ใช้บ่อย","คำบอกลักษณะ","ร่างกาย","เวลาและวัน","ทิศทางและสถานที่","คำถามและคำชี้","ปริมาณและหน่วยวัด","กิจวัตรประจำวัน","ตำแหน่งและบุพบท","ตัวเลขและการนับ","คำเชื่อมและคำช่วย","การสื่อสารและเสียง","โรงเรียนและการเรียนรู้","เงินและการค้า","สี","อารมณ์และความรู้สึก","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน","เทคโนโลยีและของสมัยใหม่"],
  subs:[["คลังคำศัพท์","📚","คลังคำศัพท์","คำกวย อักษรไทย คำอ่าน เสียง และภาพ รวมไว้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย",null,null],
- ["ประโยคและบทสนทนา","💬","ประโยคและบทสนทนา","ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ และประโยคที่ใช้บ่อย",null,["ประโยคที่ใช้บ่อย","ทักทายและมารยาท","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน"]],
- ["ภาษิต นิทาน และบทกลอน","📜","ภาษิต นิทาน บทกลอน","คำพูดสอนใจ นิทานที่ผู้เฒ่าเล่า และปริศนาคำทาย",null,[]],
- ["เพลง","🎵","เพลง","เพลงกวย เนื้อเพลง ความหมาย และผู้แต่ง",null,[]],
- ["คำเซ่นและคำเรียกขวัญ","🕯️","คำเซ่นและคำเรียกขวัญ","ถ้อยคำในพิธีและความหมายทีละบท",null,[]],
- ["วิธีอ่านและวิธีเขียน","✍️","วิธีอ่านและวิธีเขียน","หลักการถอดเสียงด้วยอักษรไทย เสียงที่ไม่มีในภาษาไทย และวิธีใช้คลัง",null,[]]]}];
+  ["ประโยคและบทสนทนา","💬","ประโยคและบทสนทนา","ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ และประโยคที่ใช้บ่อย",null,["ประโยคที่ใช้บ่อย","ทักทายและมารยาท","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน"]],
+  ["ภาษิต นิทาน เพลง","📜","ภาษิต นิทาน เพลง","คำพูดสอนใจ นิทานที่ผู้เฒ่าเล่า ปริศนาคำทาย และเพลงกวย เนื้อเพลง ความหมาย และผู้แต่ง",null,[]],
+  ["คำเซ่นและคำเรียกขวัญ","🕯️","คำเซ่นและคำเรียกขวัญ","ถ้อยคำในพิธีและความหมายทีละบท",null,[]],
+  ["วิธีอ่านและวิธีเขียน","✍️","วิธีอ่านและวิธีเขียน","หลักการถอดเสียงด้วยอักษรไทย เสียงที่ไม่มีในภาษาไทย และวิธีใช้คลัง",null,[]]]}];
 const PM={};PIL.forEach(t=>PM[t.k]=t);
 function culRes(){const LG={"เซ (ฮีตคอง)":["กัวออ","เซ (ฮีตคอง)"],"ละวาย":["กัวออ","ละวาย"],"คำศัพท์":["ปะนาย","คลังคำศัพท์"],"ภาษากวย":["ปะนาย","คลังคำศัพท์"]};
  let p,s;if(LG[cf]){p=LG[cf][0];s=LG[cf][1]}else{p=PM[cf]?cf:"กัวออ";s=sf}
- const P=PM[p];if(!P.subs.some(x=>x[0]===s))s=P.subs[0][0];return[P,s]}
+ const P=PM[p],V=visSubs(P);if(!V.some(x=>x[0]===s))s=V[0][0];return[P,s]}
+const ALWAYS=["เซ (ฮีตคอง)","ละวาย","คลังคำศัพท์"];
+/* หัวข้อที่ยังไม่มีเรื่อง ซ่อนปุ่ม (เมื่อมีข้อมูลจากชีตแล้ว) แล้วรวมเป็นบรรทัด "กำลังรวบรวม" ท้ายหน้าเสา */
+function visSubs(P){if(!LIFEOBJ.length)return P.subs;const v=P.subs.filter(z=>ALWAYS.indexOf(z[0])>=0||LIFEOBJ.some(o=>o.src.cat===P.k&&(o.src.sub||"")===z[0]));return v.length?v:P.subs}
+const SCOPES=["4 หมู่บ้านวัดเดียวกัน","ทั้งตำบล"];
 function csvRows(t){const R=[];let r=[],c="",q=false;t=String(t).replace(/^\uFEFF/,"");for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}else if(ch==='"')q=true;else if(ch===","){r.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;r.push(c);c="";if(r.length>1||r[0]!=="")R.push(r);r=[]}else c+=ch}
  if(c!==""||r.length){r.push(c);R.push(r)}return R}
 let VCATS=null;
@@ -582,14 +581,16 @@ function rCul(){
  $("kpanel").hidden=false;$("kv").hidden=true;$("kpanel").style.setProperty("--b",P.col);
  {const c=$("cintro");c.replaceChildren(el("b","",P.k+" • "+P.mean),document.createElement("br"),P.intro);c.hidden=false}
  {const ks=$("ksub"),ss=$("ssub");ks.hidden=ss.hidden=false;ks.setAttribute("aria-label","หัวข้อย่อยของ"+P.k);ks.replaceChildren();
-  P.subs.forEach(t=>{const on=t[0]===S,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",P.col);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(on)return;sf=t[0];rCul();TRK.ev("ceh/"+P.k+"/"+t[0])};ks.append(b)});ss.textContent=sb[3]}
+  visSubs(P).forEach(t=>{const on=t[0]===S,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",P.col);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(on)return;sf=t[0];rCul();TRK.ev("ceh/"+P.k+"/"+t[0])};ks.append(b)});ss.textContent=sb[3]}
  const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx0=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
  const cx=(isH||cx0==="ละวาย"||cx0==="จาเอม")?cx0:((LIFEOBJ.length&&S!=="ผลิตภัณฑ์ชุมชน"&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์"))?"ชีต":cx0);
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg)lg.hidden=!isH}
- const kvr=$("kvr");kvr.replaceChildren();VTK++;
+ const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
+ {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
  if(S==="ผลิตภัณฑ์ชุมชน"){const a=el("a","kvb");a.href="#/products";a.append(el("span","ke","🧶"),(()=>{const t=el("span","kx");t.append(el("b","","ของดีบ้านเรา"),el("small","","ผ้าไหม จักสาน ฝีมือคนบ้านโพธิ์กระสังข์ ใครทำ ราคาประมาณเท่าไหร่"));return t})(),el("span","go","ดูของดีทั้งหมด →"));a.onclick=e=>{e.preventDefault();go("home","products")};kvr.append(a)}
  if(isH){$("cgr").replaceChildren();try{rYear()}catch(_){}relVocab(P,sb,kvr);return}
+ if(LIFEOBJ.length&&!(P.k==="กัวออ"&&S==="ละวาย")&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์")){rPage(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
  if(!cx){$("cgr").replaceChildren(...(S==="ผลิตภัณฑ์ชุมชน"||(P.k==="ปะนาย"&&S==="คลังคำศัพท์")?[]:[waitCard(P,sb)]));relVocab(P,sb,kvr);return}
 {
 const BT={"ชีต":"silk","เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงเลิง":"bead","กัวออ":"silk","จาเอม":"plaid"};
@@ -614,6 +615,20 @@ if(hee){const lg=el("p","mute","☀️ สุริยคติ = วันท�
 if(!out.length&&S!=="ผลิตภัณฑ์ชุมชน")out.push(waitCard(P,sb));
 $("cgr").replaceChildren(...out)}
 relVocab(P,sb,kvr)}
+
+/* หน้าเดียวอ่านจบ: ทุกเรื่องในหัวข้อเรียงต่อกันลงมา เรื่องแรกกางไว้ ที่เหลือพับได้ ไม่มีการ์ดให้กดเข้าไปอ่านต่อ */
+function rPage(P,sb,L){const g=$("cgr");g.className="grid pg";
+ if(!L.length){g.replaceChildren(waitCard(P,sb));return}
+ g.replaceChildren(...L.map((o,n)=>{const e=o.src,d=document.createElement("details");d.className="sec";d.id="sec-"+e.id;d.style.setProperty("--b",P.col);if(n===0)d.open=true;
+  const s=document.createElement("summary");s.append(el("b","",e.title));
+  if(e.kuay&&String(e.title).indexOf(String(e.kuay).split(" • ")[0])<0)s.append(el("small","","ภาษากวย: "+e.kuay));
+  if(SCOPES.indexOf(e.tag)>=0)s.append(el("span","scope",e.tag));
+  if(e.sum)s.append(el("small","sm",e.sum));
+  d.append(s);
+  let built=false;const fill=()=>{if(built)return;built=true;const c=el("div","sbody");renderBody(c,o);if(o.extra)o.extra(c,true);
+   const bar=el("div","sbar"),a=el("a","btn");a.href="#/read/"+o.k;a.textContent="🔗 ลิงก์เรื่องนี้ • แชร์";a.onclick=ev=>{ev.preventDefault();openRead(o)};
+   const ln=ext(el("a","btn line","📷 มีภาพหรือเรื่องเล่าเพิ่ม ส่งทาง LINE"),lineMsg("ส่งภาพหรือเรื่องเล่า: "+e.title));bar.append(a,ln);{const vw=vwEl(o);if(vw)bar.append(vw)}c.append(bar);d.append(c)};
+  if(d.open)fill();d.addEventListener("toggle",()=>{if(d.open){fill();TRK.ev("life-sec/"+o.k)}});return d}))}
 function goC(k){cf=(k==="ภาษากวย"?"คำศัพท์":k);rCul();go("home","culture")}
 let live=false;
 
@@ -630,9 +645,11 @@ const t=el("div","thumb"+(o.t?" t-"+o.t:""),play||o.t?"":(o.icon||""));if(o.t&&o
 if(o.img){t.classList.add("ph1");const im=new Image();im.alt="";im.loading="lazy";im.className="cover";im.onerror=()=>im.remove();im.src=o.img;t.append(im)}
 if(o.date)t.append(el("div","dbadge",o.date));if(play)t.append(el("div","play","▶"));
 const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.ltitle||o.title),el("div","mute",o.lsum||o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);}{const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}c.append(t,i);return c}
-function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.ltitle||o.title);const m=el("div","mute",(o.date||"")+(o.meta!=null?o.meta:o.prod?"ผลิตภัณฑ์ชุมชนบ้านโพธิ์กระสังข์":o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);{const vw=vwEl(o);if(vw){vw.classList.add("vwr");r.append(vw)}}
-if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
-let ul=null;o.body.forEach(x=>{if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null;
+function renderBody(r,o){let ul=null,vg=null;o.body.forEach(x=>{if(!x.startsWith("@V"))vg=null;
+if(x.startsWith("@V")){const v=x.slice(2).split("|").map(s=>s.trim());if(v.length>=3){if(!vg){vg=el("div","vstrip");r.append(vg)}const c=el("div","vch"+(v[3]==="main"?" main":""));c.append(el("small","",v[0]),el("b","",v[1]),el("span","",v[2]+" คน"));vg.append(c)}return}
+if(x.startsWith("@S")){const v=x.slice(2).split("|").map(s=>s.trim()).filter(Boolean);if(v.length){const g=el("div","step3");v.forEach((s,i)=>{const d=el("div");d.append(el("i","",String(i+1)),el("span","",s));g.append(d)});r.append(g)}ul=null;return}
+if(x.startsWith("@G")){const v=x.slice(2).split("|").map(s=>s.trim());if(v[0]&&v[1]){const p=el("p"),a=el("button","btn alt",v[0]+" →");a.type="button";a.style.margin="0";a.onclick=()=>go("home",v[1]);p.append(a);r.append(p)}ul=null;return}
+if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null;
 const ml=/^@@\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);
 if(ml){const la=+ml[2],lo=+ml[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180){const c=el("div","pm"),q=la+","+lo,fr=document.createElement("iframe");fr.loading="lazy";fr.title="แผนที่ "+ml[1];fr.src="https://www.openstreetmap.org/export/embed.html?bbox="+[lo-.008,la-.005,lo+.008,la+.005].join(",")+"&layer=mapnik&marker="+q;const a=el("a","btn solid","เปิดใน Google Maps • นำทาง");a.href="https://www.google.com/maps?q="+q;a.target="_blank";a.rel="noopener";c.append(el("b","","📍 "+ml[1]),fr,a);r.append(c)}return}
 const lk=/^@L\s*(.*?)\s*\|\s*(https?:\/\/\S+)\s*$/.exec(x);
@@ -641,7 +658,10 @@ if(x.startsWith("@@"))return;
 const mi=/^!\[(.*?)\]\((\S+?)\)\s*$/.exec(x);if(mi&&okSrc(mi[2])){const f=el("figure","pf"),im=new Image();im.src=mi[2];im.alt=mi[1];im.loading="lazy";im.onerror=()=>f.remove();f.append(im);if(mi[1])f.append(el("figcaption","",mi[1]));r.append(f);return}
 if(x.startsWith("> ")){const q=el("blockquote","pq"),t=x.slice(2).split(" | ");bd(q,t[0]);if(t[1])q.append(el("cite","",t[1]));r.append(q);return}
 if(x.startsWith("!! ")){const q=el("div","hl");bd(q,x.slice(3));r.append(q);return}
-if(x.startsWith("## "))r.append(el("h2","",x.slice(3)));else if(x.startsWith("### "))r.append(el("h3","",x.slice(4)));else if(x.startsWith("※"))r.append(el("p","mute",x));else{const pp=el("p");bd(pp,x);r.append(pp)}});
+if(x.startsWith("## "))r.append(el("h2","",x.slice(3)));else if(x.startsWith("### "))r.append(el("h3","",x.slice(4)));else if(x.startsWith("※"))r.append(el("p","mute",x));else{const pp=el("p");bd(pp,x);r.append(pp)}});}
+function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.ltitle||o.title);const m=el("div","mute",(o.date||"")+(o.meta!=null?o.meta:o.prod?"ผลิตภัณฑ์ชุมชนบ้านโพธิ์กระสังข์":o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);{const vw=vwEl(o);if(vw){vw.classList.add("vwr");r.append(vw)}}
+if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
+renderBody(r,o);
 if(o.gal)o.gal.forEach(g=>{const f=el("figure","gf"),im=new Image();im.src=g[0];im.alt=g[1];im.loading="lazy";im.className="rimg";im.onerror=()=>f.remove();f.append(im,el("figcaption","mute",g[1]));r.append(f)});if(o.k==="n0"){const a=el("p");a.append(ext(el("a","","▶ ดูคลิปบรรยากาศการประชุมครั้งแรก"),"https://www.facebook.com/share/v/1F5wFBkipS/"));r.append(a)}
 if(o.extra)o.extra(r);
 {const U=s=>location.origin+location.pathname.replace(/[^\/]*$/,"")+"s/"+encodeURIComponent(o.k)+".html?s="+s,u=U("link"),b=el("div","rbar"),mk=(t,h,c,ev)=>{const x=el("a","btn "+(c||""),t);x.href=h;x.target="_blank";x.rel="noopener";if(ev)x.addEventListener("click",()=>TRK.ev("share-"+ev+"/"+o.k));return x};
@@ -1097,10 +1117,10 @@ const mkLife=e=>{const b=[];
  if(e.who)b.push("**เกี่ยวข้องกับ:** "+e.who);
  const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ควรรู้");tp.forEach(x=>b.push("• "+x))}
  if(!b.length)b.push(e.title);
- const extra=r=>{
+ const extra=(r,compact)=>{
   const ws=evLines(e.words).map(x=>x.split(/\s*=\s*/)).filter(x=>x[0]&&x[1]);
   kwChips(r,e,"คำศัพท์กวยที่เกี่ยวข้อง");
-  if(e.vcat||ws.length){const vp=el("p"),va=el("a","btn alt",e.vcat?"🗣️ ดูหมวด “"+e.vcat+"” ในหน้าคำศัพท์ →":"🗣️ ดูคำศัพท์กวยทั้งหมด →");va.href=e.vcat?"vocab.html#c/"+encodeURIComponent(e.vcat):"vocab.html";va.style.margin="0";vp.append(va);r.append(vp)}
+  if(!compact&&(e.vcat||ws.length)){const vp=el("p"),va=el("a","btn alt",e.vcat?"🗣️ ดูหมวด “"+e.vcat+"” ในหน้าคำศัพท์ →":"🗣️ ดูคำศัพท์กวยทั้งหมด →");va.href=e.vcat?"vocab.html#c/"+encodeURIComponent(e.vcat):"vocab.html";va.style.margin="0";vp.append(va);r.append(vp)}
   const ls=evLinks(e);
   if(ls.length){r.append(el("h2","","คลิป บทความ และลิงก์ของเรื่องนี้"));ls.forEach(z=>{const t=z[0],u=z[1],id=ytId(u);
    if(id){const w=el("div","yt"),bt=el("button","","▶ "+(t||"กดเพื่อดูคลิป"));bt.type="button";
@@ -1108,17 +1128,22 @@ const mkLife=e=>{const b=[];
     w.append(bt,ext(el("a","","เปิดใน YouTube"),"https://www.youtube.com/watch?v="+id));r.append(w)}
    else{const p=el("p"),a=ext(el("a","btn alt",(/facebook\.com|fb\.watch|fb\.com/.test(u)?"📘 ":"🔗 ")+(t||"เปิดลิงก์")),u);a.style.margin="0";a.addEventListener("click",()=>TRK.ev("life-link/"+e.id));p.append(a);r.append(p)}})}
   if(e.elder){const q=el("blockquote","pq");bd(q,e.elder);q.append(el("cite","",e.elderby||"ผู้เฒ่าในชุมชน"));r.append(q)}
-  r.append(el("p","mute","※ เรื่องเล่านี้รวบรวมจากคำบอกเล่าของผู้เฒ่าและคนในชุมชน แต่ละหมู่บ้านอาจต่างกันเล็กน้อย ถ้าอยากเพิ่มเติมหรือแก้ไข ส่งมาทาง LINE "+CFG.lineId)) };
+  if(!compact)r.append(el("p","mute","※ เรื่องเล่านี้รวบรวมจากคำบอกเล่าของผู้เฒ่าและคนในชุมชน แต่ละหมู่บ้านอาจต่างกันเล็กน้อย ถ้าอยากเพิ่มเติมหรือแก้ไข ส่งมาทาง LINE "+CFG.lineId)) };
  return{k:"lf-"+e.id,life:1,src:e,cat:e.cat,title:e.title,date:"",meta:[e.tag,e.kuay].filter(Boolean).join(" • "),body:b,extra:extra}};
 /* ตัวอย่างหน้าอ่านจากหน้า admin (#/preview) — รับร่างเรื่องทาง postMessage จากหน้าเดียวกันเท่านั้น ไม่บันทึก ไม่นับยอดอ่าน */
 window.addEventListener("message",ev=>{if(ev.origin!==location.origin)return;const d=ev.data;if(!d||d.kp!=="preview"||!d.item)return;
  try{TRK.pv=TRK.ev=()=>{};const it=Object.assign({id:"preview",cat:"ดุงเลิง"},d.item,{id:"preview"});openRead(d.ev?mkEvt(it):mkLife(it),false);
   const r=$("rd");if(r){const bn=el("div","msg","👁 นี่คือตัวอย่าง ยังไม่ได้บันทึก (ปิดหน้าต่างนี้แล้วกลับไปกดบันทึกที่หน้า admin)");bn.style.position="sticky";bn.style.top="0";bn.style.zIndex="5";r.prepend(bn)}
   window.scrollTo(0,0);if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin)}catch(x){if(ev.source)ev.source.postMessage({kp:"ack"},ev.origin);alert("ตัวอย่างแสดงไม่ได้: "+x.message)}});
+const OLDSUB={"วอนึงเต":{"ผ้าไหมและการทอ":"ผ้าไหมและการแต่งกาย","ย้อมสีธรรมชาติ":"ผ้าไหมและการแต่งกาย","เครื่องแต่งกายและของใช้":"ผ้าไหมและการแต่งกาย","ผลิตภัณฑ์ชุมชน":"ผ้าไหมและการแต่งกาย","ตีเหล็ก":"จักสานและเครื่องมือ","ดนตรี การแสดง และการละเล่น":"ดนตรีและการละเล่น"},"จาเอม":{"อาหารว่าง":"ของกินเล่นและไปรลอง","ของกินเล่น":"ของกินเล่นและไปรลอง","ไปรลอง":"ของกินเล่นและไปรลอง","วิถีป่าและอาหารพื้นถิ่น":"ป่าและอาหารพื้นถิ่น"},"ดุงเลิง":{"ที่ศักดิ์สิทธิ์และของส่วนรวม":"ที่ศักดิ์สิทธิ์และธรรมชาติ"},"ปะนาย":{"ภาษิต นิทาน และบทกลอน":"ภาษิต นิทาน เพลง","เพลง":"ภาษิต นิทาน เพลง"}};
+const PLACES=/ศาลาประชาคม|โรงเรียน|รพ\.สต|สุขภาพตำบล|หอกระจายข่าว|ประปา|วัดโพธิ์/;
 function lnorm(x){if(!x)return x;let c=x.cat==="ดุงกวย"?"ดุงเลิง":x.cat,sb=x.sub||"";const t=[x.title,x.tag,x.kuay].join(" ");
- if(c==="ดุงเลิง"){if(CRAFT.test(t))c="วอนึงเต";else if(/ชุมชน|หมู่บ้าน/.test(t)&&!/ศาล|เญือะ/.test(t))c="กอนกวย"}
- const P=PM[c];if(P&&c!=="จาเอม"&&!P.subs.some(z=>z[0]===sb))sb="";
- if(!sb&&P){const f=P.subs.find(z=>z[4]&&z[4].test(t));sb=f?f[0]:(c==="ดุงเลิง"?"บ้านและเรือน":c==="กัวออ"?"ละวาย":"")}
+ if(c==="จาเอม"&&/เกลย์|การละเล่น/.test(x.title||""))c="วอนึงเต";
+ if(OLDSUB[c]&&OLDSUB[c][sb])sb=OLDSUB[c][sb];
+ if(c==="ดุงเลิง"&&!sb){if(CRAFT.test(t))c="วอนึงเต";else if(/ชุมชน|หมู่บ้าน/.test(t)&&!/ศาล|เญือะ/.test(t))c="กอนกวย"}
+ const P=PM[c];if(P&&!P.subs.some(z=>z[0]===sb))sb="";
+ if(!sb&&P){const f=P.subs.find(z=>z[4]&&z[4].test(t));sb=f?f[0]:(c==="ดุงเลิง"?"บ้านและเรือน":c==="กัวออ"?"ละวาย":c==="จาเอม"?"วิถีนา":"")}
+ if(c==="ดุงเลิง"&&sb==="ที่ศักดิ์สิทธิ์และธรรมชาติ"&&PLACES.test(x.title||""))sb="สถานที่ส่วนรวม";
  return Object.assign({},x,{cat:c,sub:sb})}
 async function loadLife(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;L=L.map(lnorm);LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
@@ -1150,7 +1175,7 @@ rHome();try{route()}catch(e){try{console.error(e)}catch(_){}}TRK.start();
 {const f=$("foot"),l1=el("div","fl1"),l2=el("div","fl2"),l3=el("div","fl3");
  const k=el("a","adm","🔑");k.href="admin.html";k.rel="nofollow noopener";k.title="สำหรับทีมงาน";k.setAttribute("aria-label","สำหรับทีมงาน");k.style.marginLeft="4px";
  l1.append(el("b","","ที่นี่โพธิ์กระสังข์")," • วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน");
- l2.append("ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ",el("br"),"เรียบเรียงโดย ขวัญชิต โพธิ์กระสังข์ • ผู้บันทึกและสื่อชุมชน");
+ l2.append("ยินดีรับฟังทุกความคิดเห็นเพื่อบ้านเราครับ");
  l3.append(el("b","","ติดตามเรา"));
  [["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);l3.append(a)});
  l3.append(k);
@@ -1242,6 +1267,32 @@ ap();
 .sv2 .t.wide{grid-column:span 2}
 .ksub{display:flex;flex-wrap:wrap;gap:10px}
 .ks{--b:#0e6b73;display:flex;align-items:center;gap:8px;padding:9px 20px 9px 12px;border-radius:99px;border:2px solid color-mix(in srgb,var(--b) 35%,var(--line));background:var(--card);color:var(--ink);font-family:inherit;cursor:pointer;transition:background .15s}
+
+.kt .ke{background:transparent}.kt.on .ke{background:transparent}
+.grid.pg{display:block}
+.sec{border:1px solid var(--line);border-radius:16px;background:var(--card);margin:0 0 12px;overflow:hidden}
+.sec>summary{list-style:none;cursor:pointer;padding:14px 48px 14px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:relative;min-height:48px}
+.sec>summary::-webkit-details-marker{display:none}
+.sec>summary::after{content:"＋";position:absolute;right:16px;top:12px;font-size:22px;line-height:1.4;color:var(--b)}
+.sec[open]>summary::after{content:"－"}
+.sec>summary b{font:700 18px/1.4 Boon,system-ui,sans-serif;color:var(--ink)}
+.sec>summary small{color:var(--mute);font-size:14.5px;line-height:1.55}
+.sec[open]>summary small.sm{display:none}
+.sec .scope{font-size:13px;font-weight:700;padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--b) 12%,var(--card));color:var(--b)}
+.sec .sbody{padding:2px 16px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sec .sbody p,.sec .sbody h2,.sec .sbody h3,.sec .sbody ul{margin:0}
+.sec .sbody h2{font:700 17px Boon,system-ui,sans-serif;color:var(--b);margin-top:6px}
+.sec .sbody ul{padding-left:22px}
+.sec .sbody .pf{margin:4px 0}.sec .sbody .pq{margin:8px 0;font-size:18px}.sec .sbody .hl{margin:4px 0}
+.sec .sbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}.sec .sbar .btn{width:auto;min-height:38px;padding:5px 14px;font-size:15px;margin:0}
+.vstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.vch{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.vch.main{border:2px solid var(--b);background:color-mix(in srgb,var(--b) 8%,var(--card))}
+.vch small{color:var(--mute);font-size:14px}.vch b{font:700 16px/1.35 Boon,system-ui,sans-serif}.vch span{font-weight:700;color:var(--b);font-size:17px}
+.step3{display:flex;flex-wrap:wrap;gap:8px}
+.step3>div{flex:1 1 160px;display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.step3 i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--b);color:#fff;font:700 14px/26px Boon,system-ui,sans-serif;text-align:center;font-style:normal}
+.kcol{margin:2px 0 0;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--b) 6%,var(--card));line-height:1.6}
 .ks .ke{font-size:19px;line-height:1}.ks b{font:700 15.5px/1.2 Boon,system-ui,sans-serif}
 .ks:hover{background:color-mix(in srgb,var(--b) 9%,var(--card))}
 .ks.on{background:var(--b);border-color:var(--b);color:#fff;box-shadow:0 3px 0 color-mix(in srgb,var(--b) 55%,#000)}
