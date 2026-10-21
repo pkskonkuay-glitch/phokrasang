@@ -17,7 +17,8 @@ h1{font:700 1.7em/1.3 Boon,system-ui,sans-serif;margin:2px 0}.hd .sub{margin:2px
 .note{margin-top:12px;background:#fff8ec;border-left:5px solid var(--gold);border-radius:10px;padding:8px 14px;font-size:.82em;line-height:1.6;color:#5a4320}.note b:first-child{display:block;color:#8a4a00}
 main{max-width:960px;margin:0 auto;padding:12px 14px 20px}
 .btn{min-height:44px;padding:4px 14px;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;font-weight:700;font-size:.9em;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-.btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#0a2a14}.btn.o{background:var(--gold);border-color:var(--gold);color:#14332e}.btn.r{border-color:var(--red);color:var(--red)}.btn.sm{min-height:36px;padding:0 12px;font-size:.8em}
+.btn.s{background:var(--navy);color:#fff}.btn.g{background:#06c755;border-color:#06c755;color:#0a2a14}
+.wn .btn.sm.g{font-size:1em;padding:8px 14px;min-height:40px}.btn.o{background:var(--gold);border-color:var(--gold);color:#14332e}.btn.r{border-color:var(--red);color:var(--red)}.btn.sm{min-height:36px;padding:0 12px;font-size:.8em}
 .btn:disabled{opacity:.5}
 /* แถบค้นหา */
 .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
@@ -107,6 +108,7 @@ a{color:#b34700}
 <label for="e-note">อธิบายเพิ่ม (ถ้ามี)</label><input type="text" id="e-note" maxlength="300" autocomplete="off">
 <div class="r2"><div><label for="e-cat">หมวด *</label><input type="text" id="e-cat" list="cl" maxlength="40" autocomplete="off"></div><div><label for="e-emo">อีโมจิ</label><input type="text" id="e-emo" maxlength="8"></div></div><datalist id="cl"></datalist>
 <div id="e-imb"><label for="e-file">ภาพประกอบ (ถ้ามี ไม่ใส่ก็ได้)</label><input type="file" id="e-file" accept="image/*"><div id="pv"></div><button class="btn sm r hide" id="e-rm" type="button">เอาภาพออก</button></div>
+<div id="e-aub"><label for="e-afile">เสียงอ่านคำกวย (ถ้ามี ไม่ใส่ก็ได้)</label><input type="file" id="e-afile" accept="audio/*,.m4a,.mp3,.ogg,.wav"><div class="hint">รับ m4a, mp3, ogg, wav ไม่เกิน 8 MB ควรให้ผู้พูดอ่านช้า ๆ ชัด ๆ คำเดียว และขออนุญาตผู้ให้เสียงก่อนนำขึ้นเว็บ</div><div id="e-apv"></div><button class="btn sm r hide" id="e-arm" type="button">เอาเสียงออก</button></div>
 <label class="opt"><input type="checkbox" id="e-hide"> ซ่อนคำนี้จากหน้าเว็บ</label>
 <div id="e-m" class="mm hide"></div>
 <div class="bt"><button class="btn s" id="e-ok">💾 บันทึก</button><button class="btn" id="e-more">บันทึก + เพิ่มคำต่อ</button><button class="btn r hide" id="e-del">🗑 ลบคำนี้</button><button class="btn" id="e-x">ยกเลิก</button></div></div></div>
@@ -148,7 +150,7 @@ const GROUPS=[
 {n:"จาเอม • อาหารการกิน",e:"🍲",c:"#c9462e",cats:["อาหารและการกิน","พืช ผัก ผลไม้","ข้าวและอาหารพื้นถิ่นเพิ่มเติม","สัตว์น้ำและปลา","สัตว์ป่าและแมลง","ป่าและอาหารป่า","เกษตรและการทำนา","ชีวิตชาวนาและการลงแขก"]},
 {n:"ปะนาย • ภาษาพื้นฐาน",e:"🗣️",c:"#1c4f7d",cats:["ทักทายและมารยาท","ประโยคที่ใช้บ่อย","ความรู้สึกและคำพูดในชีวิตประจำวัน","แจ้งเหตุและขอความช่วยเหลือ","คำถามและคำชี้","การสื่อสารและเสียง","คำกริยาที่ใช้บ่อย","คำบอกลักษณะ","อารมณ์และความรู้สึก","สี","ตัวเลขและการนับ","ปริมาณและหน่วยวัด","เวลาและวัน","ตำแหน่งและบุพบท","ทิศทางและสถานที่","คำเชื่อมและคำช่วย","ร่างกาย","กิจวัตรประจำวัน","โรงเรียนและการเรียนรู้","เงินและการค้า","เทคโนโลยีและของสมัยใหม่"]},
 {n:"ที่มาและแผ่นดิน",e:"🧭",c:"#4f9d8f",cats:["ธรรมชาติ","ฟ้าฝนและฤดู","ดวงดาวและท้องฟ้า","ที่ดินและแหล่งน้ำ","ภัยธรรมชาติและการเตือนภัย","การเดินทางและพาหนะ"]}];
-let FROMSUG=false,E=[],ADM=false,MODE="",TK="",QS="",EDIT=null,VP="",RMI=false,CATN=null;
+let FROMSUG=false,E=[],ADM=false,MODE="",TK="",QS="",EDIT=null,VP="",RMI=false,CATN=null,VA="",RMA=false,AURL="";
 const NM=()=>localStorage.getItem("nm")||"แอดมิน";
 const pub=e=>!!e.kuy&&!e.hide,vis=e=>ADM||pub(e),good=e=>pub(e)&&e.kuy!==e.th;
 const imgSrc=u=>/^https:\/\//.test(u||"")?u:(/^[\w.\-\u0E00-\u0E7F]+$/.test(u||"")?"img/"+u:"");
@@ -158,13 +160,14 @@ function toast(t){const x=$("tt");x.textContent=t;x.style.display="block";clearT
 /* ---------- หน้าจอ ---------- */
 function daily(){const L=E.filter(good);if(!L.length)return null;const e=L[Math.floor(Date.now()/864e5)%L.length],w=el("div","dw");
  w.append(el("small","","🌟 คำประจำวัน"),el("div","k",e.kuy),el("div","t","แปลว่า "+e.th));if(e.note)w.append(el("small","",e.note));
+ const dau=audEl(e.aud);if(dau)w.append(dau);
  const b=el("button","btn","📤 ส่งต่อ");b.onclick=()=>share("คำศัพท์กวย","คำกวย: “"+e.kuy+"” แปลว่า “"+e.th+"”\nดูคำศัพท์กวยอื่น ๆ ได้ที่");w.append(el("div"),b);return w}
 function groupEl(g,L){const f=document.createDocumentFragment(),h=el("div","gh");h.style.setProperty("--gc",g.c);h.append(el("i"),el("div","",g.e+" "+g.n),el("span","","("+L.reduce((a,c)=>a+c.n,0)+" คำ)"));
  const t=el("div","tiles");L.forEach(c=>{const b=el("button","tile");b.style.setProperty("--gc",g.c);b.append(el("div","e",g1(c.emo)||g.e),el("b","",c.cat),el("small","",c.n+" คำ"));b.onclick=()=>{location.hash="c/"+encodeURIComponent(c.cat)};t.append(b)});f.append(h,t);return f}
 function home(){const f=document.createDocumentFragment(),cs=cats(),used=new Set(),n=E.filter(pub).length;
  const d=daily();if(d)f.append(d);
- const ns=E.filter(e=>pub(e)&&e.kuy&&e.src).length;
- f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • "+(ns?"คำที่มีบรรทัด “ที่มา” บอกผู้ให้ข้อมูลไว้แล้ว ("+ns.toLocaleString("th-TH")+" คำ) ถ้าไม่มีแปลว่ายังไม่ได้ระบุ":"ตอนนี้ยังไม่ได้ระบุที่มาของคำ ถ้าท่านเป็นผู้เฒ่าหรือผู้รู้ที่ช่วยบอกคำ แจ้งทาง LINE ได้ ทีมงานจะใส่ชื่อ/หมู่บ้านให้")+" • เลือกหมวดที่สนใจได้เลย"));
+ const ns=E.filter(e=>pub(e)&&e.kuy&&e.src).length,na=E.filter(e=>pub(e)&&e.aud).length;
+ f.append(el("div","stat","รวบรวมแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+cs.length+" หมวด • "+(ns?"คำที่มีบรรทัด “ที่มา” บอกผู้ให้ข้อมูลไว้แล้ว ("+ns.toLocaleString("th-TH")+" คำ) ถ้าไม่มีแปลว่ายังไม่ได้ระบุ":"ตอนนี้ยังไม่ได้ระบุที่มาของคำ ถ้าท่านเป็นผู้เฒ่าหรือผู้รู้ที่ช่วยบอกคำ แจ้งทาง LINE ได้ ทีมงานจะใส่ชื่อ/หมู่บ้านให้")+(na?" • มีเสียงอ่าน "+na.toLocaleString("th-TH")+" คำ กดปุ่ม 🔊 ฟังเสียง ที่คำนั้น":"")+" • เลือกหมวดที่สนใจได้เลย"));
  GROUPS.forEach(g=>{const L=g.cats.map(n=>cs.find(c=>c.cat===n)).filter(Boolean);L.forEach(c=>used.add(c.cat));if(L.length)f.append(groupEl(g,L))});
  const rest=cs.filter(c=>!used.has(c.cat));if(rest.length)f.append(groupEl({n:"หมวดอื่น ๆ",e:"📂",c:"#4a6b65"},rest));
  if(!cs.length)f.append(el("div","msg","ยังไม่มีคำศัพท์"));$("v").replaceChildren(f)}
@@ -283,10 +286,15 @@ async function refetch(){const d=await call({action:"adminVocabList"});if(d&&d.o
 const em=(t,err)=>{const m=$("e-m");m.textContent=t||"";m.className=t?"mm"+(err?" err":""):"mm hide"};
 function shrink(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.82))};im.onerror=()=>no(new Error("เปิดไฟล์รูปนี้ไม่ได้"));im.src=u})}
 function pvShow(src){const p=$("pv");p.replaceChildren();if(src){const i=new Image();i.src=src;i.alt="ภาพประกอบ";i.onerror=()=>i.remove();p.append(i)}$("e-rm").classList.toggle("hide",!src)}
+function apShow(k){const b=$("e-apv"),r=$("e-arm");b.replaceChildren();if(AURL){URL.revokeObjectURL(AURL);AURL=""}
+ if(k==="new"&&VA){AURL=URL.createObjectURL(VA);const a=document.createElement("audio");a.controls=true;a.src=AURL;a.style.cssText="width:100%;margin-top:6px";b.append(a);r.classList.remove("hide")}
+ else if(k==="old"){b.append(el("div","hint","🔊 คำนี้มีเสียงอยู่แล้ว (เลือกไฟล์ใหม่เพื่อแทนที่)"));r.classList.remove("hide")}
+ else r.classList.add("hide")}
+const aB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(new Error("อ่านไฟล์เสียงไม่ได้"));r.readAsDataURL(f)});
 function openEdit(it,cat,pre){FROMSUG=!!pre;EDIT=it||null;VP="";RMI=false;em("");fillCl();
  const c=it?it.cat:(cat||"");const emo=it?it.emo:((cats().find(x=>x.cat===c)||{}).emo||"");
  $("e-h").textContent=it?"แก้ไข: "+it.th:"เพิ่มคำใหม่";$("e-th").value=it?it.th:"";$("e-kuy").value=it?it.kuy:"";$("e-note").value=it?it.note:"";$("e-cat").value=c;$("e-emo").value=emo||"";
- $("e-file").value="";$("e-hide").checked=!!(it&&it.hide);pvShow(it?imgSrc(it.img):"");
+ $("e-file").value="";$("e-hide").checked=!!(it&&it.hide);pvShow(it?imgSrc(it.img):"");VA="";RMA=false;$("e-afile").value="";apShow(it&&it.aud?"old":"");
  $("e-del").classList.toggle("hide",!it);$("e-more").classList.toggle("hide",!!it||FROMSUG);
  if(pre){$("e-th").value=pre.th;if(!$("e-emo").value)$("e-emo").value=pre.emo||""}
  $("ed").classList.remove("hide");(pre?$("e-kuy"):$("e-th")).focus()}
@@ -296,13 +304,18 @@ $("e-x").onclick=closeEd;
 $("e-cat").addEventListener("change",()=>{const f=cats().find(x=>x.cat===$("e-cat").value.trim());if(f&&!$("e-emo").value)$("e-emo").value=f.emo||""});
 $("e-file").onchange=async e=>{const f=e.target.files[0];VP="";if(!f){pvShow(EDIT&&!RMI?imgSrc(EDIT.img):"");return}try{VP=await shrink(f);RMI=false;pvShow(VP)}catch(x){em("⚠️ "+x.message,1);$("e-file").value=""}};
 $("e-rm").onclick=()=>{VP="";RMI=true;$("e-file").value="";pvShow("")};
+$("e-afile").onchange=e=>{const f=e.target.files[0];VA="";if(!f){apShow(EDIT&&!RMA&&EDIT.aud?"old":"");return}
+ if(f.size>8*1024*1024){em("⚠️ ไฟล์เสียงใหญ่เกิน 8 MB ตัดให้สั้นลงหรือแปลงเป็น mp3",1);$("e-afile").value="";apShow(EDIT&&!RMA&&EDIT.aud?"old":"");return}
+ VA=f;RMA=false;apShow("new");em("")};
+$("e-arm").onclick=()=>{VA="";RMA=true;$("e-afile").value="";apShow("")};
 async function save(more){const b1=$("e-ok"),b2=$("e-more");
  const th=$("e-th").value.trim(),cat=$("e-cat").value.trim();if(!th){em("กรุณาใส่ความหมายไทย",1);$("e-th").focus();return}if(!cat){em("กรุณาใส่หมวด",1);$("e-cat").focus();return}
  const item=Object.assign({},EDIT||{},{id:EDIT?EDIT.id:undefined,cat:cat,emo:$("e-emo").value.trim(),th:th,kuy:$("e-kuy").value.trim(),note:$("e-note").value.trim(),hide:$("e-hide").checked});
- if(RMI)item.img="";
+ if(RMI)item.img="";if(RMA&&!VA)item.aud="";
  
- b1.disabled=b2.disabled=true;em(VP?"กำลังอัปโหลดภาพและบันทึก…":"กำลังบันทึก…");
- try{const send=()=>op({action:"adminVocabSave",item:item,photo:VP||undefined});let u=await send();
+ b1.disabled=b2.disabled=true;em(VP||VA?"กำลังอัปโหลดไฟล์และบันทึก…":"กำลังบันทึก…");
+ let AD="";if(VA){try{AD=await aB64(VA)}catch(x){em("⚠️ "+x.message,1);b1.disabled=b2.disabled=false;return}}
+ try{const send=()=>op({action:"adminVocabSave",item:item,photo:VP||undefined,audio:AD?{data:AD}:undefined});let u=await send();
   if(u&&!u.ok&&u.dup&&confirm(u.error+"\nถ้าตั้งใจเพิ่มซ้ำ กด ตกลง")){item.force=true;u=await send()}
   if(!u||!u.ok)throw new Error((u&&u.error)||"บันทึกไม่ได้");
   await merge(u);
