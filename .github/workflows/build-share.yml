@@ -2,7 +2,7 @@ name: build-share
 on:
   push:
     branches: [main]
-    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "build-share.js", "legacy-content.json", "data/legacy-keys.json"]
+    paths: ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "kuy-vocab.csv", "build-share.js", "legacy-content.json", "data/legacy-keys.json"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
