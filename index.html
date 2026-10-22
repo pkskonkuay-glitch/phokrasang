@@ -215,6 +215,7 @@ header{z-index:20}.mb svg{display:block}
 .emg{background:#fde2e2;color:#7a1c1c;border:1px solid #f1b4b4;border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.6}.pvn{font-size:14px;color:var(--mute);margin:4px 0 10px}.pvn a{color:var(--link)}
 </style>
 <style id="v2">
+#latest .fbc{display:none}#latest .fbc.fbo{display:flex}#fopen{cursor:pointer;font-family:inherit;font-size:16px;padding:6px 16px}
 .sv2{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .sv2 .t{border:0;border-radius:12px;padding:14px;text-align:left;color:#fff;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;min-height:96px;line-height:1.35}
 .sv2 .t b{font:800 18px/1.3 Boon,system-ui,sans-serif}.sv2 .t span{font-size:14px;opacity:.92}
@@ -317,10 +318,10 @@ main{overflow-x:clip}
 <main>
 <div id="v-home">
 <div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
-<div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2></div><div class="fb"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
+<div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2><button type="button" class="chip" id="fopen" aria-expanded="false" aria-controls="fbar">🔍 ค้นหา / กรอง</button></div><div class="fb fbc" id="fbar"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
 <div class="wrap">
 <section id="yr"><div class="sh"><h2>วิถีกวย</h2></div>
-<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน จัดเป็น 6 เสา เลือกเสาแล้วเลือกหัวข้อเพื่อดูเรื่องราวและคำกวยที่เกี่ยวข้อง</p>
+<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน จัดเป็น 6 เสา เลือกเสาแล้วเลือกหัวข้อเพื่อดูเรื่องราวและคำกวยที่เกี่ยวข้อง ส่วนเรื่องที่มาและแผ่นดินอยู่ในหัวข้อ “เรื่องอื่นที่เกี่ยวข้อง” ด้านล่าง</p>
 <div class="ktabs" id="cchips" role="tablist" aria-label="หมวดวิถีกวย"></div>
 <div class="kpanel" id="kpanel" role="tabpanel">
 <p class="lead" id="cintro"></p>
@@ -337,8 +338,7 @@ main{overflow-x:clip}
 <section id="layers"><div class="sh"><h2>เรื่องอื่นที่เกี่ยวข้อง</h2></div>
 <div class="lay">
 <div class="lc"><b>🧭 ที่มาและแผ่นดิน</b><small>ประวัติ ชายแดน แผนที่ ฟ้าฝนฤดูกาล</small><div class="lb"><button type="button" onclick="go('home','hub')">ชายแดน โพธิ์กระสังข์</button></div></div>
-<div class="lc"><b>🎞️ คลังผลงานและของดี</b><small>สารคดี เพลง งานเขียน ของดีบ้านเรา</small><div class="lb"><button type="button" onclick="go('home','clips')">คลิป</button><button type="button" onclick="go('home','mags')">ทางอีศาน</button><button type="button" onclick="go('home','products')">ของดีบ้านเรา</button><button type="button" onclick="go('home','about')">ผู้เขียน</button></div></div>
-<div class="lc"><b>📰 ชุมชนวันนี้</b><small>ข่าวสาร สิทธิ์ที่ควรรู้ แจ้งเรื่อง</small><div class="lb"><button type="button" onclick="go('home','latest')">ข่าว</button><button type="button" onclick="go('home','rights')">สิทธิ์ที่ควรรู้</button><button type="button" onclick="go('board')">แจ้งเรื่อง</button></div></div>
+<div class="lc"><b>🎞️ ผลงานและผู้เขียน</b><small>สารคดี เพลง งานเขียน และเรื่องของเว็บนี้</small><div class="lb"><button type="button" onclick="go('home','clips')">คลิป</button><button type="button" onclick="go('home','mags')">ทางอีศาน</button><button type="button" onclick="go('home','about')">เกี่ยวกับเว็บและผู้เขียน</button></div></div>
 </div></section>
 
 <section class="sw hide" id="products"><div class="sh"><h2>ของดีบ้านเรา</h2><span class="mute">ฝีมือคนบ้านโพธิ์กระสังข์</span></div><p class="mute">ผ้าไหมที่ทอด้วยลายของบ้านเรา และเครื่องจักสานไม้ไผ่ฝีมือผู้เฒ่า หน้านี้บอกว่ามีอะไร ใครทำ ราคาประมาณเท่าไหร่ ไม่ได้ขายสินค้า ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้</p><div class="chips" id="pchips"></div><div class="grid" id="pgrid"></div></section>
@@ -347,10 +347,7 @@ main{overflow-x:clip}
 <div class="fg" id="rgrid"></div>
 <p class="mute">สรุปจากประกาศของหน่วยงาน ควรตรวจสอบกับหน่วยงานต้นทางหรือผู้ใหญ่บ้านอีกครั้งก่อนดำเนินการ</p>
 <p><a class="btn line" id="rLn" style="margin:0">ไม่แน่ใจสิทธิ์ของตัวเอง ถามทีมงานทาง LINE</a></p></section>
-<section class="sw hide" id="news"><div class="sh"><h2>ข่าวสาร</h2></div>
-<div class="chips" id="nchips"></div><div class="grid" id="ngrid"></div></section>
 <section class="sw hide" id="clips"><div class="sh"><h2>คลิป</h2><span class="mute">สารคดี ข่าว และเพลง</span></div><div class="chips" id="vchips"></div><div class="grid" id="cgrid"></div><div id="vmore"></div></section>
-<section class="sw hide" id="arts"><div class="sh"><h2>วิถีบ้านเรา</h2></div><div id="agrid"></div></section>
 <section class="sw hide" id="mags"><div class="sh"><h2>ผลงานเขียนในนิตยสารทางอีศาน</h2><span class="mute">คอลัมน์ กะนากวย (The Way of Kuay)</span></div>
 <p class="mute">ผลงานเขียนและภาพถ่ายโดยขวัญชิต โพธิ์กระสังข์ ตั้งแต่ ก.ย. 2568 เท่าที่รวบรวมได้ในขณะนี้ (ยังไม่รวมฉบับที่ 165 และ 170) บทสรุปด้านล่างเรียบเรียงใหม่โดยย่อ อ่านฉบับเต็มได้ในนิตยสาร</p>
 <div class="chips" id="mchips"></div><div id="mlist"></div>
@@ -358,14 +355,13 @@ main{overflow-x:clip}
 <section class="sw hide" id="hub"><div class="panel hub"><div><h2>ชายแดน โพธิ์กระสังข์</h2>
 <p>เรื่องราวของโพธิ์กระสังข์ในเว็บไซต์ <b>Borderland Narratives</b> พื้นที่รวมเรื่องราวจากชายแดนไทย–กัมพูชา สแกน QR Code หรือกดปุ่มเพื่อไปอ่านต่อ</p>
 <a class="btn solid" id="hubA">เปิดหน้าโพธิ์กระสังข์</a></div><img class="qr" id="hubQ" alt="QR Code ชายแดน โพธิ์กระสังข์"></div></section>
-<section class="sw hide" id="about"><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โซดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และฉบับ ก.ย. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></section>
+<section class="sw hide" id="about"><div class="panel"><h2>เกี่ยวกับเว็บนี้</h2><p><b>ที่นี่โพธิ์กระสังข์</b> เป็นพื้นที่กลางของคนบ้านโพธิ์กระสังข์ ต.โพธิ์กระสังข์ อ.ขุนหาญ จ.ศรีสะเกษ รวบรวมข่าว คลิป เรื่องเล่าวิถีกวย และคำศัพท์กวย พร้อมช่องทางแจ้งเหตุ ปักหมุด และติดตามเรื่องที่แจ้งเข้ามา</p><ul class="steps"><li><b>ใครดูแล:</b> ทีมงานเพจและ LINE “ที่นี่โพธิ์กระสังข์” ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น</li><li><b>เรื่องที่แจ้งเข้ามา:</b> แสดงบนเว็บเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว</li><li><b>ข้อมูลที่ส่งเข้ามา:</b> อ่านว่าเก็บอะไร ใช้ทำอะไร ได้ที่ <a href="privacy.html" target="_blank" rel="noopener">พื้นที่ของเรา</a></li><li><b>พบข้อมูลคลาดเคลื่อน:</b> บอกทีมงานทาง LINE ได้เลย ทีมงานจะช่วยตรวจและแก้ไข</li></ul><p><a class="btn line" id="abLine">💬 คุยกับทีมงานทาง LINE</a></p></div><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โซดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และล่าสุดฉบับ ต.ค. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></section>
 <section id="services"><div class="sh"><h2>เมนูเดียวกับใน LINE</h2><span class="mute">กดปุ่มใหญ่ได้เลย</span></div>
 <div class="sv2">
 <button class="t big a" onclick="go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 4.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z"/></svg></i><b>แจ้งเหตุ • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย</span></button>
 <button class="t r" onclick="history.replaceState(null,'',location.pathname+'?c=urgent');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.5 1.5 21h21L12 2.5zM10.9 9h2.2v6h-2.2V9zm0 7.6h2.2v2.2h-2.2v-2.2z"/></svg></i><b>เหตุด่วน</b><span>เตือนภัย อุบัติเหตุ</span></button>
 <button class="t n" onclick="go('board')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7" stroke-width="2.4"/><path d="M6.8 10l2.4 2.4 4.2-4.4" stroke-width="2.4"/><path d="M15.5 15.5 21.5 21.5" stroke-width="3"/></svg></i><b>ติดตามเรื่อง</b><span>ดูความคืบหน้า</span></button>
-<button class="t g" onclick="history.replaceState(null,'',location.pathname+'?c=news');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5v5h3.5L14 19V5L6.5 9.5H3zm13.6 2.5a4.6 4.6 0 0 0-2-3.8v7.6a4.6 4.6 0 0 0 2-3.8z"/></svg></i><b>ส่งข่าว</b><span>ฝากข่าวดีบ้านเรา</span></button>
-<button class="t n" onclick="go('home','latest')"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h5v4H7zM15 9h2M15 12h2M7 16.5h10"/></svg></i><b>ข่าว • คลิป</b><span>ล่าสุดจากชุมชน</span></button>
+<button class="t g wide" onclick="history.replaceState(null,'',location.pathname+'?c=news');go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5v5h3.5L14 19V5L6.5 9.5H3zm13.6 2.5a4.6 4.6 0 0 0-2-3.8v7.6a4.6 4.6 0 0 0 2-3.8z"/></svg></i><b>ส่งข่าว</b><span>ฝากข่าวดีบ้านเรา</span></button>
 <a class="t a wide" id="lnT"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><g style="fill:var(--bgc)"><circle cx="7.5" cy="10.5" r="1.4"/><circle cx="12" cy="10.5" r="1.4"/><circle cx="16.5" cy="10.5" r="1.4"/></g></svg></i><b>คุยกับทีมงาน</b><span>ถามได้ทุกเรื่อง</span></a>
 </div>
 <a class="rt" href="#/rights" onclick="go('home','rights');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.5 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M14.5 9.5h4M14.5 13h4"/></svg></i><span><b>สิทธิ์ที่ควรรู้</b><small>บัตรสวัสดิการ ไฟฟ้าการเกษตร ตรวจข้อมูลนาปี และเรื่องที่ไม่ควรพลาด</small></span></a>
@@ -479,6 +475,7 @@ const K={
 CFG.hubUrl="https://sites.google.com/view/borderlands-narrative1/Home/Phokrasang";CFG.hubQr="img/emb-9d79cf49.png";
 /* ===== ผลงานในทางอีศาน: [ฉบับ,เดือนปี,ชื่อบทความ,หน้า,หมวด,สรุปสั้น,ลิงก์ฉบับเต็ม(ใส่เมื่อมี)] ===== */
 const MG=[
+[174,"ต.ค. 2569","โคลนตม ความเชื่อ และเส้นฝ้าย: วิถีชีวิตและขวัญกำลังใจคนชายแดน","56–63","วัฒนธรรมและความเชื่อ","ลงแขกดำนาให้เด็ก ๆ ที่บ้านตาจวนโดยกลุ่มสำนึกรักบ้านเกิด สังฆทานสลากภัตของ ๔ ชุมชนวัดโพธิ์กระสังข์ และพิธีเลื๊อะอ์ดุง กะเยือละวาย ที่ย้ายศาลพระภูมิและเรียกขวัญคืนตัว","" ],
 [173,"ก.ย. 2569","เสียงกระซิบจากขวัญ และผืนดินเกษตรกรรมชายแดน","68–75","วัฒนธรรมและความเชื่อ","พิธีกะเยือละวาย ช้อนขวัญผู้ประสบอุบัติเหตุ ต่อด้วยทุเรียนภูเขาไฟ GI ของสวนสมานมีประโยชน์ และรถดำนาที่ไร่อิงกัน",""],
 [172,"ส.ค. 2569","ถักทอสายใยชายแดน บนผืนแผ่นดินขุนหาญ","62–69","เกษตรและชุมชน","เกษตรกรชายแดนปรับตัวรับความแล้ง ตลาดนัดโพธิ์กระสังข์ และค่ายบ่มเพาะนักสื่อสารรุ่นเยาว์",""],
 [171,"ก.ค. 2569","ลมหายใจแห่งศรัทธาและรากเหง้า: จากรอยยิ้มคนชายแดน สู่พิธีกรรมศักดิ์สิทธิ์แห่งโพธิ์กระสังข์","83–92","วัฒนธรรมและความเชื่อ","เครือข่ายคนรุ่นใหม่รวมพลที่สวนองุ่น ก่อนถึงพิธีบุญโซดโธระ ที่ชาวกวยทำแพหมุ๊หลี๊อ์ส่งบุญให้ดวงวิญญาณร่อนเร่",""],
@@ -671,7 +668,7 @@ const cp=el("button","btn","คัดลอกลิงก์");cp.onclick=()=>{
 const b2=el("div","rbar");b2.append((o.evt||o.life?(()=>{const a=ext(el("a","btn line",o.life?"📷 มีภาพเก่าหรือเรื่องเล่าเรื่องนี้ ส่งมาทาง LINE":"📷 มีภาพเก่าหรือเรื่องของงานนี้ ส่งมาทาง LINE"),lineMsg((o.life?"ส่งภาพหรือเรื่องเล่า: ":"ส่งภาพหรือเรื่องของงาน: ")+o.title));a.addEventListener("click",()=>TRK.ev("evt-send/"+o.k));return a})():o.prod?(()=>{const a=ext(el("a","btn line","💬 สอบถามข้อมูลทาง LINE"),lineMsg("สอบถามผลิตภัณฑ์: "+o.title));a.addEventListener("click",()=>TRK.ev("ask/"+o.k));return a})():ext(el("a","btn","💬 ส่งความคิดเห็นเรื่องนี้ทาง LINE"),lineMsg("ความคิดเห็นเรื่อง: "+o.title))),ext(el("a","btn","เพิ่มเพื่อน LINE"),CFG.lineUrl),ext(el("a","btn","ติดตามเพจ Facebook"),F));r.append(b2)}
 go("read");TRK.pv("/read/"+o.k,o.title);if(push!==false)history.pushState({kp:1},"","#/read/"+o.k)}
 function readFrom(h){const k=(h||"").replace("#/read/","");const o=[...news,...arts,...PRODUCTS,...EVTS,...LIFEOBJ].find(x=>x.k===k)||legacyFind(k);if(o)openRead(o,false)}
-const ROUTES={"#/submit":["submit"],"#/board":["board"],"#/news":["home","latest"],"#/rights":["home","rights"],"#/newsonly":["home","news"],"#/culture":["home","culture"],"#/clips":["home","clips"],"#/mags":["home","mags"],"#/products":["home","products"],"#/vocab":["home","yr"],"#/heeet":["home","yr"]};
+const ROUTES={"#/submit":["submit"],"#/board":["board"],"#/news":["home","latest"],"#/rights":["home","rights"],"#/culture":["home","culture"],"#/clips":["home","clips"],"#/mags":["home","mags"],"#/products":["home","products"],"#/vocab":["home","yr"],"#/heeet":["home","yr"]};
 function goBack(){if(history.state&&history.state.kp)history.back();else{history.replaceState(null,"",location.pathname);go("home")}}
 function route(){const h=location.hash;if(h.startsWith("#/read/"))return readFrom(h);if(h==="#/vocab"){cf="คำศัพท์";rCul()}else if(h==="#/heeet"){cf="เซ (ฮีตคอง)";rCul()}const m=ROUTES[h.split("?")[0]];if(m)go(m[0],m[1])}
 window.addEventListener("popstate",()=>{const h=location.hash;if(h.startsWith("#/read/"))readFrom(h);else if(ROUTES[h.split("?")[0]])route();else go("home")});
@@ -730,7 +727,7 @@ function heroInit(){if(!HERO.length){$("hn").replaceChildren();return}$("hn").re
 const rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;htm=rm?0:1;rHero(0);if(!rm){const hs=document.querySelector(".hs");hs.onmouseenter=()=>{clearTimeout(htm);$("hp").classList.remove("run")};hs.onmouseleave=()=>{htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000);$("hp").classList.add("run")}}}
 const _go=go;go=function(v,s){if(v==="home")document.querySelectorAll(".sw").forEach(x=>x.classList.toggle("hide",x.id!==s));_go(v,s)};
 let nf="ทั้งหมด";
-function rNews(){const cats=["ทั้งหมด",...new Set(news.map(n=>n.cat))];
+function rNews(){if(!$("nchips"))return;const cats=["ทั้งหมด",...new Set(news.map(n=>n.cat))];
 $("nchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===nf?" on":""),k);b.onclick=()=>{nf=k;rNews()};return b}));
 $("ngrid").replaceChildren(...news.filter(n=>nf==="ทั้งหมด"||n.cat===nf).map(n=>card(n)))}
 const stc=s=>({"แก้ไขแล้ว":"done","เสร็จสิ้น":"done","ส่งต่อหน่วยงาน":"fwd","ส่งต่อ":"fwd","รอรับเรื่อง":"wait","ดำเนินการ":"prog","ไม่เกี่ยวข้อง":"na"})[s]||"";
@@ -739,8 +736,7 @@ box.replaceChildren(...list.map(x=>{const r=el("button","row"),d=el("div");
 d.append(el("div","t",x.title),el("div","mute",[x.no,x.type,x.topic,x.place,x.at].filter(Boolean).join(" • ")));
 r.append(d,el("span","st "+stc(x.status),x.status));r.onclick=()=>openT(x);return r}))}
 function rHome(){rNews();rCul();rMags();rClips();rFeed();if(!window.__h){window.__h=1;heroInit()}
-$("agrid").replaceChildren(...arts.map(a=>{const d=el(a.link?"a":"div","art"),b=el("div");if(a.body){d.href="#/read/"+a.k;d.onclick=e=>{e.preventDefault();openRead(a)};d.style.color="inherit";d.style.textDecoration="none"}else if(a.link){ext(d,a.link);d.style.color="inherit";d.style.textDecoration="none"}
-b.append(el("span","tag",a.cat),el("h3","",a.title),el("div","mute",a.sum));d.append(b);return d}));rows(th.slice(0,3),$("hlist"))}
+rows(th.slice(0,3),$("hlist"))}
 let bf="ทั้งหมด";
 function rBoard(){const cats=["ทั้งหมด","แจ้งปัญหา","เสนอแนะ","ข่าว"];
 $("bchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===bf?" on":""),k);b.onclick=()=>{bf=k;rBoard()};return b}));
@@ -1179,9 +1175,10 @@ rHome();try{route()}catch(e){try{console.error(e)}catch(_){}}TRK.start();
  l3.append(el("b","","ติดตามเรา"));
  [["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);l3.append(a)});
  l3.append(k);
- f.replaceChildren(l1,l2,lc,l3)}
+ const lp=el("div","fl2"),pa=el("a","","พื้นที่ของเรา (ความเป็นส่วนตัว)"),ab=el("a","","เกี่ยวกับเว็บนี้");pa.href="privacy.html";pa.target="_blank";pa.rel="noopener";ab.href="#/about";ab.onclick=function(e){e.preventDefault();go("home","about")};lp.append(ab," • ",pa);
+ f.replaceChildren(l1,l2,lp,lc,l3)}
 </script>
-<script>document.getElementById("lnT").href=lineMsg("คุยกับทีมงาน");document.getElementById("lnT").target="_blank";document.getElementById("lnT").rel="noopener"</script>
+<script>document.getElementById("lnT").href=lineMsg("คุยกับทีมงาน");document.getElementById("lnT").target="_blank";document.getElementById("lnT").rel="noopener";var _al=document.getElementById("abLine");_al.href=lineMsg("คุยกับทีมงาน");_al.target="_blank";_al.rel="noopener";var _fo=document.getElementById("fopen"),_fb=document.getElementById("fbar");_fo.onclick=function(){var o=_fb.classList.toggle("fbo");_fo.setAttribute("aria-expanded",o?"true":"false");_fo.textContent=o?"✕ ปิดการค้นหา":"🔍 ค้นหา / กรอง";if(o){var q=document.getElementById("fq");if(q)q.focus()}}</script>
 
 <script>function okSrc(u){return /^(https:\/\/|img\/)/.test(u)}
 function bd(e,t){String(t).split(/\*\*(.+?)\*\*/).forEach(function(x,i){if(!x)return;if(i%2){var b=document.createElement("b");b.textContent=x;e.append(b);return}
