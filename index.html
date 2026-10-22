@@ -382,6 +382,7 @@ main{overflow-x:clip}
 <a class="rt" href="#/products" style="background:#7a3f1d" onclick="go('home','products');return false"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 10h18l-2 10H5L3 10z"/><path d="M7 10l2.2-5M17 10l-2.2-5M9 14v3M12 14v3M15 14v3"/></svg></i><span><b>ของดีบ้านเรา</b><small>ผ้าไหมลายลูกแก้ว จักสานไม้ไผ่ ฝีมือคนบ้านเรา</small></span></a>
 <a class="rt" href="vocab.html" style="background:#2f7d5b"><i><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12.5h5"/></svg></i><span><b>คำศัพท์กวย</b><small>เรียนคำภาษากวยของบ้านเรา ช่วยกันเติมคำได้</small></span></a>
 </section>
+ <section id="recent"><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
 <section id="works"><div class="sh"><h2>ผลงานและผู้เขียน</h2><span class="mute">กดเลือกหมวด เนื้อหาแสดงในหน้านี้เลย</span></div>
 <div class="wtabs" role="tablist" aria-label="ผลงานและผู้เขียน">
 <button type="button" role="tab" id="wt-clips" data-w="clips" aria-selected="true" aria-controls="clips"><i aria-hidden="true">🎬</i><b>คลิป</b><small>สารคดี ข่าว เพลง</small></button>
@@ -393,7 +394,7 @@ main{overflow-x:clip}
 <div class="wp hide" id="mags" role="tabpanel" aria-labelledby="wt-mags"><h3 class="wh">ผลงานเขียนในนิตยสารทางอีศาน <span class="mute">คอลัมน์ กะนากวย (The Way of Kuay)</span></h3><p class="mute">ผลงานเขียนและภาพถ่ายโดยขวัญชิต โพธิ์กระสังข์ ตั้งแต่ ก.ย. 2568 เท่าที่รวบรวมได้ในขณะนี้ (ยังไม่รวมฉบับที่ 165 และ 170) บทสรุปด้านล่างเรียบเรียงใหม่โดยย่อ อ่านฉบับเต็มได้ในนิตยสาร</p><div class="chips" id="mchips"></div><div id="mlist"></div><p style="margin-top:14px"><a class="wbtn" href="https://www.e-shann.com" target="_blank" rel="noopener"><i aria-hidden="true">📖</i>เว็บไซต์ทางอีศาน e-shann.com</a></p></div>
 <div class="wp hide" id="hub" role="tabpanel" aria-labelledby="wt-hub"><div class="panel"><p>ผลงานของ <b>ขวัญชิต โพธิ์กระสังข์</b> ในฐานะผู้ผลิตสารคดี รายการทีวี และเพลง ที่เล่าเรื่องของพื้นที่บ้านเรา ชายแดน และอีสานชายแดน รวมไว้เป็นเพลย์ลิสต์ กดแล้วเปิดดูบน YouTube ได้เลย</p><h4 class="pg pg-d"><i aria-hidden="true">🎞️</i>สารคดี</h4><div class="pls"><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-a5QYJwWtMC65smqJprzzkN" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>สารคดี ที่นี่บ้านเรา</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-ZI2CQLFFXBYn78t7y0rE7T" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>สารคดี อยู่ดีมีแฮง</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>สารคดี คนชายแดน</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div><h4 class="pg pg-n"><i aria-hidden="true">📰</i>ข่าว</h4><div class="pls"><a class="pl pl-n" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-Y5LLzuESf_23teeHSwsHKH" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>ข่าว นักข่าวพลเมือง</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-n" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-ad-1So3bnfQhiY9g_pOk9t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>ข่าว คุณเล่าเราขยาย</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div><h4 class="pg pg-m"><i aria-hidden="true">🎵</i>เพลง</h4><div class="pls"><a class="pl pl-m" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-aMkhIrvPCPWFIGvioFzj_t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>เพลง คนชายแดน</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-m" href="https://www.youtube.com/watch?v=ra0w1brCLJ0&list=PLcx0VcPxAS-aMkhIrvPCPWFIGvioFzj_t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="ptx"><b>เพลงประกอบสารคดี ที่นี่โพธิ์กระสังข์ ที่นี่บ้านเรา</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div></div></div>
 <div class="wp hide" id="about" role="tabpanel" aria-labelledby="wt-about"><div class="panel"><h2>เกี่ยวกับเว็บนี้</h2><p><b>ที่นี่โพธิ์กระสังข์</b> เป็นพื้นที่กลางของคนบ้านโพธิ์กระสังข์ ต.โพธิ์กระสังข์ อ.ขุนหาญ จ.ศรีสะเกษ รวบรวมข่าว คลิป เรื่องเล่าวิถีกวย และคำศัพท์กวย พร้อมช่องทางแจ้งเหตุ ปักหมุด และติดตามเรื่องที่แจ้งเข้ามา</p><ul class="steps"><li><b>ใครดูแล:</b> ทีมงานเพจและ LINE “ที่นี่โพธิ์กระสังข์” ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น</li><li><b>เรื่องที่แจ้งเข้ามา:</b> แสดงบนเว็บเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว</li><li><b>ข้อมูลที่ส่งเข้ามา:</b> อ่านว่าเก็บอะไร ใช้ทำอะไร ได้ที่ <a href="privacy.html" target="_blank" rel="noopener">พื้นที่ของเรา</a></li><li><b>พบข้อมูลคลาดเคลื่อน:</b> บอกทีมงานทาง LINE ได้เลย ทีมงานจะช่วยตรวจและแก้ไข</li></ul><p><a class="btn line" id="abLine">💬 คุยกับทีมงานทาง LINE</a></p></div><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โซดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และล่าสุดฉบับ ต.ค. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></div>
-</section> <section id="recent"><div class="sh"><h2>เรื่องที่ติดตามล่าสุด</h2><button class="back" style="padding:0" onclick="go('board')">ดูทั้งหมด</button></div><div class="list" id="hlist"></div></section>
+</section>
 </div></div>
 
 <div id="v-board" class="wrap hide"><section>
@@ -537,8 +538,7 @@ const PIL=[
  subs:[["ประวัติและที่มา","📜","ประวัติและที่มา","ที่มาของชื่อ ชื่อเก่าของชุมชน (ลพังคีลย์) การตั้งและย้ายหมู่บ้าน และเรื่องที่เกิดขึ้นตามลำดับเวลา",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
   ["หมู่บ้านและผู้คน","🏘️","หมู่บ้านและผู้คน","4 หมู่บ้านที่ใช้วัดเดียวกัน ชาวกวย ชาวจีน ลูกเขย สะใภ้ อยู่ร่วมกันอย่างไร",null,["ครอบครัว","ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
   ["ตระกูลและเครือญาติ","🌳","ตระกูล","ตระกูลหลักของแต่ละหมู่บ้าน สกุลโพธิ์กระสังข์ คำเรียกญาติ และการสืบสายตระกูล",null,["ครอบครัว"]],
-  ["ผู้รู้ ผู้นำ และผู้มีคุณูปการ","🧓","ผู้รู้ ผู้นำ","พระสงฆ์ ผู้นำพิธี ผู้เฒ่า ปราชญ์ ครู และผู้ทำคุณประโยชน์ให้ชุมชน คนละ 1 เรื่อง",null,["คนและสรรพนาม","อาชีพและงานชุมชน","วัดและพุทธศาสนา"]],
-  ["คนรุ่นใหม่และผู้บันทึก","🌱","คนรุ่นใหม่ ผู้บันทึก","ลูกหลานที่ไปทำงานต่างถิ่น เยาวชนที่สืบสานวัฒนธรรม และคนที่ช่วยกันบันทึกเรื่องราวชุมชน",null,[]]]},
+  ["ผู้รู้ ผู้นำ และผู้มีคุณูปการ","🧓","ผู้รู้ ผู้นำ","พระสงฆ์ ผู้นำพิธี ผู้เฒ่า ปราชญ์ ครู และผู้ทำคุณประโยชน์ให้ชุมชน คนละ 1 เรื่อง",null,["คนและสรรพนาม","อาชีพและงานชุมชน","วัดและพุทธศาสนา"]]]},
 {k:"ดุงเลิง",ic:"🏡",col:"#9a5b12",mean:"บ้านเรือน อาคาร สถานที่",intro:"ดุงเลิง คือบ้านเรือนและที่อยู่อาศัยของชาวกวย ไม่ได้หมายถึงแค่ตัวบ้าน แต่รวมทุกอย่างที่เป็นอาคาร บ้านเรือน ศาลา และที่พัก",
  voc:["บ้านและเรือน","สถานที่ในชุมชน","สัตว์เลี้ยง","ครัวและภาชนะ"],
  subs:[["บ้านและเรือน","🏡","บ้านและเรือน","ลักษณะบ้านกวย การวางผัง ห้องและหน้าที่ วัสดุ และข้อห้ามเรื่องบ้าน",/(^|\s)ดุง(\s|$)|บ้านเรือน|ห้อง/,["บ้านและเรือน","ครัวและภาชนะ"]],
@@ -606,9 +606,9 @@ function rCul(){
   visSubs(P).forEach(t=>{const on=t[0]===S,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",P.col);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(on)return;sf=t[0];rCul();TRK.ev("ceh/"+P.k+"/"+t[0])};ks.append(b)});ss.textContent=sb[3]}
  const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx0=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
  const cx=(isH||cx0==="ละวาย"||cx0==="จาเอม")?cx0:((LIFEOBJ.length&&S!=="ผลิตภัณฑ์ชุมชน"&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์"))?"ชีต":cx0);
- {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg)lg.hidden=!isH}
+ {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg){lg.hidden=!isH;if(window.__ylg0)lg.textContent=window.__ylg0}}
  /* v19: เสาดุงเลิง = ทุกหัวข้อย่อยจัดเป็นกรอบการ์ดเลื่อนดู (หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี) ไม่ต้องกดแท็บหัวข้อย่อย */
- if(P.k==="ดุงเลิง"&&LIFEOBJ.some(o=>o.src.cat==="ดุงเลิง")){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;rDung(P);relVocab(P,[],kv);return}
+ if(P.k==="ดุงเลิง"&&LIFEOBJ.some(o=>o.src.cat==="ดุงเลิง")){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
  {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
@@ -640,30 +640,18 @@ if(!out.length&&S!=="ผลิตภัณฑ์ชุมชน")out.push(waitCa
 $("cgr").replaceChildren(...out)}
 relVocab(P,sb,kvr)}
 
-/* v19: หมวดดุงเลิง — ทุกหัวข้อย่อยเป็นกรอบหนึ่งกรอบ ข้างในเป็นแถวการ์ดเลื่อนซ้าย-ขวา (เหมือนปฏิทิน เซ (ฮีตคอง) ตลอดปี) */
-function rDung(P){const g=$("cgr");g.className="grid dl";g.hidden=false;
- const cols=["#9a5b12","#2f7d5b","#1c4f7d","#7a3f6b"],out=[],empty=[];
- P.subs.forEach((sb,gi)=>{
-  const L=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);
-  if(!L.length){empty.push(sb[2]);return}
-  const s=el("section","dg"),h=el("div","dgh"),t=el("div","dgt"),row=el("div","dgr");s.style.setProperty("--b",cols[gi%cols.length]);
-  row.setAttribute("role","list");row.setAttribute("aria-label",sb[2]);
-  const nb=el("div","dga"),pv=el("button","","‹"),nx=el("button","","›");pv.type=nx.type="button";pv.setAttribute("aria-label","เลื่อนไปทางซ้าย");nx.setAttribute("aria-label","เลื่อนไปทางขวา");
-  pv.onclick=()=>row.scrollBy({left:-row.clientWidth*.8,behavior:"smooth"});nx.onclick=()=>row.scrollBy({left:row.clientWidth*.8,behavior:"smooth"});nb.append(pv,nx);
-  const hb=el("h3","",sb[2]);t.append(hb,el("small","",sb[3]));
-  h.append(el("span","dgi",sb[1]),t,el("span","dgn",L.length+" เรื่อง"),nb);
-  L.forEach(o=>{const e=o.src,c=el("article","dc");c.setAttribute("role","listitem");
-   if(e.img&&evOk(evSrc(e.img))){const v=el("div","dcv"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{v.className="dcv ph";v.textContent=sb[1];im.remove()};im.src=evSrc(e.img);v.append(im);c.append(v)}
-   else c.append(el("div","dcv ph",sb[1]));
-   const i=el("div","dci"),w=[e.kuay,e.tag].filter(Boolean)[0];if(w)i.append(el("span","dw",w));
-   i.append(el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));
-   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;
-   const go2=()=>{TRK.ev("dl-open/"+o.k);openRead(o)};a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();go2()};i.append(a);
+/* v19: หมวดดุงเลิง — ทุกเรื่องจากทุกหัวข้อย่อยเรียงเป็นแถวเลื่อนแถวเดียว หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี (ป้ายสีส้มบนการ์ด = ไอคอนและชื่อหัวข้อย่อย) */
+function rDung(P){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
+ if(lg){if(!window.__ylg0)window.__ylg0=lg.textContent;lg.textContent=P.subs.map(z=>z[1]+" "+z[2]).join(" • ")+" — เลื่อนดูได้";lg.hidden=false}
+ gr.hidden=true;gr.replaceChildren();L.hidden=false;const empty=[],cards=[];
+ P.subs.forEach(sb=>{const items=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);if(!items.length){empty.push(sb[2]);return}
+  items.forEach(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
+   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
+   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("dl-open/"+o.k);openRead(o)};
+   i.append(el("span","w",sb[1]+" "+sb[2]),el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));i.append(a);
    {const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}
-   c.append(i);c.onclick=go2;return row.append(c)});
-  s.append(h,row);out.push(s)});
- if(!out.length)out.push(waitCard(P,P.subs[0]));
- g.replaceChildren(...out);
+   d.append(i);d.style.cursor="pointer";d.onclick=()=>{TRK.ev("dl-open/"+o.k);openRead(o)};cards.push(d)})});
+ L.replaceChildren(...(cards.length?cards:[waitCard(P,P.subs[0])]));
  const w=$("kwl");if(empty.length){w.textContent="🌱 กำลังรวบรวม: "+empty.join(" • ");w.hidden=false}else w.hidden=true}
 /* หน้าเดียวอ่านจบ: ทุกเรื่องในหัวข้อเรียงต่อกันลงมา เรื่องแรกกางไว้ ที่เหลือพับได้ ไม่มีการ์ดให้กดเข้าไปอ่านต่อ */
 /* เสากอนกวย: หัวข้อที่ไม่ใช่ "ผู้รู้ ผู้นำ" แสดงเป็นเนื้อหาต่อเนื่องชิ้นเดียว (ไม่พับ ไม่แยกหัวข้อย่อย) ดึงเรื่องทุกเรื่องในหัวข้อนั้นมาเรียงต่อกัน */
@@ -1169,7 +1157,7 @@ const mkEvt=e=>{const b=[];
   r.append(el("p","mute","※ วันที่ตามปฏิทินกวยอาจต่างกันเล็กน้อยในแต่ละหมู่บ้าน ถามผู้นำหมู่บ้านหรือทีมงานทาง LINE ก่อนไปร่วมงาน"))};
  return{k:"ev-"+e.id,evt:1,src:e,cat:"เซกวย (ฮีตคอง)",title:e.title,date:"",meta:(e.cal&&CALI[e.cal]?CALI[e.cal]+" "+e.cal+" • ":"")+(e.when||"")+(e.kuay?" • "+e.kuay:""),body:b,extra:extra}};
 let EVTS=K["เซ (ฮีตคอง)"].map((r,i)=>mkEvt({id:"e"+(i+1),when:r[0],title:r[1],sum:r[2],cal:r[3]}));
-function rYear(){const L=$("yrl");if(!L)return;
+function rYear(){const L=$("yrl");if(!L)return;if(cf==="ดุงเลิง"&&LIFEOBJ.some(o=>o.src.cat==="ดุงเลิง"))return;
  L.replaceChildren(...EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
   const a=el("a","go","ดูเรื่องราวของงานนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();TRK.ev("evt-open/"+o.k);openRead(o)};
@@ -1251,7 +1239,7 @@ rHome();try{route()}catch(e){try{console.error(e)}catch(_){}}TRK.start();
  [["Facebook",CFG.fbUrl],["YouTube",CFG.ytList],["อีเมล","mailto:"+CFG.email],["LINE "+CFG.lineId,CFG.lineUrl]].forEach(x=>{const a=el("a","",x[0]);if(x[1].indexOf("mailto:")===0)a.href=x[1];else ext(a,x[1]);l3.append(a)});
  l3.append(k);
  const lp=el("div","fl2"),pa=el("a","","พื้นที่ของเรา (ความเป็นส่วนตัว)"),ab=el("a","","เกี่ยวกับเว็บนี้");pa.href="privacy.html";pa.target="_blank";pa.rel="noopener";ab.href="#/about";ab.onclick=function(e){e.preventDefault();go("home","about")};lp.append(ab," • ",pa);
- f.replaceChildren(l1,l2,lp,lc,l3)}
+ f.replaceChildren(l1,l2,l3)}
 </script>
 <script>document.getElementById("lnT").href=lineMsg("คุยกับทีมงาน");document.getElementById("lnT").target="_blank";document.getElementById("lnT").rel="noopener";var _al=document.getElementById("abLine");_al.href=lineMsg("คุยกับทีมงาน");_al.target="_blank";_al.rel="noopener";var _fo=document.getElementById("fopen"),_fb=document.getElementById("fbar");_fo.onclick=function(){var o=_fb.classList.toggle("fbo");_fo.setAttribute("aria-expanded",o?"true":"false");_fo.textContent=o?"✕ ปิดการค้นหา":"🔍 ค้นหา / กรอง";if(o){var q=document.getElementById("fq");if(q)q.focus()}}</script>
 
@@ -1485,30 +1473,17 @@ function installApp(){
 .flatp .pq,.sec .sbody .pq{font-size:19px;line-height:1.8}
 .flatp ul{display:flex;flex-direction:column;gap:4px}
 .flatp li::marker{color:var(--b)}
-/* 4) หมวดดุงเลิง: กรอบรายหัวข้อ ข้างในเป็นแถวการ์ดเลื่อนดู */
-.grid.dl{display:block}
-.dg{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--b);border-radius:20px;padding:18px 18px 6px;margin:0 0 20px}
-.dgh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.dgi{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:14px;font-size:26px;background:color-mix(in srgb,var(--b) 13%,var(--card))}
-.dgt{display:flex;flex-direction:column;min-width:0;margin-right:auto}
-.dgt h3{font:700 22px/1.35 Boon,system-ui,sans-serif;color:var(--b);margin:0}
-.dgt small{font-size:15px;line-height:1.5;color:var(--mute)}
-.dgn{flex:none;font-size:14px;padding:2px 12px;border-radius:99px;background:color-mix(in srgb,var(--b) 10%,var(--card));color:var(--b);font-weight:700}
-.dga{display:flex;gap:6px;flex:none}
-.dga button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--b);font-size:22px;line-height:1;padding:0 0 3px}
-.dga button:hover{border-color:var(--b);background:color-mix(in srgb,var(--b) 8%,var(--card))}
-.dgr{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 16px;-webkit-overflow-scrolling:touch}
-.dc{flex:0 0 min(272px,80%);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s}
-.dc:hover{border-color:var(--gold,#fc8c2c);box-shadow:0 10px 22px -12px rgba(14,80,70,.4)}
-.dcv{aspect-ratio:3/2;overflow:hidden;background:#d6ebe6}
-.dcv img{width:100%;height:100%;object-fit:cover;display:block}
-.dcv.ph{display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,color-mix(in srgb,var(--b) 20%,#fff),color-mix(in srgb,var(--b) 5%,#fff))}
-.dci{display:flex;flex-direction:column;gap:6px;flex:1;padding:12px 16px 14px}
-.dw{font:700 14.5px/1.4 Boon,system-ui,sans-serif;color:#b34700}
-.dc h3{font:700 19px/1.4 Boon,system-ui,sans-serif;margin:0;min-height:2.8em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.dc p{margin:0;font-size:15px;line-height:1.6;color:var(--mute);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.dc .go{margin-top:auto;padding-top:6px;font-weight:700;font-size:15px;color:#b34700}
-@media(max-width:640px){.dg{padding:14px 12px 4px;border-radius:16px}.dga{display:none}.dgn{display:none}.dgt h3{font-size:20px}}
+/* 5) ผลงานและผู้เขียน: ย้ายลงท้ายหน้า ปรับเป็นแถบเล็กเรียบ ๆ ไม่แย่งความสำคัญจากเรื่องของชุมชน */
+#works{--bnd:var(--b-a);padding-top:28px}
+#works .sh{border-bottom:1px solid var(--line)}
+#works .sh h2{font-size:19px;color:var(--mute)}
+#works .sh .mute{font-size:14px}
+#works .wtabs{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 14px}
+#works .wtabs button{flex-direction:row;gap:6px;min-height:0;padding:7px 16px;border-width:1.5px;border-radius:99px}
+#works .wtabs button i{font-size:17px}
+#works .wtabs button b{font-size:15.5px}
+#works .wtabs button small{display:none}
+#works .wtabs button:hover{transform:none;box-shadow:none}
 </style>
 </body>
 </html>
