@@ -215,6 +215,27 @@ header{z-index:20}.mb svg{display:block}
 .emg{background:#fde2e2;color:#7a1c1c;border:1px solid #f1b4b4;border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.6}.pvn{font-size:14px;color:var(--mute);margin:4px 0 10px}.pvn a{color:var(--link)}
 </style>
 <style id="v2">
+.wtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:4px 0 16px}
+.wtabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;padding:12px 8px;min-height:96px;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);font-family:inherit;line-height:1.3;transition:transform .12s,box-shadow .12s}
+.wtabs button i{font-style:normal;font-size:30px;line-height:1}
+.wtabs button b{font:700 clamp(17px,2.2vw,20px)/1.25 Boon,system-ui,sans-serif}
+.wtabs button small{font-size:14px;color:var(--mute)}
+.wtabs button:hover{box-shadow:0 4px 14px rgba(14,80,70,.14);transform:translateY(-1px)}
+.wtabs button[aria-selected=true]{background:var(--teal,#0e6b73);border-color:var(--teal,#0e6b73);color:#fff}
+.wtabs button[aria-selected=true] small{color:#d9f2ee}
+.wp{animation:in .25s ease}.wp .wl{margin:0 0 10px}.wh{font-size:22px;margin:0 0 8px;color:var(--orange-ink,#b34700)}.wh .mute{font-size:16px;font-weight:400}
+.wbtn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:14px;background:var(--hero,#b34700);color:#fff;font:700 18px/1.3 Boon,system-ui,sans-serif;text-decoration:none;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.wbtn i{font-style:normal;font-size:24px;line-height:1}.wbtn:hover{filter:brightness(1.08)}.wbtn:active{transform:translateY(2px);box-shadow:none}
+@media(max-width:640px){.wtabs{grid-template-columns:1fr 1fr}.wtabs button{min-height:88px}}
+#works .wp.hide{display:none}
+.pg{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font:700 20px/1.3 Boon,system-ui,sans-serif;color:var(--ink)}.pg i{font-style:normal;font-size:24px}
+.pls{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.pl{display:flex;align-items:center;gap:14px;padding:12px 14px;background:#fff;border:2px solid var(--line);border-left:8px solid var(--pc,#0e6b73);border-radius:14px;color:var(--ink);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.pl:hover{box-shadow:0 4px 14px rgba(14,80,70,.16);transform:translateY(-1px)}.pl:active{transform:none}
+.pl-d{--pc:#b34700}.pl-n{--pc:#0e6b73}.pl-m{--pc:#2f7d5b}
+.pl .yt{flex:none;width:52px;display:block;line-height:0}.pl .yt svg{width:52px;height:auto}
+.pl .pt{display:flex;flex-direction:column;min-width:0}.pl .pt b{font:700 18px/1.35 Boon,system-ui,sans-serif;overflow-wrap:anywhere}.pl .pt small{font-size:14px;color:var(--mute)}
+.wbtn.alt2{background:var(--teal,#0e6b73)}
 #latest .fbc{display:none}#latest .fbc.fbo{display:flex}#fopen{cursor:pointer;font-family:inherit;font-size:16px;padding:6px 16px}
 .sv2{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .sv2 .t{border:0;border-radius:12px;padding:14px;text-align:left;color:#fff;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;min-height:96px;line-height:1.35}
@@ -321,7 +342,7 @@ main{overflow-x:clip}
 <div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2><button type="button" class="chip" id="fopen" aria-expanded="false" aria-controls="fbar">🔍 ค้นหา / กรอง</button></div><div class="fb fbc" id="fbar"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
 <div class="wrap">
 <section id="yr"><div class="sh"><h2>วิถีกวย</h2></div>
-<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน จัดเป็น 6 เสา เลือกเสาแล้วเลือกหัวข้อเพื่อดูเรื่องราวและคำกวยที่เกี่ยวข้อง ส่วนเรื่องที่มาและแผ่นดินอยู่ในหัวข้อ “เรื่องอื่นที่เกี่ยวข้อง” ด้านล่าง</p>
+<p class="mute" style="margin:0 0 14px">วิถีของชาวกวยบ้านโพธิ์กระสังข์ รวบรวมจากการบันทึกและคำบอกเล่าของผู้เฒ่าในชุมชน จัดเป็น 6 เสา เลือกเสาแล้วเลือกหัวข้อเพื่อดูเรื่องราวและคำกวยที่เกี่ยวข้อง ส่วนเรื่องที่มาและแผ่นดินอยู่ในหัวข้อ “ผลงานและผู้เขียน” ด้านล่าง</p>
 <div class="ktabs" id="cchips" role="tablist" aria-label="หมวดวิถีกวย"></div>
 <div class="kpanel" id="kpanel" role="tabpanel">
 <p class="lead" id="cintro"></p>
@@ -335,11 +356,18 @@ main{overflow-x:clip}
 </div>
 <div id="kv" class="kpanel kpv" role="tabpanel" hidden></div>
 </section>
-<section id="layers"><div class="sh"><h2>เรื่องอื่นที่เกี่ยวข้อง</h2></div>
-<div class="lay">
-<div class="lc"><b>🧭 ที่มาและแผ่นดิน</b><small>ประวัติ ชายแดน แผนที่ ฟ้าฝนฤดูกาล</small><div class="lb"><button type="button" onclick="go('home','hub')">ชายแดน โพธิ์กระสังข์</button></div></div>
-<div class="lc"><b>🎞️ ผลงานและผู้เขียน</b><small>สารคดี เพลง งานเขียน และเรื่องของเว็บนี้</small><div class="lb"><button type="button" onclick="go('home','clips')">คลิป</button><button type="button" onclick="go('home','mags')">ทางอีศาน</button><button type="button" onclick="go('home','about')">เกี่ยวกับเว็บและผู้เขียน</button></div></div>
-</div></section>
+<section id="works"><div class="sh"><h2>ผลงานและผู้เขียน</h2><span class="mute">กดเลือกหมวด เนื้อหาแสดงในหน้านี้เลย</span></div>
+<div class="wtabs" role="tablist" aria-label="ผลงานและผู้เขียน">
+<button type="button" role="tab" id="wt-clips" data-w="clips" aria-selected="true" aria-controls="clips"><i aria-hidden="true">🎬</i><b>คลิป</b><small>สารคดี ข่าว เพลง</small></button>
+<button type="button" role="tab" id="wt-mags" data-w="mags" aria-selected="false" aria-controls="mags" tabindex="-1"><i aria-hidden="true">📖</i><b>ทางอีศาน</b><small>ผลงานเขียน กะนากวย</small></button>
+<button type="button" role="tab" id="wt-hub" data-w="hub" aria-selected="false" aria-controls="hub" tabindex="-1"><i aria-hidden="true">🌏</i><b>ที่มาและแผ่นดิน</b><small>เพลย์ลิสต์ชายแดนบ้านเรา</small></button>
+<button type="button" role="tab" id="wt-about" data-w="about" aria-selected="false" aria-controls="about" tabindex="-1"><i aria-hidden="true">✍️</i><b>ผู้เขียนและเว็บนี้</b><small>ใครทำ ติดต่อได้ที่ไหน</small></button>
+</div>
+<div class="wp" id="clips" role="tabpanel" aria-labelledby="wt-clips"><p class="mute wl">คลิปสารคดี ข่าว และเพลงของบ้านเรา กดที่ภาพเพื่อดูบน YouTube ได้เลย</p><div class="chips" id="vchips"></div><div class="grid" id="cgrid"></div><div id="vmore"></div></div>
+<div class="wp hide" id="mags" role="tabpanel" aria-labelledby="wt-mags"><h3 class="wh">ผลงานเขียนในนิตยสารทางอีศาน <span class="mute">คอลัมน์ กะนากวย (The Way of Kuay)</span></h3><p class="mute">ผลงานเขียนและภาพถ่ายโดยขวัญชิต โพธิ์กระสังข์ ตั้งแต่ ก.ย. 2568 เท่าที่รวบรวมได้ในขณะนี้ (ยังไม่รวมฉบับที่ 165 และ 170) บทสรุปด้านล่างเรียบเรียงใหม่โดยย่อ อ่านฉบับเต็มได้ในนิตยสาร</p><div class="chips" id="mchips"></div><div id="mlist"></div><p style="margin-top:14px"><a class="wbtn" href="https://www.e-shann.com" target="_blank" rel="noopener"><i aria-hidden="true">📖</i>เว็บไซต์ทางอีศาน e-shann.com</a></p></div>
+<div class="wp hide" id="hub" role="tabpanel" aria-labelledby="wt-hub"><div class="panel"><h3 class="wh">เรื่องราวบ้านเราและอีสานชายแดน</h3><p>ผลงานของ <b>ขวัญชิต โพธิ์กระสังข์</b> ในฐานะผู้ผลิตสารคดี รายการทีวี และเพลง ที่เล่าเรื่องของพื้นที่บ้านเรา ชายแดน และอีสานชายแดน รวมไว้เป็นเพลย์ลิสต์ กดแล้วเปิดดูบน YouTube ได้เลย</p><h4 class="pg pg-d"><i aria-hidden="true">🎞️</i>สารคดี</h4><div class="pls"><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-a5QYJwWtMC65smqJprzzkN" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>สารคดี ที่นี่บ้านเรา</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-ZI2CQLFFXBYn78t7y0rE7T" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>สารคดี อยู่ดีมีแฮง</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-d" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-YBE3kPqCb6frGimv_bNlaS" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>สารคดี คนชายแดน</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div><h4 class="pg pg-n"><i aria-hidden="true">📰</i>ข่าว</h4><div class="pls"><a class="pl pl-n" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-Y5LLzuESf_23teeHSwsHKH" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>ข่าว นักข่าวพลเมือง</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-n" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-ad-1So3bnfQhiY9g_pOk9t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>ข่าว คุณเล่าเราขยาย</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div><h4 class="pg pg-m"><i aria-hidden="true">🎵</i>เพลง</h4><div class="pls"><a class="pl pl-m" href="https://www.youtube.com/playlist?list=PLcx0VcPxAS-aMkhIrvPCPWFIGvioFzj_t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>เพลง คนชายแดน</b><small>เพลย์ลิสต์บน YouTube</small></span></a><a class="pl pl-m" href="https://www.youtube.com/watch?v=ra0w1brCLJ0&list=PLcx0VcPxAS-aMkhIrvPCPWFIGvioFzj_t" target="_blank" rel="noopener"><span class="yt"><svg viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="12" fill="#f00"/><path d="M27 34V14l18 10z" fill="#fff"/></svg></span><span class="pt"><b>เพลงประกอบสารคดี ที่นี่โพธิ์กระสังข์ ที่นี่บ้านเรา</b><small>เพลย์ลิสต์บน YouTube</small></span></a></div><p style="margin-top:18px"><a class="wbtn alt2" id="hubA"><i aria-hidden="true">🌏</i>อ่านเรื่องโพธิ์กระสังข์ใน Borderland Narratives</a></p></div></div>
+<div class="wp hide" id="about" role="tabpanel" aria-labelledby="wt-about"><div class="panel"><h2>เกี่ยวกับเว็บนี้</h2><p><b>ที่นี่โพธิ์กระสังข์</b> เป็นพื้นที่กลางของคนบ้านโพธิ์กระสังข์ ต.โพธิ์กระสังข์ อ.ขุนหาญ จ.ศรีสะเกษ รวบรวมข่าว คลิป เรื่องเล่าวิถีกวย และคำศัพท์กวย พร้อมช่องทางแจ้งเหตุ ปักหมุด และติดตามเรื่องที่แจ้งเข้ามา</p><ul class="steps"><li><b>ใครดูแล:</b> ทีมงานเพจและ LINE “ที่นี่โพธิ์กระสังข์” ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น</li><li><b>เรื่องที่แจ้งเข้ามา:</b> แสดงบนเว็บเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว</li><li><b>ข้อมูลที่ส่งเข้ามา:</b> อ่านว่าเก็บอะไร ใช้ทำอะไร ได้ที่ <a href="privacy.html" target="_blank" rel="noopener">พื้นที่ของเรา</a></li><li><b>พบข้อมูลคลาดเคลื่อน:</b> บอกทีมงานทาง LINE ได้เลย ทีมงานจะช่วยตรวจและแก้ไข</li></ul><p><a class="btn line" id="abLine">💬 คุยกับทีมงานทาง LINE</a></p></div><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โซดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และล่าสุดฉบับ ต.ค. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></div>
+</section>
 
 <section class="sw hide" id="products"><div class="sh"><h2>ของดีบ้านเรา</h2><span class="mute">ฝีมือคนบ้านโพธิ์กระสังข์</span></div><p class="mute">ผ้าไหมที่ทอด้วยลายของบ้านเรา และเครื่องจักสานไม้ไผ่ฝีมือผู้เฒ่า หน้านี้บอกว่ามีอะไร ใครทำ ราคาประมาณเท่าไหร่ ไม่ได้ขายสินค้า ถ้าสนใจทักทีมงานทาง LINE ทีมงานจะช่วยประสานกับช่างให้</p><div class="chips" id="pchips"></div><div class="grid" id="pgrid"></div></section>
 <section class="sw hide" id="rights"><div class="sh"><h2>สิทธิ์ที่ควรรู้</h2><span class="mute">อย่าให้ตกหล่น</span></div>
@@ -347,15 +375,10 @@ main{overflow-x:clip}
 <div class="fg" id="rgrid"></div>
 <p class="mute">สรุปจากประกาศของหน่วยงาน ควรตรวจสอบกับหน่วยงานต้นทางหรือผู้ใหญ่บ้านอีกครั้งก่อนดำเนินการ</p>
 <p><a class="btn line" id="rLn" style="margin:0">ไม่แน่ใจสิทธิ์ของตัวเอง ถามทีมงานทาง LINE</a></p></section>
-<section class="sw hide" id="clips"><div class="sh"><h2>คลิป</h2><span class="mute">สารคดี ข่าว และเพลง</span></div><div class="chips" id="vchips"></div><div class="grid" id="cgrid"></div><div id="vmore"></div></section>
-<section class="sw hide" id="mags"><div class="sh"><h2>ผลงานเขียนในนิตยสารทางอีศาน</h2><span class="mute">คอลัมน์ กะนากวย (The Way of Kuay)</span></div>
-<p class="mute">ผลงานเขียนและภาพถ่ายโดยขวัญชิต โพธิ์กระสังข์ ตั้งแต่ ก.ย. 2568 เท่าที่รวบรวมได้ในขณะนี้ (ยังไม่รวมฉบับที่ 165 และ 170) บทสรุปด้านล่างเรียบเรียงใหม่โดยย่อ อ่านฉบับเต็มได้ในนิตยสาร</p>
-<div class="chips" id="mchips"></div><div id="mlist"></div>
-<p style="margin-top:14px"><a class="btn solid" href="https://www.e-shann.com" target="_blank" rel="noopener">เว็บไซต์ทางอีศาน e-shann.com</a></p></section>
-<section class="sw hide" id="hub"><div class="panel hub"><div><h2>ชายแดน โพธิ์กระสังข์</h2>
-<p>เรื่องราวของโพธิ์กระสังข์ในเว็บไซต์ <b>Borderland Narratives</b> พื้นที่รวมเรื่องราวจากชายแดนไทย–กัมพูชา สแกน QR Code หรือกดปุ่มเพื่อไปอ่านต่อ</p>
-<a class="btn solid" id="hubA">เปิดหน้าโพธิ์กระสังข์</a></div><img class="qr" id="hubQ" alt="QR Code ชายแดน โพธิ์กระสังข์"></div></section>
-<section class="sw hide" id="about"><div class="panel"><h2>เกี่ยวกับเว็บนี้</h2><p><b>ที่นี่โพธิ์กระสังข์</b> เป็นพื้นที่กลางของคนบ้านโพธิ์กระสังข์ ต.โพธิ์กระสังข์ อ.ขุนหาญ จ.ศรีสะเกษ รวบรวมข่าว คลิป เรื่องเล่าวิถีกวย และคำศัพท์กวย พร้อมช่องทางแจ้งเหตุ ปักหมุด และติดตามเรื่องที่แจ้งเข้ามา</p><ul class="steps"><li><b>ใครดูแล:</b> ทีมงานเพจและ LINE “ที่นี่โพธิ์กระสังข์” ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น</li><li><b>เรื่องที่แจ้งเข้ามา:</b> แสดงบนเว็บเฉพาะเรื่องที่ผู้แจ้งอนุญาตและทีมงานตรวจแล้ว</li><li><b>ข้อมูลที่ส่งเข้ามา:</b> อ่านว่าเก็บอะไร ใช้ทำอะไร ได้ที่ <a href="privacy.html" target="_blank" rel="noopener">พื้นที่ของเรา</a></li><li><b>พบข้อมูลคลาดเคลื่อน:</b> บอกทีมงานทาง LINE ได้เลย ทีมงานจะช่วยตรวจและแก้ไข</li></ul><p><a class="btn line" id="abLine">💬 คุยกับทีมงานทาง LINE</a></p></div><div class="panel"><h2>ผู้เขียนและผู้สื่อสาร</h2><p><b>ขวัญชิต โพธิ์กระสังข์</b> แอดมินเพจ “ที่นี่โพธิ์กระสังข์” คนบ้านเราที่ทำงานเพื่อบ้านเรา ไม่ได้สังกัดหน่วยงานรัฐหรือท้องถิ่น ทำหน้าที่เป็นสื่อกลางส่งต่อข้อมูลและเสียงของชุมชน</p><ul class="steps"><li>นักเขียนประจำคอลัมน์ <b>กะนากวย (The Way of Kuay)</b> นิตยสารทางอีศาน</li><li>นักข่าวพลเมือง Thai PBS</li><li>ผู้ผลิตสารคดีอิสระ และเขียนบทความส่งเว็บไซต์ต่างๆ เพื่อบ้านเรา</li><li>ผลงานเขียนในทางอีศานต่อเนื่องตั้งแต่ ก.ย. 2568 (ดูหัวข้อ <a href="#mags" onclick="go('home','mags');return false">ผลงานเขียนในทางอีศาน</a>) เช่น “โซดโธระ” (ก.ค. 2569), “ถักทอสายใยชายแดน” (ส.ค. 2569) และล่าสุดฉบับ ต.ค. 2569</li></ul><p class="mute">คอลัมน์ในเพจ: แจ้งข่าวโพธิ์กระสังข์ • วัฒน์กวย</p></div></section>
+
+
+
+
 <section id="services"><div class="sh"><h2>เมนูเดียวกับใน LINE</h2><span class="mute">กดปุ่มใหญ่ได้เลย</span></div>
 <div class="sv2">
 <button class="t big a" onclick="go('submit')"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 4.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z"/></svg></i><b>แจ้งเหตุ • ปักหมุด</b><span>ถนน น้ำ ไฟ ขยะ ร้องเรียน ถ่ายรูปส่งได้เลย</span></button>
@@ -472,7 +495,7 @@ const K={
 "ภาษากวย":[
 ["คำ","ซะออบ-ปอ","สวัสดี (แปลว่า สบายดี) คำทักทายโบราณ"],["คำ","ธรอ / ซะธูง","ข้าว / ปักดำ"],["คำ","ชิโซด / ชิเก็บ","ผ้าไหม / ลายลูกแก้ว"],["คำ","เท๊ะ / ตะแวลย์","พริก / ตะไคร้"],["คำ","กะตาม","ปูนา"],["คำ","เกลย์","การละเล่น"],["คำ","โคะอ์โค","โรงเรือนเลี้ยงสัตว์"],["คำ","เซน","เซ่นไหว้ / ประเพณี"],["คำ","สากกวย","บุญอุทิศบรรพบุรุษ เดือน 10"],["คำ","สากเพ็ง / สากอะรับ","สากกวยใหญ่ ขึ้น 15 ค่ำ เดือน 10 (วันเดียวกัน)"],["คำ","สากดับ / สากปัด / สากชูน","สากเล็ก แรม 15 ค่ำ เดือน 10 (วันเดียวกัน)"]]};
 
-CFG.hubUrl="https://sites.google.com/view/borderlands-narrative1/Home/Phokrasang";CFG.hubQr="img/emb-9d79cf49.png";
+CFG.hubUrl="https://sites.google.com/view/borderlands-narrative1/Home/Phokrasang";
 /* ===== ผลงานในทางอีศาน: [ฉบับ,เดือนปี,ชื่อบทความ,หน้า,หมวด,สรุปสั้น,ลิงก์ฉบับเต็ม(ใส่เมื่อมี)] ===== */
 const MG=[
 [174,"ต.ค. 2569","โคลนตม ความเชื่อ และเส้นฝ้าย: วิถีชีวิตและขวัญกำลังใจคนชายแดน","56–63","วัฒนธรรมและความเชื่อ","ลงแขกดำนาให้เด็ก ๆ ที่บ้านตาจวนโดยกลุ่มสำนึกรักบ้านเกิด สังฆทานสลากภัตของ ๔ ชุมชนวัดโพธิ์กระสังข์ และพิธีเลื๊อะอ์ดุง กะเยือละวาย ที่ย้ายศาลพระภูมิและเรียกขวัญคืนตัว","" ],
@@ -494,7 +517,7 @@ $("mchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===mf?"
 $("mlist").replaceChildren(...MG.filter(m=>mf==="ทั้งหมด"||m[4]===mf).map(m=>{const d=el("div","mag"),i=el("div","iss"),b=el("div");
 i.append(el("small","","ฉบับที่"),el("b","",String(m[0])),el("small","",m[1]));
 b.append(el("span","tag",m[4]+" • หน้า "+m[3]),el("h3","",m[2]),el("div","mute",m[5]));
-if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl);$("hubQ").src=CFG.hubQr}
+if(m[6])b.append(ext(el("a","fl","อ่านฉบับเต็ม"),m[6]));d.append(i,b);return d}));ext($("hubA"),CFG.hubUrl)}
 let cf="เซ (ฮีตคอง)",sf="";
 /* วิถีชีวิตกวย 3 หมวด (ข้อมูลไม่ผูกวันที่ มาจากชีต "วิถีชีวิตกวย" ผ่าน action=life; ถ้ายังไม่มีข้อมูลในชีตจะใช้การ์ดในโค้ด K เดิม) */
 const LCATS=["กอนกวย","ดุงเลิง","กัวออ","วอนึงเต","จาเอม","ปะนาย"];
@@ -725,7 +748,10 @@ $("hn").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i)
 const p=$("hp");p.classList.remove("run");void p.offsetWidth;if(!htm)return;p.classList.add("run");clearTimeout(htm);htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000)}
 function heroInit(){if(!HERO.length){$("hn").replaceChildren();return}$("hn").replaceChildren(...HERO.map((f,i)=>{const b=el("button");const n=el("b","","0"+(i+1));b.append(n,el("span","",f.lbl||f.t));/* ป้ายแถบรอง: ใช้ช่อง "ป้ายแถบรอง" จากหลังบ้านก่อน ไม่มีค่อยใช้ชื่อเรื่อง */b.onclick=()=>{htm=htm||1;rHero(i)};return b}));
 const rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;htm=rm?0:1;rHero(0);if(!rm){const hs=document.querySelector(".hs");hs.onmouseenter=()=>{clearTimeout(htm);$("hp").classList.remove("run")};hs.onmouseleave=()=>{htm=setTimeout(()=>rHero((hi+1)%HERO.length),6000);$("hp").classList.add("run")}}}
-const _go=go;go=function(v,s){if(v==="home")document.querySelectorAll(".sw").forEach(x=>x.classList.toggle("hide",x.id!==s));_go(v,s)};
+const WT=["clips","mags","hub","about"];
+function wTab(id){if(WT.indexOf(id)<0)id="clips";WT.forEach(function(k){var p=document.getElementById(k),b=document.getElementById("wt-"+k),on=k===id;p.classList.toggle("hide",!on);b.setAttribute("aria-selected",on?"true":"false");b.tabIndex=on?0:-1})}
+document.querySelectorAll(".wtabs button").forEach(function(b,i,L){b.onclick=function(){wTab(b.dataset.w)};b.onkeydown=function(e){var n=e.key==="ArrowRight"?i+1:e.key==="ArrowLeft"?i-1:-1;if(n<0)return;e.preventDefault();var t=L[(n+L.length)%L.length];wTab(t.dataset.w);t.focus()}});
+const _go=go;go=function(v,s){if(v==="home"&&s&&WT.indexOf(s)>=0){wTab(s);s="works"}if(v==="home")document.querySelectorAll(".sw").forEach(x=>x.classList.toggle("hide",x.id!==s));_go(v,s)};
 let nf="ทั้งหมด";
 function rNews(){if(!$("nchips"))return;const cats=["ทั้งหมด",...new Set(news.map(n=>n.cat))];
 $("nchips").replaceChildren(...cats.map(k=>{const b=el("button","chip"+(k===nf?" on":""),k);b.onclick=()=>{nf=k;rNews()};return b}));
