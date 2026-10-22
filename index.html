@@ -1214,13 +1214,19 @@ function lnorm(x){if(!x)return x;let c=x.cat==="ดุงกวย"?"ดุง�
  if(!sb&&P){const f=P.subs.find(z=>z[4]&&z[4].test(t));sb=f?f[0]:(c==="ดุงเลิง"?"บ้านและเรือน":c==="กัวออ"?"ละวาย":c==="จาเอม"?"วิถีนา":"")}
  if(c==="ดุงเลิง"&&sb==="ที่ศักดิ์สิทธิ์และธรรมชาติ"&&PLACES.test(x.title||""))sb="สถานที่ส่วนรวม";
  return Object.assign({},x,{cat:c,sub:sb})}
+/* v19: ที่เดียวกันแสดงใบเดียวต่อกลุ่ม (ต้องตรงกับ L_GROUPS ใน life.gs) + หัวข้อที่แอดมินเพิ่มเองจากหลังบ้าน */
+const LGRX=[["a",/รพ\.?\s?สต|โรงพยาบาลส่งเสริมสุขภาพตำบล/],["b",/ทนับพืด|หนองซำ|โนนหนองโพธิ์/],["c",/ลพังคีลย์|หนองแคน/],["d",/ศาลาประชาคม/],["e",/โรงเรียน(บ้าน)?โพธิ์กระสังข์/],["f",/^วัดโพธิ์กระสังข์(\s|\(|$)/]];
+function lDedupe(L){const sc=x=>String(x.story||"").length+(x.img?300:0)+(x.elder?300:0)+String(x.words||"").split("\n").filter(Boolean).length*20,by={};
+ L.forEach(x=>{const g=LGRX.find(z=>z[1].test(String(x.title||"")));const k=x.cat+"|"+(g?g[0]:"t:"+String(x.title||"").replace(/\s+/g,"").toLowerCase());(by[k]=by[k]||[]).push(x)});
+ const drop=new Set();Object.values(by).forEach(a=>{if(a.length<2)return;a.slice().sort((p,q)=>sc(q)-sc(p)).slice(1).forEach(x=>drop.add(x))});return L.filter(x=>!drop.has(x))}
+function lCustomSubs(cs){if(!cs)return;PIL.forEach(P=>{P.subs=P.subs.filter(z=>!z.cust);(cs[P.k]||[]).forEach(z=>{const a=[z.n,z.i||"🔖",z.n,z.d||"",null,null];a.cust=true;P.subs.push(a)})})}
 async function loadLife(){if(!CFG.apiUrl)return;
- const use=L=>{if(!Array.isArray(L)||!L.length)return false;L=L.map(lnorm);LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
+ const use=L=>{if(!Array.isArray(L)||!L.length)return false;try{lCustomSubs(JSON.parse(localStorage.getItem("kp_lifesubs")||"null"))}catch(e){}L=lDedupe(L.map(lnorm));LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let had=false;try{had=use(JSON.parse(localStorage.getItem(LKEY)||"null"))}catch(e){}
  if(had&&FRESH("life",30000))return;
  try{const d=await getJ("life","life",had);
   if(d&&d.ok&&Array.isArray(d.items)){STAMP("life");
-   if(d.items.length){if(use(d.items)){try{localStorage.setItem(LKEY,JSON.stringify(d.items))}catch(e){}}}
+   if(d.items.length){try{localStorage.setItem("kp_lifesubs",JSON.stringify(d.customSubs||{}))}catch(e){}if(use(d.items)){try{localStorage.setItem(LKEY,JSON.stringify(d.items))}catch(e){}}}
    else{LIFEOBJ=[];try{localStorage.removeItem(LKEY)}catch(e){}try{rCul()}catch(_){}}}}catch(e){}}
 rYear();
 /* ลิงก์ #/read/xxx ที่หาเรื่องไม่เจอหลังโหลดข้อมูลครบทุกแหล่ง (ลบแล้ว/หมดอายุ/พิมพ์ผิด) → กลับหน้าแรกพร้อมข้อความ ไม่ปล่อยให้เห็นหน้าว่าง */
