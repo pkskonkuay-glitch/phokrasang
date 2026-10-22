@@ -533,7 +533,7 @@ const CRAFT={test:s=>/ผ้า|ไหม|ตานชิ|ย้อม|จัก
 /* 6 เสาหลักของวิถีกวย (ลำดับตามเอกสาร "โครงสร้างหมวดหมู่ วิถีกวย"): หัวข้อย่อย = [รหัส, ไอคอน, ป้าย, คำอธิบาย, regex จัดเรื่องเข้าหัวข้อ, หมวดคำศัพท์ที่เกี่ยวข้อง (null = ใช้ของเสา)] */
 /* v15: เสา → หัวข้อ (ไม่เกิน 5) → หน้าเดียวอ่านจบ  (ชื่อหัวข้อย่อย [0] ต้องตรงกับ LSUBS ใน life.gs และ KG ใน admin.html) */
 const PIL=[
-{k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน. เริ่มเล่าจากบ้านโพธิ์กระสังข์ หมู่ 2 ซึ่งเป็นหมู่บ้านเก่าแก่ ที่มาของชื่อตำบล ชื่อวัด และนามสกุลของผู้คน บางเรื่องเป็นของ 4 หมู่บ้านที่ใช้วัดโพธิ์กระสังข์ร่วมกัน (หมู่ 2 • หมู่ 9 โนนคูณ • หมู่ 11 แต้ • หมู่ 12 โพธิ์กระสังข์เหนือ) และในอนาคตจะขยายถึงทั้งตำบล 14 หมู่บ้าน",
+{k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน เริ่มเล่าจากบ้านโพธิ์กระสังข์ หมู่ 2 ซึ่งเป็นหมู่บ้านเก่าแก่ ที่มาของชื่อตำบล ชื่อวัด และนามสกุลของผู้คน บางเรื่องเป็นของ 4 หมู่บ้านที่ใช้วัดโพธิ์กระสังข์ร่วมกัน (หมู่ 2 • หมู่ 9 โนนคูณ • หมู่ 11 แต้ • หมู่ 12 โพธิ์กระสังข์เหนือ) และในอนาคตจะขยายถึงทั้งตำบล 14 หมู่บ้าน",
  voc:["ครอบครัว","คนและสรรพนาม","ชาติพันธุ์และกลุ่มคนใกล้เคียง","อาชีพและงานชุมชน"],
  subs:[["ประวัติและที่มา","📜","ประวัติและที่มา","ที่มาของชื่อ ชื่อเก่าของชุมชน (ลพังคีลย์) การตั้งและย้ายหมู่บ้าน และเรื่องที่เกิดขึ้นตามลำดับเวลา",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
   ["หมู่บ้านและผู้คน","🏘️","หมู่บ้านและผู้คน","4 หมู่บ้านที่ใช้วัดเดียวกัน ชาวกวย ชาวจีน ลูกเขย สะใภ้ อยู่ร่วมกันอย่างไร",null,["ครอบครัว","ชาติพันธุ์และกลุ่มคนใกล้เคียง"]],
@@ -601,7 +601,8 @@ function rCul(){
   b.append(el("span","ke",t.ic),el("b","",t.k));b.onclick=()=>{if(on)return;cf=t.k;sf="";rCul();TRK.ev("ceh/"+t.k)};return b}));
  {const o=$("cchips").querySelector(".kt.on");if(o){try{const w=$("cchips");w.scrollLeft=o.offsetLeft-(w.clientWidth-o.offsetWidth)/2}catch(_){}}}
  $("kpanel").hidden=false;$("kv").hidden=true;$("kpanel").style.setProperty("--b",P.col);
- {const c=$("cintro");c.replaceChildren(el("b","",P.k+" • "+P.mean),document.createElement("br"),P.intro);c.hidden=false}
+ {const c=$("cintro");let it=String(P.intro||"").replace(new RegExp("^"+P.k+"\\s*คือ\\s*"),"").trim();if(P.mean&&it.indexOf(P.mean)===0)it=it.slice(P.mean.length).replace(/^[\s.,]+/,"");it=it.replace(/\.\s+/g," ");   /* ตัดคำที่ซ้ำกับหัวบรรทัด (ชื่อเสา/ความหมาย) */
+ c.replaceChildren(el("b","",P.k+" • "+P.mean),document.createElement("br"),it);c.hidden=false}
  {const ks=$("ksub"),ss=$("ssub");ks.hidden=ss.hidden=false;ks.setAttribute("aria-label","หัวข้อย่อยของ"+P.k);ks.replaceChildren();
   visSubs(P).forEach(t=>{const on=t[0]===S,b=el("button","ks"+(on?" on":""));b.type="button";b.style.setProperty("--b",P.col);b.setAttribute("role","tab");b.setAttribute("aria-selected",on?"true":"false");b.append(el("span","ke",t[1]),el("b","",t[2]));b.onclick=()=>{if(on)return;sf=t[0];rCul();TRK.ev("ceh/"+P.k+"/"+t[0])};ks.append(b)});ss.textContent=sb[3]}
  const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx0=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
@@ -643,15 +644,21 @@ relVocab(P,sb,kvr)}
 /* v19: หมวดดุงเลิง — ทุกเรื่องจากทุกหัวข้อย่อยเรียงเป็นแถวเลื่อนแถวเดียว หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี (ป้ายสีส้มบนการ์ด = ไอคอนและชื่อหัวข้อย่อย) */
 function rDung(P){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
  if(lg){if(!window.__ylg0)window.__ylg0=lg.textContent;lg.hidden=true}
- gr.hidden=true;gr.replaceChildren();L.hidden=false;const empty=[],cards=[];
+ gr.hidden=true;gr.replaceChildren();L.hidden=false;const empty=[],cards=[],seen={},nk=t=>String(t||"").replace(/[\s()（）\-–•+.,]/g,"").toLowerCase();
  P.subs.forEach(sb=>{const items=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);if(!items.length){empty.push(sb[2]);return}
-  items.forEach(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
+  const uniq=[];items.forEach(o=>{const e=o.src,ks=["t:"+nk(e.title)].concat(e.sum?["s:"+nk(e.sum).slice(0,70)]:[]);
+   /* ตัดเรื่องซ้ำ: ชื่อเรื่องเดียวกันหรือคำโปรยเดียวกัน เก็บเรื่องที่มีรูปไว้ */
+   const j=uniq.findIndex(u=>u.k.some(k=>ks.indexOf(k)>=0));if(j<0){uniq.push({o:o,k:ks});return}
+   if(!uniq[j].o.src.img&&e.img)uniq[j]={o:o,k:ks.concat(uniq[j].k)}});
+  uniq.forEach(u=>{const o=u.o,e=o.src;
+   const d=el("div","yc"),i=el("div","in");
    if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{c.className="ycov ph";c.textContent=sb[1]};im.src=evSrc(e.img);c.append(im);d.append(c)}
    else d.append(el("div","ycov ph",sb[1]));
    const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("dl-open/"+o.k);openRead(o)};
    /* ลำดับบนการ์ด: รูป → ชื่อหมวด → ชื่อเรื่อง (ไทย (กวย)) → เนื้อหา → อ่านเรื่องนี้ */
    let ti=String(e.title||"").replace(/\s*\++\s*$/,"").trim();const kz=String(e.kuay||"").split(" • ")[0].trim();if(kz&&ti.indexOf(kz)<0)ti+=" ("+kz+")";
-   i.append(el("span","w",sb[2]),el("h3","",ti));if(e.sum)i.append(el("p","",e.sum));i.append(a);
+   let sm=String(e.sum||"").trim();[ti,String(e.title||"").replace(/\s*\++\s*$/,"").trim(),kz].filter(Boolean).forEach(t=>{const r=new RegExp("^"+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\s*(คือ|หมายถึง)?\\s*");if(sm.length>t.length+8&&r.test(sm))sm=sm.replace(r,"")});   /* คำโปรยไม่ขึ้นต้นด้วยชื่อเรื่องซ้ำอีก */
+   i.append(el("span","w",sb[2]),el("h3","",ti));if(sm)i.append(el("p","",sm));i.append(a);
    {const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}
    d.append(i);d.style.cursor="pointer";d.onclick=()=>{TRK.ev("dl-open/"+o.k);openRead(o)};cards.push(d)})});
  L.replaceChildren(...(cards.length?cards:[waitCard(P,P.subs[0])]));
