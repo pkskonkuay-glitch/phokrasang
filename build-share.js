@@ -142,7 +142,7 @@ function page(it) {
   fs.writeFileSync(path.join(__dirname, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: " + BASE + "sitemap.xml\n");
   // ===== เลื่อนเลขเวอร์ชันของ service worker อัตโนมัติ เมื่อไฟล์หลักเปลี่ยน =====
   const h = crypto.createHash("sha1");
-  ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
+  ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "kuy-vocab.csv"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
   const ver = "kp-" + h.digest("hex").slice(0, 8);
   const VER_PATH = path.join(__dirname, "version.js");   // แยกจาก config.js เพื่อไม่ให้บอตกับคนแก้ไฟล์เดียวกันชนกัน
   let curVer = ""; try { curVer = fs.readFileSync(VER_PATH, "utf8"); } catch (_) {}
