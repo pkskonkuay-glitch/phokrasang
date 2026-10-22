@@ -1481,14 +1481,20 @@ function installApp(){
 .hn span{-webkit-line-clamp:3;font-size:15px}
 @media(max-width:700px){.hn button{padding:12px 12px 14px;font-size:14.5px}.hn b{font-size:30px}}
 /* 3) เนื้อหาในหน้าวิถีกวย: ตัวหนังสือปกติ อ่านสบาย + หัวข้อเด่น (เดิมชื่อคลาส .pg ชนกับสไตล์แถบหัวข้อเก่า ทำให้ทั้งกล่องเป็นตัวหนา) */
-.grid.pgx{font:400 19px/1.85 Boon,system-ui,sans-serif;background:none;padding:0;color:var(--ink)}
-.flatp{gap:14px;padding:20px 22px 22px}
+.grid.pgx{font:400 18px/1.65 Boon,system-ui,sans-serif;background:none;padding:0;color:var(--ink)}
+.flatp{gap:10px;padding:20px 22px 22px}
 .flatp p{font-weight:400}
-.flatp h2,.sec .sbody h2{font:700 22px/1.4 Boon,system-ui,sans-serif;color:var(--b);margin:16px 0 2px;padding:0 0 8px;border-bottom:2px solid color-mix(in srgb,var(--b) 22%,transparent)}
+.flatp h2,.sec .sbody h2{font:700 21px/1.4 Boon,system-ui,sans-serif;color:var(--b);margin:16px 0 2px;padding:0 0 8px;border-bottom:2px solid color-mix(in srgb,var(--b) 22%,transparent)}
 .flatp h2:first-child,.sec .sbody h2:first-child{margin-top:0}
-.flatp .pq,.sec .sbody .pq{font-size:19px;line-height:1.8}
-.flatp ul{display:flex;flex-direction:column;gap:4px}
+.flatp .pq,.sec .sbody .pq{font-size:18px;line-height:1.65}
+.flatp ul{display:flex;flex-direction:column;gap:2px}
 .flatp li::marker{color:var(--b)}
+/* v20: ระยะห่างบรรทัดวิถีกวย/กอนกวย — ไทยมีสระบน-ล่างอยู่ในบรรทัดแล้ว 1.65 พอ (เดิม 1.85 + ช่องว่างย่อหน้า 14px ทำให้โปร่งเกิน) */
+.sec .sbody{gap:8px}.sec .sbody p{line-height:1.65}.flatp p{line-height:1.65}
+.kpanel .lead{font-size:17.5px;line-height:1.7;padding:10px 16px}
+.kcol{line-height:1.55}
+.hn button{gap:4px;line-height:1.4}
+@media(max-width:640px){.grid.pgx{font-size:17px;line-height:1.65}.flatp{gap:9px;padding:16px 16px 18px}.flatp .pq,.sec .sbody .pq{font-size:17px}.flatp h2,.sec .sbody h2{font-size:19px}}
 .yc .ycov{flex:none;aspect-ratio:3/2}.yc .ycov.ph{line-height:1;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#f3e6d4,#fbf6ee)}
 #yrl .yc p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 /* 5) ผลงานและผู้เขียน: ย้ายลงท้ายหน้า ปรับเป็นแถบเล็กเรียบ ๆ ไม่แย่งความสำคัญจากเรื่องของชุมชน */
