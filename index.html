@@ -607,6 +607,8 @@ function rCul(){
  const isH=P.k==="กัวออ"&&S==="เซ (ฮีตคอง)",cx0=isH?"เซ (ฮีตคอง)":(P.k==="กัวออ"&&S==="ละวาย")?"ละวาย":(P.k==="จาเอม")?"จาเอม":(P.k==="ดุงเลิง"||P.k==="วอนึงเต")?"ดุงเลิง":null;
  const cx=(isH||cx0==="ละวาย"||cx0==="จาเอม")?cx0:((LIFEOBJ.length&&S!=="ผลิตภัณฑ์ชุมชน"&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์"))?"ชีต":cx0);
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg)lg.hidden=!isH}
+ /* v19: เสาดุงเลิง = ทุกหัวข้อย่อยจัดเป็นกรอบการ์ดเลื่อนดู (หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี) ไม่ต้องกดแท็บหัวข้อย่อย */
+ if(P.k==="ดุงเลิง"&&LIFEOBJ.some(o=>o.src.cat==="ดุงเลิง")){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;rDung(P);relVocab(P,[],kv);return}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
  {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
@@ -638,6 +640,31 @@ if(!out.length&&S!=="ผลิตภัณฑ์ชุมชน")out.push(waitCa
 $("cgr").replaceChildren(...out)}
 relVocab(P,sb,kvr)}
 
+/* v19: หมวดดุงเลิง — ทุกหัวข้อย่อยเป็นกรอบหนึ่งกรอบ ข้างในเป็นแถวการ์ดเลื่อนซ้าย-ขวา (เหมือนปฏิทิน เซ (ฮีตคอง) ตลอดปี) */
+function rDung(P){const g=$("cgr");g.className="grid dl";g.hidden=false;
+ const cols=["#9a5b12","#2f7d5b","#1c4f7d","#7a3f6b"],out=[],empty=[];
+ P.subs.forEach((sb,gi)=>{
+  const L=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);
+  if(!L.length){empty.push(sb[2]);return}
+  const s=el("section","dg"),h=el("div","dgh"),t=el("div","dgt"),row=el("div","dgr");s.style.setProperty("--b",cols[gi%cols.length]);
+  row.setAttribute("role","list");row.setAttribute("aria-label",sb[2]);
+  const nb=el("div","dga"),pv=el("button","","‹"),nx=el("button","","›");pv.type=nx.type="button";pv.setAttribute("aria-label","เลื่อนไปทางซ้าย");nx.setAttribute("aria-label","เลื่อนไปทางขวา");
+  pv.onclick=()=>row.scrollBy({left:-row.clientWidth*.8,behavior:"smooth"});nx.onclick=()=>row.scrollBy({left:row.clientWidth*.8,behavior:"smooth"});nb.append(pv,nx);
+  const hb=el("h3","",sb[2]);t.append(hb,el("small","",sb[3]));
+  h.append(el("span","dgi",sb[1]),t,el("span","dgn",L.length+" เรื่อง"),nb);
+  L.forEach(o=>{const e=o.src,c=el("article","dc");c.setAttribute("role","listitem");
+   if(e.img&&evOk(evSrc(e.img))){const v=el("div","dcv"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{v.className="dcv ph";v.textContent=sb[1];im.remove()};im.src=evSrc(e.img);v.append(im);c.append(v)}
+   else c.append(el("div","dcv ph",sb[1]));
+   const i=el("div","dci"),w=[e.kuay,e.tag].filter(Boolean)[0];if(w)i.append(el("span","dw",w));
+   i.append(el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));
+   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;
+   const go2=()=>{TRK.ev("dl-open/"+o.k);openRead(o)};a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();go2()};i.append(a);
+   {const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}
+   c.append(i);c.onclick=go2;return row.append(c)});
+  s.append(h,row);out.push(s)});
+ if(!out.length)out.push(waitCard(P,P.subs[0]));
+ g.replaceChildren(...out);
+ const w=$("kwl");if(empty.length){w.textContent="🌱 กำลังรวบรวม: "+empty.join(" • ");w.hidden=false}else w.hidden=true}
 /* หน้าเดียวอ่านจบ: ทุกเรื่องในหัวข้อเรียงต่อกันลงมา เรื่องแรกกางไว้ ที่เหลือพับได้ ไม่มีการ์ดให้กดเข้าไปอ่านต่อ */
 /* เสากอนกวย: หัวข้อที่ไม่ใช่ "ผู้รู้ ผู้นำ" แสดงเป็นเนื้อหาต่อเนื่องชิ้นเดียว (ไม่พับ ไม่แยกหัวข้อย่อย) ดึงเรื่องทุกเรื่องในหัวข้อนั้นมาเรียงต่อกัน */
 const FLAT_ORD={"ประวัติและที่มา":["กวยโพธิ์กระสังข์ ชุมชนใหญ่ของชาวกวย","ที่มาของชื่อบ้านโพธิ์กระสังข์","คำขวัญและอาณาเขตของหมู่ 2"],
@@ -645,7 +672,7 @@ const FLAT_ORD={"ประวัติและที่มา":["กวยโ�
 const FLAT_DUP=["ที่ตั้งและอาณาเขตของหมู่ 2","คำขวัญของหมู่บ้าน"];   /* ชื่อเรื่องเก่าที่ซ้ำกับ "คำขวัญและอาณาเขตของหมู่ 2" */
 const FLAT_META=/^หน้านี้เป็นหน้าเปิดของหมวด/;
 function isFlat(P,S){return P.k==="กอนกวย"&&S!=="ผู้รู้ ผู้นำ และผู้มีคุณูปการ"}
-function rFlat(P,sb,L){const g=$("cgr");g.className="grid pg flat";
+function rFlat(P,sb,L){const g=$("cgr");g.className="grid pgx flat";
  if(L.some(o=>o.src.title==="คำขวัญและอาณาเขตของหมู่ 2"))L=L.filter(o=>FLAT_DUP.indexOf(o.src.title)<0);
  if(!L.length){g.replaceChildren(waitCard(P,sb));return}
  const od=FLAT_ORD[sb[0]]||[],ix=o=>{const i=od.indexOf(o.src.title);return i<0?99:i};
@@ -659,7 +686,7 @@ function rFlat(P,sb,L){const g=$("cgr");g.className="grid pg flat";
  const bar=el("div","sbar"),a=ext(el("a","btn line","📷 มีภาพหรือเรื่องเล่าเพิ่ม ส่งทาง LINE"),lineMsg("ส่งภาพหรือเรื่องเล่า: "+P.k+" › "+sb[2]));bar.append(a);
  if(L.length===1){const s=el("a","btn","🔗 ลิงก์ • แชร์");s.href="#/read/"+L[0].k;s.onclick=ev=>{ev.preventDefault();openRead(L[0])};bar.prepend(s)}
  box.append(bar);g.replaceChildren(box)}
-function rPage(P,sb,L){if(isFlat(P,sb[0]))return rFlat(P,sb,L);const g=$("cgr");g.className="grid pg";
+function rPage(P,sb,L){if(isFlat(P,sb[0]))return rFlat(P,sb,L);const g=$("cgr");g.className="grid pgx";
  if(!L.length){g.replaceChildren(waitCard(P,sb));return}
  g.replaceChildren(...L.map((o,n)=>{const e=o.src,d=document.createElement("details");d.className="sec";d.id="sec-"+e.id;d.style.setProperty("--b",P.col);if(n===0)d.open=true;
   const s=document.createElement("summary");s.append(el("b","",e.title));
@@ -1314,7 +1341,7 @@ ap();
 .ks{--b:#0e6b73;display:flex;align-items:center;gap:8px;padding:9px 20px 9px 12px;border-radius:99px;border:2px solid color-mix(in srgb,var(--b) 35%,var(--line));background:var(--card);color:var(--ink);font-family:inherit;cursor:pointer;transition:background .15s}
 
 .kt .ke{background:transparent}.kt.on .ke{background:transparent}
-.grid.pg{display:block}
+.grid.pgx{display:block}
 .sec{border:1px solid var(--line);border-radius:16px;background:var(--card);margin:0 0 12px;overflow:hidden}
 .sec>summary{list-style:none;cursor:pointer;padding:14px 48px 14px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:relative;min-height:48px}
 .sec>summary::-webkit-details-marker{display:none}
@@ -1435,5 +1462,53 @@ function installApp(){
 /* ดึงยอดอ่านของทุกเรื่องครั้งเดียวตอนเปิดเว็บ แล้วเติมตัวเลขข้างไอคอนลูกตา */
 (function(){try{if(!CFG.apiUrl)return;fetch(CFG.apiUrl+"?action=views").then(function(r){return r.json()}).then(function(d){if(d&&d.ok&&d.map){Object.keys(d.map).forEach(function(k){VWMAP[k]=d.map[k];vwSet(k,d.map[k])})}}).catch(function(){})}catch(e){}})();
 </script>
+<style id="v19">
+/* ===== v19 (22 ต.ค. 2569) ===== */
+/* 1) ชื่อคลิปทุกใบขนาดเท่ากัน (เดิมใบแรกโดนกฎ "ข่าวใบแรกใหญ่" มาใช้ด้วย) */
+#cgrid>.vc h3,#cgrid>.vc:first-child h3{font:700 16.5px/1.5 Boon,system-ui,sans-serif;min-height:3em;-webkit-line-clamp:2}
+/* 2) แถบ 6 ช่องใต้ภาพเด่น: เลขและข้อความเริ่มบรรทัดเดียวกันทุกช่อง เลขใหญ่ขึ้น ช่องสูงเท่ากัน */
+.hn{align-items:stretch;background:#fff}
+.hn button{position:relative;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:6px;padding:16px 16px 18px;font-size:15px;line-height:1.5;color:#27433d;transition:background .2s}
+.hn button:hover:not(.on){background:#f1f9f7}
+.hn button::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:transparent;transition:background .2s}
+.hn button.on::before{background:var(--gold,#fc8c2c)}
+.hn b{display:block;font:800 36px/1 Boon,system-ui,sans-serif;letter-spacing:.5px;color:#a8c7c0}
+.hn button.on b{color:#b34700}
+.hn span{-webkit-line-clamp:3;font-size:15px}
+@media(max-width:700px){.hn button{padding:12px 12px 14px;font-size:14.5px}.hn b{font-size:30px}}
+/* 3) เนื้อหาในหน้าวิถีกวย: ตัวหนังสือปกติ อ่านสบาย + หัวข้อเด่น (เดิมชื่อคลาส .pg ชนกับสไตล์แถบหัวข้อเก่า ทำให้ทั้งกล่องเป็นตัวหนา) */
+.grid.pgx{font:400 19px/1.85 Boon,system-ui,sans-serif;background:none;padding:0;color:var(--ink)}
+.flatp{gap:14px;padding:20px 22px 22px}
+.flatp p{font-weight:400}
+.flatp h2,.sec .sbody h2{font:700 22px/1.4 Boon,system-ui,sans-serif;color:var(--b);margin:16px 0 2px;padding:0 0 8px;border-bottom:2px solid color-mix(in srgb,var(--b) 22%,transparent)}
+.flatp h2:first-child,.sec .sbody h2:first-child{margin-top:0}
+.flatp .pq,.sec .sbody .pq{font-size:19px;line-height:1.8}
+.flatp ul{display:flex;flex-direction:column;gap:4px}
+.flatp li::marker{color:var(--b)}
+/* 4) หมวดดุงเลิง: กรอบรายหัวข้อ ข้างในเป็นแถวการ์ดเลื่อนดู */
+.grid.dl{display:block}
+.dg{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--b);border-radius:20px;padding:18px 18px 6px;margin:0 0 20px}
+.dgh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.dgi{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:14px;font-size:26px;background:color-mix(in srgb,var(--b) 13%,var(--card))}
+.dgt{display:flex;flex-direction:column;min-width:0;margin-right:auto}
+.dgt h3{font:700 22px/1.35 Boon,system-ui,sans-serif;color:var(--b);margin:0}
+.dgt small{font-size:15px;line-height:1.5;color:var(--mute)}
+.dgn{flex:none;font-size:14px;padding:2px 12px;border-radius:99px;background:color-mix(in srgb,var(--b) 10%,var(--card));color:var(--b);font-weight:700}
+.dga{display:flex;gap:6px;flex:none}
+.dga button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--b);font-size:22px;line-height:1;padding:0 0 3px}
+.dga button:hover{border-color:var(--b);background:color-mix(in srgb,var(--b) 8%,var(--card))}
+.dgr{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 16px;-webkit-overflow-scrolling:touch}
+.dc{flex:0 0 min(272px,80%);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.dc:hover{border-color:var(--gold,#fc8c2c);box-shadow:0 10px 22px -12px rgba(14,80,70,.4)}
+.dcv{aspect-ratio:3/2;overflow:hidden;background:#d6ebe6}
+.dcv img{width:100%;height:100%;object-fit:cover;display:block}
+.dcv.ph{display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,color-mix(in srgb,var(--b) 20%,#fff),color-mix(in srgb,var(--b) 5%,#fff))}
+.dci{display:flex;flex-direction:column;gap:6px;flex:1;padding:12px 16px 14px}
+.dw{font:700 14.5px/1.4 Boon,system-ui,sans-serif;color:#b34700}
+.dc h3{font:700 19px/1.4 Boon,system-ui,sans-serif;margin:0;min-height:2.8em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dc p{margin:0;font-size:15px;line-height:1.6;color:var(--mute);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.dc .go{margin-top:auto;padding-top:6px;font-weight:700;font-size:15px;color:#b34700}
+@media(max-width:640px){.dg{padding:14px 12px 4px;border-radius:16px}.dga{display:none}.dgn{display:none}.dgt h3{font-size:20px}}
+</style>
 </body>
 </html>
