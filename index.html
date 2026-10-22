@@ -631,7 +631,7 @@ if(P.k==="จาเอม"&&S!=="ทั้งหมด"){const gi=["วิถี
 if(cx==="ละวาย"){const guL=LIFEOBJ.length?LIFEOBJ.filter(o=>o.src.cat==="กัวออ"&&(!o.src.sub||o.src.sub==="ละวาย")).map(o=>({tag:o.src.tag||"",kuay:o.src.kuay||"",title:o.src.title,sum:o.src.sum||"",ev:o,img:o.src.img})):(K["กัวออ"]||[]).map(x=>({tag:x[0],title:x[1],sum:x[2],ev:null}));/* เรื่องใหม่ที่กรอกในหลังบ้าน (วิถีกวย) ชื่อตรงกับเรื่องเก่าจากชีตงานประจำปี → แสดงเฉพาะเรื่องใหม่ ไม่ให้ซ้ำ */const k1=t=>String(t||"").trim().split(/[\s(（]/)[0];L=L.filter(x=>!guL.some(g=>k1(g.title)===k1(x.title)||(g.kuay&&k1(g.kuay)===k1(x.title)))).concat(guL)}
 const out=L.map((x,n)=>{const c=el("div","card"),i=el("div","in"),bd=el("div","band tx-"+BT[cx]);bd.style.backgroundPosition=(n*37%100)+"% "+(n*53%100)+"%";c.append(covOf(x,bd));i.append(el("div","tag",x.tag),el("h3","",x.title));if(x.kuay&&String(x.title).indexOf(String(x.kuay).split(" • ")[0])<0){const kz=el("div","mute","ภาษากวย: "+x.kuay);kz.style.fontWeight="700";i.append(kz)}i.append(el("div","mute",x.sum));
   const ev0=x.ev;
-  if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute",ev0.life?"อ่านเรื่องนี้ →":"ดูเรื่องราวของงานนี้ →");m2.style.fontWeight="700";i.append(m2);{const vw=vwEl(ev0);if(vw){vw.classList.add("vwc");i.append(vw)}}}
+  if(ev0){const go2=()=>{TRK.ev("evt-open/"+ev0.k);openRead(ev0)};c.style.cursor="pointer";c.tabIndex=0;c.setAttribute("role","link");c.onclick=go2;c.onkeydown=ke=>{if(ke.key==="Enter")go2()};const m2=el("div","mute","อ่านเรื่องนี้ →");m2.style.fontWeight="700";i.append(m2);{const vw=vwEl(ev0);if(vw){vw.classList.add("vwc");i.append(vw)}}}
   c.append(i);return c});
 if(cx==="จาเอม"&&S==="ทั้งหมด"&&out.length){const o2=[];let last=-1;L.forEach((x,i)=>{const g=jgx(x);if(g!==last){last=g;const G=JG[g],h=el("div","ghd");h.style.setProperty("--g",G[3]);const t=el("span","gt");t.append(el("b","",G[1]+" "+G[0]));if(G[2])t.append(el("small","",G[2]));h.append(t);o2.push(h)}o2.push(out[i])});out.length=0;o2.forEach(x=>out.push(x))}
 if(hee){const lg=el("p","mute","☀️ สุริยคติ = วันที่ตายตัวตามปฏิทินสากล • 🌙 จันทรคติ = ตามข้างขึ้นข้างแรม วันที่เปลี่ยนทุกปี เรียงตามลำดับของปี");lg.style.gridColumn="1/-1";lg.style.margin="0";out.unshift(lg);
@@ -642,13 +642,16 @@ relVocab(P,sb,kvr)}
 
 /* v19: หมวดดุงเลิง — ทุกเรื่องจากทุกหัวข้อย่อยเรียงเป็นแถวเลื่อนแถวเดียว หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี (ป้ายสีส้มบนการ์ด = ไอคอนและชื่อหัวข้อย่อย) */
 function rDung(P){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
- if(lg){if(!window.__ylg0)window.__ylg0=lg.textContent;lg.textContent=P.subs.map(z=>z[1]+" "+z[2]).join(" • ")+" — เลื่อนดูได้";lg.hidden=false}
+ if(lg){if(!window.__ylg0)window.__ylg0=lg.textContent;lg.hidden=true}
  gr.hidden=true;gr.replaceChildren();L.hidden=false;const empty=[],cards=[];
  P.subs.forEach(sb=>{const items=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);if(!items.length){empty.push(sb[2]);return}
   items.forEach(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
-   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
+   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{c.className="ycov ph";c.textContent=sb[1]};im.src=evSrc(e.img);c.append(im);d.append(c)}
+   else d.append(el("div","ycov ph",sb[1]));
    const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("dl-open/"+o.k);openRead(o)};
-   i.append(el("span","w",sb[1]+" "+sb[2]),el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));i.append(a);
+   /* ลำดับบนการ์ด: รูป → ชื่อหมวด → ชื่อเรื่อง (ไทย (กวย)) → เนื้อหา → อ่านเรื่องนี้ */
+   let ti=String(e.title||"").replace(/\s*\++\s*$/,"").trim();const kz=String(e.kuay||"").split(" • ")[0].trim();if(kz&&ti.indexOf(kz)<0)ti+=" ("+kz+")";
+   i.append(el("span","w",sb[2]),el("h3","",ti));if(e.sum)i.append(el("p","",e.sum));i.append(a);
    {const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}
    d.append(i);d.style.cursor="pointer";d.onclick=()=>{TRK.ev("dl-open/"+o.k);openRead(o)};cards.push(d)})});
  L.replaceChildren(...(cards.length?cards:[waitCard(P,P.subs[0])]));
@@ -1160,7 +1163,7 @@ let EVTS=K["เซ (ฮีตคอง)"].map((r,i)=>mkEvt({id:"e"+(i+1),when:r[
 function rYear(){const L=$("yrl");if(!L)return;if(cf==="ดุงเลิง"&&LIFEOBJ.some(o=>o.src.cat==="ดุงเลิง"))return;
  L.replaceChildren(...EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
-  const a=el("a","go","ดูเรื่องราวของงานนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();TRK.ev("evt-open/"+o.k);openRead(o)};
+  const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();TRK.ev("evt-open/"+o.k);openRead(o)};
   i.append(el("span","w",(CALI[e.cal]?CALI[e.cal]+" ":"")+(e.when||"")),el("h3","",e.title));if(e.sum)i.append(el("p","",e.sum));i.append(a);{const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}d.append(i);return d}))}
 async function loadEvents(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;EVTS=L.map(mkEvt);rYear();try{if(typeof rCul==="function")rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/ev-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
@@ -1473,6 +1476,8 @@ function installApp(){
 .flatp .pq,.sec .sbody .pq{font-size:19px;line-height:1.8}
 .flatp ul{display:flex;flex-direction:column;gap:4px}
 .flatp li::marker{color:var(--b)}
+.yc .ycov{flex:none;aspect-ratio:3/2}.yc .ycov.ph{line-height:1;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#f3e6d4,#fbf6ee)}
+#yrl .yc p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 /* 5) ผลงานและผู้เขียน: ย้ายลงท้ายหน้า ปรับเป็นแถบเล็กเรียบ ๆ ไม่แย่งความสำคัญจากเรื่องของชุมชน */
 #works{--bnd:var(--b-a);padding-top:28px}
 #works .sh{border-bottom:1px solid var(--line)}
