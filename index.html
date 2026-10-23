@@ -536,7 +536,7 @@ const PIL=[
 {k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน เริ่มเล่าจากบ้านโพธิ์กระสังข์ หมู่ 2 ซึ่งเป็นหมู่บ้านเก่าแก่ ที่มาของชื่อตำบล ชื่อวัด และนามสกุลของผู้คน บางเรื่องเป็นของ 4 หมู่บ้านที่ใช้วัดโพธิ์กระสังข์ร่วมกัน (หมู่ 2 • หมู่ 9 โนนคูณ • หมู่ 11 แต้ • หมู่ 12 โพธิ์กระสังข์เหนือ) และในอนาคตจะขยายถึงทั้งตำบล 14 หมู่บ้าน",
  voc:["ครอบครัว","คนและสรรพนาม","ชาติพันธุ์และกลุ่มคนใกล้เคียง","อาชีพและงานชุมชน"],
  subs:[["กวยโพธิ์กระสังข์","🏘️","กวยโพธิ์กระสังข์","ชื่อและที่มา ที่ตั้ง ประวัติศาสตร์ ความเป็นอยู่วันนี้ และตระกูลเครือญาติ รวมในหน้าเดียว",null,["ชาติพันธุ์และกลุ่มคนใกล้เคียง","ครอบครัว"]],
-  ["ผู้นำ ผู้รู้ และกลุ่ม","🧓","ผู้นำ ผู้รู้ และกลุ่ม","พระสงฆ์และวัด ผู้นำ ปราชญ์ และกลุ่มในชุมชน",null,["คนและสรรพนาม","อาชีพและงานชุมชน","วัดและพุทธศาสนา"]]]},
+  ["ผู้นำและผู้รู้","🧓","ผู้นำและผู้รู้","ปูชนียบุคคล และผู้นำ ผู้รู้ในพื้นที่ แสดงเป็นการ์ดรายบุคคล",null,["คนและสรรพนาม","อาชีพและงานชุมชน","วัดและพุทธศาสนา"]]]},
 {k:"ดุงเลิง",ic:"🏡",col:"#9a5b12",mean:"บ้านเรือน อาคาร สถานที่",intro:"ดุงเลิง คือบ้านเรือนและที่อยู่อาศัยของชาวกวย ไม่ได้หมายถึงแค่ตัวบ้าน แต่รวมทุกอย่างที่เป็นอาคาร บ้านเรือน ศาลา และที่พัก",
  voc:["บ้านและเรือน","สถานที่ในชุมชน","สัตว์เลี้ยง","ครัวและภาชนะ"],
  subs:[["บ้านและเรือน","🏡","บ้านและเรือน","ลักษณะบ้านกวย การวางผัง ห้องและหน้าที่ วัสดุ และข้อห้ามเรื่องบ้าน",/(^|\s)ดุง(\s|$)|บ้านเรือน|ห้อง/,["บ้านและเรือน","ครัวและภาชนะ"]],
@@ -618,6 +618,7 @@ function rCul(){
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
  if(S==="ผลิตภัณฑ์ชุมชน"){const a=el("a","kvb");a.href="#/products";a.append(el("span","ke","🧶"),(()=>{const t=el("span","kx");t.append(el("b","","ของดีบ้านเรา"),el("small","","ผ้าไหม จักสาน ฝีมือคนบ้านโพธิ์กระสังข์ ใครทำ ราคาประมาณเท่าไหร่"));return t})(),el("span","go","ดูของดีทั้งหมด →"));a.onclick=e=>{e.preventDefault();go("home","products")};kvr.append(a)}
  if(isH){$("cgr").replaceChildren();try{rYear()}catch(_){}relVocab(P,sb,kvr);return}
+ if(P.k==="กอนกวย"&&S==="ผู้นำและผู้รู้"&&LIFEOBJ.length){rLead(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
  if(LIFEOBJ.length&&!(P.k==="กัวออ"&&S==="ละวาย")&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์")){rPage(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
  if(!cx){$("cgr").replaceChildren(...(S==="ผลิตภัณฑ์ชุมชน"||(P.k==="ปะนาย"&&S==="คลังคำศัพท์")?[]:[waitCard(P,sb)]));relVocab(P,sb,kvr);return}
 {
@@ -672,7 +673,21 @@ const FLAT_ORD={"ประวัติและที่มา":["กวยโ�
  "หมู่บ้านและผู้คน":["ชุมชนกวย 4 หมู่บ้านของวัดโพธิ์กระสังข์","ความหลากหลายของชาติพันธุ์ในชุมชนกวย","ชาวจีนในชุมชนโพธิ์กระสังข์","ลูกเขย สะใภ้ และคนที่มาอยู่ร่วมกัน","ภาษาและวัด หัวใจของความเป็นกวยโพธิ์กระสังข์"]};
 const FLAT_DUP=["ที่ตั้งและอาณาเขตของหมู่ 2","คำขวัญของหมู่บ้าน"];   /* ชื่อเรื่องเก่าที่ซ้ำกับ "คำขวัญและอาณาเขตของหมู่ 2" */
 const FLAT_META=/^หน้านี้เป็นหน้าเปิดของหมวด/;
-function isFlat(P,S){return P.k==="กอนกวย"&&S!=="ผู้รู้ ผู้นำ และผู้มีคุณูปการ"}
+function rLead(P,sb,L){const g=$("cgr");g.className="grid pgx lead";
+ if(!L.length){g.replaceChildren(waitCard(P,sb));return}
+ const pj=o=>/ปูชนีย/.test(o.src.tag||"")||(!/ผู้นำและผู้รู้ในพื้นที่/.test(o.src.tag||"")&&/พระครู|หลวงปู่|หลวงพ่อ/.test(o.src.title||""));
+ const G=[["ปูชนียบุคคล","🙏","ผู้ที่ชุมชนเคารพบูชา ทั้งที่ล่วงลับและยังอยู่","#8a3b5a",L.filter(pj)],["ผู้นำและผู้รู้ในพื้นที่","🧓","ผู้นำ ปราชญ์ และผู้รู้ของบ้านเรา","#1f7a6d",L.filter(o=>!pj(o))]];
+ const out=[];G.forEach(x=>{if(!x[4].length)return;const h=el("div","ghd");h.style.setProperty("--g",x[3]);const tt=el("span","gt");tt.append(el("b","",x[1]+" "+x[0]),el("small","",x[2]));h.append(tt);out.push(h);
+  x[4].forEach(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
+   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{c.className="ycov ph";c.textContent=x[1]};im.src=evSrc(e.img);c.append(im);d.append(c)}else d.append(el("div","ycov ph",x[1]));
+   i.append(el("div","tag",x[1]+" "+(e.tag||x[0])));
+   let ti=String(e.title||"").trim();const kz=String(e.kuay||"").split(" • ")[0].trim();if(kz&&ti.indexOf(kz)<0)ti+=" ("+kz+")";
+   i.append(el("h3","",ti));if(e.sum)i.append(el("p","",e.sum));
+   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("lead-open/"+o.k);openRead(o)};i.append(a);
+   const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}
+   d.append(i);d.style.cursor="pointer";d.onclick=()=>{TRK.ev("lead-open/"+o.k);openRead(o)};out.push(d)})});
+ g.replaceChildren(...out)}
+function isFlat(P,S){return P.k==="กอนกวย"&&S!=="ผู้นำและผู้รู้"}
 function rFlat(P,sb,L){const g=$("cgr");g.className="grid pgx flat";
  if(L.some(o=>o.src.title==="คำขวัญและอาณาเขตของหมู่ 2"))L=L.filter(o=>FLAT_DUP.indexOf(o.src.title)<0);
  if(!L.length){g.replaceChildren(waitCard(P,sb));return}
@@ -1499,6 +1514,7 @@ function installApp(){
 .hn button{gap:4px;line-height:1.4}
 @media(max-width:640px){.grid.pgx{font-size:17px;line-height:1.65}.flatp{gap:9px;padding:16px 16px 18px}.flatp .pq,.sec .sbody .pq{font-size:17px}.flatp h2,.sec .sbody h2{font-size:19px}}
 .yc .ycov{flex:none;aspect-ratio:3/2}.yc .ycov.ph{line-height:1;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#f3e6d4,#fbf6ee)}
+.lead{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}.lead .yc{flex:none;min-width:0}.lead .yc p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.lead .yc .tag{color:#b45f12;font-weight:700}
 #yrl .yc p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 /* 5) ผลงานและผู้เขียน: ย้ายลงท้ายหน้า ปรับเป็นแถบเล็กเรียบ ๆ ไม่แย่งความสำคัญจากเรื่องของชุมชน */
 #works{--bnd:var(--b-a);padding-top:28px}
