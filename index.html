@@ -1528,5 +1528,6 @@ function installApp(){
 #works .wtabs button small{display:none}
 #works .wtabs button:hover{transform:none;box-shadow:none}
 </style>
+<script>/* kp-countdown: แก้วันที่ใน data/countdown.json */(async()=>{try{const r=await fetch("data/countdown.json",{cache:"no-cache"}),L=await r.json(),t0=new Date();t0.setHours(0,0,0,0);const h=L.map(o=>[Math.round((new Date(o.date+"T00:00:00")-t0)/864e5),o]).filter(x=>x[0]>=0&&x[0]<=30).sort((a,b)=>a[0]-b[0]);if(!h.length)return;const b=document.createElement("div");b.style.cssText="margin:12px;padding:14px 16px;border-radius:14px;background:#efe6f7;color:#3b1f5c;border:1px solid #c9b3e0;font-size:18px;line-height:1.5";h.forEach(([n,o])=>{const d=document.createElement("div");d.textContent=(n?"อีก "+n+" วัน":"วันนี้")+" • "+o.title+" "+o.when;b.appendChild(d)});const p=document.getElementById("home")||document.querySelector("main")||document.body;p.insertBefore(b,p.firstChild)}catch(e){}})();</script>
 </body>
 </html>
