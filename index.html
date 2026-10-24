@@ -618,7 +618,7 @@ function rCul(){
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg){lg.hidden=!isH;if(window.__ylg0)lg.textContent=window.__ylg0}}
  /* v23: เสาจาเอมใช้แบบเดียวกับดุงเลิง (การ์ดเลื่อนดูทุกหัวข้อย่อยในแถวเดียว หัวข้อที่ยังไม่มีเรื่องรวมเป็นบรรทัด "กำลังรวบรวม") */
  /* v19: เสาดุงเลิง = ทุกหัวข้อย่อยจัดเป็นกรอบการ์ดเลื่อนดู (หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี) ไม่ต้องกดแท็บหัวข้อย่อย */
- if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(P.k)>=0&&LIFEOBJ.some(o=>o.src.cat===P.k)){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
+ if(P.k==="กอนกวย"&&(S==="ปูชนียบุคคล"||S==="ผู้นำและผู้รู้ในพื้นที่")&&LIFEOBJ.some(o=>o.src.cat===P.k&&(o.src.sub||"")===S)){const kv2=$("kvr");kv2.replaceChildren();VTK++;$("cgr").className="grid";rDung(P,[sb]);relVocab(P,sb,kv2);return} if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(P.k)>=0&&LIFEOBJ.some(o=>o.src.cat===P.k)){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
  {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
@@ -652,10 +652,10 @@ $("cgr").replaceChildren(...out)}
 relVocab(P,sb,kvr)}
 
 /* v19: หมวดดุงเลิง — ทุกเรื่องจากทุกหัวข้อย่อยเรียงเป็นแถวเลื่อนแถวเดียว หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี (ป้ายสีส้มบนการ์ด = ไอคอนและชื่อหัวข้อย่อย) */
-function rDung(P){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
+function rDung(P,only){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
  if(lg){if(!window.__ylg0)window.__ylg0=lg.textContent;lg.hidden=true}
  gr.hidden=true;gr.replaceChildren();L.hidden=false;const empty=[],cards=[],seen={},nk=t=>String(t||"").replace(/[\s()（）\-–•+.,]/g,"").toLowerCase();
- P.subs.forEach(sb=>{const items=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);if(!items.length){empty.push(sb[2]);return}
+ (only||P.subs).forEach(sb=>{const items=LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||P.subs[0][0])===sb[0]);if(!items.length){empty.push(sb[2]);return}
   const uniq=[];items.forEach(o=>{const e=o.src,ks=["t:"+nk(e.title)].concat(e.sum?["s:"+nk(e.sum).slice(0,70)]:[]);
    /* ตัดเรื่องซ้ำ: ชื่อเรื่องเดียวกันหรือคำโปรยเดียวกัน เก็บเรื่องที่มีรูปไว้ */
    const j=uniq.findIndex(u=>u.k.some(k=>ks.indexOf(k)>=0));if(j<0){uniq.push({o:o,k:ks});return}
@@ -1191,7 +1191,7 @@ const mkEvt=e=>{const b=[];
   r.append(el("p","mute","※ วันที่ตามปฏิทินกวยอาจต่างกันเล็กน้อยในแต่ละหมู่บ้าน ถามผู้นำหมู่บ้านหรือทีมงานทาง LINE ก่อนไปร่วมงาน"))};
  return{k:"ev-"+e.id,evt:1,src:e,cat:"เซกวย (ฮีตคอง)",title:e.title,date:"",meta:(e.cal&&CALI[e.cal]?CALI[e.cal]+" "+e.cal+" • ":"")+(e.when||"")+(e.kuay?" • "+e.kuay:""),body:b,extra:extra}};
 let EVTS=K["เซ (ฮีตคอง)"].map((r,i)=>mkEvt({id:"e"+(i+1),when:r[0],title:r[1],sum:r[2],cal:r[3]}));
-function rYear(){const L=$("yrl");if(!L)return;if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(cf)>=0&&LIFEOBJ.some(o=>o.src.cat===cf))return;
+function rYear(){const L=$("yrl");if(!L)return;if((["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(cf)>=0&&LIFEOBJ.some(o=>o.src.cat===cf)||(cf==="กอนกวย"&&(sf==="ปูชนียบุคคล"||sf==="ผู้นำและผู้รู้ในพื้นที่")&&LIFEOBJ.length>0)))return;
  L.replaceChildren(...EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();TRK.ev("evt-open/"+o.k);openRead(o)};
