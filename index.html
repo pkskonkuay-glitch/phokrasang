@@ -617,7 +617,7 @@ function rCul(){
  {const y=$("yrl"),g=$("cgr"),lg=$("ylg");if(y)y.hidden=!isH;if(g)g.hidden=isH;if(lg){lg.hidden=!isH;if(window.__ylg0)lg.textContent=window.__ylg0}}
  /* v23: เสาจาเอมใช้แบบเดียวกับดุงเลิง (การ์ดเลื่อนดูทุกหัวข้อย่อยในแถวเดียว หัวข้อที่ยังไม่มีเรื่องรวมเป็นบรรทัด "กำลังรวบรวม") */
  /* v19: เสาดุงเลิง = ทุกหัวข้อย่อยจัดเป็นกรอบการ์ดเลื่อนดู (หน้าตาเดียวกับ เซ (ฮีตคอง) ตลอดปี) ไม่ต้องกดแท็บหัวข้อย่อย */
- if((P.k==="ดุงเลิง"||P.k==="จาเอม")&&LIFEOBJ.some(o=>o.src.cat===P.k)){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
+ if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(P.k)>=0&&LIFEOBJ.some(o=>o.src.cat===P.k)){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
  {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
  if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
@@ -1190,7 +1190,7 @@ const mkEvt=e=>{const b=[];
   r.append(el("p","mute","※ วันที่ตามปฏิทินกวยอาจต่างกันเล็กน้อยในแต่ละหมู่บ้าน ถามผู้นำหมู่บ้านหรือทีมงานทาง LINE ก่อนไปร่วมงาน"))};
  return{k:"ev-"+e.id,evt:1,src:e,cat:"เซกวย (ฮีตคอง)",title:e.title,date:"",meta:(e.cal&&CALI[e.cal]?CALI[e.cal]+" "+e.cal+" • ":"")+(e.when||"")+(e.kuay?" • "+e.kuay:""),body:b,extra:extra}};
 let EVTS=K["เซ (ฮีตคอง)"].map((r,i)=>mkEvt({id:"e"+(i+1),when:r[0],title:r[1],sum:r[2],cal:r[3]}));
-function rYear(){const L=$("yrl");if(!L)return;if((cf==="ดุงเลิง"||cf==="จาเอม")&&LIFEOBJ.some(o=>o.src.cat===cf))return;
+function rYear(){const L=$("yrl");if(!L)return;if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์"].indexOf(cf)>=0&&LIFEOBJ.some(o=>o.src.cat===cf))return;
  L.replaceChildren(...EVTS.filter(o=>o.src.cal!=="ตามเหตุการณ์ชีวิต").map(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
   if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>c.remove();im.src=evSrc(e.img);c.append(im);d.append(c)}
   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();TRK.ev("evt-open/"+o.k);openRead(o)};
