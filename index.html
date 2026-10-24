@@ -532,6 +532,15 @@ function evFind(t){const k=String(t).split(" ")[0];try{return EVTS.find(o=>o.src
 const CRAFT={test:s=>/ผ้า|ไหม|ตานชิ|ย้อม|จักสาน|สมุนไพร|หมอยา/.test(String(s))};/* v23i: ตัด "ดนตรี|แคน" ออก เพราะดนตรีย้ายไปคองเกลย์ แล้ว (ไม่ให้เรื่องดุงเลิงที่พูดถึงดนตรี/หนองแคนถูกดึงไปวอนึงเต) */
 /* 7 เสาหลักของวิถีกวย (ลำดับตามเอกสาร "โครงสร้างหมวดหมู่ วิถีกวย"): หัวข้อย่อย = [รหัส, ไอคอน, ป้าย, คำอธิบาย, regex จัดเรื่องเข้าหัวข้อ, หมวดคำศัพท์ที่เกี่ยวข้อง (null = ใช้ของเสา)] */
 /* v15: เสา → หัวข้อ (จาเอมมีสูงสุด 7 หัวข้อ) → หน้าเดียวอ่านจบ  (ชื่อหัวข้อย่อย [0] ต้องตรงกับ LSUBS ใน life.gs และ KG ใน admin.html) */
+/* v24: โครงคองเกลย์/ผู้นำ ใช้ชุดเดียวกันทั้งหน้าเว็บและหลังบ้าน (คัดลอกตรงกัน อย่าแก้ที่เดียว) */
+const KG_INFO=/^(เกลย์\s*[ (]\s*การละเล่น|คองเกลย์\s*[ (]\s*ของเล่น|การแสดงและการเล่นประกอบพิธี)/;
+function kgSub(x,sb){sb=sb||"";if(sb==="ของเล่นทำมือ"||sb==="ดนตรีและเครื่องดนตรี"||sb==="ข้อมูลเบื้องต้น"||sb==="การละเล่นหลัก")return sb;return(KG_INFO.test(String(x.title||"").trim())||/^(เด็กๆ|รวมการละเล่น|หัวข้อที่เสนอ)$/.test(String(x.tag||"").trim()))?"ข้อมูลเบื้องต้น":"การละเล่นหลัก"}
+/* ชื่อเรื่องคองเกลย์ = ชื่อกวย (คำไทย) เช่น ฮ-เทิด (กระโดดสร้างบ้าน) */
+function kgTitle(x){const t=String(x.title||"").trim();if(/\(.+\)\s*$/.test(t))return t;const k=String(x.kuay||"").split(" • ")[0].trim();
+ if(k){if(t.indexOf(k+" ")===0)return k+" ("+t.slice(k.length).trim()+")";if(t.length>k.length+1&&t.slice(-(k.length+1))===" "+k)return k+" ("+t.slice(0,t.length-k.length-1).trim()+")"}
+ const m=/^(\S+)\s+การละเล่น(คนละเกม.+)$/.exec(t);if(m)return m[1]+" ("+m[2]+")";return t}
+/* ผู้นำและผู้รู้: ผู้นำท้องที่ → ปราชญ์/ผู้รู้ → ผู้ทำพิธี → คนอื่น ๆ → ผู้บันทึกเว็บ (อยู่ท้ายสุด) */
+function leadRank(x){const t=[x.title,x.tag,x.sum].join(" ");return /ผู้บันทึก|สื่อชุมชน/.test(t)?9:/ผู้ใหญ่บ้าน|กำนัน|นายก|อบต|ประธาน|ผู้นำท้องที่/.test(t)?1:/ปราชญ์|ผู้รู้|ผู้เฒ่า/.test(t)?2:/พราหมณ์|หมอ|ผู้ทำพิธี|แม่ชี/.test(t)?3:4}
 const PIL=[
 {k:"กอนกวย",ic:"👥",col:"#7a3f6b",mean:"ผู้คน",intro:"กอนกวย คือผู้คน เราคือใคร ใครเป็นผู้สืบทอดและรักษาเรื่องราวของชาวกวย ทุกเรื่องในเว็บนี้เล่าผ่านคน จึงเริ่มต้นที่ผู้เฒ่า ตระกูล และลูกหลาน เริ่มเล่าจากบ้านโพธิ์กระสังข์ หมู่ 2 ซึ่งเป็นหมู่บ้านเก่าแก่ ที่มาของชื่อตำบล ชื่อวัด และนามสกุลของผู้คน บางเรื่องเป็นของ 4 หมู่บ้านที่ใช้วัดโพธิ์กระสังข์ร่วมกัน (หมู่ 2 • หมู่ 9 โนนคูณ • หมู่ 11 แต้ • หมู่ 12 โพธิ์กระสังข์เหนือ) และในอนาคตจะขยายถึงทั้งตำบล 14 หมู่บ้าน",
  voc:["ครอบครัว","คนและสรรพนาม","ชาติพันธุ์และกลุ่มคนใกล้เคียง","อาชีพและงานชุมชน"],
@@ -567,10 +576,10 @@ const PIL=[
   ["ถนอมอาหารและของฝาก","🫙","ถนอมอาหารและของฝาก","ปลาร้า ปโฮะฮ์ กาเย๊าะอ์ มะม่วงดอง มะยมดอง ตามฤดูกาล",null,[]]]},
 {k:"คองเกลย์",ic:"🪁",col:"#9a4f1d",mean:"ของเล่นและการละเล่น",intro:"คองเกลย์ คือของเล่นและการละเล่นของเด็กกวย เล่นด้วยกัน ทำของเล่นเอง ใช้ของใกล้ตัว และมีคำกวยติดปากในเกม (เกลย์ = เล่น)",
  voc:["ดนตรีและการละเล่น"],
- subs:[["การละเล่นเป็นหมู่", "🤸", "การละเล่นเป็นหมู่", "เกมที่เล่นหลายคน ซ่อนแอบ กระโดด วิ่ง เปลี่ยนข้าง", null, ["ดนตรีและการละเล่น"]],
-  ["การละเล่นด้วยอุปกรณ์", "🎯", "การละเล่นด้วยอุปกรณ์", "เกมที่ใช้ของเล่น ยาง ไม้ ลูกแก้ว เม็ดมะขาม", null, ["ดนตรีและการละเล่น"]],
+ subs:[["ข้อมูลเบื้องต้น", "📖", "ข้อมูลเบื้องต้น", "ความหมายของคำและภาพรวม เกลย์ = เล่น คองเกลย์ = ของเล่น และการเล่นประกอบพิธี", null, ["ดนตรีและการละเล่น"]],
+  ["การละเล่นหลัก", "🤸", "การละเล่นหลัก", "การละเล่นแต่ละอย่าง ชื่อกวย (คำไทย) เช่น ฮ-เทิด (กระโดดสร้างบ้าน) พร้อมความหมายและวิธีเล่น", null, ["ดนตรีและการละเล่น"]],
   ["ของเล่นทำมือ", "🪁", "ของเล่นทำมือ", "ของเล่นที่เด็กทำเอง เช่น ว่าว (คแลง) หนังสติ๊ก (ตองยืด)", null, ["ดนตรีและการละเล่น"]],
-  ["ดนตรีและเครื่องดนตรี", "🎶", "ดนตรีและเครื่องดนตรี", "แคน ซอ กลอง ฆ้อง และดนตรีในพิธี เล่าตามจริงว่าปัจจุบันเหลือใครเล่นบ้าง", null, ["ดนตรีและการละเล่น"]]]},
+  ["ดนตรีและเครื่องดนตรี", "🎶", "ดนตรีและเครื่องดนตรี", "บันทึกตามจริงว่าปัจจุบันกวยโพธิ์กระสังข์ไม่มีเครื่องดนตรีและบทเพลงดั้งเดิมของตัวเอง ดนตรีในพิธี และคำกวยที่เกี่ยวกับดนตรี", null, ["ดนตรีและการละเล่น"]]]},
  {k:"ปะนาย",ic:"🗣️",col:"#1c4f7d",mean:"ภาษา",intro:"ปะนาย คือภาษา กวยพูด เล่า ร้อง และสื่อสารกันอย่างไร ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว",
  voc:["ทักทายและมารยาท","ประโยคที่ใช้บ่อย","คำกริยาที่ใช้บ่อย","การกระทำ","คำบอกลักษณะ","ร่างกาย","เวลาและวัน","ทิศทางและสถานที่","คำถามและคำชี้","ปริมาณและหน่วยวัด","กิจวัตรประจำวัน","ตำแหน่งและบุพบท","ตัวเลขและการนับ","คำเชื่อมและคำช่วย","การสื่อสารและเสียง","โรงเรียนและการเรียนรู้","เงินและการค้า","สี","อารมณ์และความรู้สึก","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน","เทคโนโลยีและของสมัยใหม่"],
  subs:[["คลังคำศัพท์","📚","คลังคำศัพท์","คำกวย อักษรไทย คำอ่าน เสียง และภาพ รวมไว้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย",null,null],
@@ -661,6 +670,7 @@ function rDung(P,only){const L=$("yrl"),lg=$("ylg"),gr=$("cgr");if(!L)return;
    /* ตัดเรื่องซ้ำ: ชื่อเรื่องเดียวกันหรือคำโปรยเดียวกัน เก็บเรื่องที่มีรูปไว้ */
    const j=uniq.findIndex(u=>u.k.some(k=>ks.indexOf(k)>=0));if(j<0){uniq.push({o:o,k:ks});return}
    if(!uniq[j].o.src.img&&e.img)uniq[j]={o:o,k:ks.concat(uniq[j].k)}});
+  if(sb[0]==="ผู้นำและผู้รู้ในพื้นที่")uniq.forEach((u,i)=>u.i=i),uniq.sort((p,q)=>leadRank(p.o.src)-leadRank(q.o.src)||p.i-q.i);
   uniq.forEach(u=>{const o=u.o,e=o.src;
    const d=el("div","yc"),i=el("div","in");
    if(e.img&&evOk(evSrc(e.img))){const c=el("div","ycov"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>{c.className="ycov ph";c.textContent=sb[1]};im.src=evSrc(e.img);c.append(im);d.append(c)}
@@ -683,6 +693,7 @@ const FLAT_META=/^หน้านี้เป็นหน้าเปิดข�
 function rLead(P,sb,L){const g=$("cgr");g.className="grid pgx lead";
  if(!L.length){g.replaceChildren(waitCard(P,sb));return}
  const pj=o=>/ปูชนีย/.test(o.src.tag||"")||(!/ผู้นำและผู้รู้ในพื้นที่/.test(o.src.tag||"")&&/พระครู|หลวงปู่|หลวงพ่อ/.test(o.src.title||""));
+ if(sb[0]==="ผู้นำและผู้รู้ในพื้นที่")L=L.map((o,i)=>({o:o,i:i})).sort((p,q)=>leadRank(p.o.src)-leadRank(q.o.src)||p.i-q.i).map(z=>z.o);
  const G=[[sb[0],sb[1],sb[3],sb[0]==="ปูชนียบุคคล"?"#8a3b5a":"#1f7a6d",L]];
  const out=[];G.forEach(x=>{if(!x[4].length)return;const h=el("div","ghd");h.style.setProperty("--g",x[3]);const tt=el("span","gt");tt.append(el("b","",x[1]+" "+x[0]),el("small","",x[2]));h.append(tt);out.push(h);
   x[4].forEach(o=>{const e=o.src,d=el("div","yc"),i=el("div","in");
@@ -1238,16 +1249,17 @@ function lnorm(x){if(!x)return x;let c=x.cat==="ดุงกวย"?"ดุง�
  if(c==="วอนึงเต"&&/^ดนตรี/.test(sb))c="คองเกลย์";   /* เรื่องเก่าที่ยังใช้หัวข้อ "วอนึงเต › ดนตรีและการละเล่น" ย้ายเข้าคองเกลย์ */
  if(OLDSUB[c]&&OLDSUB[c][sb])sb=OLDSUB[c][sb];
  if(c==="ดุงเลิง"&&!sb){if(CRAFT.test(t))c="วอนึงเต";else if(/ชุมชน|หมู่บ้าน/.test(t)&&!/ศาล|เญือะ/.test(t))c="กอนกวย"}
+ if(c==="คองเกลย์")sb=kgSub(x,sb);
  const P=PM[c];if(P&&!P.subs.some(z=>z[0]===sb))sb="";
  if(!sb&&P){const f=P.subs.find(z=>z[4]&&z[4].test(t));sb=f?f[0]:(c==="ดุงเลิง"?"บ้านและเรือน":c==="กัวออ"?"ละวาย":c==="จาเอม"?"วิถีนา":c==="คองเกลย์"?(/ดนตรี|แคน|ซอ|ฆ้อง/.test(t)?"ดนตรีและเครื่องดนตรี":/ว่าว|หนังสติ๊ก|ทำมือ|ของเล่น/.test(t)?"ของเล่นทำมือ":/ยาง|ลูกแก้ว|หมากเก็บ|ตีไม้|เม็ดมะขาม/.test(t)?"การละเล่นด้วยอุปกรณ์":"การละเล่นเป็นหมู่"):"")}
  if(c==="ดุงเลิง"&&sb==="ที่ศักดิ์สิทธิ์และธรรมชาติ"&&PLACES.test(x.title||""))sb="สถานที่ส่วนรวม";
- return Object.assign({},x,{cat:c,sub:sb,sum:lwait(x.sum),story:lwait(x.story)})}
+ return Object.assign({},x,{cat:c,sub:sb,title:c==="คองเกลย์"?kgTitle(x):x.title,sum:lwait(x.sum),story:lwait(x.story)})}
 /* v19: ที่เดียวกันแสดงใบเดียวต่อกลุ่ม (ต้องตรงกับ L_GROUPS ใน life.gs) + หัวข้อที่แอดมินเพิ่มเองจากหลังบ้าน */
 const LGRX=[["a",/รพ\.?\s?สต|โรงพยาบาลส่งเสริมสุขภาพตำบล/],["b",/ทนับพืด|ทนับพืด|ทนับพืด/],["c",/ลพังคีลย์|หนองแคน/],["d",/ศาลาประชาคม/],["e",/โรงเรียน(บ้าน)?โพธิ์กระสังข์/],["f",/^วัดโพธิ์กระสังข์(\s|\(|$)/]];
 function lDedupe(L){const sc=x=>String(x.story||"").length+(x.img?300:0)+(x.elder?300:0)+String(x.words||"").split("\n").filter(Boolean).length*20,by={};
  L.forEach(x=>{const g=LGRX.find(z=>z[1].test(String(x.title||"")));const k=x.cat+"|"+(g?g[0]:"t:"+String(x.title||"").replace(/\s+/g,"").toLowerCase());(by[k]=by[k]||[]).push(x)});
  const drop=new Set();Object.values(by).forEach(a=>{if(a.length<2)return;a.slice().sort((p,q)=>sc(q)-sc(p)).slice(1).forEach(x=>drop.add(x))});return L.filter(x=>!drop.has(x))}
-function lCustomSubs(cs){if(!cs)return;PIL.forEach(P=>{P.subs=P.subs.filter(z=>!z.cust);(cs[P.k]||[]).forEach(z=>{const a=[z.n,z.i||"🔖",z.n,z.d||"",null,null];a.cust=true;P.subs.push(a)})})}
+function lCustomSubs(cs){if(!cs)return;PIL.forEach(P=>{P.subs=P.subs.filter(z=>!z.cust);(cs[P.k]||[]).forEach(z=>{if(P.subs.some(q=>q[0]===z.n))return;const a=[z.n,z.i||"🔖",z.n,z.d||"",null,null];a.cust=true;P.subs.push(a)})})}
 async function loadLife(){if(!CFG.apiUrl)return;
  const use=L=>{if(!Array.isArray(L)||!L.length)return false;try{lCustomSubs(JSON.parse(localStorage.getItem("kp_lifesubs")||"null"))}catch(e){}L=lDedupe(L.map(lnorm));LIFEOBJ=L.map(mkLife);try{rCul()}catch(_){}try{homeRefresh()}catch(_){}if(location.hash.indexOf("#/read/lf-")===0&&$("v-read").classList.contains("hide"))readFrom(location.hash);return true};
  let had=false;try{had=use(JSON.parse(localStorage.getItem(LKEY)||"null"))}catch(e){}
@@ -1539,5 +1551,15 @@ function installApp(){
 #works .wtabs button:hover{transform:none;box-shadow:none}
 </style>
 <script>/* kp-countdown: แก้วันที่ใน data/countdown.json */(async()=>{try{const r=await fetch("data/countdown.json",{cache:"no-cache"}),L=await r.json(),t0=new Date();t0.setHours(0,0,0,0);const h=L.map(o=>[Math.round((new Date(o.date+"T00:00:00")-t0)/864e5),o]).filter(x=>x[0]>=0&&x[0]<=30).sort((a,b)=>a[0]-b[0]);if(!h.length)return;const b=document.createElement("div");b.style.cssText="margin:12px;padding:14px 16px;border-radius:14px;background:#efe6f7;color:#3b1f5c;border:1px solid #c9b3e0;font-size:18px;line-height:1.5";h.forEach(([n,o])=>{const d=document.createElement("div");d.textContent=(n?"อีก "+n+" วัน":"วันนี้")+" • "+o.title+" "+o.when;b.appendChild(d)});const p=document.getElementById("home")||document.querySelector("main")||document.body;p.insertBefore(b,p.firstChild)}catch(e){}})();</script>
+<style id="v24">
+/* v24: ท้ายหน้าและป้ายสีส้มอ่านชัดทุกอุปกรณ์ (ล็อกสีตัวอักษรเอง ไม่พึ่งโหมดมืดของเครื่อง) */
+:root{color-scheme:light only}
+footer #foot,footer #foot .fl1,footer #foot .fl2,footer #foot .fl3,footer #foot b,footer #foot span{color:#14332e!important}
+footer #foot a{color:#8a3500!important;text-decoration:underline}
+footer #foot a.adm{color:#14332e!important;text-decoration:none}
+.yc .w,.yc .in .w{color:#a84300}
+.kcol,.kcol *{color:#3d5a54}
+.mute{color:#3d5a54}
+</style>
 </body>
 </html>
