@@ -329,6 +329,29 @@ main{overflow-x:clip}
 .lay{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.lc{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card)}.lc b{font:700 16.5px Boon,system-ui,sans-serif}.lc small{color:var(--mute);font-size:14px}.lb{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}.lb button{font:inherit;font-weight:700;font-size:14.5px;padding:7px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:38px}.lb button:hover{border-color:#0e6b73;color:#0e6b73}
 .ks .ke{font-size:18px}
 </style>
+<style id="kp-v31">
+/* v31: แผนที่ Google ฝัง + หน้าปะนายแบบใหม่ */
+.gmap{margin:22px 0 6px}.gmap .gmh{margin:0 0 10px}
+.gmf{display:block;width:100%;height:360px;border:0;border-radius:16px;background:rgba(127,127,127,.08)}
+.gmb{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.gmc{font:inherit;font-size:15px;font-weight:600;padding:5px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:inherit;cursor:pointer}
+.gmc.on{background:#1f6f78;color:#fff;border-color:#1f6f78}
+.gmo{display:inline-block;margin-top:10px;padding:8px 16px;border-radius:999px;background:#1f6f78;color:#fff!important;text-decoration:none;font-weight:700;font-size:15px}
+.lg{margin:20px 0}.lg>h3{margin:0 0 10px}
+.lg-about{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.lg-about p{margin:0}
+.lg-fam{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.lg-fam li{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:rgba(28,79,125,.09);position:relative}
+.lg-fam li:not(:last-child)::after{content:"›";position:absolute;right:-11px;top:50%;transform:translateY(-50%);font-weight:800;font-size:18px;color:var(--mute)}
+.lg-fam small{font-size:12px;color:var(--mute)}.lg-fam b{font-size:16px}.lg-fam i{font-style:normal;font-size:13px;color:var(--mute)}
+.lg-gd{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.lg-c{border:1px solid var(--line);border-top:4px solid var(--b,#1c4f7d);border-radius:16px;background:var(--card);padding:14px 16px}
+.lg-s{font-size:34px;font-weight:800;line-height:1.15;color:var(--b,#1c4f7d)}
+.lg-r{margin:6px 0 10px;font-size:15px}
+.lg-x{background:rgba(28,79,125,.07);border-radius:12px;padding:8px 12px}
+.lg-x b{font-size:20px}.lg-x span{color:var(--mute)}.lg-x em{display:block;font-style:normal;font-size:14px;margin-top:2px}
+.lg-n{border-left:4px solid #b8860b;background:rgba(184,134,11,.09);padding:10px 14px;border-radius:0 12px 12px 0;font-size:15px;margin:14px 0 0}
+</style>
 <style id="kp-v30">
 /* v30: คลังคำศัพท์เรียบง่ายขึ้น + แผนที่หมุดถาวร */
 .kvb{background:var(--card)!important;color:inherit!important;border:1px solid var(--line)!important;border-radius:16px!important;box-shadow:0 1px 3px rgba(0,0,0,.06)!important}
@@ -599,7 +622,7 @@ const PIL=[
  subs:[["เพลงคนชายแดน", "🎤", "เพลงคนชายแดน", "เพลงใหม่ที่แต่งเนื้อร้องเอง แทรกคำกวยไว้ในเนื้อเพลง ดนตรีทำด้วย AI ฟังได้ในเพลย์ลิสต์ YouTube", null, ["ดนตรีและเพลง"]]]},
  {k:"ปะนาย",ic:"🗣️",col:"#1c4f7d",mean:"ภาษา",intro:"ปะนาย คือภาษา กวยพูด เล่า ร้อง และสื่อสารกันอย่างไร ภาษากวยคือหัวใจของวิถีกวย คำที่ใช้ในงานประเพณีและวิถีชีวิตทุกเรื่องอยู่ในคลังนี้ที่เดียว",
  voc:["ทักทายและมารยาท","ประโยคที่ใช้บ่อย","คำกริยาที่ใช้บ่อย","การกระทำ","คำบอกลักษณะ","ร่างกาย","เวลาและวัน","ทิศทางและสถานที่","คำถามและคำชี้","ปริมาณและหน่วยวัด","กิจวัตรประจำวัน","ตำแหน่งและบุพบท","ตัวเลขและการนับ","คำเชื่อมและคำช่วย","การสื่อสารและเสียง","โรงเรียนและการเรียนรู้","เงินและการค้า","สี","อารมณ์และความรู้สึก","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน","เทคโนโลยีและของสมัยใหม่"],
- subs:[["คลังคำศัพท์","📚","คลังคำศัพท์","คำกวย อักษรไทย คำอ่าน เสียง และภาพ รวมไว้ที่เดียว เลือกหมวดเพื่อดูคำและความหมาย",null,null],
+ subs:[["คลังคำศัพท์","📚","ภาษากวยและคำศัพท์","ที่มาของภาษา วิธีอ่านคำกวย และคลังคำศัพท์ที่เลือกดูตามหมวด",null,null],
   ["ประโยคและบทสนทนา","💬","ประโยคและบทสนทนา","ทักทาย ถามทุกข์สุข ขอความช่วยเหลือ และประโยคที่ใช้บ่อย",null,["ประโยคที่ใช้บ่อย","ทักทายและมารยาท","แจ้งเหตุและขอความช่วยเหลือ","ความรู้สึกและคำพูดในชีวิตประจำวัน"]],
   ["ภาษิต นิทาน","📜","ภาษิต นิทาน","คำพูดสอนใจ นิทานที่ผู้เฒ่าเล่า และปริศนาคำทาย พร้อมคำแปลและความหมาย",null,[]],
   ["คำเซ่นและคำเรียกขวัญ","🕯️","คำเซ่นและคำเรียกขวัญ","ถ้อยคำในพิธีและความหมายทีละบท",null,[]],
@@ -618,14 +641,28 @@ function csvRows(t){const R=[];let r=[],c="",q=false;t=String(t).replace(/^\uFEF
 let VCATS=null;
 function vocabCats(){if(VCATS)return Promise.resolve(VCATS);
  return fetch("kuy-vocab.csv").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const R=csvRows(t).slice(1),m=new Map();R.forEach(x=>{if(!x[0])return;if((x[8]||"").trim()==="ซ่อน")return;const o=m.get(x[0])||{cat:x[0],emo:x[1]||"🗣️",n:0};o.n++;m.set(x[0],o)});VCATS=[...m.values()];return VCATS}).catch(()=>[])}
-function rVocab(v){
- const a=el("a","kvb");a.href="vocab.html";a.append(el("span","ke","🗣️"),(()=>{const t=el("span","kx");t.append(el("b","","คลังคำศัพท์กวย"),el("small","","คำภาษากวยพร้อมคำแปลและเสียง จัดหมวดตามเสาเดียวกับหน้านี้"));return t})(),el("span","go","เปิดคำศัพท์ทั้งหมด →"));
- v.append(a);
- const W=(K["ภาษากวย"]||[]);if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำที่ควรรู้"),w);if(W.length>8){w.classList.add("col");const tb=el("button","vmore","ดูเพิ่ม ("+(W.length-8)+")");tb.type="button";tb.onclick=()=>{const c=w.classList.toggle("col");tb.textContent=c?"ดูเพิ่ม ("+(W.length-8)+")":"ย่อ"};v.append(tb)}}const dt=el("details","vinfo");dt.append(el("summary","","ℹ️ ทำไมบางคำจึงไม่มีคำกวย"),el("p","mute","คำใหม่อย่าง ขอบคุณ ธนาคาร โทรทัศน์ ชาวกวยใช้ทับศัพท์กับภาษาไทย จึงไม่มีคำกวยเฉพาะตัว คลังนี้ลงเฉพาะคำที่มีคำกวย"));v.append(dt)}
+function rLang(v){
+ const sec=(t,k)=>{const d=el("section","lg "+(k||""));if(t)d.append(el("h3","",t));return d};
+ const ab=sec("","lg lg-about");ab.className="lg-about lg";
+ ab.append(el("h3","","ภาษากวยโพธิ์กระสังข์"),el("p","","สำเนียงกวยโพธิ์กระสังข์ เป็นสำเนียงของคนไทยที่อาศัยอยู่ติดชายแดน มีสำเนียงคล้ายกับสำเนียงเขมร ซึ่งจัดอยู่ในหมวดหมู่เดียวกัน"));
+ const fam=el("ol","lg-fam");[["ตระกูลภาษา","ออสโตรเอเชียติก","Austroasiatic"],["สาขา","มอญ-เขมร","Mon-Khmer"],["กลุ่มภาษา","กะตู","Katuic"],["สำเนียงของเรา","กวยโพธิ์กระสังข์","ติดชายแดนไทย"]].forEach(a=>{const li=el("li");li.append(el("small","",a[0]),el("b","",a[1]),el("i","",a[2]));fam.append(li)});
+ ab.append(fam);
+ const gd=sec("อ่านคำกวยในเว็บนี้อย่างไร","lg-guide");const grid=el("div","lg-gd");
+ [["ฮ-","ตัว ฮ- นำหน้าคำ ให้อ่านเป็นเสียง ฮึน หรือ ฮือ ออกกึ่งในลำคอ","ฮ-ปลอน","วิ่ง","อ่านว่า ฮือปลอน หรือ ฮึนปลอน"],
+  ["ญ","ออกเสียงคล้าย ย ยุง ไม่ใช่ ย ยา ของลาว และไม่ใช่ ย ยักษ์ ของไทย จึงขอใช้ ญ แทนเพื่อให้เข้าใจ","เญาะ","เปรี้ยว",""],
+  ["อ์","เติม อ์ ท้ายคำ เพื่อบอกว่าเป็นเสียงสั้นตอนท้าย กึ่งการกระดกลิ้นกลับ ถ้าไม่มี อ์ จะอ่านเป็นเสียงยาว","ปลู๊อ์","เช่น กวย ปลู๊อ์ = คนหนุ่ม","อ่านว่า ปลู๊-อะ"],
+  ["ลย์","อ่านเหมือนการกระดกลิ้น มีทั้ง ล และ ย อยู่ด้วยกัน แต่ ย ไม่ออกเสียงเป็นของตัวเอง อ่านติดกัน ไม่ใส่สระ อะ มากเกินไป","กวย กโมลย์","","อ่านว่า กวย กับ กะโม-ละยะ (ละยะ = กระดกลิ้น)"]].forEach(g=>{
+  const c=el("div","lg-c");c.style.setProperty("--b",PM["ปะนาย"].col);const x=el("div","lg-x"),w=el("b","",g[2]);x.append(w);if(g[3])x.append(document.createTextNode(" "),el("span","",g[3].indexOf("เช่น")===0?"("+g[3]+")":"= "+g[3]));if(g[4])x.append(el("em","","▶ "+g[4]));
+  c.append(el("div","lg-s",g[0]),el("p","lg-r",g[1]),x);grid.append(c)});
+ gd.append(grid,el("p","lg-n","คำกวยที่ใช้ในเว็บนี้ ไม่ได้ยึดตามหลักภาษาศาสตร์แบบผู้รู้ อาศัยความเข้าใจของผู้เรียบเรียงเอง"));
+ const a=el("a","kvb");a.href="vocab.html";a.append(el("span","ke","📚"),(()=>{const t=el("span","kx");t.append(el("b","","คลังคำศัพท์กวย"),el("small","","คำกวยพร้อมคำแปล จัดหมวดตามหัวข้อ ค้นหาได้"));return t})(),el("span","go","เปิดคลังคำศัพท์ →"));
+ v.append(ab,gd,a);
+ const W=(K["ภาษากวย"]||[]);if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำเริ่มต้นที่ควรรู้"),w);if(W.length>8){w.classList.add("col");const tb=el("button","vmore","ดูเพิ่ม ("+(W.length-8)+")");tb.type="button";tb.onclick=()=>{const c=w.classList.toggle("col");tb.textContent=c?"ดูเพิ่ม ("+(W.length-8)+")":"ย่อ"};v.append(tb)}}
+ const dt=el("details","vinfo");dt.append(el("summary","","ℹ️ ทำไมบางคำจึงไม่มีคำกวย"),el("p","mute","คำใหม่อย่าง ขอบคุณ ธนาคาร โทรทัศน์ ชาวกวยใช้ทับศัพท์กับภาษาไทย จึงไม่มีคำกวยเฉพาะตัว คลังนี้ลงเฉพาะคำที่มีคำกวย"));v.append(dt)}
 let VTK=0;
 function relVocab(P,sb,box){const tk=++VTK,cats=sb[5]||P.voc;if(!cats.length)return;
  vocabCats().then(L=>{if(tk!==VTK)return;const m=new Map(L.map(c=>[c.cat,c])),it=cats.map(n=>m.get(n)).filter(Boolean);if(!it.length)return;
-  const tot=it.reduce((a,c)=>a+c.n,0),h=el("h3","","คำกวยที่เกี่ยวข้อง"),s=el("small","mute"," "+tot+" คำ"),g=el("div","vgrid");h.append(s);g.style.setProperty("--b",P.col);if(it.length>8){const tb=el("button","vmore","ดูทุกหมวด ("+it.length+")");tb.type="button";g.classList.add("col");tb.onclick=()=>{const c=g.classList.toggle("col");tb.textContent=c?"ดูทุกหมวด ("+it.length+")":"ย่อ"};h.append(tb)}
+  const tot=it.reduce((a,c)=>a+c.n,0),h=el("h3","",P.k==="ปะนาย"?"หมวดคำศัพท์พื้นฐาน":"คำกวยที่เกี่ยวข้อง"),s=el("small","mute"," "+tot+" คำ"),g=el("div","vgrid");h.append(s);g.style.setProperty("--b",P.col);if(it.length>8){const tb=el("button","vmore","ดูทุกหมวด ("+it.length+")");tb.type="button";g.classList.add("col");tb.onclick=()=>{const c=g.classList.toggle("col");tb.textContent=c?"ดูทุกหมวด ("+it.length+")":"ย่อ"};h.append(tb)}
   it.forEach(c=>{const t=el("a","vt");t.href="vocab.html#c/"+encodeURIComponent(c.cat);t.style.setProperty("--b",P.col);const x=el("span");x.append(el("b","",c.cat),el("small","",c.n+" คำ"));t.append(el("i","",c.emo),x);g.append(t)});
   box.append(h,g)})}
 function waitCard(P,sb){const w=el("div","kwait");w.style.gridColumn="1/-1";const a=ext(el("a","btn line","💬 ส่งเรื่องหรือภาพทาง LINE"),lineMsg("ส่งเรื่องเล่า/ภาพ: "+P.k+" › "+sb[2]));
@@ -648,7 +685,7 @@ function rCul(){
  if(P.k==="โพธิ์กระสังข์"&&(S==="ปูชนียบุคคล"||S==="ผู้นำและผู้รู้ในพื้นที่")&&LIFEOBJ.some(o=>o.src.cat===P.k&&(o.src.sub||"")===S)){const kv2=$("kvr");kv2.replaceChildren();VTK++;$("cgr").className="grid";rDung(P,[sb]);relVocab(P,sb,kv2);return} if(["ดุงเลิง","จาเอม","วอนึงเต","คองเกลย์","เพลง"].indexOf(P.k)>=0&&LIFEOBJ.some(o=>o.src.cat===P.k)){$("ksub").hidden=true;$("ssub").hidden=true;const kv=$("kvr");kv.replaceChildren();VTK++;$("cgr").className="grid";rDung(P);relVocab(P,[],kv);return}
  const kvr=$("kvr");kvr.replaceChildren();VTK++;$("cgr").className="grid";
  {const w=$("kwl"),H=LIFEOBJ.length?P.subs.filter(z=>visSubs(P).indexOf(z)<0):[];if(H.length){w.textContent="🌱 กำลังรวบรวม: "+H.map(z=>z[2]).join(" • ");w.hidden=false}else w.hidden=true}
- if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rVocab(kvr);
+ if(P.k==="ปะนาย"&&S==="คลังคำศัพท์")rLang(kvr);
  if(S==="ผลิตภัณฑ์ชุมชน"){const a=el("a","kvb");a.href="#/products";a.append(el("span","ke","🧶"),(()=>{const t=el("span","kx");t.append(el("b","","ของดีบ้านเรา"),el("small","","ผ้าไหม จักสาน ฝีมือคนบ้านโพธิ์กระสังข์ ใครทำ ราคาประมาณเท่าไหร่"));return t})(),el("span","go","ดูของดีทั้งหมด →"));a.onclick=e=>{e.preventDefault();go("home","products")};kvr.append(a)}
  if(isH){$("cgr").replaceChildren();try{rYear()}catch(_){}relVocab(P,sb,kvr);return}
  if(P.k==="โพธิ์กระสังข์"&&(S==="ปูชนียบุคคล"||S==="ผู้นำและผู้รู้ในพื้นที่")&&LIFEOBJ.length){rLead(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
@@ -765,17 +802,28 @@ const t=el("div","thumb"+(o.t?" t-"+o.t:""),play||o.t?"":(o.icon||""));if(o.t&&o
 if(o.img){t.classList.add("ph1");const im=new Image();im.alt="";im.loading="lazy";im.className="cover";im.onerror=()=>im.remove();im.src=o.img;t.append(im)}
 if(o.date)t.append(el("div","dbadge",o.date));if(play)t.append(el("div","play","▶"));
 const i=el("div","in");i.append(el("div","tag",o.cat),el("h3","",o.ltitle||o.title),el("div","mute",o.lsum||o.sum||""));if(o.body){const mr=el("div","more","อ่านต่อ →");i.append(mr);}{const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}}c.append(t,i);return c}
-function drawPins(pb){const mp=pb.querySelector(".pmmap"),ul=pb.querySelector(".pmlist");ul.replaceChildren();pb._pins.forEach(p=>{const li=el("li"),a=el("a","","📍 "+p[0]);a.href="https://www.google.com/maps?q="+p[1]+","+p[2];a.target="_blank";a.rel="noopener";li.append(a);ul.append(li)});
- const go=()=>{if(!window.L||pb._m)return;const m=L.map(mp,{scrollWheelZoom:false});pb._m=m;L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(m);const bs=[];pb._pins.forEach(p=>{const ll=[+p[1],+p[2]];bs.push(ll);const pp=el("div");pp.append(el("b","",p[0]),el("br"));const a=el("a","","นำทางใน Google Maps");a.href="https://www.google.com/maps?q="+p[1]+","+p[2];a.target="_blank";a.rel="noopener";pp.append(a);L.marker(ll).addTo(m).bindPopup(pp)});m.fitBounds(bs,{padding:[30,30],maxZoom:17});setTimeout(()=>{m.invalidateSize();m.fitBounds(bs,{padding:[30,30],maxZoom:17})},400)};
- if(window.L)return go();if(!document.getElementById("lfcss")){const c=el("link");c.id="lfcss";c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";document.head.append(c)}
- if(window.__lfj){window.__lfj.addEventListener("load",go);return}const j=el("script");window.__lfj=j;j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";j.onload=go;j.onerror=()=>{mp.textContent="โหลดแผนที่ไม่ได้ ใช้ลิงก์ด้านล่างแทน"};document.head.append(j)}
+/* v31: แผนที่ Google Maps ฝังในหน้าเรื่อง — บรรทัด @@ ชื่อ|ละติจูด,ลองจิจูด • @P (เหมือน @@) • @M ชื่อ|คำค้น (ค้นด้วยชื่อ ไม่ต้องมีพิกัด) • @MAP ลิงก์ Google My Maps (หลายหมุดในแผนที่เดียว)
+   หลายจุดในเรื่องเดียวกันรวมเป็นแผนที่เดียว แล้วมีปุ่มชื่อจุดสลับ */
+function gmSrc(q){return"https://www.google.com/maps?q="+encodeURIComponent(q)+"&z=16&hl=th&output=embed"}
+function gmOpen(q){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)}
+function gmPoint(r,name,q){let pb=r.querySelector(".gmap");if(!pb||pb._custom){pb=el("div","gmap");pb._pins=[];pb._i=0;r.append(pb)}pb._pins.push([name,q]);clearTimeout(pb._t);pb._t=setTimeout(()=>drawGMap(pb),0)}
+function gmCustom(r,u){const pb=el("div","gmap");pb._custom=u.replace("/maps/d/viewer","/maps/d/embed").replace("/maps/d/u/0/viewer","/maps/d/embed");pb._pins=[];r.append(pb);drawGMap(pb)}
+function drawGMap(pb){pb.replaceChildren();const P=pb._pins,fr=document.createElement("iframe");fr.className="gmf";fr.loading="lazy";fr.referrerPolicy="no-referrer-when-downgrade";fr.allowFullscreen=true;fr.title="แผนที่ Google Maps";
+ const op=el("a","gmo","เปิดใน Google Maps • นำทาง");op.target="_blank";op.rel="noopener";
+ pb.append(el("h3","gmh","📍 แผนที่"),fr);
+ if(pb._custom){fr.src=pb._custom;op.href=pb._custom.replace("/maps/d/embed","/maps/d/viewer");pb.append(op);return}
+ const show=i=>{pb._i=i;fr.src=gmSrc(P[i][1]);fr.title="แผนที่ "+P[i][0];op.href=gmOpen(P[i][1]);pb.querySelectorAll(".gmc").forEach((b,k)=>b.classList.toggle("on",k===i))};
+ if(P.length>1){const bar=el("div","gmb");P.forEach((p,i)=>{const b=el("button","gmc",p[0]);b.type="button";b.onclick=()=>show(i);bar.append(b)});pb.append(bar)}
+ pb.append(op);show(pb._i<P.length?pb._i:0)}
 function renderBody(r,o){let ul=null,vg=null;o.body.forEach(x=>{if(!x.startsWith("@V"))vg=null;
 if(x.startsWith("@V")){const v=x.slice(2).split("|").map(s=>s.trim());if(v.length>=3){if(!vg){vg=el("div","vstrip");r.append(vg)}const c=el("div","vch"+(v[3]==="main"?" main":""));c.append(el("small","",v[0]),el("b","",v[1]),el("span","",v[2]+" คน"));vg.append(c)}return}
 if(x.startsWith("@S")){const v=x.slice(2).split("|").map(s=>s.trim()).filter(Boolean);if(v.length){const g=el("div","step3");v.forEach((s,i)=>{const d=el("div");d.append(el("i","",String(i+1)),el("span","",s));g.append(d)});r.append(g)}ul=null;return}
 if(x.startsWith("@G")){const v=x.slice(2).split("|").map(s=>s.trim());if(v[0]&&v[1]){const p=el("p"),a=el("button","btn alt",v[0]+" →");a.type="button";a.style.margin="0";a.onclick=()=>go("home",v[1]);p.append(a);r.append(p)}ul=null;return}
-if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null; const pm=/^@P\s*(.+?)\s*\|\s*(-?\d{1,2}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)\s*$/.exec(x);if(pm){let pb=r.querySelector(".pinmap");if(!pb){pb=el("div","pinmap");pb._pins=[];pb.append(el("h3","","จุดสำคัญบนแผนที่"),el("div","pmmap"),el("ul","pmlist"));r.append(pb)}pb._pins.push([pm[1],pm[2],pm[3]]);clearTimeout(pb._t);pb._t=setTimeout(()=>drawPins(pb),0);return} const ml=/^@@\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);
-if(ml){const la=+ml[2],lo=+ml[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180){const c=el("div","pm"),q=la+","+lo,fr=document.createElement("iframe");fr.loading="lazy";fr.title="แผนที่ "+ml[1];fr.src="https://www.openstreetmap.org/export/embed.html?bbox="+[lo-.008,la-.005,lo+.008,la+.005].join(",")+"&layer=mapnik&marker="+q;const a=el("a","btn solid","เปิดใน Google Maps • นำทาง");a.href="https://www.google.com/maps?q="+q;a.target="_blank";a.rel="noopener";c.append(el("b","","📍 "+ml[1]),fr,a);r.append(c)}return}
+if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null; const pm=/^@[P@]\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);if(pm){const la=+pm[2],lo=+pm[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180)gmPoint(r,pm[1],la+","+lo);return}
+const gg=/^@MAP\s*(https:\/\/www\.google\.com\/maps\/\S+)\s*$/.exec(x);if(gg){gmCustom(r,gg[1]);return}
+const mm=/^@M(?!AP)\s*(.+?)\s*(?:\|\s*(.+?))?\s*$/.exec(x);if(mm){gmPoint(r,mm[1],mm[2]||mm[1]);return}
 const lk=/^@L\s*(.*?)\s*\|\s*(https?:\/\/\S+)\s*$/.exec(x);
+if(lk&&/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/.test(lk[2])){try{const q=decodeURIComponent(lk[2].split("query=")[1].split("&")[0]);gmPoint(r,(lk[1]||q).replace(/^[^\u0E00-\u0E7Fa-zA-Z0-9]+/,""),q)}catch(_){}return}
 if(lk){let box=r.querySelector(".rlinks");if(!box){box=el("div","rlinks");r.append(box)}if(box.children.length<3){let h2="";try{h2=new URL(lk[2]).hostname.replace(/^www\./,"")}catch(_){}const yt=/(^|\.)(youtube\.com|youtu\.be)$/.test(h2),fb=/(^|\.)(facebook\.com|fb\.watch|fb\.com)$/.test(h2);const a=el("a",yt?"yt":fb?"fb":"");a.href=lk[2];a.target="_blank";a.rel="noopener noreferrer";const ic=el("span","i",yt?"▶️":fb?"📘":"📰");const tx=el("span","",lk[1]||(yt?"ดูคลิปบน YouTube":fb?"เปิดใน Facebook":"เปิด "+(h2||"ลิงก์")));tx.append(el("small","",h2));a.append(ic,tx);a.addEventListener("click",()=>TRK.ev("extlink/"+o.k));box.append(a)}return}
 if(x.startsWith("@@"))return;
 const mi=/^!\[(.*?)\]\((\S+?)\)\s*$/.exec(x);if(mi&&okSrc(mi[2])){const f=el("figure","pf"),im=new Image();im.src=mi[2];im.alt=mi[1];im.loading="lazy";im.onerror=()=>f.remove();f.append(im);if(mi[1])f.append(el("figcaption","",mi[1]));r.append(f);return}
