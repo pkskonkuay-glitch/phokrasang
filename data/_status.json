@@ -1,1 +1,1 @@
-{"generatedAt":"2026-10-25T10:56:01.257Z","failed":[],"failedSince":{},"counts":{"content":20,"events":15,"products":9,"life":98,"vocab":2500}}
+{"generatedAt":"2026-10-25T11:14:08.161Z","failed":["content","life","vocab"],"failedSince":{"content":"2026-10-25T11:14:08.161Z","life":"2026-10-25T11:14:08.161Z","vocab":"2026-10-25T11:14:08.161Z"},"counts":{"content":20,"events":15,"products":9,"life":98,"vocab":2500}}
