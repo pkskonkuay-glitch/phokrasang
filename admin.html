@@ -49,7 +49,7 @@ mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}details.qe
 <label for="tk">รหัสผู้ดูแล</label><input id="tk" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
 <label class="opt"><input type="checkbox" id="sp"> แสดงรหัสที่พิมพ์ (ใช้ตรวจว่าพิมพ์ถูก)</label>
 <div class="msg warn hide" id="tw"></div>
-<label for="nm">ชื่อผู้ตรวจ (บันทึกในรายการ)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
+<label for="nm">ชื่อของคุณ (บันทึกว่าใครแก้รายการนี้ — จำเป็น)</label><input id="nm" placeholder="เช่น ขวัญชิต" autocomplete="name">
 <details id="adv"><summary>ตั้งค่าขั้นสูง: ลิงก์ Web App</summary><label for="api">ลิงก์ Web App (Apps Script)</label><input id="api" placeholder="https://script.google.com/macros/s/.../exec"></details>
 <p><button class="btn" id="go" style="width:100%">เข้าสู่ระบบ</button></p><div class="msg err hide" id="le"></div><div class="msg hide" id="li"></div></div>
 <div id="app" class="wrap hide"><div class="msg hide" id="bk" role="status"></div><nav class="mgs" aria-label="เมนูหลังบ้าน 5 กลุ่ม"><div class="mg"><span class="mgl">📨 รับเรื่องจากชาวบ้าน</span><button class="chip on" id="t1">เรื่องแจ้ง</button></div><div class="mg"><span class="mgl">📰 ข่าวและคลิป</span><button class="chip" id="t2">ข่าว • เรื่องเล่า • คลิป</button></div><div class="mg"><span class="mgl">🌾 เรื่องราวของชุมชน</span><button class="chip" id="t7">🌾 วิถีกวย 8 เสา</button><button class="chip" id="t4">🧶 ของดีบ้านเรา</button></div><div class="mg"><span class="mgl">🗣️ คลังภาษา</span><button class="chip" id="t3">คำศัพท์กวย</button></div><div class="mg"><span class="mgl">🩺 ตรวจและดูแล</span><button class="chip" id="t8">✅ ความสมบูรณ์ • เรื่องซ้ำ</button></div></nav><div id="p1"><p><input id="rq" placeholder="🔍 ค้นหาเรื่องแจ้ง: เลขเรื่อง หมวด รายละเอียด หน่วยงาน (เว้นวรรคเพื่อใส่หลายคำ)" aria-label="ค้นหาเรื่องแจ้ง"></p><div class="stats" id="st"></div><div class="stats" id="ft"></div><div id="ls"></div></div>
@@ -302,7 +302,7 @@ const chkTk=e=>{const v=$("tk").value,w=$("tw"),m=[];
 ["input","keydown","keyup"].forEach(t=>$("tk").addEventListener(t,chkTk));
 ["tk","nm","api"].forEach(i=>$(i).addEventListener("keydown",e=>{if(e.key==="Enter")$("go").click()}));
 $("go").onclick=async()=>{S.api=$("api").value.trim();S.tk=$("tk").value.trim();S.nm=$("nm").value.trim();const e=$("le"),g=$("go");e.classList.add("hide");$("li").classList.add("hide");
- if(!S.tk){e.textContent="⚠️ กรุณากรอกรหัสผู้ดูแล";e.classList.remove("hide");$("tk").focus();return}
+ if(!S.nm){e.textContent="⚠️ กรุณาใส่ชื่อของคุณ (เช่น ขวัญชิต) เพื่อบันทึกว่าใครเป็นผู้แก้ไข เมื่อมีแอดมินหลายคน";e.classList.remove("hide");$("nm").focus();return}  if(!S.tk){e.textContent="⚠️ กรุณากรอกรหัสผู้ดูแล";e.classList.remove("hide");$("tk").focus();return}
  if(!S.api){e.textContent="⚠️ ยังไม่มีลิงก์ Web App กรุณากรอกในช่อง “ตั้งค่าขั้นสูง”";e.classList.remove("hide");$("adv").open=true;return}
  g.disabled=true;g.textContent="กำลังตรวจสอบ…";
  try{const d=await call({action:"adminList"});if(!d.ok)throw new Error(d.error||"เข้าสู่ระบบไม่ได้");localStorage.setItem("api",S.api);localStorage.setItem("nm",S.nm);sessionStorage.setItem("api",S.api);sessionStorage.setItem("tk",S.tk);$("tk").value="";$("sp").checked=false;$("tk").type="password";start(d)}
@@ -979,33 +979,35 @@ async function loadK(){const box=$("kwtree");if(!KI.length)box.replaceChildren(e
 const kflt={all:["ทั้งหมด",()=>true],nostory:["ยังไม่มีเรื่องราว",x=>!x.it.story],nopic:["ยังไม่มีรูป",x=>!x.it.img],nolink:["ยังไม่มีลิงก์/คลิป",x=>!kn(x.it.links)],hid:["ซ่อนอยู่",x=>x.it.hide]};
 function kmatch(x,q){if(!q)return true;const it=x.it;return q.split(/\s+/).filter(Boolean).every(t=>[it.title,it.kuay,it.sum,it.story,it.tag,it.when,it.words].join(" ").toLowerCase().includes(t))}
 let KPIL="all";
-const kdone=x=>!x.it.hide&&!!x.it.story,kwaitI=x=>!x.it.story;
+const kdone=x=>!x.it.hide&&!!x.it.story,kplan=x=>!!x.it.hide&&!x.it.story&&x.it.tag==="หัวข้อที่เสนอ",kwaitI=x=>!x.it.story&&!kplan(x);
 function renderK(){if(!$("kwtree"))return;const q=$("kwq").value.trim().toLowerCase();
  /* ปุ่มเลือกเสา: การ์ด 6 ใบ + ทั้งหมด */
  const st=$("kwst");st.className="kwpil";st.replaceChildren();
  {const b=el("button","kwpc"+(KPIL==="all"?" on":""));b.type="button";b.style.setProperty("--pc","#5a4a3a");b.append(el("span","kwpi","🌾"),el("b","","ทั้งหมด"),el("small","","ภาพรวม 8 เสา"));b.onclick=()=>{KPIL="all";renderK()};st.append(b)}
  KP6.forEach(P=>{const ks=KG.filter(g=>g.top===P.k).map(g=>g.k),L=KI.filter(x=>ks.includes(kkey(x))),ok=L.filter(kdone).length,w=L.filter(kwaitI).length;
   const b=el("button","kwpc"+(KPIL===P.k?" on":""));b.type="button";b.style.setProperty("--pc",P.col);
-  b.append(el("span","kwpi",P.ic),el("b","",P.k),el("small","",P.mean),el("small","kwn","แสดงแล้ว "+ok+(w?" • รอเติม "+w:"")));b.onclick=()=>{KPIL=P.k;renderK()};st.append(b)});
+  b.append(el("span","kwpi",P.ic),el("b","",P.k),el("small","",P.mean),el("small","kwn","แสดงแล้ว "+ok+(w?" • รอเติม "+w:"")+(L.filter(kplan).length?" • ร่าง "+L.filter(kplan).length:"")));b.onclick=()=>{KPIL=P.k;renderK()};st.append(b)});
  $("kwft").replaceChildren(...Object.keys(kflt).map(k=>{const b=el("button","chip"+(KFl===k?" on":""),kflt[k][0]+" ("+KI.filter(kflt[k][1]).length+")");b.onclick=()=>{KFl=k;renderK()};return b}));
  NUMB={};const box=$("kwtree");box.replaceChildren();const single=KPIL!=="all"&&!q;
  KP6.filter(P=>!single||P.k===KPIL).forEach(P=>{const sec=el("div","kws"),h=el("div","kwtop2");h.style.setProperty("--pc",P.col);
-  h.append(el("span","kwpi",P.ic),el("b","",P.k),el("span","mute"," — "+P.mean));{const tb=el("button","btn o kwadd","➕ เพิ่มหัวข้อ");tb.type="button";tb.style.marginLeft="8px";tb.onclick=()=>ktOpen(P.k);h.append(tb)}if(P.k==="คองเกลย์"){const mb=el("button","btn o kwadd","🔧 จัดให้ตรงหน้าเว็บ (ครั้งเดียว)");mb.type="button";mb.style.marginLeft="8px";mb.onclick=kgMigrate;h.append(mb)}sec.append(h);
+  h.append(el("span","kwpi",P.ic),el("b","",P.k),el("span","mute"," — "+P.mean));{const tb=el("button","btn o kwadd","➕ เพิ่มหัวข้อ");tb.type="button";tb.style.marginLeft="8px";tb.onclick=()=>ktOpen(P.k);h.append(tb)}if(P.k==="โพธิ์กระสังข์"){const cb=el("button","btn o kwadd","🧹 ล้างหัวข้อร่างที่เลิกใช้");cb.type="button";cb.style.marginLeft="8px";cb.title="ย้ายหัวข้อร่างที่ไม่มีเนื้อหาไปถังขยะ (กู้คืนได้) เรื่องที่เขียนแล้วไม่ถูกแตะ";cb.onclick=async()=>{if(!confirm("จะย้ายหัวข้อร่างของ โพธิ์กระสังข์ ที่ยังว่าง (ไม่มีเรื่องราว รูป คำศัพท์ ลิงก์) ไปถังขยะ\nเรื่องที่เขียนแล้วหรือแสดงบนเว็บแล้วจะไม่ถูกแตะ และกู้คืนได้จากแท็บถังขยะวิถีชีวิตกวยในชีต\n\nดำเนินการ?"))return;cb.disabled=true;try{const u=await call({action:"adminLifePlanClean"});if(!u.ok){alert("⚠️ "+(u.error||"ไม่สำเร็จ"));cb.disabled=false;return}alert("เรียบร้อย ✅ ย้ายไปถังขยะ "+(u.cleaned||0)+" หัวข้อ");loadK()}catch(x){alert("⚠️ "+x.message);cb.disabled=false}};h.append(cb)}if(P.k==="คองเกลย์"){const mb=el("button","btn o kwadd","🔧 จัดให้ตรงหน้าเว็บ (ครั้งเดียว)");mb.type="button";mb.style.marginLeft="8px";mb.onclick=kgMigrate;h.append(mb)}sec.append(h);
   if(single)sec.append(el("p","mute kwint",P.intro));
   KG.filter(g=>g.top===P.k).forEach(g=>{
    if(g.kind==="link"){const r=el("div","kwlink"),bt=el("button","btn o",g.btn+" →");bt.type="button";bt.onclick=()=>tab(g.tab);r.append(el("b","",g.ico+" "+g.name+" "),el("span","mute",g.desc+" "),bt);sec.append(r);return}
    if(g.loose&&!KI.some(x=>kkey(x)===g.k))return;
-   const L=KI.filter(x=>kkey(x)===g.k).sort(ksortFn(g)),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q));
-   if(q&&!F.length)return;
+   const L0=KI.filter(x=>kkey(x)===g.k).sort(ksortFn(g)),L=L0.filter(x=>!kplan(x)),PL=L0.filter(kplan),F=L.filter(x=>kflt[KFl][1](x)&&kmatch(x,q)),FP=(KFl==="all"||KFl==="hid"||KFl==="nostory")?PL.filter(x=>kmatch(x,q)):[];
+   if(q&&!F.length&&!FP.length)return;
    const d=el("details","kwg");d.style.setProperty("--pc",P.col);d.open=!!(q||KFl!=="all"||single||g.k===(KOPEN||""));
    const w=L.filter(kwaitI).length,s=el("summary","kwsub");
-   s.append(el("b","",g.ico+" "+g.name+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง"+(w?" • รอเติม "+w:"")+") "+g.desc));
+   s.append(el("b","",g.ico+" "+g.name+" "),el("span","mute","("+(F.length===L.length?L.length:F.length+"/"+L.length)+" เรื่อง"+(w?" • รอเติม "+w:"")+(PL.length?" • ร่าง "+PL.length:"")+") "+g.desc));
    const add=el("button","btn o kwadd","➕ เพิ่มเรื่อง");add.type="button";add.onclick=e=>{e.preventDefault();e.stopPropagation();kopen(null,g.k)};s.append(" ",add);
    if(g.custom){const db=el("button","btn o kwadd","🗑 ลบหัวข้อนี้");db.type="button";db.style.color="#c93b2f";db.onclick=e=>{e.preventDefault();e.stopPropagation();ktDel(P.k,g.sub)};s.append(" ",db),s.append(el("span","badge g","หัวข้อที่เพิ่มเอง"))}
    d.append(s);
    if(g.guide&&g.guide.length){const gd=el("details","kwguide"),gs=el("summary","","💡 หัวข้อนี้ควรมีอะไร"),ul=el("ul");g.guide.forEach(t=>ul.append(el("li","",t)));gd.append(gs,ul);d.append(gd)}
    if(!F.length)d.append(el("p","mute kwemp",L.length?"ไม่พบเรื่องที่ตรงกับตัวกรอง":"ยังไม่มีเรื่องในหัวข้อนี้ กด “➕ เพิ่มเรื่อง” ได้เลย"));
-   F.forEach(x=>d.append(krow(x,(NUMB[P.k]||0)+L.indexOf(x)+1)));NUMB[P.k]=(NUMB[P.k]||0)+L.length;sec.append(d)});box.append(sec)});
+   F.forEach(x=>d.append(krow(x,(NUMB[P.k]||0)+L.indexOf(x)+1)));NUMB[P.k]=(NUMB[P.k]||0)+L.length;
+    if(FP.length){const pd=el("details","kwplan"),ps=el("summary","","💡 หัวข้อร่างที่ยังไม่ได้เขียน ("+FP.length+") — ยังไม่แสดงบนเว็บ ไม่ต้องทำก็ได้");pd.style.cssText="margin:8px 0 2px;padding:6px 10px;background:#fffbea;border:1px dashed #e2c46a;border-radius:10px";ps.style.cssText="cursor:pointer;font-size:.92em;color:#7a5a00";pd.append(ps);FP.forEach(x=>pd.append(krow(x,0)));d.append(pd)}
+    sec.append(d)});box.append(sec)});
  if(q&&!box.children.length)box.append(el("p","mute","ไม่พบเรื่องที่ตรงกับคำค้น"));
  kvoc();kimpR()}
 let KOPEN="";
@@ -1021,12 +1023,12 @@ async function kgMigrate(){const L=FL.filter(it=>it.cat==="คองเกลย
 
 function krow(x,n){const it=x.it,r=el("div","kwr"),h=el("div","kwrh");h.append(el("b","",(n?n+". ":(it.ord?it.ord+". ":""))+(it.cat==="คองเกลย์"?kgTitle(it):it.title)));
  if(it.kuay)h.append(el("span","mute"," · "+it.kuay));
- if(x.store==="ev"){if(it.cal)h.append(el("span","badge",(it.cal==="สุริยคติ"?"☀️ ":it.cal==="จันทรคติ"?"🌙 ":"🧵 ")+it.cal));if(it.when)h.append(el("span","badge",it.when))}else if(it.tag)h.append(el("span","badge",it.tag));
- if(it.hide)h.append(el("span","badge r","ซ่อนอยู่"));if(!it.story)h.append(el("span","badge","รอเติมเรื่อง"));if(x.store==="lf"&&kdupSet().has(String(it.id)))h.append(el("span","badge r","⚠️ ซ้ำ — ไม่แสดงบนเว็บ (ไปแท็บ ความสมบูรณ์ • เรื่องซ้ำ เพื่อรวม)"));
+ if(x.store==="ev"){if(it.cal)h.append(el("span","badge",(it.cal==="สุริยคติ"?"☀️ ":it.cal==="จันทรคติ"?"🌙 ":"🧵 ")+it.cal));if(it.when)h.append(el("span","badge",it.when))}else if(it.tag&&it.tag!=="หัวข้อที่เสนอ")h.append(el("span","badge",it.tag));
+ if(x.store==="lf"&&kplan(x))h.append(el("span","badge","💡 หัวข้อร่าง"));else{if(it.hide)h.append(el("span","badge r","ซ่อนอยู่"));if(!it.story)h.append(el("span","badge","รอเติมเรื่อง"))}if(x.store==="lf"&&kdupSet().has(String(it.id)))h.append(el("span","badge r","⚠️ ซ้ำ — ไม่แสดงบนเว็บ (ไปแท็บ ความสมบูรณ์ • เรื่องซ้ำ เพื่อรวม)"));
  if(it.home==="hero"||it.home==="latest")h.append(el("span","badge g","🏠 หน้าแรก"));
  r.append(h);if(it.sum)r.append(el("div","mute kwsum",it.sum.slice(0,120)));
  const miss=[];if(!it.story)miss.push("เรื่องราว");if(!it.img)miss.push("รูป");
- r.append(el("div","mute kwm","📖 "+(it.story?"มี":"—")+"  📷 "+kimgs(it).length+"/5  🔗 "+kn(it.links)+"  🗣️ "+kn(it.words)+(miss.length?"   • ขาด: "+miss.join(", "):"")));
+ r.append(el("div","mute kwm","📖 "+(it.story?"มี":"—")+"  📷 "+kimgs(it).length+"/5  🔗 "+kn(it.links)+"  🗣️ "+kn(it.words)+(miss.length?"   • ขาด: "+miss.join(", "):"")+(x.store==="lf"&&it.by&&it.by!=="เริ่มต้น"?"   ✏️ แก้ล่าสุดโดย "+it.by+(it.upd?" • "+String(it.upd).slice(0,16):""):"")));
  const row=el("div","kwb"),mk=(t,c,f)=>{const b=el("button","btn "+c,t);b.type="button";b.onclick=f;return b};
  const mv=async d=>{const u=await call({action:x.store==="ev"?"adminEventMove":"adminLifeMove",id:it.id,dir:d});if(!u.ok)alert("⚠️ "+u.error);KOPEN=kkey(x);loadK()};
  const sv=x.store==="ev"?esave:fsave;
