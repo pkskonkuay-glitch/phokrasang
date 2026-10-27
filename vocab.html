@@ -206,6 +206,7 @@ function searchView(){const q=norm(QS),L=E.filter(e=>vis(e)&&norm(e.th+e.kuy+e.n
 function hlWord(w){const n=[...document.querySelectorAll("#v .w")].find(x=>x.dataset.kuy===w||x.dataset.th===w);if(n){n.classList.add("hl");n.scrollIntoView({block:"center",behavior:"smooth"})}}
 const VCAL={"ดนตรีและการละเล่น": "การละเล่นและของเล่น", "ความเชื่อและพิธีกรรม": "ความเชื่อ พิธีกรรม เหตุการณ์ในชีวิต", "ชาติพันธุ์และกลุ่มคนใกล้เคียง": "คนและกลุ่มคน", "สัตว์น้ำและปลา": "สัตว์ป่า นก แมลง สัตว์น้ำ", "ที่ดินและแหล่งน้ำ": "ป่า ที่ดิน แหล่งน้ำ", "คนและสรรพนาม": "คนและกลุ่มคน", "สถานที่ในชุมชน": "สถานที่ ป่าชุมชน และศาลปู่ตา", "จักสานและเครื่องมือ": "จักสาน เครื่องมือ วัสดุ", "เกษตรและการทำนา": "การทำนา ฤดูกาล เกษตร", "ครอบครัว": "ครอบครัวและเครือญาติ", "บ้านและเรือน": "บ้านเรือนและครัว", "สัตว์เลี้ยง": "สัตว์เลี้ยงและช้าง", "สัตว์ป่าและแมลง": "สัตว์ป่า นก แมลง สัตว์น้ำ", "ผ้าไหมและการทอ": "ผ้าไหม การทอ ย้อมสี"};/* v34: ชื่อหมวดที่ใช้ในชีตเรื่อง (ช่อง vcat) ที่ไม่ตรงกับหมวดในคลังคำ → พาไปหมวดที่ใกล้เคียงที่สุด */
 function route(){let h="",hw="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}
+ if(h.indexOf("q/")===0&&!QS.trim()){QS=h.slice(2);$("q").value=QS;try{history.replaceState(null,"",location.pathname)}catch(e){}}
  if(QS.trim()){searchView();return}
  if(h.indexOf("c/")===0){let c=h.slice(2);const i=c.indexOf("~");if(i>=0){hw=c.slice(i+1);c=c.slice(0,i)}if(!E.some(e=>e.cat===c)&&VCAL[c])c=VCAL[c];
   if(hw&&!E.some(e=>e.cat===c&&vis(e)&&(e.th===hw||e.kuy===hw))){const f=E.find(e=>vis(e)&&(e.kuy===hw||e.th===hw));if(f)c=f.cat}

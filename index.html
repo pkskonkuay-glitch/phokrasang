@@ -366,6 +366,28 @@ h3:has(>.vmore){display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .vmore{margin-left:auto;font:inherit;font-size:14px;font-weight:700;color:#1f6f78;background:transparent;border:1px solid currentColor;border-radius:999px;padding:3px 14px;cursor:pointer}
 .vw+.vmore{display:block;margin:10px 0 0}
 .vinfo{margin:16px 0 4px;font-size:14px;color:var(--mute)}.vinfo summary{cursor:pointer}
+/* v33: หน้าปะนาย — ค้นหา/คำ/หมวดขึ้นก่อน คำอธิบายพับเก็บ */
+.pn-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:2px 0 10px}
+.pn-q{display:flex;flex:1 1 280px;gap:8px;margin:0}
+.pn-q input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.pn-q .pn-btn{margin:0;border:0;cursor:pointer;font-family:inherit}
+.pn-all{font-weight:700;font-size:15px;color:#1f6f78;text-decoration:none;white-space:nowrap}
+.pn-cnt{flex-basis:100%;font-size:13.5px;margin:0}
+.pn-lang>h3,.pn-cat>h3{font-size:18px;margin:16px 0 8px;padding-top:0;border-top:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px}
+.vgrid.pn-cats{display:flex!important;flex-wrap:wrap;gap:8px!important}
+.vgrid.pn-cats .vt{flex:0 1 auto;padding:6px 13px;border-radius:999px;border-left-width:1px;box-shadow:none;gap:6px}
+.vgrid.pn-cats .vt i{font-size:17px}
+.vgrid.pn-cats .vt span{flex-direction:row;align-items:baseline;gap:6px}
+.vgrid.pn-cats .vt b{font-size:14px;font-weight:600}
+.vgrid.pn-cats .vt small{font-size:12px}
+.vgrid.pn-cats.col .vt:nth-child(n+9){display:flex}
+.vgrid.pn-cats.col .vt:nth-child(n+13){display:none}
+.pn-gd2{margin:14px 0 0;border-top:1px solid var(--line);padding-top:8px}
+.pn-gd2>summary{cursor:pointer;font-weight:700;font-size:15.5px;padding:4px 0}
+.pn-gd2>p{margin:8px 0;line-height:1.7}
+.pn-sym{margin-left:8px;font-weight:600;color:var(--mute);letter-spacing:2px}
+.pn-gd2 .pn-r{padding:10px 0}
+
 .pinmap{margin:22px 0 6px}.pmmap{height:340px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:rgba(127,127,127,.08)}
 .pmlist{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:10px 0 0}.pmlist a{display:inline-block;padding:5px 12px;border-radius:999px;background:rgba(47,154,143,.12);text-decoration:none;font-size:15px;font-weight:600;color:inherit}
 </style>
@@ -601,29 +623,41 @@ function csvRows(t){const R=[];let r=[],c="",q=false;t=String(t).replace(/^\uFEF
  if(c!==""||r.length){r.push(c);R.push(r)}return R}
 let VCATS=null;
 function vocabCats(){if(VCATS)return Promise.resolve(VCATS);
- return fetch("kuy-vocab.csv").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const R=csvRows(t).slice(1),m=new Map();R.forEach(x=>{if(!x[0])return;if((x[8]||"").trim()==="ซ่อน")return;const o=m.get(x[0])||{cat:x[0],emo:x[1]||"🗣️",n:0};o.n++;m.set(x[0],o)});VCATS=[...m.values()];return VCATS}).catch(()=>[])}
+ /* v33: ใช้ข้อมูลชุดเดียวกับ vocab.html (data/vocab.json จากชีต) ก่อน — ไฟล์ CSV เก่ายังใช้ชื่อหมวดชุดเดิม ทำให้หมวดส่วนใหญ่ไม่ขึ้น */
+ return fetch("data/vocab.json").then(r=>r.ok?r.json():Promise.reject()).then(d=>{const L=d&&(d.items||d);if(!Array.isArray(L)||!L.length)return Promise.reject();const m=new Map();L.forEach(e=>{if(!e||!e.cat||!e.kuy||e.hide)return;const o=m.get(e.cat)||{cat:e.cat,emo:e.emo||"🗣️",n:0};o.n++;m.set(e.cat,o)});VCATS=[...m.values()];return VCATS}).catch(()=>vocabCatsCsv())}
+function vocabCatsCsv(){return fetch("kuy-vocab.csv").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const R=csvRows(t).slice(1),m=new Map();R.forEach(x=>{if(!x[0])return;if((x[8]||"").trim()==="ซ่อน")return;const o=m.get(x[0])||{cat:x[0],emo:x[1]||"🗣️",n:0};o.n++;m.set(x[0],o)});VCATS=[...m.values()];return VCATS}).catch(()=>[])}
 function rLang(v){
- /* v32: หน้าภาษา = หัวข้อ + คำอธิบายเรียบ ๆ ไม่ทำเป็นกล่อง */
- const S1=(t,x)=>{const d=el("div","pn-s");d.append(el("h3","",t));if(x)d.append(el("p","",x));return d};
- const ab=S1("ภาษากวยโพธิ์กระสังข์","สำเนียงกวยโพธิ์กระสังข์ เป็นสำเนียงของคนไทยที่อาศัยอยู่ติดชายแดน มีสำเนียงคล้ายกับสำเนียงเขมร ซึ่งจัดอยู่ในหมวดหมู่เดียวกัน");
- const fam=el("dl","pn-fam");[["ตระกูลภาษา","ออสโตรเอเชียติก","Austroasiatic"],["สาขา","มอญ-เขมร","Mon-Khmer"],["กลุ่มภาษา","กะตู","Katuic"],["สำเนียงของเรา","กวยโพธิ์กระสังข์","ติดชายแดนไทย"]].forEach(a=>{const r=el("div"),d=el("dd","",a[1]);d.append(el("i","",a[2]));r.append(el("dt","",a[0]),d);fam.append(r)});
- ab.append(fam);
- const gd=S1("อ่านคำกวยในเว็บนี้อย่างไร","คำกวยในเว็บนี้เขียนด้วยอักษรไทย มีเครื่องหมายและตัวอักษรที่ควรรู้ 4 แบบ");const grid=el("dl","pn-gd");
+ /* v33: หน้าปะนาย = ค้นหา → คำเริ่มต้น → หมวดคำศัพท์ทั้งหมด ขึ้นก่อน คำอธิบายภาษา/วิธีอ่านพับเก็บไว้ท้ายหน้า */
+ v.classList.add("pn-lang");
+ const top=el("div","pn-top"),f=el("form","pn-q"),inp=el("input"),go=el("button","pn-btn","ค้นหา");
+ f.setAttribute("role","search");inp.type="search";inp.placeholder="🔍 ค้นหาคำกวย หรือคำไทย";inp.setAttribute("aria-label","ค้นหาคำศัพท์");inp.autocomplete="off";go.type="submit";
+ f.onsubmit=e=>{e.preventDefault();const q=inp.value.trim();location.href="vocab.html"+(q?"#q/"+encodeURIComponent(q):"")};
+ f.append(inp,go);
+ const all=el("a","pn-all","เปิดคลังคำศัพท์ทั้งหมด →");all.href="vocab.html";
+ const cnt=el("small","mute pn-cnt","");
+ top.append(f,all,cnt);v.append(top);
+ vocabCats().then(L=>{const n=L.reduce((a,c)=>a+c.n,0);if(n)cnt.textContent="มีคำกวยแล้ว "+n.toLocaleString("th-TH")+" คำ ใน "+L.length+" หมวด"});
+ const W=(K["ภาษากวย"]||[]);
+ if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำเริ่มต้นที่ควรรู้"),w);
+  if(W.length>8){w.classList.add("col");const tb=el("button","vmore","ดูเพิ่ม ("+(W.length-8)+")");tb.type="button";tb.onclick=()=>{const c=w.classList.toggle("col");tb.textContent=c?"ดูเพิ่ม ("+(W.length-8)+")":"ย่อ"};v.append(tb)}}
+ const cat=el("div","pn-cat");cat.id="pncat";v.append(cat);
+ const gd=el("details","pn-gd2"),gs=el("summary","","🔤 วิธีอ่านคำกวยในเว็บนี้ ");gs.append(el("span","pn-sym","ฮ-  ญ  อ์  ลย์"));
+ const grid=el("dl","pn-gd");
  [["ฮ-","ตัว ฮ- นำหน้าคำ ให้อ่านเป็นเสียง ฮึน หรือ ฮือ ออกกึ่งในลำคอ","ฮ-ปลอน","วิ่ง","อ่านว่า ฮือปลอน หรือ ฮึนปลอน"],
   ["ญ","ออกเสียงคล้าย ย ยุง ไม่ใช่ ย ยา ของลาว และไม่ใช่ ย ยักษ์ ของไทย จึงขอใช้ ญ แทนเพื่อให้เข้าใจ","เญาะ","เปรี้ยว",""],
   ["อ์","เติม อ์ ท้ายคำ เพื่อบอกว่าเป็นเสียงสั้นตอนท้าย กึ่งการกระดกลิ้นกลับ ถ้าไม่มี อ์ จะอ่านเป็นเสียงยาว","ปลู๊อ์","เช่น กวย ปลู๊อ์ = คนหนุ่ม","อ่านว่า ปลู๊-อะ"],
   ["ลย์","อ่านเหมือนการกระดกลิ้น มีทั้ง ล และ ย อยู่ด้วยกัน แต่ ย ไม่ออกเสียงเป็นของตัวเอง อ่านติดกัน ไม่ใส่สระ อะ มากเกินไป","กวย กโมลย์","","อ่านว่า กวย กับ กะโม-ละยะ (ละยะ = กระดกลิ้น)"]].forEach(g=>{
   const r=el("div","pn-r"),d=el("dd"),x=el("p","pn-ex");x.append(el("b","",g[2]));if(g[3])x.append(document.createTextNode(" "),el("span","",g[3].indexOf("เช่น")===0?"("+g[3]+")":"= "+g[3]));if(g[4])x.append(el("em","",g[4]));
   d.append(el("p","",g[1]),x);r.append(el("dt","",g[0]),d);grid.append(r)});
- gd.append(grid,el("p","pn-n","คำกวยที่ใช้ในเว็บนี้ ไม่ได้ยึดตามหลักภาษาศาสตร์แบบผู้รู้ อาศัยความเข้าใจของผู้เรียบเรียงเอง"));
- const a=S1("คลังคำศัพท์กวย","คำกวยพร้อมคำแปล จัดหมวดตามหัวข้อ ค้นหาได้");const ak=el("a","pn-btn","เปิดคลังคำศัพท์ →");ak.href="vocab.html";a.append(ak);
- v.classList.add("pn-lang");v.append(ab,gd,a);
- const W=(K["ภาษากวย"]||[]);if(W.length){const w=el("div","vw");W.forEach(x=>{const s=el("span");s.append(el("b","",x[1]),x[2]);w.append(s)});v.append(el("h3","","คำเริ่มต้นที่ควรรู้"),w);if(W.length>8){w.classList.add("col");const tb=el("button","vmore","ดูเพิ่ม ("+(W.length-8)+")");tb.type="button";tb.onclick=()=>{const c=w.classList.toggle("col");tb.textContent=c?"ดูเพิ่ม ("+(W.length-8)+")":"ย่อ"};v.append(tb)}}
- const dt=el("details","vinfo");dt.append(el("summary","","ℹ️ ทำไมบางคำจึงไม่มีคำกวย"),el("p","mute","คำใหม่อย่าง ขอบคุณ ธนาคาร โทรทัศน์ ชาวกวยใช้ทับศัพท์กับภาษาไทย จึงไม่มีคำกวยเฉพาะตัว คลังนี้ลงเฉพาะคำที่มีคำกวย"));v.append(dt)}
+ gd.append(gs,grid,el("p","pn-n","คำกวยที่ใช้ในเว็บนี้ ไม่ได้ยึดตามหลักภาษาศาสตร์แบบผู้รู้ อาศัยความเข้าใจของผู้เรียบเรียงเอง"));
+ const ab=el("details","pn-gd2");ab.append(el("summary","","ℹ️ เกี่ยวกับภาษากวยโพธิ์กระสังข์"),el("p","","สำเนียงกวยโพธิ์กระสังข์ เป็นสำเนียงของคนไทยที่อาศัยอยู่ติดชายแดน มีสำเนียงคล้ายกับสำเนียงเขมร ซึ่งจัดอยู่ในหมวดหมู่เดียวกัน"));
+ const fam=el("dl","pn-fam");[["ตระกูลภาษา","ออสโตรเอเชียติก","Austroasiatic"],["สาขา","มอญ-เขมร","Mon-Khmer"],["กลุ่มภาษา","กะตู","Katuic"],["สำเนียงของเรา","กวยโพธิ์กระสังข์","ติดชายแดนไทย"]].forEach(a=>{const r=el("div"),d=el("dd","",a[1]);d.append(el("i","",a[2]));r.append(el("dt","",a[0]),d);fam.append(r)});
+ ab.append(fam,el("p","pn-n","ทำไมบางคำจึงไม่มีคำกวย: คำใหม่อย่าง ขอบคุณ ธนาคาร โทรทัศน์ ชาวกวยใช้ทับศัพท์กับภาษาไทย จึงไม่มีคำกวยเฉพาะตัว คลังนี้ลงเฉพาะคำที่มีคำกวย"));
+ v.append(gd,ab)}
 let VTK=0;
-function relVocab(P,sb,box){const tk=++VTK,cats=sb[5]||P.voc;if(!cats.length)return;
- vocabCats().then(L=>{if(tk!==VTK)return;const m=new Map(L.map(c=>[c.cat,c])),it=cats.map(n=>m.get(n)).filter(Boolean);if(!it.length)return;
-  const tot=it.reduce((a,c)=>a+c.n,0),h=el("h3","",P.k==="ปะนาย"?"หมวดคำศัพท์พื้นฐาน":"คำกวยที่เกี่ยวข้อง"),s=el("small","mute"," "+tot+" คำ"),g=el("div","vgrid");h.append(s);g.style.setProperty("--b",P.col);if(it.length>8){const tb=el("button","vmore","ดูทุกหมวด ("+it.length+")");tb.type="button";g.classList.add("col");tb.onclick=()=>{const c=g.classList.toggle("col");tb.textContent=c?"ดูทุกหมวด ("+it.length+")":"ย่อ"};h.append(tb)}
+function relVocab(P,sb,box){const tk=++VTK,AL=!!(box&&box.id==="pncat"),cats=AL?[]:(sb[5]||P.voc);if(!AL&&!cats.length)return;
+ vocabCats().then(L=>{if(tk!==VTK)return;const m=new Map(L.map(c=>[c.cat,c])),it=AL?L.slice().sort((a,b)=>b.n-a.n):cats.map(n=>m.get(n)).filter(Boolean);if(!it.length)return;
+  const tot=it.reduce((a,c)=>a+c.n,0),h=el("h3","",P.k==="ปะนาย"?"หมวดคำศัพท์":"คำกวยที่เกี่ยวข้อง"),s=el("small","mute"," "+tot+" คำ"),g=el("div","vgrid"+(AL?" pn-cats":""));h.append(s);g.style.setProperty("--b",P.col);if(it.length>(AL?12:8)){const tb=el("button","vmore","ดูทุกหมวด ("+it.length+")");tb.type="button";g.classList.add("col");tb.onclick=()=>{const c=g.classList.toggle("col");tb.textContent=c?"ดูทุกหมวด ("+it.length+")":"ย่อ"};h.append(tb)}
   it.forEach(c=>{const t=el("a","vt");t.href="vocab.html#c/"+encodeURIComponent(c.cat);t.style.setProperty("--b",P.col);const x=el("span");x.append(el("b","",c.cat),el("small","",c.n+" คำ"));t.append(el("i","",c.emo),x);g.append(t)});
   box.append(h,g)})}
 function waitCard(P,sb){const w=el("div","kwait");w.style.gridColumn="1/-1";const a=ext(el("a","btn line","💬 ส่งเรื่องหรือภาพทาง LINE"),lineMsg("ส่งเรื่องเล่า/ภาพ: "+P.k+" › "+sb[2]));
@@ -651,7 +685,7 @@ function rCul(){
  if(isH){$("cgr").replaceChildren();try{rYear()}catch(_){}relVocab(P,sb,kvr);return}
  if(P.k==="โพธิ์กระสังข์"&&S==="บุคคลสำคัญ"&&LIFEOBJ.length){rLead(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
  if(LIFEOBJ.length&&!(P.k==="กัวออ"&&S==="ละวาย")&&!(P.k==="ปะนาย"&&S==="คลังคำศัพท์")){rPage(P,sb,LIFEOBJ.filter(o=>o.src.cat===P.k&&(o.src.sub||"")===S));relVocab(P,sb,kvr);return}
- if(!cx){$("cgr").replaceChildren(...(S==="ผลิตภัณฑ์ชุมชน"||(P.k==="ปะนาย"&&S==="คลังคำศัพท์")?[]:[waitCard(P,sb)]));relVocab(P,sb,kvr);return}
+ if(!cx){$("cgr").replaceChildren(...(S==="ผลิตภัณฑ์ชุมชน"||(P.k==="ปะนาย"&&S==="คลังคำศัพท์")?[]:[waitCard(P,sb)]));relVocab(P,sb,(P.k==="ปะนาย"&&$("pncat"))||kvr);return}
 {
 const BT={"ชีต":"silk","เซ (ฮีตคอง)":"plaid","ละวาย":"silk","ดุงเลิง":"bead","กัวออ":"silk","จาเอม":"plaid"};
 /* หมวดฮีตคอง = ปฏิทินงานประจำปีจากชีต "งานประจำปี" ที่เดียว (เรียงลำดับตามที่แอดมินจัด) หมวดอื่นใช้การ์ดในโค้ด แต่ถ้ามีงานชื่อตรงกันในชีตจะเปิดหน้าเรื่องราวให้ */
