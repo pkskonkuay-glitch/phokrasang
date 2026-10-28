@@ -134,6 +134,22 @@ function page(it) {
   // ===== ข้อ 14: ส่งออกข้อมูลเป็นไฟล์นิ่ง data/*.json (หน้าเว็บใช้สำรองเมื่อ Apps Script ช้า/ล่ม) =====
   const dump = (name, j) => { if (j) fs.writeFileSync(path.join(dd, name + ".json"), JSON.stringify(j)); };
   names.forEach(k => dump(k, got[k]));
+  // ===== คลังย้อนหลัง data/archive/<กลุ่ม>.json — เพิ่มอย่างเดียว ไม่ลบ (เรื่องที่ถูกถอดจากหลังบ้านจะถูกทำเครื่องหมาย gone แต่ยังอยู่ ตรวจย้อนหลังได้ ลิงก์เดิมเปิดได้) =====
+  const archKeys = new Set();
+  ["content", "events", "products", "life"].forEach(name => {
+    const j = got[name]; const ap = path.join(dd, "archive"); fs.mkdirSync(ap, { recursive: true });
+    const fp = path.join(ap, name + ".json"); const A = readJson(path.join("data", "archive"), name + ".json") || { items: {} }; A.items = A.items || {};
+    const pre = name === "events" ? "ev-" : name === "products" ? "p-" : name === "life" ? "lf-" : "c";
+    if (j) {
+      const t = new Date().toISOString().slice(0, 10), live = new Set();
+      list(j).forEach(x => { const id = String(x.id); live.add(id); const o = A.items[id]; A.items[id] = Object.assign({ first: (o && o.first) || t }, o && o.into ? { into: o.into } : {}, { item: x }); });
+      Object.keys(A.items).forEach(id => { if (!live.has(id) && !A.items[id].gone) A.items[id].gone = t; });
+      A._note = "คลังย้อนหลัง เพิ่มอย่างเดียว ไม่ลบ • gone = วันที่ถูกถอดจากหลังบ้าน • into = เรื่องที่รวมเข้าไป (ลิงก์เก่าจะพาไปเรื่องนั้น)";
+      const out = JSON.stringify(A); let cur = ""; try { cur = fs.readFileSync(fp, "utf8"); } catch (_) {}
+      if (cur !== out) fs.writeFileSync(fp, out);
+    }
+    Object.keys(A.items).forEach(id => archKeys.add(pre + id + ".html"));
+  });
   // ===== sitemap.xml =====
   const today = new Date().toISOString().slice(0, 10);
   const lm = d => { const m = String(d || "").match(/^\d{4}-\d{2}-\d{2}/); return m ? m[0] : today; };
@@ -153,9 +169,10 @@ function page(it) {
   const dir = path.join(__dirname, "s"); fs.mkdirSync(dir, { recursive: true });
   const keep = new Set(items.map(i => i.k + ".html"));
   // ลบหน้าที่ไม่มีในข้อมูลแล้ว "เฉพาะกลุ่มที่ดึงข้อมูลสำเร็จรอบนี้" (กลุ่มไหนดึงไม่ได้ เก็บหน้าเก่าของกลุ่มนั้นไว้ ไม่ลบมั่ว)
+  // v28: หน้าของเรื่องที่อยู่ในคลังย้อนหลัง (data/archive) ก็ไม่ถูกลบเช่นกัน — เนื้อหาคงอยู่ตลอดไป
   // หน้ารหัสเรื่องเริ่มต้น (n*/a*/l-*) ไม่ถูกลบเลย เพราะลิงก์ที่แชร์ไปแล้วต้องเปิดได้ตลอด
   const okGroup = f => f.startsWith("ev-") ? !!e : f.startsWith("p-") ? !!p : f.startsWith("lf-") ? !!lf : /^c\d/.test(f) ? !!c : false;
-  fs.readdirSync(dir).filter(f => f.endsWith(".html") && !keep.has(f) && okGroup(f)).forEach(f => fs.unlinkSync(path.join(dir, f)));
+  fs.readdirSync(dir).filter(f => f.endsWith(".html") && !keep.has(f) && !archKeys.has(f) && okGroup(f)).forEach(f => fs.unlinkSync(path.join(dir, f)));
   items.forEach(it => fs.writeFileSync(path.join(dir, it.k + ".html"), page(it)));
   console.log("สร้างหน้าแชร์ " + items.length + " เรื่อง");
   finish();
