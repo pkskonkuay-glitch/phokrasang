@@ -1320,8 +1320,10 @@ async function loadEvents(){if(!CFG.apiUrl)return;
   if(d&&d.ok&&Array.isArray(d.items)&&(STAMP("evt"),use(d.items))){try{localStorage.setItem(EKEY,JSON.stringify(d.items))}catch(e){}}}catch(e){}}
 /* ===== วิถีชีวิตกวย: หน้าอ่านของแต่ละเรื่อง (ดุงเลิง / กัวออ / จาเอม) ===== */
 const mkLife=e=>{const b=[];
- [[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].forEach(x=>{if(x[0]&&evOk(evSrc(x[0])))b.push("!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")")});
- const st=evLines(e.story);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));
+ const IM=[[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].filter(x=>x[0]&&evOk(evSrc(x[0]))).map(x=>"!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")");
+ const st=evLines(e.story),mk=st.findIndex(x=>/^@IMG2-5\s*$/.test(x));   /* v29: บรรทัด @IMG2-5 ในเรื่องราว = ภาพแรกอยู่ต้นเรื่อง ภาพที่ 2–5 ไปอยู่ตรงบรรทัดนั้น (ไม่ใส่ = ภาพทั้งหมดอยู่ต้นเรื่องเหมือนเดิม) */
+ if(mk>=0){if(IM[0])b.push(IM[0]);st.forEach((x,i)=>{if(i===mk)IM.slice(1).forEach(y=>b.push(y));else b.push(x)})}
+ else{IM.forEach(y=>b.push(y));(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x))}
  if(e.who)b.push("**เกี่ยวข้องกับ:** "+e.who);
  const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ควรรู้");tp.forEach(x=>b.push("• "+x))}
  if(!b.length)b.push(e.title);
