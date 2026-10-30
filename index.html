@@ -394,6 +394,7 @@ h3:has(>.vmore){display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pinmap{margin:22px 0 6px}.pmmap{height:340px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:rgba(127,127,127,.08)}
 .pmlist{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:10px 0 0}.pmlist a{display:inline-block;padding:5px 12px;border-radius:999px;background:rgba(47,154,143,.12);text-decoration:none;font-size:15px;font-weight:600;color:inherit}
 </style>
+<style id="v32">.read p.opn{font-weight:700;font-size:22px;line-height:1.75;margin:12px 0 20px}@media(max-width:520px){.read p.opn{font-size:20px}}</style>
 </head>
 <body>
 <header><div class="bar">
@@ -843,11 +844,11 @@ function drawGMap(pb){pb.replaceChildren();const P=pb._pins,fr=document.createEl
  const show=i=>{pb._i=i;fr.src=gmSrc(P[i][1]);fr.title="แผนที่ "+P[i][0];op.href=gmOpen(P[i][1]);pb.querySelectorAll(".gmc").forEach((b,k)=>b.classList.toggle("on",k===i))};
  if(P.length>1){const bar=el("div","gmb");P.forEach((p,i)=>{const b=el("button","gmc",p[0]);b.type="button";b.onclick=()=>show(i);bar.append(b)});pb.append(bar)}
  pb.append(op);show(pb._i<P.length?pb._i:0)}
-function renderBody(r,o){let ul=null,vg=null;o.body.forEach(x=>{if(!x.startsWith("@V"))vg=null;
+function renderBody(r,o,ld0){let ul=null,vg=null,ld=ld0?0:1;o.body.forEach(x=>{if(!x.startsWith("@V"))vg=null;
 if(x.startsWith("@V")){const v=x.slice(2).split("|").map(s=>s.trim());if(v.length>=3){if(!vg){vg=el("div","vstrip");r.append(vg)}const c=el("div","vch"+(v[3]==="main"?" main":""));c.append(el("small","",v[0]),el("b","",v[1]),el("span","",v[2]+" คน"));vg.append(c)}return}
-if(x.startsWith("@S")){const v=x.slice(2).split("|").map(s=>s.trim()).filter(Boolean);if(v.length){const g=el("div","step3");v.forEach((s,i)=>{const d=el("div");d.append(el("i","",String(i+1)),el("span","",s));g.append(d)});r.append(g)}ul=null;return}
+if(x.startsWith("@S")){ld=1;const v=x.slice(2).split("|").map(s=>s.trim()).filter(Boolean);if(v.length){const g=el("div","step3");v.forEach((s,i)=>{const d=el("div");d.append(el("i","",String(i+1)),el("span","",s));g.append(d)});r.append(g)}ul=null;return}
 if(x.startsWith("@G")){const v=x.slice(2).split("|").map(s=>s.trim());if(v[0]&&v[1]){const p=el("p"),a=el("button","btn alt",v[0]+" →");a.type="button";a.style.margin="0";a.onclick=()=>go("home",v[1]);p.append(a);r.append(p)}ul=null;return}
-if(x.startsWith("• ")){if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null; const pm=/^@[P@]\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);if(pm){const la=+pm[2],lo=+pm[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180)gmPoint(r,pm[1],la+","+lo);return}
+if(x.startsWith("• ")){ld=1;if(!ul){ul=el("ul");r.append(ul)}ul.append(el("li","",x.slice(2)));return}ul=null; const pm=/^@[P@]\s*(.+?)\s*\|\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)\s*$/.exec(x);if(pm){const la=+pm[2],lo=+pm[3];if(Math.abs(la)<=90&&Math.abs(lo)<=180)gmPoint(r,pm[1],la+","+lo);return}
 const gg=/^@MAP\s*(https:\/\/www\.google\.com\/maps\/\S+)\s*$/.exec(x);if(gg){gmCustom(r,gg[1]);return}
 const mm=/^@M(?!AP)\s*(.+?)\s*(?:\|\s*(.+?))?\s*$/.exec(x);if(mm){gmPoint(r,mm[1],mm[2]||mm[1]);return}
 const lk=/^@L\s*(.*?)\s*\|\s*(https?:\/\/\S+)\s*$/.exec(x);
@@ -855,12 +856,12 @@ if(lk&&/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/.test(lk[2])){
 if(lk){let box=r.querySelector(".rlinks");if(!box){box=el("div","rlinks");r.append(box)}if(box.children.length<3){let h2="";try{h2=new URL(lk[2]).hostname.replace(/^www\./,"")}catch(_){}const yt=/(^|\.)(youtube\.com|youtu\.be)$/.test(h2),fb=/(^|\.)(facebook\.com|fb\.watch|fb\.com)$/.test(h2);const a=el("a",yt?"yt":fb?"fb":"");a.href=lk[2];a.target="_blank";a.rel="noopener noreferrer";const ic=el("span","i",yt?"▶️":fb?"📘":"📰");const tx=el("span","",lk[1]||(yt?"ดูคลิปบน YouTube":fb?"เปิดใน Facebook":"เปิด "+(h2||"ลิงก์")));tx.append(el("small","",h2));a.append(ic,tx);a.addEventListener("click",()=>TRK.ev("extlink/"+o.k));box.append(a)}return}
 if(x.startsWith("@@"))return;
 const mi=/^!\[(.*?)\]\((\S+?)\)\s*$/.exec(x);if(mi&&okSrc(mi[2])){const f=el("figure","pf"),im=new Image();im.src=mi[2];im.alt=mi[1];im.loading="lazy";im.onerror=()=>f.remove();f.append(im);if(mi[1])f.append(el("figcaption","",mi[1]));r.append(f);return}
-if(x.startsWith("> ")){const q=el("blockquote","pq"),t=x.slice(2).split(" | ");bd(q,t[0]);if(t[1])q.append(el("cite","",t[1]));r.append(q);return}
-if(x.startsWith("!! ")){const q=el("div","hl");bd(q,x.slice(3));r.append(q);return}
-if(x.startsWith("## "))r.append(el("h2","",x.slice(3)));else if(x.startsWith("### "))r.append(el("h3","",x.slice(4)));else if(x.startsWith("※"))r.append(el("p","mute",x));else{const pp=el("p");bd(pp,x);r.append(pp)}});gmLast(r);}
+if(x.startsWith("> ")){ld=1;const q=el("blockquote","pq"),t=x.slice(2).split(" | ");bd(q,t[0]);if(t[1])q.append(el("cite","",t[1]));r.append(q);return}
+if(x.startsWith("!! ")){ld=1;const q=el("div","hl");bd(q,x.slice(3));r.append(q);return}
+if(x.startsWith("## ")){ld=1;r.append(el("h2","",x.slice(3)))}else if(x.startsWith("### ")){ld=1;r.append(el("h3","",x.slice(4)))}else if(x.startsWith("※"))r.append(el("p","mute",x));else{const pp=el("p");if(!ld){ld=1;if(x.length<=700)pp.className="opn"}bd(pp,x);r.append(pp)}});gmLast(r);}
 function openRead(o,push){const r=$("rd");r.replaceChildren();const sb=el("div","tag",o.cat);const h=el("h1","",o.ltitle||o.title);const m=el("div","mute",(o.date||"")+(o.meta!=null?o.meta:o.prod?"ผลิตภัณฑ์ชุมชนบ้านโพธิ์กระสังข์":o.dynId?" • ที่นี่โพธิ์กระสังข์":" • ขวัญชิต โพธิ์กระสังข์ (เพจ ที่นี่โพธิ์กระสังข์)"));r.append(sb,h,m);{const vw=vwEl(o);if(vw){vw.classList.add("vwr");r.append(vw)}}
 if(o.img){const im=new Image();im.src=o.img;im.alt="";im.className="rimg";im.onerror=()=>im.remove();r.append(im)}
-renderBody(r,o);
+renderBody(r,o,1);
 if(o.gal)o.gal.forEach(g=>{const f=el("figure","gf"),im=new Image();im.src=g[0];im.alt=g[1];im.loading="lazy";im.className="rimg";im.onerror=()=>f.remove();f.append(im,el("figcaption","mute",g[1]));r.append(f)});if(o.k==="n0"){const a=el("p");a.append(ext(el("a","","▶ ดูคลิปบรรยากาศการประชุมครั้งแรก"),"https://www.facebook.com/share/v/1F5wFBkipS/"));r.append(a)}
 if(o.extra)o.extra(r);gmLast(r);xlinkBar(r,o);
 {const U=s=>location.origin+location.pathname.replace(/[^\/]*$/,"")+"s/"+encodeURIComponent(o.k)+".html?s="+s,u=U("link"),b=el("div","rbar"),mk=(t,h,c,ev)=>{const x=el("a","btn "+(c||""),t);x.href=h;x.target="_blank";x.rel="noopener";if(ev)x.addEventListener("click",()=>TRK.ev("share-"+ev+"/"+o.k));return x};
@@ -1286,8 +1287,11 @@ function homeFeed(){const out=[];
  return out}
 function homeRefresh(){const sig=homeFeed().map(f=>f.key+(f.pin?"*":"")+(f.lt?"+":"")).join();if(sig===HSIG)return;if(CUR&&CUR.length)applyContent(CUR)}
 const mkEvt=e=>{const b=[];
- [[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].forEach(x=>{if(x[0]&&evOk(evSrc(x[0])))b.push("!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")")});
- const st=evLines(e.story);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));
+ const IM=[[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].filter(x=>x[0]&&evOk(evSrc(x[0]))).map(x=>"!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")");
+ const top=evLines(e.story).some(x=>/^@IMGTOP\s*$/.test(x)),st=evLines(e.story).filter(x=>!/^@IMGTOP\s*$/.test(x)),mk=st.findIndex(x=>/^@IMG2-5\s*$/.test(x));   /* v32: เหมือนเรื่องวิถีชีวิต ภาพแรกต้นเรื่อง ภาพ 2–5 ท้ายเรื่อง */
+ if(mk>=0){if(IM[0])b.push(IM[0]);st.forEach((x,i)=>{if(i===mk)IM.slice(1).forEach(y=>b.push(y));else b.push(x)})}
+ else if(top){IM.forEach(y=>b.push(y));(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x))}
+ else{if(IM[0])b.push(IM[0]);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));IM.slice(1).forEach(y=>b.push(y))}
  if(e.who)b.push("**ใครทำ ที่ไหน:** "+e.who);
  const sc=evLines(e.sched);if(e.cal==="ตามเหตุการณ์ชีวิต"){/* พิธีตามเหตุการณ์ ไม่มีกำหนดการประจำปี */}else{b.push("## 📅 กำหนดการปีนี้");if(sc.length)sc.forEach(x=>b.push("• "+x));else b.push("ยังไม่ประกาศกำหนดการปีนี้ — ติดตามประกาศทาง LINE "+CFG.lineId+" หรือถามผู้นำหมู่บ้าน")};
  const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ผู้มาร่วมงานควรรู้");tp.forEach(x=>b.push("• "+x))}
@@ -1321,9 +1325,10 @@ async function loadEvents(){if(!CFG.apiUrl)return;
 /* ===== วิถีชีวิตกวย: หน้าอ่านของแต่ละเรื่อง (ดุงเลิง / กัวออ / จาเอม) ===== */
 const mkLife=e=>{const b=[];
  const IM=[[e.img,e.cap],[e.img2,e.cap2],[e.img3,e.cap3],[e.img4,e.cap4],[e.img5,e.cap5]].filter(x=>x[0]&&evOk(evSrc(x[0]))).map(x=>"!["+String(x[1]||"").replace(/[\[\]]/g,"")+"]("+evSrc(x[0])+")");
- const st=evLines(e.story),mk=st.findIndex(x=>/^@IMG2-5\s*$/.test(x));   /* v29: บรรทัด @IMG2-5 ในเรื่องราว = ภาพแรกอยู่ต้นเรื่อง ภาพที่ 2–5 ไปอยู่ตรงบรรทัดนั้น (ไม่ใส่ = ภาพทั้งหมดอยู่ต้นเรื่องเหมือนเดิม) */
+ const top=evLines(e.story).some(x=>/^@IMGTOP\s*$/.test(x)),st=evLines(e.story).filter(x=>!/^@IMGTOP\s*$/.test(x)),mk=st.findIndex(x=>/^@IMG2-5\s*$/.test(x));   /* v32: ค่าเริ่มต้น = ภาพแรกอยู่ต้นเรื่อง ภาพที่ 2–5 ไปท้ายเรื่อง • @IMG2-5 = ย้ายภาพ 2–5 ไปตรงบรรทัดนั้น • @IMGTOP = ภาพทั้งหมดอยู่ต้นเรื่องแบบเดิม */
  if(mk>=0){if(IM[0])b.push(IM[0]);st.forEach((x,i)=>{if(i===mk)IM.slice(1).forEach(y=>b.push(y));else b.push(x)})}
- else{IM.forEach(y=>b.push(y));(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x))}
+ else if(top){IM.forEach(y=>b.push(y));(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x))}
+ else{if(IM[0])b.push(IM[0]);(st.length?st:(e.sum?[e.sum]:[])).forEach(x=>b.push(x));IM.slice(1).forEach(y=>b.push(y))}
  if(e.who)b.push("**เกี่ยวข้องกับ:** "+e.who);
  const tp=evLines(e.tips);if(tp.length){b.push("## สิ่งที่ควรรู้");tp.forEach(x=>b.push("• "+x))}
  if(!b.length)b.push(e.title);
