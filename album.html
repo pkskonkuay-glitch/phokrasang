@@ -86,7 +86,7 @@ footer{max-width:1100px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);fo
 <main>
 <div class="hero" id="hero"><img id="hi" alt="ภาพปกอัลบั้มกฐินกวยสามัคคี 69" decoding="async" fetchpriority="high">
 <div class="ht"><small>31 ต.ค.–1 พ.ย. 2569 • วัดโพธิ์กระสังข์ อ.ขุนหาญ จ.ศรีสะเกษ</small><h1>อัลบั้มภาพ กฐินกวยสามัคคี 69</h1><p id="hc">กำลังโหลดภาพ…</p>
-<div class="acts"><button type="button" class="btn o" id="hs" disabled>▶ ดูภาพต่อเนื่อง</button><a class="btn" id="hd" href="#" target="_blank" rel="noopener">⬇ ดาวน์โหลดภาพต้นฉบับ (Google Drive)</a></div></div></div>
+<div class="acts"><button type="button" class="btn o" id="hs" disabled>▶ ดูภาพต่อเนื่อง</button></div></div></div>
 <div class="bar" id="bar" role="group" aria-label="เลือกช่วงงาน"></div>
 <noscript><div class="msg">หน้านี้ต้องเปิด JavaScript เพื่อแสดงอัลบั้มภาพ</div></noscript>
 <div id="app"><div class="msg">กำลังโหลดอัลบั้ม…</div></div>
@@ -108,7 +108,6 @@ footer{max-width:1100px;margin:0 auto;padding:4px 14px 34px;color:var(--mute);fo
 <script>
 (function(){"use strict";
 var BASE="albums/kathin69/";
-var DRIVE="https://drive.google.com/drive/folders/1D19k34NohWaztapk_XpK70jiPCRF2Ki_?usp=sharing";
 var COVER="3-offering-040";   /* ภาพปกอัลบั้มรวม (ชื่อไฟล์ใน web/ ไม่ต้องใส่ .jpg) */
 var SECS=[
  {k:"1-parade",no:"1",t:"แห่สมโภชกฐิน",when:"31 ต.ค. 2569",c:"#b34700",cover:"1-parade-025",news:"c103",
@@ -239,7 +238,6 @@ function applyHash(){
 window.addEventListener("popstate",function(){applyHash()});
 
 /* ---------- เริ่ม ---------- */
-$("hd").href=DRIVE;if(!DRIVE)$("hd").classList.add("hide");
 $("hi").src=BASE+"web/"+COVER+".jpg";$("hi").onerror=function(){this.classList.add("hide")};
 Promise.all(SECS.map(load)).then(function(){
  ALL=[];SECS.forEach(function(s){(s.photos||[]).forEach(function(p){ALL.push(p)})});
