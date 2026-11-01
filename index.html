@@ -771,7 +771,7 @@ function rLead(P,sb,L){const g=$("cgr");g.className="grid pgx lead";
    i.append(el("div","tag",x[1]+" "+(e.tag||x[0])));
    let ti=String(e.title||"").trim();const kz=String(e.kuay||"").split(" • ")[0].trim();if(kz&&ti.indexOf(kz)<0)ti+=" ("+kz+")";
    i.append(el("h3","",ti));if(e.sum)i.append(el("p","",e.sum));
-   const a=el("a","go","อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("lead-open/"+o.k);openRead(o)};i.append(a);
+   const a=el("a","go",/^อัลบั้มภาพ/.test(o.title||"")?"เปิดอัลบั้มภาพ →":"อ่านเรื่องนี้ →");a.href="#/read/"+o.k;a.onclick=ev=>{ev.preventDefault();ev.stopPropagation();TRK.ev("lead-open/"+o.k);openRead(o)};i.append(a);
    const vw=vwEl(o);if(vw){vw.classList.add("vwc");i.append(vw)}
    d.append(i);d.style.cursor="pointer";d.onclick=()=>{TRK.ev("lead-open/"+o.k);openRead(o)};out.push(d)})});
  g.replaceChildren(...out)}
@@ -825,7 +825,9 @@ function gmOpen(q){return"https://www.google.com/maps/search/?api=1&query="+enco
 function gmLast(r){[].slice.call(r.children).filter(c=>c.classList&&c.classList.contains("gmap")).forEach(m=>r.append(m))}   /* v28: แผนที่พิกัดอยู่ท้ายเนื้อหาเสมอ */
 /* ลิงก์ข่าวประจำปี ↔ คำอธิบายประเพณี — จับคู่ด้วย "ชื่อ" (ไม่ใช้รหัส เพราะรหัสงานประจำปีเปลี่ยนได้) เพิ่มคู่ใหม่ได้ที่นี่ n = รหัสข่าว e = รูปแบบชื่องานประจำปี */
 const XPAIR=[{n:"c18",e:/สากปัด|สากดับ/},{n:"c15",e:/^สากกวย/},{n:"c52",e:/^บุญชัก/}];
-function xlinkBar(r,o){const isEv=String(o.k).indexOf("ev-")===0;let all=[];try{all=[].concat(news||[],arts||[],EVTS||[])}catch(e){}
+function xlinkBar(r,o){const AB={c103:"1-parade",c112:"2-baisri",c128:"3-offering"};   /* ข่าวแต่ละช่วงของกฐิน 69 → ปุ่มไปอัลบั้มช่วงนั้น (รหัสข่าว: ช่วง) */
+ if(AB[o.k]){const bx=el("div","rbar"),hh=el("h3","","📸 ภาพงานช่วงนี้"),ww=el("div",""),ab=el("a","btn solid","ดูอัลบั้มภาพช่วงนี้ →");ab.href="album.html#/"+AB[o.k];ab.addEventListener("click",()=>{try{TRK.ev("album-from-news/"+o.k)}catch(e){}});ww.append(ab);bx.append(hh,ww);r.append(bx)}
+ const isEv=String(o.k).indexOf("ev-")===0;let all=[];try{all=[].concat(news||[],arts||[],EVTS||[])}catch(e){}
  let L=[];XPAIR.forEach(p=>{if(isEv){if(p.e.test(o.title||""))L=L.concat(all.filter(x=>x&&x.k===p.n))}else if(o.k===p.n)L=L.concat(all.filter(x=>x&&String(x.k).indexOf("ev-")===0&&p.e.test(x.title||"")))});
  if(!L.length)return;const box=el("div","rbar"),h=el("h3","",isEv?"📰 ข่าวประจำปีที่เกี่ยวข้อง":"📖 อ่านคำอธิบายประเพณี"),w=el("div","");
  L.forEach(x=>{const b=el("a","btn",x.title);b.href="#/read/"+x.k;b.onclick=ev=>{ev.preventDefault();openRead(x,true)};w.append(b)});box.append(h,w);r.append(box)}
@@ -1126,6 +1128,9 @@ const thD=x=>{const m=/^(\d{4})-(\d\d)-(\d\d)/.exec(x||"");return m?(+m[3])+" "+
 FEED.forEach(f=>{f.y=((f.o&&f.o.date||"").match(/25\d\d/)||[""])[0]});
 const _openRead=openRead;
 openRead=function(o,push){const _vk=vwKey(o);if(_vk&&CFG.apiUrl)try{fetch(CFG.apiUrl+"?action=view&id="+encodeURIComponent(_vk)+"&cid="+encodeURIComponent(CID),{keepalive:true}).then(r=>r.json()).then(d=>{if(d&&d.ok&&d.v!=null){o.v=d.v;VWMAP[_vk]=d.v;vwSet(_vk,d.v)}}).catch(()=>{})}catch(e){}  /* นับยอดอ่าน (หลังบ้านนับ 1 เครื่อง/เรื่อง/6 ชม. ไม่เก็บชื่อ) */
+ /* การ์ด "อัลบั้มภาพ…" (ชื่อขึ้นต้น อัลบั้มภาพ และในเนื้อหามีลิงก์ @L … | …/album.html) กดแล้วเข้าหน้าอัลบั้มทันที ไม่ต้องผ่านหน้าบทความอีกชั้น
+    เปิดจากลิงก์แชร์ (#/read/…) ใช้ replace เพื่อไม่ให้ปุ่มย้อนกลับวนกลับมาเด้งเข้าอัลบั้มซ้ำ */
+ if(o&&/^อัลบั้มภาพ/.test(String(o.title||""))&&(o.body||[]).some(x=>/^@L\s*.*?\|\s*https?:\/\/\S*album\.html\S*\s*$/.test(String(x)))){try{TRK.ev("album-go/"+o.k)}catch(e){}if(push===false)location.replace("album.html");else location.href="album.html";return}
  if(o.lazy&&!o.full&&CFG.apiUrl){go("read");$("rd").replaceChildren(el("p","mute","กำลังโหลดเนื้อหา…"));
 fetch(CFG.apiUrl+"?action=item&id="+encodeURIComponent(o.dynId)).then(x=>x.json()).then(d=>{if(d.ok&&d.body)o.body=String(d.body).split(/\n+/).map(x=>x.trim()).filter(Boolean);o.full=1;_openRead(o,push)}).catch(()=>{o.full=1;_openRead(o,push)});return}
 _openRead(o,push)};
