@@ -20,7 +20,7 @@ self.addEventListener("fetch", e => {
   if (r.method !== "GET" || u.origin !== location.origin) return;   // ข้อมูลแจ้งเหตุ/แผนที่/YouTube ไปเครือข่ายตามปกติ
   if (u.pathname.indexOf("/s/") >= 0) return;                       // หน้าแชร์รายเรื่อง: ไปเครือข่ายเสมอ ไม่เก็บแคช
   if (/\/admin\.html$/.test(u.pathname)) return;
-  if (/\/(config\.js|version\.js|data\/[^/]+\.json)$/.test(u.pathname)) {          // ค่ากลาง/ข้อมูล: ลองโหลดใหม่ก่อนเสมอ (แก้ลิงก์แล้วต้องเห็นผลทันที)
+  if (/\/(config\.js|version\.js|data\/[^/]+\.json|albums\/[^/]+\/photos-[^/]+\.csv)$/.test(u.pathname)) {          // ค่ากลาง/ข้อมูล: ลองโหลดใหม่ก่อนเสมอ (แก้ลิงก์แล้วต้องเห็นผลทันที)
     e.respondWith(fetch(r).then(x => { if (x.ok) { const c = x.clone(); caches.open(V).then(k => k.put(r, c)); } return x; }).catch(() => caches.match(r)));
     return;
   }                    // หน้าแอดมิน: ไม่เก็บแคช

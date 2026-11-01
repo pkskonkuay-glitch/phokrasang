@@ -153,12 +153,12 @@ function page(it) {
   // ===== sitemap.xml =====
   const today = new Date().toISOString().slice(0, 10);
   const lm = d => { const m = String(d || "").match(/^\d{4}-\d{2}-\d{2}/); return m ? m[0] : today; };
-  const urls = [[BASE, today], [BASE + "vocab.html", today], [BASE + "privacy.html", today]].concat(items.map(i => [BASE + "s/" + encodeURIComponent(i.k) + ".html", lm(i.at)]));
+  const urls = [[BASE, today], [BASE + "vocab.html", today], [BASE + "album.html", today], [BASE + "privacy.html", today]].concat(items.map(i => [BASE + "s/" + encodeURIComponent(i.k) + ".html", lm(i.at)]));
   fs.writeFileSync(path.join(__dirname, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(u => "<url><loc>" + esc(u[0]) + "</loc><lastmod>" + u[1] + "</lastmod></url>").join("\n") + "\n</urlset>\n");
   fs.writeFileSync(path.join(__dirname, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: " + BASE + "sitemap.xml\n");
   // ===== เลื่อนเลขเวอร์ชันของ service worker อัตโนมัติ เมื่อไฟล์หลักเปลี่ยน =====
   const h = crypto.createHash("sha1");
-  ["index.html", "vocab.html", "privacy.html", "sw.js", "manifest.webmanifest", "kuy-vocab.csv"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
+  ["index.html", "vocab.html", "album.html", "privacy.html", "sw.js", "manifest.webmanifest", "kuy-vocab.csv"].forEach(f => { try { h.update(fs.readFileSync(path.join(__dirname, f))); } catch (_) {} });
   const ver = "kp-" + h.digest("hex").slice(0, 8);
   const VER_PATH = path.join(__dirname, "version.js");   // แยกจาก config.js เพื่อไม่ให้บอตกับคนแก้ไฟล์เดียวกันชนกัน
   let curVer = ""; try { curVer = fs.readFileSync(VER_PATH, "utf8"); } catch (_) {}
