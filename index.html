@@ -832,7 +832,7 @@ function gmOpen(q){return"https://www.google.com/maps/search/?api=1&query="+enco
 function gmLast(r){[].slice.call(r.children).filter(c=>c.classList&&c.classList.contains("gmap")).forEach(m=>r.append(m))}   /* v28: แผนที่พิกัดอยู่ท้ายเนื้อหาเสมอ */
 /* ลิงก์ข่าวประจำปี ↔ คำอธิบายประเพณี — จับคู่ด้วย "ชื่อ" (ไม่ใช้รหัส เพราะรหัสงานประจำปีเปลี่ยนได้) เพิ่มคู่ใหม่ได้ที่นี่ n = รหัสข่าว e = รูปแบบชื่องานประจำปี */
 const XPAIR=[{n:"c18",e:/สากปัด|สากดับ/},{n:"c15",e:/^สากกวย/},{n:"c52",e:/^บุญชัก/}];
-function xlinkBar(r,o){const AB={c103:"1-parade",c112:"2-baisri",c128:"3-offering"};   /* ข่าวแต่ละช่วงของกฐิน 69 → ปุ่มไปอัลบั้มช่วงนั้น (รหัสข่าว: ช่วง) */
+function xlinkBar(r,o){const AB=(()=>{const m=CFG.albumNews||{"1-parade":"c103","2-baisri":"c112","3-offering":"c128"},r={};Object.keys(m).forEach(k=>{r[m[k]]=k});return r})();   /* ข่าวแต่ละช่วงของกฐิน 69 → ปุ่มไปอัลบั้มช่วงนั้น (รหัสข่าว: ช่วง) อ่านจาก config.js albumNews */
  if(AB[o.k]){const bx=el("div","rbar"),hh=el("h3","","📸 ภาพงานช่วงนี้"),ww=el("div",""),ab=el("a","btn solid","ดูอัลบั้มภาพช่วงนี้ →");ab.href="album.html#/"+AB[o.k];ab.addEventListener("click",()=>{try{TRK.ev("album-from-news/"+o.k)}catch(e){}});ww.append(ab);bx.append(hh,ww);r.append(bx)}
  const isEv=String(o.k).indexOf("ev-")===0;let all=[];try{all=[].concat(news||[],arts||[],EVTS||[])}catch(e){}
  let L=[];XPAIR.forEach(p=>{if(isEv){if(p.e.test(o.title||""))L=L.concat(all.filter(x=>x&&x.k===p.n))}else if(o.k===p.n)L=L.concat(all.filter(x=>x&&String(x.k).indexOf("ev-")===0&&p.e.test(x.title||"")))});

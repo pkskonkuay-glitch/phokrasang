@@ -124,6 +124,7 @@ var SECS=[
   d:"พิธีสมโภชบายศรีสู่ขวัญ ผูกแขนให้กำลังใจเจ้าภาพ ณ ศาลาลมโชย วัดโพธิ์กระสังข์"},
  {k:"3-offering",no:"3",t:"ทอดถวายกฐินสามัคคี",tt:"ทอดถวาย",when:"1 พ.ย. 2569",c:"#2f7d5b",cover:"3-offering-040",news:"c128",
   d:"พิธีทำวัตร เทศน์ ตักบาตร และทอดถวายกฐินกวยสามัคคี วัดโพธิ์กระสังข์"}];
+var AN=(window.KP_CONFIG||{}).albumNews||{};SECS.forEach(function(s){if(AN[s.k])s.news=AN[s.k]});   /* รหัสข่าวแต่ละช่วงอ่านจาก config.js albumNews (ค่าในตัวด้านบนเป็นค่าสำรอง) */
 var S={star:false},ALL=[],VIS=[],LB={i:-1,pushed:false,opener:null},BYK={},SPY=null,tick=false;
 function $(i){return document.getElementById(i)}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
