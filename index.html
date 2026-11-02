@@ -214,6 +214,12 @@ header{z-index:20}.mb svg{display:block}
 #ydl{position:absolute;top:calc(100% + 6px);left:0;z-index:8;min-width:160px;max-height:50vh;overflow:auto;background:var(--soft);border-radius:16px;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}#ydl button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 20px;color:var(--ink)}
 .ug h2{font-size:26px;margin:6px 0}.ug p{margin:0 0 12px}.callbig{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff;text-decoration:none;border-radius:16px;padding:18px 22px;margin:0 0 12px;min-height:76px}.callbig b{font-size:40px;line-height:1.1;letter-spacing:1px}.callbig span{font-size:22px;font-weight:700}.ug .btn{width:100%;margin-top:8px;padding:16px;font-size:18px}
 .emg{background:#fde2e2;color:#7a1c1c;border:1px solid #f1b4b4;border-radius:12px;padding:10px 14px;margin-bottom:12px;line-height:1.6}.pvn{font-size:14px;color:var(--mute);margin:4px 0 10px}.pvn a{color:var(--link)}
+
+/* การเข้าถึง: หัวข้อหลักที่มองไม่เห็นด้วยตา + ลิงก์ข้ามไปเนื้อหา (กด Tab ครั้งแรกจะโผล่) */
+.sro{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:8px;top:-60px;z-index:100;background:#fff;color:#b34700;font-weight:700;padding:10px 16px;border-radius:10px;border:2px solid #b34700;text-decoration:none}
+.skip:focus{top:8px}
+main:focus{outline:none}
 </style>
 <style id="v2">
 .wtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:4px 0 16px}
@@ -397,14 +403,15 @@ h3:has(>.vmore){display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 <style id="v32">.read p.opn{font-weight:700;font-size:22px;line-height:1.75;margin:12px 0 20px}@media(max-width:520px){.read p.opn{font-size:20px}}</style>
 </head>
 <body>
-<header><div class="bar">
+<a class="skip" href="#main" onclick="event.preventDefault();document.getElementById('main').focus()">ข้ามไปเนื้อหา</a>
+<header><h1 class="sro">ที่นี่โพธิ์กระสังข์ วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน</h1><div class="bar">
 <button class="brand" onclick="go('home')"><img src="img/emb-b1f49dda.png" alt="โลโก้"><span>ที่นี่โพธิ์กระสังข์<small>วิถี ข่าวสารกวยมูไฮ เพื่อทุกคน</small></span></button>
 <div class="zb" role="group" aria-label="ปรับขนาดตัวอักษร"><button type="button" id="zm" aria-label="ตัวอักษรเล็กลง" title="ตัวอักษรเล็กลง"><span>ก</span>−</button><button type="button" id="zp" aria-label="ตัวอักษรใหญ่ขึ้น" title="ตัวอักษรใหญ่ขึ้น"><span>ก</span>+</button></div>
 <button class="mb" id="mb" aria-label="เมนู" aria-expanded="false"><svg id="mbi" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 8h22M4 15h22M4 22h22"/></svg></button></div>
 <div id="tbm" class="tbm" role="status" aria-live="polite"></div>
 <div id="menu" class="hide"><div class="mp" id="mlist2"></div></div></header>
 
-<main>
+<main id="main" tabindex="-1">
 <div id="v-home">
 <div class="band2"><div class="wrap"><div class="hs"><div class="hm" id="hm"><i class="hp" id="hp"></i><div class="ht"><span class="hc" id="hc"></span><h2 id="hh"></h2><p id="hq"></p></div></div><div class="hn" id="hn"></div></div></div></div>
 <div class="wrap"><section id="latest"><div class="sh"><h2>ข่าว • คลิป ล่าสุดจากชุมชน</h2><button type="button" class="chip" id="fopen" aria-expanded="false" aria-controls="fbar">🔍 ค้นหา / กรอง</button></div><div class="fb fbc" id="fbar"><div class="dd"><button id="ddb"></button><div id="ddl" class="hide"></div></div><div class="dd"><button id="ydb"></button><div id="ydl" class="hide"></div></div><input id="fq" type="search" placeholder="🔍 ค้นหาข่าว เรื่องเล่า คลิป" aria-label="ค้นหา"><button id="ddx" class="hide">✕ ล้าง</button></div><div class="fg" id="fg"></div><div id="fmore"></div></section></div>
@@ -907,7 +914,7 @@ const HPOS={n8:"50% 50%",a3:"40% 55%",n0:"30% 50%",a0:"50% 55%",a1:"50% 32%",a2:
 const FEED=[];
 function openF(f){f.kind==="v"?window.open(f.url,"_blank","noopener"):openRead(f.o)}
 function fcard(f){const a=el("a","fc");if(f.kind==="v")ext(a,f.url);else{a.href="#/read/"+f.o.k;a.onclick=e=>{e.preventDefault();openRead(f.o)}}
-const t=el("div","fi"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>im.remove();im.src=f.img;if(CPOS[f.key])im.style.objectPosition=CPOS[f.key];t.append(im);
+const t=el("div","fi"),im=new Image();im.alt="";im.loading="lazy";im.onerror=()=>im.remove();im.src=String(f.img).replace(/(drive\.google\.com\/thumbnail\?[^"' ]*?sz=w)1200\b/,"$1640");if(CPOS[f.key])im.style.objectPosition=CPOS[f.key];t.append(im);
 if(f.kind==="v"){const y=el("span","yb");y.innerHTML=YT;t.append(y)}
 const m=el("div","fm");m.innerHTML=FOLD;{const cs=el("span","fmc",f.cat);cs.title=f.cat;m.append(cs)}const vw=vwEl(f.o);if(vw)m.append(vw);a.append(t,el("h3","",f.lt||f.t));if(f.ls)a.append(el("p","fd",f.ls));a.append(m);return a}
 let ff="ทั้งหมด",fn=12;const FC={"ข่าวสาร":"n","วิถีกวย":"a","คลิป":"v","สิทธิ์ที่ควรรู้":"r"};
@@ -962,6 +969,7 @@ const CATS=[["🛣️","ถนน / ไฟส่องสว่าง","หล�
 const WANT=["ช่วยซ่อมแซม","มาตรวจสอบ","ประสานหน่วยงาน","แจ้งให้ทราบเฉย ๆ"];
 const ORGS=["ไม่แน่ใจ (ทีมงานช่วยส่งต่อ)","ผู้ใหญ่บ้าน / ผู้นำท้องที่","เทศบาล / อบต.","พัฒนาชุมชน","รพ.สต.","วัด / กรรมการหมู่บ้าน"];
 let R={ph:[],want:[]},map,meM,meC,wId=null,tlO,tlS;
+(()=>{try{const q=new URLSearchParams(location.search).get("nocount");if(q==="1")localStorage.setItem("kpnc","1");else if(q==="0")localStorage.removeItem("kpnc")}catch(e){}})(); /* เปิดเว็บด้วย ?nocount=1 บนเครื่องทีมงาน = ไม่นับยอดอ่านจากเครื่องนี้ (?nocount=0 = กลับมานับ) */
 const CID=(()=>{try{let c=localStorage.getItem("kpcid");if(!c){c=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem("kpcid",c)}return c}catch(e){return"anon"}})();
 const rdURL=f=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.onerror=()=>r("");x.readAsDataURL(f)});
 async function sendApi(){const b=$("send"),er=$("er");b.disabled=true;const old=b.textContent;b.textContent="⏳ กำลังส่งเรื่อง…";er.textContent="";
@@ -1127,7 +1135,7 @@ const TMN=["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.
 const thD=x=>{const m=/^(\d{4})-(\d\d)-(\d\d)/.exec(x||"");return m?(+m[3])+" "+TMN[+m[2]-1]+" "+(+m[1]+543):""};
 FEED.forEach(f=>{f.y=((f.o&&f.o.date||"").match(/25\d\d/)||[""])[0]});
 const _openRead=openRead;
-openRead=function(o,push){const _vk=vwKey(o);if(_vk&&CFG.apiUrl)try{fetch(CFG.apiUrl+"?action=view&id="+encodeURIComponent(_vk)+"&cid="+encodeURIComponent(CID),{keepalive:true}).then(r=>r.json()).then(d=>{if(d&&d.ok&&d.v!=null){o.v=d.v;VWMAP[_vk]=d.v;vwSet(_vk,d.v)}}).catch(()=>{})}catch(e){}  /* นับยอดอ่าน (หลังบ้านนับ 1 เครื่อง/เรื่อง/6 ชม. ไม่เก็บชื่อ) */
+openRead=function(o,push){const _vk=vwKey(o);const _nc=(()=>{try{return localStorage.getItem("kpnc")==="1"}catch(e){return false}})();if(_vk&&CFG.apiUrl&&!_nc)try{fetch(CFG.apiUrl+"?action=view&id="+encodeURIComponent(_vk)+"&cid="+encodeURIComponent(CID),{keepalive:true}).then(r=>r.json()).then(d=>{if(d&&d.ok&&d.v!=null){o.v=d.v;VWMAP[_vk]=d.v;vwSet(_vk,d.v)}}).catch(()=>{})}catch(e){}  /* นับยอดอ่าน (หลังบ้านนับ 1 เครื่อง/เรื่อง/6 ชม. ไม่เก็บชื่อ) */
  /* การ์ด "อัลบั้มภาพ…" (ชื่อขึ้นต้น อัลบั้มภาพ และเนื้อหามีลิงก์ @L … | …/album.html หรือเป็นเรื่องจากชีตที่เนื้อหายังไม่โหลด) กดแล้วเข้าหน้าอัลบั้มทันที ไม่ต้องผ่านหน้าบทความอีกชั้น
     เปิดจากลิงก์แชร์ (#/read/…) ใช้ replace เพื่อไม่ให้ปุ่มย้อนกลับวนกลับมาเด้งเข้าอัลบั้มซ้ำ */
  if(o&&/^อัลบั้มภาพ/.test(String(o.title||""))&&((o.body||[]).some(x=>/^@L\s*.*?\|\s*https?:\/\/\S*album\.html\S*\s*$/.test(String(x)))||(o.lazy&&!o.full))){try{TRK.ev("album-go/"+o.k)}catch(e){}if(push===false)location.replace("album.html");else location.href="album.html";return}
